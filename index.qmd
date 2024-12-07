@@ -32,16 +32,16 @@ I recommend using a laptop or tablet to access this page. Use the sidebar for ea
 
 *Table of Contents:*
 
--   Part I: Statistical and Econometric Theory
--   Part II: Econometric Methods for Causal Inference
--   Part III: Multivariate Statistical Methods
--   Part IV: Time Series and Forecasting
--   Part V: Applied Machine Learning
--   Part VI: Text Analysis
--   Part VII: Spatial Econometrics
--   Appendix A: Mathematical Methods
--   Appendix B: Game Theory and Political Economics
--   Appendix C: Programming in R
+-   [Part I: Statistical and Econometric Theory](https://statsnotes.github.io/#part-i-statistical-and-econometric-theory)
+-   [Part II: Econometric Methods for Causal Inference](https://statsnotes.github.io/#part-ii-econometric-methods-for-causal-inference)
+-   [Part III: Multivariate Statistical Methods](https://statsnotes.github.io/#part-iii-multivariate-statistical-methods)
+-   [Part IV: Time Series and Forecasting](https://statsnotes.github.io/#part-iv-time-series-and-forecasting)
+-   [Part V: Applied Machine Learning](https://statsnotes.github.io/#part-v-applied-machine-learning)
+-   [Part VI: Text Analysis](https://statsnotes.github.io/#part-vi-text-analysis)
+-   [Part VII: Spatial Econometrics](https://statsnotes.github.io/#part-vii-spatial-econometrics)
+-   [Appendix A: Mathematical Methods](https://statsnotes.github.io/#appendix-a-mathematical-methods)
+-   [Appendix B: Game Theory and Political Economics](https://statsnotes.github.io/#appendix-b-game-theory-and-political-economics)
+-   [Appendix C: Programming in R](https://statsnotes.github.io/#appendix-c-programming-in-r)
 
 <br />
 
@@ -51,14 +51,14 @@ I recommend using a laptop or tablet to access this page. Use the sidebar for ea
 
 Pre-requisites: Single Variable Calculus (see Appendix A). Linear Algebra and Multivariate Calculus is helpful (see Appendix B).
 
--   1.1: Random Variables and Distributions
--   1.2: Estimates and Statistical Inference
--   1.3: Relationships with Correlation and Covariance
--   1.4: Simple Linear Regression - Estimation and Interpretation
--   1.5: Simple Linear Regression - Properties and Inference
--   1.6: Multiple Linear Regression - Estimation and Interpretation
--   1.7: Multiple Linear Regression - Estimation and Interpretation
--   1.8: Further Topics in Inference with Linear Regression
+-   [1.1: Random Variables and Distributions](https://statsnotes.github.io/theory/1.html)
+-   [1.2: Estimates and Statistical Inference](https://statsnotes.github.io/theory/2.html)
+-   [1.3: Relationships with Correlation and Covariance](https://statsnotes.github.io/theory/3.html)
+-   [1.4: Simple Linear Regression - Estimation and Interpretation](https://statsnotes.github.io/theory/4.html)
+-   [1.5: Simple Linear Regression - Properties and Inference](https://statsnotes.github.io/theory/5.html)
+-   [1.6: Multiple Linear Regression - Estimation and Interpretation](https://statsnotes.github.io/theory/6.html)
+-   1.7: Multiple Linear Regression - Properties and Inference
+-   1.8: Heteroscedasticity, Asymptotics, and Extensions of Inference
 -   1.9: Extensions of Linear Regression
 -   1.10: Method of Moments Estimator
 -   1.11: Instrumental Variables Estimator
@@ -133,6 +133,8 @@ Pre-requisites: Part I and Part V.
 
 <br />
 
+------------------------------------------------------------------------
+
 ## Appendix A: Mathematical Methods
 
 *This appendix discusses some key mathematical concepts needed for the courses above. Specifically, lessons A.1-A.6 are mandatory for Part I.*
@@ -178,3 +180,17 @@ Pre-requisites: Appendix A (A.1-A.6), and some basic microeconomics is helpful.
 *This is not a full course in the R-language. This provides a brief guide to useful tips in R*.
 
 <br />
+
+------------------------------------------------------------------------
+
+## About the Author
+
+This website was created by Kevin Lingfeng Li.
+
+-   [LinkedIn](https://www.linkedin.com/in/kevinlingfengli/) \| [Website](https://kevinli03.github.io/)
+
+I am a candidate for a MSc in Political Science & Political Economics at the London School of Economics (LSE), focusing on Applied Statistics/Econometrics. Prior to my Masters, I completed a BSc in Politics at King’s College London, focusing on statistical methods and game theory, obtaining a First-Class Honours (US equivalent: Summa Cum Laude) classification. During my Undergraduate Degree, I also took classes in Data Science + Machine Learning and Accounting at the London School of Economics.
+
+I created this page as a helpful guide while studying for my Masters degree. I realised that it would be useful for me, and for my fellow students, to have a collection of Political Science resources in one place.
+
+I do my best to update this website: it is a tool not only for my classmates and other political science students, but for me myself. However, as a full-time student with an internship, I may not be able to update this site at a fast enough pace.

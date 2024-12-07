@@ -1,0 +1,661 @@
+---
+title: "StatsNotes by Kevin"
+subtitle: "Lesson 1.6: Multiple Linear Regression - Estimation and Interpretation"
+format:
+    html:
+        page-layout: article
+        grid:
+          sidebar-width: 300px
+          body-width: 750px
+          margin-width: 250px
+          gutter-width: 2em
+        fontsize: 12.5pt
+        theme: yeti
+        toc: TRUE
+        toc-depth: 2
+        toc-location: left
+        toc-expand: true
+        toc-title: "Lesson 1.6: Multiple Linear Regression - Estimation and Interpretation"
+        mainfont: "Computer Modern"
+        title-block-banner: true
+        classoption: fleqn
+        html-math-method: katex
+---
+
+This lesson covers the following topics:
+
+-   The motivation/goal of Multiple Linear Regression, and the basic layout of Multiple Linear Regression.
+-   The estimation process of the OLS estimator for Multiple Linear Regression.
+-   What it means to control for a variable (using the regression anatomy theory).
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.6.1: Motivation Behind Multiple Linear Regression
+
+In [section 5.2](https://politicalscience.github.io/metrics/5.html#unbiasedness-of-ols-under-the-gauss-markov-theorem), we discussed how the simple linear regression with the OLS estimator is only unbiased under 4 conditions.
+
+::: callout-tip
+## Definition: Gauss-Markov Theorem
+
+The Gauss-Markov Theorem states that under 4 conditions, the OLS estimator is unbiased for $\beta_1$.
+
+-   **SLR.1 (Linearity in Parameters)**: The parameters of the model are linear.
+-   **SLR.2 (Random Sampling)**: All observations in our sample are randomly sampled from the population.
+-   **SLR.3 (Sample Variation in** $x$**)**: The sample values of $x$ must have a non-zero variance.
+-   **SLR.4 (Zero Conditional Mean)**. The error term $u$ has an expectation of 0, given any value of $x$.
+
+We will explore each condition in detail.
+:::
+
+The key assumption that is most often violated is the final assumption: Zero Conditional Mean. For this condition to be met, we know that $E(u|x) = 0$ for all $x$. This also implies that:
+
+$$
+Cov(x, u) = 0
+$$
+
+Why is this condition frequently violated? Recall from [section 4.1](https://politicalscience.github.io/metrics/4.html#the-simple-linear-regression-model), where we discussed that the error term $u_i$ represents the effect of anything else on $y$ other than our explanatory variable $x$.
+
+-   For example, if $x$ is age, and $y$ is income, there are other factors that also affect income $y$ besides age $x$. Those other factors are included in the error term $u_i$.
+
+However, if our explanatory variable $x$ is correlated with any of these other factors in $u_i$, that also means that $Cov(x,u)≠0$.
+
+-   For example, if $x$ is age, and $y$ is income, another factor that could affect income $y$ is a third variable, years of work experience (let us label that $w$).
+-   This extra variable $w$ that affects outcome $y$ is included in the error term $u$ of our regression $y = \beta_0 + \beta_1 + u$.
+-   However, years of work experience $w$ is also correlated with age $x$, as obviously, older people have more work experience.
+-   Since $x$ is correlated with $w$, and $w$ is in the error term $u$, that means that $x$ is correlated with $u$, which violates the Zero Conditional Mean assumption.
+
+These variables $w$ that are correlated with both $x$ and $y$ are called **confounding variables**.
+
+-   Note: there can be (and almost always are) more than one confounding variable.
+-   Note: This concept will be further discussed in chapter 7 with omitted variable bias and Endogeniety.
+
+<br />
+
+How do we address this violation of the Zero Conditional Mean resulting from the extra variable $w$?
+
+-   Well, there are actually several ways to do this, which we briefly mentioned at the end of [section 5.3](https://politicalscience.github.io/metrics/5.html#proof-of-unbiasedness-of-ols-under-gauss-markov).
+
+The simplest way to address it is to include the extra variable $w$ into our regression as another explanatory variable.
+
+-   This way, $w$ is another explanatory variable along with $x$, and is no longer in the error term $u$, thus $x$ will not be correlated with $u$ anymore (assuming there are no other confounders).
+
+Multiple Linear Regression is a way to implement this solution - it allows us to include multiple explanatory variables in our regression model.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.6.2: The Multiple Linear Regression Model
+
+Multiple linear regression is an extension of simple linear regression, that can help us deal with confounding variables.
+
+-   Multiple linear regression allows us to "control for the effect" of confounders. We will discuss this in [section 6.5](https://politicalscience.github.io/metrics/6.html#regression-anatomy-and-controlling-for-confounders).
+
+The **response variable** (outcome variable) is notated $y$, just like in single linear regression.
+
+The **explanatory variable**s are $x_1, x_2, ..., x_k$. We sometimes also denote all explanatory variables as the vector $\overrightarrow{x}$.
+
+-   $k$ represents the total number of explanatory variables.
+-   Note: if you see the notation $x_j$, that means any explanatory variable $x_1, \dots , x_k$. The variable $x_j$ represents any individual coefficient (for generalisation purposes).
+
+<br />
+
+The multiple linear regression takes the following form:
+
+::: callout-tip
+## Definition: Multiple Linear Regression Model
+
+Take a set of observed data with $n$ number of pairs of $(\overrightarrow{x}_i, y_i)$ observations. The linear model takes the following form:
+
+$$
+y_i = \beta_0 + \beta_1x_{1i} + \dots + \beta_k x_{ki} + u_i
+$$
+
+-   Where the coefficients (that need to be estimated) are vector$\overrightarrow{\beta} = \beta_0, \beta_1, ..., \beta_k$. That means we have $k$ number of variables and $k+1$ number of coefficients (with the one not attached to a variable being the intercept).
+-   Where $u_i$ is the error term function - that determines the error for each unit $i$. Error $u_i$ has a variance of $\sigma^2$, and expectation $E(u_i) = 0$.
+
+In [section 4.7](https://politicalscience.github.io/metrics/4.html#ols-regression-as-a-conditional-expectation-function), we also established that the linear regression model is equivalent to the conditional expectation function. This is also true with multiple linear regression. Thus, we can also write multiple linear regression as:
+
+$$
+E(y_i|x_i) = \beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki}
+$$
+:::
+
+<br />
+
+Same as in Simple Linear Regression, once we have estimated $\overrightarrow\beta$, we will have a best-fit **plane**, also called a fitted-values model (see [section 4.2](https://politicalscience.github.io/metrics/4.html#fitted-values-and-best-fit-lines)). The fitted values model takes the form:
+
+$$
+\hat y_i = \hat\beta_0 + \hat\beta_1 x_{1i} + \dots + \hat\beta_k x_{ki}
+$$
+
+-   Where $\hat y$ are the predicted values of $y$ based on our best-fit plane.
+-   Where $\hat\beta_0, \dots, \hat\beta_k$ are our estimates for coefficients $\beta_0, \dots, \beta_k$.
+-   Just like in simple linear regression, the error term $u_i$ dispersal because $E(u_i) = 0$.
+
+Note how I have been saying best-fit **plane**, not best-fit line. This is because with multiple explanatory variables, we are now no longer in a 2-dimensional space, but a $k$-dimensional space (based on the number of variables).
+
+-   Essentially, each variable has its own "axis"/"dimension".
+
+Thus, our best-fit line now is a best-fit plane. For example, take this model with 2 explanatory variables $x_1$ (years of education), $x_2$ (seniority), and $y$ (income):
+
+![](images/clipboard-365376575.png){fig-align="center" width="80%"}
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.6.3: Multiple Linear Regression with Linear Algebra
+
+::: callout-warning
+This section contains Linear Algebra. It is not essential that you understand this section, however, it can be helpful to develop intuition.
+:::
+
+In the previous section, we introduced the multiple linear regression model as the following:
+
+$$
+y_i = \beta_0 + \beta_1x_{1i} + \dots + \beta_k x_{ki} + u_i
+$$
+
+However, it can be very useful to also see the multiple linear regression model in terms of linear algebra (vectors and matrices).
+
+-   The main reason for this is because this will make the estimation process far easier.
+
+<br />
+
+The $i$'th observation can be re-written in vector form as following:
+
+$$
+y_i = x_i'\beta + u_i, \text{ where }\beta = \begin{bmatrix}\beta_0 \\ \beta_1 \\ \vdots \\ \beta_k\end{bmatrix} \text{ and }x_i = \begin{bmatrix}1 \\x_{1i} \\\vdots \\x_{ki}\end{bmatrix}
+$$
+
+-   The $x_i'$ in the equation is the transpose of $x_i$, to make matrix multiplication possible.
+-   The first element of the $x_i$ matrix is 1, since $1 \times \beta_0$ gives us the first parameter (intercept) in the linear model.
+-   Thus, when multiplying out, we get the same equation as the original multiple linear regression.
+
+<br />
+
+Note how we have the subscript $i$ representing each individual observation. With a vector, we can expand out these subscripts.
+
+-   For example, instead of $y_i$, we could have a vector with $y_1, y_2, \dots, y_n$ (assuming we have $n$ observations).
+-   Same for $x'_i$, which can be expanded into a vector of $x_1', x_2', \dots x_n'$, and for the error term $u_i$, which can be expanded into a vector of $u_1, u_2, \dots, u_n$.
+
+Using this logic, we can obtain the following, with the $x_i'$ and $\beta$ being vectors within a vector:
+
+$$
+\begin{split}
+\begin{pmatrix}y_1 \\ y_2 \\ \vdots \\ y_n\end{pmatrix} & = \begin{pmatrix}x_1'\beta + u_1 \\ x_2'\beta + u_2 \\ \vdots \\ x_n'\beta + u_n\end{pmatrix} \\
+& \\
+\begin{pmatrix}y_1 \\ y_2 \\ \vdots \\ y_n\end{pmatrix}& = \begin{pmatrix}x_1'\beta \\ x_2'\beta \\ \vdots \\ x_n'\beta\end{pmatrix} + \begin{pmatrix}u_1 \\ u_2 \\ \vdots \\ u_n\end{pmatrix}
+\end{split}
+$$
+
+Since $\beta$ vector appears as a common factor for all observations $i=1,...,n$, we can factor it out and have an equation:
+
+$$
+\begin{pmatrix}y_1 \\ y_2 \\ \vdots \\ y_n\end{pmatrix} = \begin{pmatrix}x_1' \\ x_2' \\ \vdots \\ x_n'\end{pmatrix} \space \beta + \begin{pmatrix}u_1 \\ u_2 \\ \vdots \\ u_n\end{pmatrix}
+$$
+
+<br />
+
+We can expand the $x_1',...,x_n'$ vector into a matrix. Remember that each $x_1',...,x_n'$ is already a vector of different explanatory variables. So, we get the following result:
+
+$$
+y = X \beta + u, \text{ where } X = \begin{bmatrix}1 & x_{21} & \dots & x_{k1} \\1 & x_{22} & \dots & x_{k2} \\\vdots & \vdots & \vdots & \vdots \\1 & x_{2n} & \dots & x_{kn}\end{bmatrix}
+$$
+
+::: callout-tip
+## Definition: Multiple Linear Regression with Linear Algebra
+
+The multiple linear regression can be expressed in linear algebra as:
+
+$$
+y = X \beta + u
+$$
+
+Where vector $y$ is equal to:
+
+$$
+y = \begin{pmatrix}y_1 \\ y_2 \\ \vdots \\ y_n\end{pmatrix} 
+$$
+
+Where matrix $X$ is equal to:
+
+$$
+X = \begin{bmatrix}1 & x_{21} & \dots & x_{k1} \\1 & x_{22} & \dots & x_{k2} \\\vdots & \vdots & \vdots & \vdots \\1 & x_{2n} & \dots & x_{kn}\end{bmatrix}
+$$
+
+-   Where the notation for elements of $X$ is $x_{ki}$, with $i$ being the unit of observation $i = 1, \dots n$, and $k$ being the explanatory variables index.
+-   The first column of $X$ is a vector of 1, which exists because these 1's are multiplied with $\beta_0$ in our model (see below).
+
+Where vector $\beta$ is equal to:
+
+$$
+\beta = \begin{pmatrix}\beta_0 \\ \beta_1 \\ \vdots \\ \beta_k\end{pmatrix}
+$$
+:::
+
+The point of expressing the model in linear algebra is that it makes the estimation process far easier, as we will see in the next section.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.6.4: Mathematics of the Ordinary Least Squares Estimator
+
+::: callout-warning
+This section contains Linear Algebra. It is not essential that you understand this section, however, it can be helpful to develop intuition.
+:::
+
+As we remember from Chapter 1, the goal of Ordinary Least Squares Estimation is to minimise the sum of squared errors. The sum of squared errors in multiple regression is:
+
+$$
+\begin{split}
+SSE & = \sum\limits_{i=1}^n (y_i - \hat y_i)^2\\
+& = \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i} -  ... - \hat\beta_kx_{ki})^2
+\end{split}
+$$
+
+Similar to our simple linear regression (but with additional variables), our minimisation condition is:
+
+$$
+\begin{split}
+(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2, ...) & = \arg \min\limits_{(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2, ...)} (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i} ...)^2 \\
+& = \arg \min\limits_{(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2, ...)} S(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2, ...)
+\end{split}
+$$
+
+<br />
+
+Taking the partial derivatives of each parameter like in simple linear regression, we get first order conditions:
+
+$$
+\begin{split}& \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\& \sum\limits_{i=1}^n X_{1i}(y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\
+& \sum\limits_{i=1}^n X_{2i} (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0
+\end{split}
+$$
+
+-   and so on for $x_{3i}, ..., x_{ki}$.
+
+This system of equations includes $k+1$ variables and $k+1$ equations, which is way too difficult to solve.
+
+<br />
+
+Instead, we can use linear algebra. Let us define our estimation vector $\hat{\beta}$ as the value of $\hat\beta$ that minimises the sum of squared errors:
+
+$$
+\hat{\beta} = \arg \min\limits_{b} (y - Xb)' (y - Xb) = \arg \min\limits_b S(b)
+$$
+
+We can expand $S(b)$ as follows:
+
+$$
+\begin{split}
+S(b) & = y'y - b'X'y - y'Xb + b'X'Xb \\ 
+& = y'y - 2b'X'y + b'X'Xb
+\end{split}
+$$
+
+Taking the partial derivative in respect to $b$:
+
+$$
+\frac{\partial S(b)}{\partial b} = \begin{pmatrix}\frac{\partial S(b)}{\partial b_1} \\\vdots \\\frac{\partial S(b)}{\partial b_k}\end{pmatrix}
+$$
+
+Differentiating with the vector $b$ yields:
+
+$$
+\frac{\partial S(b)}{\partial b} = -2X'y + 2X'Xb
+$$
+
+Evaluted at $\hat{\beta}$, the derivatives should equal zero (since first order condition of finding minimums):
+
+$$
+\frac{\partial S(b)}{\partial b} \biggr|_{\hat{\beta}} = -2X'y + 2X'X \hat{\beta} = 0
+$$
+
+When assuming $X'X$ is invertable, we can isolate $\hat{\beta}$ to find the solution to OLS:
+
+$$
+\begin{split}
+-2X'y + 2X'X \hat{\beta} & = 0 \\
+2X'X\hat\beta & = 2X'y \\
+\hat\beta & = (2X'X)^{-1} 2 X'y \\
+\hat\beta & = (X'X)^{-1}X'y
+\end{split}
+$$
+
+::: callout-tip
+## Definition: OLS Estimate of $\hat\beta$
+
+The Ordinary Least Squares Estimate of vector $\hat\beta$ for multiple linear regression is:
+
+$$
+\hat{\beta} = (X'X)^{-1} X'y
+$$
+:::
+
+Once we have estimates of $\hat{\beta}$, we can plug them into our linear model to obtain fitted values:
+
+$$
+\begin{split}
+\hat{y} & = X\hat{\beta} \\
+& = X(X'X)^{-1} X'y
+\end{split}
+$$
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.6.5: Regression Anatomy and Controlling for Confounders
+
+We talked about how multiple linear regression allows us to control for confounders. But what does that mean? How does it affect our interpretations of coefficients?
+
+The **Regression Anatomy** Theory, also called the **Frisch–Waugh–Lovell (FWL)** theorem, illustrates this concept. Take our standard multiple linear regression:
+
+$$
+y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_k x_{ki} + u_i
+$$
+
+<br />
+
+Let us say we are interested in $x_1$ (this can be generalised to any explanatory variable $x_j$). Let us make $x_1$ the outcome variable of a regression with explanatory variables $x_2, ..., x_k$:
+
+$$
+x_{1i} = \gamma_0 + \gamma_1 x_{2i} + ... + \gamma_{k-1}x_{ki} + \widetilde{r_{1i}}
+$$
+
+-   Where $\gamma_0, ..., \gamma_{k-1}$ are coefficients.
+-   Where $\widetilde{r_{1i}}$ is the error term.
+
+The error term is $\widetilde{r_{1i}}$, which represents the part of $x_{1i}$ that are uncorrelated to $x_2, ..., x_k$.
+
+-   In other words, $\widetilde{r_{1i}}$ is the part of $x_1$ that cannot be explained by any other explanatory variable $x_2, ..., x_k$. (uncorrelated with them)
+
+<br />
+
+Now, take the regression of with outcome variable $y$, with all explanatory variables [except]{.underline} $x_1$:
+
+$$
+y_i = \delta_0 + \delta_1 x_{2i} + ... + \delta_{k-1} x_{ki} + \widetilde{y_i}
+$$
+
+-   Where $\delta_0, ..., \delta_{k-1}$ are coefficients.
+-   Where $\widetilde {y_i}$ is the error term.
+
+The error term is $\widetilde{y_i}$, which is the part of $y_i$ that cannot be explained by $x_2, ..., x_k$ (uncorrelated with them).
+
+<br />
+
+Since $\widetilde{y_i}$ is not explained by $x_2, ..., x_k$, variable $x_1$ must be the one explaining $\widetilde{y_i}$.
+
+-   But, it is not the whole of $x_1$ explaining $\tilde{y_i}$.
+-   This is since $x_1$ may also correlated with $x_2, ..., x_k$, and the correlated parts of $x_1$ with $x_2, ..., x_k$ are already picked up in the regression by the coefficients of $x_2, ..., x_k$.
+
+Thus, $\widetilde{y_i}$ must be explained by the part of $x_1$ that is uncorrelated and not explained by $x_2, ..., x_k$, which we derived earlier as $\widetilde{r_{1i}}$.
+
+<br />
+
+Thus, we can create another regression with explanatory variable $\widetilde{x_{1i}}$ and outcome variable $\widetilde{y_i}$.
+
+$$
+\widetilde{y_i} = \alpha_0 + \alpha_1 \widetilde{r_{1i}} + u_i
+$$
+
+We can plug $\widetilde{y_i}$ back into our regression of $y_i$ with explanatory variables $x_2 ..., x_k$, and re-arrange:
+
+$$
+\begin{split}
+y_i & = \delta_0 + \delta_1 x_{2i} + ... + \delta_{k-1} x_{ki} + \widetilde{y_i} \\
+y_i & = \delta_0 + \delta_1 x_{2i} + ... + \delta_{k-1} x_{ki} + \alpha_0 + \alpha_1 \widetilde{r_{1i}} + u_i \\
+y_i  & = (\delta_0 + \alpha_0) + \alpha_1 \widetilde{r_{1i}} + \delta_1x_{2i} + ... + \delta_{k-1} x_{ki} + u_i 
+\end{split}
+$$
+
+As we can see, this new regression mirrors the original standard multiple linear regression:
+
+$$
+\begin{split}
+y_i  & = (\delta_0 + \alpha_0) + \alpha_1 \widetilde{r_{1i}} + \delta_1x_{2i} + ... + \delta_{k-1} x_{ki} + u_i \\
+y_i & = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \dots + \beta_k x_{ki} + u_i
+\end{split}
+$$
+
+-   The $\beta_0$ in the original is analogous to the $(\delta_0 + \alpha 0)$.
+-   The $\beta_1 x_{1i}$ in the original is analogous to $\alpha_1 \widetilde{r_{1i}}$.
+-   The $\beta_2 x_{2i} + \dots + \beta_k x_{ki}$ is analogous to $\delta_1 x_{2i} + ... + \delta_{k-1} x_{ki}$.
+-   The $u_i$ is in both regressions.
+
+Importantly we know the $\beta_1 x_{1i}$ in the original is analogous to $\alpha_1 \widetilde{r_{1i}}$. Thus, [the estimate of $\alpha_1$ will be the same as $\beta_1$ in the original regression]{.underline}.
+
+-   The coefficient $\alpha_1$ (which is equal to $\beta_1$) explains the expected change in $y$, given an increase in the part of $x_1$ uncorrelated with $x_2, ..., x_k$.
+-   So essentially, [we have **partialed out** the effect of the other explanatory variables, and only focus on the effect on $y$ of the uncorrelated part of $x_1$ (which is $\widetilde{r_{1i}}$)]{.underline}
+
+Or in other words, OLS in multiple linear regression estimates the effect of $\widetilde{r_{1i}}$ on $y$.
+
+-   We can apply this to any explanatory variable $x_1, \dots, x_k$. The uncorrelated parts of any explanatory variable $x_j$ are labelled $\widetilde{r_{ji}}$.
+
+<br />
+
+Using all this info, we can interpret the meaning of any coefficient $\hat\beta_j$ on the relationship between $x_j$ and $y$:
+
+::: callout-tip
+## Interpretation of Coefficients in OLS
+
+The interpretation of $\hat\beta_j$ coefficient, multiplied to variable $x_j$ is:
+
+-   When $x_j$ increases by one unit, there is an expected $\hat\beta_j$ unit change in $y$, holding all other explanatory variables constant.
+
+The interpretation of intercept $\hat\beta_0$ is still the same: it is the expected value of $y$ when all explanatory variables equal 0.
+:::
+
+We can also standardise our interpretations as shown in [section 4.5](https://politicalscience.github.io/metrics/4.html#interpretation-and-standardisation).
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.6.6: Regression Anatomy Formula for OLS Estimation
+
+In the last section, we discussed the idea of regression anatomy, and how including confounding variables changes the estimates.
+
+-   That instead of finding the effect of $x_j$ entirely on $y$, we partial out the effect of other explanatory variables, and only find the effect of the uncorrelated part of $x_j$ (labelled $\widetilde {r_{ji}}$) on $y$.
+
+We have already discussed the mathematical solution of OLS in relation to linear algebra (see section 6.4). However, we can also express the estimation solution of $\hat\beta_j$ in relation to the regression anatomy formula.
+
+<br />
+
+Let us start off with the OLS estimator for simple linear regression, which calculates the $\hat\beta_1$, the relationship between $x$ and $y$ (which we derived in [section 4.4](https://politicalscience.github.io/metrics/4.html#mathematics-of-the-ordinary-least-squares-estimator)):
+
+$$
+\hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n(x_i - \bar{x})^2}
+$$
+
+::: callout-note
+## Useful Properties of Summation
+
+Before we start, here are a few key properties of summation
+
+$$
+\begin{split}& \sum\limits_{i=1}^n (x_i - \bar{x}) = 0 \\& \sum\limits_{i=1}^n x_i(y_i - \bar{y}) = \sum\limits_{i=1}^n(x_i - \bar{x}) (y_i - \bar{y}) \\& \sum\limits_{i=1}^n x_i(x_i - \bar{x}) = \sum\limits_{i=1}^n(x_i - \bar{x})^2\end{split}
+$$
+:::
+
+Let us look at the numerator. Let us expand the numerator:
+
+$$
+\begin{split}
+& \sum\limits_{i=1}^n (x_i - \bar{x})(y_i - \bar{y}) \\
+= & \sum\limits_{i=1}^n [(x_i - \bar x)y_i - (x_i - \bar x) \bar y] \\
+= & \sum\limits_{i=1}^n(x_i - \bar x)y_i - \sum\limits_{i=1}^n (x_i - \bar x) \bar y \\
+= & \sum\limits_{i=1}^n(x_i - \bar x)y_i - \bar y\sum\limits_{i=1}^n (x_i - \bar x) \\
+\end{split}
+$$
+
+We know that $\sum (x_i - \bar x) = 0$. Thus, we can further simplify to:
+
+$$
+\begin{split}
+= & \sum\limits_{i=1}^n(x_i - \bar x)y_i - \bar y\sum\limits_{i=1}^n (x_i - \bar x) \\
+= & \sum\limits_{i=1}^n(x_i - \bar x)y_i - \bar y(0) \\
+= & \sum\limits_{i=1}^n(x_i - \bar x)y_i
+\end{split}
+$$
+
+Thus, putting the numerator back in, we now we have the equation:
+
+$$
+\hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})y_i}{\sum_{i=1}^n(x_i - \bar{x})^2}
+$$
+
+<br />
+
+We know that in multiple linear regression, $\hat\beta_j$ is not the full relationship between $x_j$ and $y$. Instead, it is the relationship of the part of $x_j$ that is uncorrelated with all other explanatory variables, and $y$.
+
+-   So in other words, it is the relationship of $\widetilde{r_{ji}}$ on $y$.
+
+::: callout-note
+## Reminder: Regression Anatomy
+
+Remember, in the last section, we defined $\widetilde{r_{ji}}$ as the error term in a regression of $x_j$ on all other explanatory variables:
+
+$$
+x_{ji} = \gamma_0 + \gamma_1 x_{1i} + ... + \gamma_{k-1}x_{ki} + \widetilde{r_{ji}}
+$$
+
+Thus, $\widetilde{r_{ji}}$ is the part of $x_j$ uncorrelated with any other explanatory variable.
+:::
+
+So, since multiple linear regression is the relationship of $\widetilde{r_{ji}}$ on $y$, instead of $x$ on $y$, let us replace the $x$'s in our formula with $\widetilde{r_{ji}}$:
+
+$$
+\hat{\beta}_j = \frac{\sum_{i=1}^n (\widetilde{r_{ji}} - E(\widetilde{r_{ji}}))y_i}{\sum_{i=1}^n(\widetilde{r_{ji}} - E(\widetilde{r_{ji}}))^2}
+$$
+
+We can actually simplify this more with a property of simple linear regression - remember, that the error term of a regression $u$, should be such that $E(u)=0$.
+
+We know that $\widetilde{r_{ji}}$ is also the error term of a regression, so, $E(\widetilde{r_{ji}}) = 0$ as well. Plugging that into our equation, we can get the regression anatomy formula for OLS.
+
+$$
+\begin{split}
+\hat{\beta}_j & = \frac{\sum_{i=1}^n (\widetilde{r_{ji}} - E(\widetilde{r_{ji}}))y_i}{\sum_{i=1}^n(\widetilde{r_{ji}} - E(\widetilde{r_{ji}}))^2} \\
+\\
+& = \frac{\sum_{i=1}^n (\widetilde{r_{ji}} - 0)y_i}{\sum_{i=1}^n(\widetilde{r_{ji}} - 0)^2} \\
+\\
+& = \frac{\sum_{i=1}^n \widetilde{r_{ji}} \ y_i}{\sum_{i=1}^n \widetilde {r_{ji}}^2}
+\end{split}
+$$
+
+::: callout-tip
+## Definition: Regression Anatomy Formula
+
+The OLS estimate of coefficient $\beta_j$ can be written in terms of regression anatomy as follows:
+
+$$
+\hat{\beta}_j = \frac{\sum_{i=1}^n \widetilde{r_{ji}} \ y_i}{\sum_{i=1}^n \widetilde {r_{ji}}^2}
+$$
+:::
+
+This formula will be very useful in analysing the properties of the OLS estimator (in chapter 7).
+
+<br />
+
+The key implication of this formula is that when we add more explanatory variables, our existing coefficient estimates might change.
+
+-   This is because if the new explanatory variable is at all correlated with our explanatory variable of interest, that correlation will be partialed out of our estimate.
+
+This explains intuitively why the Zero-Conditional mean assumption (discussed in [section 5.2](https://politicalscience.github.io/metrics/5.html#unbiasedness-of-ols-under-the-gauss-markov-theorem)), when violated, results in biased OLS estimates.
+
+-   Zero-Conditional Mean $E(u|x)$, which also means $Cov(x,u) = 0$, is often violated when there is some confounding variable $w$ that is correlated with both $x$ and $y$, which causes $x$ to be correlated with $u$.
+-   When we actually include $w$ in the regression, the part of $x$ and $w$ being correlated together will be partialled out of the $\hat\beta_1$ of variable $x$'s effect on $y$.
+-   Thus, our estimate will change when we include $w$, getting closer to the true $\beta_1$.
+-   This explains why when Zero-Conditional Mean is violated, that means our estimates are biased.
+
+Of course, this also implies that if there are more than one confounder $w$, to get an accurate OLS estimate, we will need to include every single possible confounder.
+
+-   We will discuss this more when we discuss the Gauss-Markov conditions of Multiple Linear Regression in Chapter 7.
+
+-   We will also discuss in Chapter 7, how much (quantitatively) our estimates will be biased when we fail to include a confounder $w$.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.6.7: R-Squared and Goodness of Fit
+
+In [section 4.6](https://politicalscience.github.io/metrics/4.html#r-squared-and-goodness-of-fit), we discussed R-squared as a measure of the goodness of fit of a model.
+
+In multiple linear regression, R-squared is the exact same.
+
+::: callout-tip
+## Definition: R-Squared
+
+The R-squared metric is a metric describing how good of a fit our model is.
+
+R-Squared is the proportion of variation in $y$, explained by our model with all our explanatory variables.
+
+Mathematically:
+
+$$
+R^2 = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}
+$$
+
+Where:
+
+$$
+\begin{split}
+& SST = \sum\limits_{i=1}^n (y_i - \bar y)^2 \\
+& SSE = \sum\limits_{i=1}^n (\hat y_i - \bar y )^2 \\
+& SSR = \sum\limits_{i=1}^n (\hat u_i^2)
+\end{split}
+$$
+:::
+
+<br />
+
+There is an additional property with $R^2$ in multiple linear regression: [$R^2$ never falls when another explanatory is added to the regression.]{.underline}
+
+-   So essentially, any explanatory variable added to the regression will always boost R-squared.
+
+This shows the downside of R-squared as a metric - if we just include random variables, by chance, these variables will explain the variation in $y$.
+
+-   Thus, focusing on R-squared can result in models with silly or nonsensical explanatory variables.
+
+We will discuss the importance of careful model selection in Part II of the course, where we discuss causal inference.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)

@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>StatsNotes by Kevin</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="3_files/libs/clipboard/clipboard.min.js"></script>
+<script src="3_files/libs/quarto-html/quarto.js"></script>
+<script src="3_files/libs/quarto-html/popper.min.js"></script>
+<script src="3_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="3_files/libs/quarto-html/anchor.min.js"></script>
+<link href="3_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="3_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="3_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="3_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: true
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body>
+
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">StatsNotes by Kevin</h1>
+            <p class="subtitle lead">Lesson 1.3: Relationships with Covariance and Correlation</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">Lesson 1.3: Relationships with Covariance and Correlation</h2>
+   
+  <ul class="collapse">
+  <li><a href="#relationships-between-variables" id="toc-relationships-between-variables" class="nav-link active" data-scroll-target="#relationships-between-variables">1.3.1: Relationships Between Variables</a></li>
+  <li><a href="#correlations-between-variables" id="toc-correlations-between-variables" class="nav-link" data-scroll-target="#correlations-between-variables">1.3.2: Correlations Between Variables</a></li>
+  <li><a href="#graphical-representation-of-correlations" id="toc-graphical-representation-of-correlations" class="nav-link" data-scroll-target="#graphical-representation-of-correlations">1.3.3: Graphical Representation of Correlations</a></li>
+  <li><a href="#quantifying-relationships-with-covariance" id="toc-quantifying-relationships-with-covariance" class="nav-link" data-scroll-target="#quantifying-relationships-with-covariance">1.3.4: Quantifying Relationships with Covariance</a></li>
+  <li><a href="#correlation-coefficients-and-strength-of-correlations" id="toc-correlation-coefficients-and-strength-of-correlations" class="nav-link" data-scroll-target="#correlation-coefficients-and-strength-of-correlations">1.3.5: Correlation Coefficients and Strength of Correlations</a></li>
+  <li><a href="#magnitude-of-relationships-with-best-fit-lines" id="toc-magnitude-of-relationships-with-best-fit-lines" class="nav-link" data-scroll-target="#magnitude-of-relationships-with-best-fit-lines">1.3.6: Magnitude of Relationships with Best-Fit Lines</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>This lesson covers the following topics:</p>
+<ul>
+<li>How variables can be related/correlated with each other.</li>
+<li>How we can quantify correlations with covariance and correlation coefficients</li>
+<li>How we might care about the magnitude of correlations, rather than the strength of correlations</li>
+</ul>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+<section id="relationships-between-variables" class="level1">
+<h1>1.3.1: Relationships Between Variables</h1>
+<p>In the past chapter, we talked a lot about estimating the average value of some variable in a population.</p>
+<p>However, that is not the only thing we can estimate - we can also estimate the relationship between variables in a population.</p>
+<p>In fact, relationships is what we are primarily concerned about as social scientists. This is because a lot of the questions we want to answer with social science are relationships between variables.</p>
+<ul>
+<li>How does the education level of an individual affect an individual’s income?</li>
+<li>How does inflation levels within a country affect the popularity of the incumbent administration?</li>
+<li>Do proportional representation systems increase turnout of individuals?</li>
+<li>Are less educated citizens more hostile to immigrants?</li>
+</ul>
+<p>Thus, for the rest of this course, we will be focusing on how we characterise the relationships between different variables of the world.</p>
+<p><br></p>
+<p>We describe relationships between variables as correlations.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Correlation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The correlation between two variables <span class="math inline">x</span> and <span class="math inline">y</span>, are the extent to which they occur together in the real world.</p>
+<ul>
+<li>If we are more likely to observe higher values of <span class="math inline">y</span> when higher values of <span class="math inline">x</span> are present, that means we have a positive correlation between <span class="math inline">x</span> and <span class="math inline">y</span>.</li>
+<li>If we are more likely to observe lower values of <span class="math inline">y</span> when higher values of <span class="math inline">x</span> are present, that means we have a negative correlation between <span class="math inline">x</span> and <span class="math inline">y</span>.</li>
+<li>If the likelihood of observing <span class="math inline">y</span> does not change no matter the value of <span class="math inline">x</span>, then the two variables <span class="math inline">x</span> and <span class="math inline">y</span> are uncorrelated.</li>
+</ul>
+</div>
+</div>
+<p>Our goal in statistics and econometrics is to quantify these relationships between variables - to assign numerical values to these variables.</p>
+<p><br></p>
+<p>An important warning on interpretation and terminology:</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpretation Warning!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note how I have been using the word <strong>relationship</strong> and <strong>correlation</strong> to describe the relationship between two variables <span class="math inline">x</span> and <span class="math inline">y</span>.</p>
+<p>I have not been using the word <strong>causation</strong> or <strong>causal effect</strong>.</p>
+<p><u>This is because <strong>correlation is not causation</strong>!</u></p>
+</div>
+</div>
+<p>This course will only really focus on correlations and relationships, not causation.</p>
+<ul>
+<li>If you are interested in causation, after you finish this course on statistical and econometric theory, you can move onto the course Applied Econometric Methods, which takes these theories to create research designs to distinguish correlation and causation.</li>
+</ul>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="correlations-between-variables" class="level1">
+<h1>1.3.2: Correlations Between Variables</h1>
+<p>As we mentioned before, correlations are the following:</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Correlation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The correlation between two variables <span class="math inline">x</span> and <span class="math inline">y</span>, are the extent to which they occur together in the real world.</p>
+<ul>
+<li>If we are more likely to observe higher values of <span class="math inline">y</span> when higher values of <span class="math inline">x</span> are present, that means we have a positive correlation between <span class="math inline">x</span> and <span class="math inline">y</span>.</li>
+<li>If we are more likely to observe lower values of <span class="math inline">y</span> when higher values of <span class="math inline">x</span> are present, that means we have a negative correlation between <span class="math inline">x</span> and <span class="math inline">y</span>.</li>
+<li>If the likelihood of observing <span class="math inline">y</span> does not change no matter the value of <span class="math inline">x</span>, then the two variables <span class="math inline">x</span> and <span class="math inline">y</span> are uncorrelated.</li>
+</ul>
+</div>
+</div>
+<p><br></p>
+<p>In order to talk about correlation, there are two factors that must be met:</p>
+<ol type="1">
+<li>There has to be a comparison - high <span class="math inline">x</span> vs.&nbsp;low <span class="math inline">x</span>, and how that related to high <span class="math inline">y</span> and low <span class="math inline">y</span>. This is often expressed by words like <em>more</em>, <em>more likely, less, less likely</em>.</li>
+<li>Both <span class="math inline">x</span> and <span class="math inline">y</span> must have some variation.</li>
+</ol>
+<p>If these criteria are not met, we only have facts, not correlation.</p>
+<p><br></p>
+<p>For example, take these statements, and see if they are correlations or just facts:</p>
+<p><em>Old People Take Vitamins</em></p>
+<ul>
+<li>This is not a correlation, just a fact. You have to have a comparison - “Old People” is not a comparison.</li>
+<li>To turn this into a correlation, we could say that <em>older people, <strong>compared</strong> to younger people, are <strong>morelikely</strong> to take vitamins.</em></li>
+</ul>
+<p><em>Successful People Work Hard</em></p>
+<ul>
+<li>This is not a correlation, just a fact. You have to have a comparison - “Successful people” is not a comparison.</li>
+<li>To turn this into a correlation, we could say that <em><strong>more</strong> successful people, compared to less successful people, work <strong>harder</strong>.</em></li>
+</ul>
+<p><em>Cities with More Crime Hire More Police Officers</em></p>
+<ul>
+<li>This is a correlation. We can tell there is a comparison, with the word <em>more</em>, which indicate a comparison.</li>
+</ul>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="graphical-representation-of-correlations" class="level1">
+<h1>1.3.3: Graphical Representation of Correlations</h1>
+<p>How can we illustrate the correlation between variables.</p>
+<p>One popular way is to use scatter-plots.</p>
+<ul>
+<li>Scatter-plots have one variable along the x-axis, and one variable along the y-axis.</li>
+<li>We then plot our data points <span class="math inline">(x_i, y_i)</span> in the graph.</li>
+<li>We can generally see if our variables are related if there is a pattern in the scatter-plot.</li>
+</ul>
+<p>For example, below is a scatter plot, with variable <span class="math inline">x</span> on the x-axis, and variable <span class="math inline">y</span> on the y-axis.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-3570065701.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:65.0%"></p>
+</figure>
+</div>
+<p>We can use scatter-plots to determine the direction of correlations. Remember that:</p>
+<ul>
+<li>If we are more likely to observe higher values of <span class="math inline">y</span> when higher values of <span class="math inline">x</span> are present, that means we have a positive correlation between <span class="math inline">x</span> and <span class="math inline">y</span>.</li>
+<li>If we are more likely to observe lower values of <span class="math inline">y</span> when higher values of <span class="math inline">x</span> are present, that means we have a negative correlation between <span class="math inline">x</span> and <span class="math inline">y</span>.</li>
+<li>If the likelihood of observing <span class="math inline">y</span> does not change no matter the value of <span class="math inline">x</span>, then the two variables <span class="math inline">x</span> and <span class="math inline">y</span> are uncorrelated.</li>
+</ul>
+<p>In graphical form, these types of correlations look like this:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-3489268418.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%"></p>
+</figure>
+</div>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="quantifying-relationships-with-covariance" class="level1">
+<h1>1.3.4: Quantifying Relationships with Covariance</h1>
+<p>Often, we can tell a correlation just by plotting it in a scatter-plot. However, there are some times where we would like a numerical value to summarises the correlation.</p>
+<p>We can use the concept of <strong>covariance</strong> to measure this.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Covariance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Covariance measures how much two variables <span class="math inline">x</span> and <span class="math inline">y</span> vary together. Formally, covariance is calculated as follows:</p>
+<p><span class="math display">
+\begin{split}
+Cov(x,y) &amp; = E((x_i - \bar{x})(y_i - \bar y)) \\
+&amp; = \frac{1}{n}\sum\limits_{i=1}^n[(x_i - \bar x)(y_i - \bar y)]
+\end{split}
+</span></p>
+<ul>
+<li>Where <span class="math inline">(x_i, y_i)</span> is one data point in our data.</li>
+<li>Where <span class="math inline">\bar x</span> and <span class="math inline">\bar y</span> are the average <span class="math inline">x</span> and <span class="math inline">y</span> values in our data.</li>
+<li>Where <span class="math inline">n</span> is the total number of data points we have in our data.</li>
+</ul>
+</div>
+</div>
+<p>Why is that the formula of covariance?</p>
+<ul>
+<li><p>Well, take some random data point within our data <span class="math inline">(x_i, y_i)</span>.</p></li>
+<li><p>If <span class="math inline">x_i</span> is above the mean while <span class="math inline">y_i</span> is above the mean, the covariance will be positive. Similarly, if <span class="math inline">x_i</span> is below the mean while <span class="math inline">y_i</span> is below the mean, the covariance will also be positive (because both variables move in the same direction together).</p></li>
+<li><p>If <span class="math inline">x_i</span> is above the mean while <span class="math inline">y_i</span> is below the mean, or if <span class="math inline">x_i</span> is below the mean while <span class="math inline">y_i</span> is above the mean, the covariance will be negative (because both variables move in opposite directions).</p></li>
+</ul>
+<p>This makes sense if we look back at our definitions of correlation.</p>
+<ul>
+<li><p>If <span class="math inline">x</span> is lower while <span class="math inline">y</span> is lower, and <span class="math inline">x</span> is higher while <span class="math inline">y</span> is higher, we have a positive correlation. This matches the sign of the covariance.</p></li>
+<li><p>If <span class="math inline">x</span> is lower while <span class="math inline">y</span> is higher, and <span class="math inline">x</span> is higher while <span class="math inline">y</span> is lower, we have a negative correlation. This matches the sign of the covariance.</p></li>
+</ul>
+<p>Thus, we can interpret the sign of the covariance:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpretation of Covariance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the covariance is positive, there is a positive relationship between <span class="math inline">x</span> and <span class="math inline">y</span>.</p>
+<p>If the covariance is negative, there is a negative relationship between <span class="math inline">x</span> and <span class="math inline">y</span>.</p>
+<p>If the covariance is zero, then there is no relationship between <span class="math inline">x</span> and <span class="math inline">y</span>.</p>
+</div>
+</div>
+<p><br></p>
+<p>However, the downside of covariance is that the actual number does not mean much.</p>
+<ul>
+<li>We can only interpret the sign of the covariance.</li>
+<li>We cannot interpret the actual value of the covariance.</li>
+</ul>
+<p>Why is this the case? For example, let us say we are measuring the covariance of height with income.</p>
+<ul>
+<li>Let us say we measure the covariance twice. First time, we use height in feet. Second time, we use height in inches.</li>
+<li>We will get different covariance values, since <span class="math inline">(x_i - \bar x)</span> will have a different magnitude. For example, if <span class="math inline">\bar{x}</span> is 6 feet (72 inches), and <span class="math inline">x_i</span> is 6.5 feet (78 inches), the <span class="math inline">(x_i - \bar x)</span> would be 0.5 feet or 6 inches. That means for inches, we will get a higher value for covariance.</li>
+<li>However, getting different covariances makes no sense - we are still comparing the exact same variables, we just changed the units of one. Just because we measured in inches instead of feet, the relationship between height and income should not change.</li>
+</ul>
+<p>This weakness of covariance is why there is another way to measure correlations - the correlation coefficient, described in the next section.</p>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="correlation-coefficients-and-strength-of-correlations" class="level1">
+<h1>1.3.5: Correlation Coefficients and Strength of Correlations</h1>
+<p>Like we mentioned in the last section, covariances cannot be interpreted for their actual values, since changing the units will affect the covariance.</p>
+<p>However, we can adjust covariances slightly to interpret their numbers - we can divide the covariance by the standard deviation of both <span class="math inline">x</span> and <span class="math inline">y</span> (square root of variances).</p>
+<ul>
+<li>Why does this work? Well, let us go back to the height in feet or inches example.</li>
+<li>This difference in units would change our covariances, as we discussed before. For example, inches would have a higher covariance, simply because inches have the larger values (12 inches is one feet)</li>
+<li>However, if we divide by the standard deviation, this gets rid of the differences. This is because the standard deviation is also measured in the units (feet or inches), and adjusts to the units. For example, perhaps our standard deviation is 12 inches, which is one feet. Dividing by the standard deviation will thus cancel out the effect of units on covariance.</li>
+<li>By dividing by the standard deviation, we get rid of the effect of units.</li>
+</ul>
+<p>By doing this adjustment, we get the correlation coefficient:</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Correlation Coefficient
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The correlation coefficient is the covariance adjusted by the standard deviations (square root of variance) of the variables in question. Mathematically:</p>
+<p><span class="math display">
+Corr(x, y) =r = \frac{Cov(x, y)}{\sqrt{Var(x)Var(y)}}
+</span></p>
+<ul>
+<li>Where <span class="math inline">Cov(x,y)</span> is the covariance between <span class="math inline">x</span> and <span class="math inline">y</span> (discussed in the last section)</li>
+<li>Where <span class="math inline">Var(x)</span> is the variance of <span class="math inline">x</span>, and <span class="math inline">Var(y)</span> is the variance of <span class="math inline">y</span> (discussed in <a href="https://politicalscience.github.io/metrics/1.html#variance-and-standard-deviation">section 1.5</a>)</li>
+</ul>
+<p>Note: we often use <span class="math inline">r</span> to notate the correlation coefficient.</p>
+</div>
+</div>
+<p><br></p>
+<p>By doing this normalisation procedure, units no longer matter, and we can compare all relationships with a single value.</p>
+<p>The correlation coefficient is always between -1 and 1. We can also interpret the magnitudes now.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpretation of Correlation Coefficients
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Negative correlation coefficients mean a negative correlation, and positive correlation coefficients mean a positive correlation.</p>
+<p>The magnitude is also interpretable.</p>
+<ul>
+<li>The closer the correlation coefficient is to -1 or 1, the “stronger” the correlation. If the correlation is exactly 1, that means all points are in a perfect straight line.</li>
+<li>The closer the correlation coefficient is to 0, the “weaker” the correlation. If the correlation is eactly 0, that means there is no relationship between the variables</li>
+</ul>
+</div>
+</div>
+<p><br></p>
+<p>What do I mean by a “strong” or “weak” correlation. It is easier to showcase with a graph:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-3774741322.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+<p>We can see here that stronger correlations mean that the points fit closer to a straight line, while a weaker correlations mean the opposite.</p>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="magnitude-of-relationships-with-best-fit-lines" class="level1">
+<h1>1.3.6: Magnitude of Relationships with Best-Fit Lines</h1>
+<p>So far, we have focused on the strength of correlations - how closely they fit to a line.</p>
+<p>But is this actually that important for us as social scientists?</p>
+<ul>
+<li>We do not really care how closely two variables are correlated (how closely they are to a straight line)</li>
+<li>Instead, we care about the <strong>magnitude</strong> of the relationship.</li>
+</ul>
+<p>For example, we don’t really care about how closely the relationship between Education and income are to a straight line. We care about how much an increase in one year of education is related to a certain value increase of an individual’s income.</p>
+<p>For example, to better illustrate this, the figure below has all medium-strong correlated relationships with the same correlation coefficients r=0.58. However, they have very different effects (steepness of the best-fit line).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-1086280664.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+<p><br></p>
+<p>So, what is a better, alternative way, to describe the relationships between variables that incorporates the idea of magnitude?</p>
+<p>One way to explore the relationship is with a best-fit line. A best-fit line is useful, since the <strong>slope</strong> of the best-fit line represents the change in <span class="math inline">y</span> for every unit change in <span class="math inline">x</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-3708176954.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+<p>In the figure above, we have plotted a number of observations, and implemented a best-fit line in blue. The graph here introduces some common terminology:</p>
+<ul>
+<li>The <strong>independent variable</strong>, also called the <strong>explanatory variable</strong> or <strong>treatment variable</strong>, is the variable that we believe is doing the causing. It is typically notated <span class="math inline">x</span>.</li>
+<li>The <strong>dependent variable</strong>, also called the <strong>response variable</strong> or <strong>outcome variable</strong>, is the variable that is affected by a change in the independent variable. The dependent variable is typically notated with <span class="math inline">y</span>.</li>
+</ul>
+<p>We know from algebra that a linear equation takes the form <span class="math inline">y=mx+b</span>. The slope <span class="math inline">m</span> describes the rate of change of <span class="math inline">y</span> for a one unit change in <span class="math inline">x</span>.</p>
+<ul>
+<li>Thus, the slope is a measurement of the relationship between <span class="math inline">x</span> and <span class="math inline">y</span>.</li>
+</ul>
+<p>Thus, if we can fit a best-fit line to our data, we can look at the slope, and determine the <strong>relationship</strong> between <span class="math inline">x</span> and <span class="math inline">y</span>.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note how I have been using the word <strong>relationship</strong>, not causal effect.</p>
+<p>Causality is not established through estimators, it is established through a strong experimental design (which we will cover in the subsequent Applied Econometric Methods course).</p>
+</div>
+</div>
+<p><br></p>
+<p>We will spend most of the rest of this course discussing how to estimate these best-fit lines, using different estimators, and discussing their benefits and drawbacks.</p>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

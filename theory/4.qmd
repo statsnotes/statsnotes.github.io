@@ -1,0 +1,726 @@
+---
+title: "StatsNotes by Kevin"
+subtitle: "Lesson 1.4: Simple Linear Regression - Estimation and Interpretation"
+format:
+    html:
+        page-layout: article
+        grid:
+          sidebar-width: 300px
+          body-width: 750px
+          margin-width: 250px
+          gutter-width: 2em
+        fontsize: 12.5pt
+        theme: yeti
+        toc: TRUE
+        toc-depth: 2
+        toc-location: left
+        toc-expand: true
+        toc-title: "Lesson 1.4: Simple Linear Regression - Estimation and Interpretation"
+        mainfont: "Computer Modern"
+        title-block-banner: true
+        classoption: fleqn
+        html-math-method: katex
+---
+
+This lesson covers the following topics:
+
+-   The basic form of the simple linear regression model.
+-   How we can mathematically estimate the slope and intercept of the best-fit line using the Ordinary Least Squares Estimator.
+-   How we can interpret the OLS estimates as the relationships between two variables.
+-   How we can describe the *goodness of fit* with the R-squared metric.
+-   Why OLS is also the best approximation of the conditional expectation function.
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.4.1: The Simple Linear Regression Model
+
+In [section 3.6](https://politicalscience.github.io/metrics/3.html#magnitude-of-relationships-with-best-fit-lines), we established that we care about the magnitude of the relationship between two variables $x$ and $y$. One way we can measure the magnitude is through the slope of a best-fit linear line.
+
+-   This is because the slope in a linear equation $y=mx+b$ shows how much $y$ changes for every on unit increase in $x$.
+
+We can formalise this with the Linear Regression Model:
+
+::: callout-tip
+## Definition: Simple Linear Regression
+
+The simple linear regression model takes the following form.
+
+$$
+y_i = \beta_0 + \beta_1 x_i + u_i
+$$
+
+-   Where we have $n$ number of observations in our data, $i$ being any one of them, and each observation has an $x$ and $y$ value $(x_i, y_i)$.
+-   Where $\beta_0$ (intercept) and $\beta_1$ (slope) are coefficients of the model that need to be estimated (since they will differ in value between different samples and data).
+-   Where $\beta_1$ (slope) describes the association of $x$ and $y$.
+-   Where $u_i$ is the error term (see below for more details)
+:::
+
+<br />
+
+You might notice an extra term at the end of the equation $u_i$. This is called the error term. Why does it exist?
+
+-   Well, not all of our data points $(x_i, y_i)$ are going to be exactly on the straight line of best fit.
+-   The term $u_i$ represents the distance (in terms of units of $y$) of that actual point from the best-fit line.
+
+Mathematically, we can solve for the value of $u_i$ for each observation of $u_i$ by solving for it from the regression equation:
+
+$$
+\begin{split}
+y_i & = \beta_0 + \beta_1x_i + u_i \\
+- u_i & = -y_i + \beta_0 + \beta_1 x_i \\
+u_i & = y_i - \beta_0 - \beta_1 x_i
+\end{split}
+$$
+
+This might not be too intuitive. An easier way is to visualise it with a figure. Take the figure below - not all points are on the best-fit line. $u_i$ represents the distance of points from the best fit line:
+
+![](images/clipboard-1210742477.png){fig-align="center" width="55%"}
+
+The error term, in social science terms, is the effect of anything else on $y$ excluding $x$ (which is already included in our linear equation).
+
+-   For example, if $x$ is age and $y$ is income, you might have a relationship between the two variables.
+-   However, this is not a perfect linear relationship - not all points will be on the best fit line. This is because there are other factors that affect $y$ (income), including education, bargaining ability, location of work, and so on. It could also just be random variation - after all, some people's incomes $y$ are a result of just pure luck.
+-   Every other factor that affects $y$, but is not $x$, is encompassed in this error term $u_i$.
+
+For the simple linear regression model, the average error $u_i$ across all observations $i$, is 0. Mathematically, $E(u_i) = 0$. We will discuss this in the [next chapter](https://politicalscience.github.io/metrics/5.html).
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.4.2: Fitted Values and Best-Fit Lines
+
+We have discussed the form a simple linear regression takes: $y_i = \beta_0 + \beta_1 x_i + u_i$.
+
+However, that is not the best-fit line: we still need to estimate the coefficients $\beta_0$ (intercept) and $\beta_1$ (slope) in order to create a best-fit line.
+
+-   The estimates of $\beta_0$ and $\beta_1$ that we obtain will be denoted with a hat \^: $\hat\beta_0$ and $\hat\beta_1$.
+-   The estimates of $\beta_0$ and $\beta_1$ will vary depending on the data we have.
+
+We will discuss the estimation process in a short bit. But first, let us explore why we care about the estimates of our coefficients.
+
+<br />
+
+Once we have obtained our estimates of the coefficients, we will have a **best-fit line**, also called a **fitted-values** model.
+
+::: callout-tip
+## Definition: Fitted Values
+
+The fitted values are obtained after estimating $\beta_0$ and $\beta_1$. The equation takes the following form:
+
+$$
+\hat{y}_i = \hat\beta_0 + \hat\beta_1x_i
+$$
+
+-   Where $\hat{y}$ are the predicted values of $y$ based on our best-fit line.
+-   Where $\hat\beta_0$ and $\hat\beta_1$ are our estimates for the true coefficients $\beta_0$ and $\beta_1$.
+-   Note that the error term $u_i$ disappears. This is because the average value of $u_i$ is $E(u_i) = 0$, so we do not need to include the term (this is proved in section 5.1).
+:::
+
+What do the fitted values allow us to do?
+
+The estimate $\hat\beta_1$ is the estimate of the slope of the linear equation.
+
+-   That means $\hat\beta_1$ explains the amount of change in $y$, given a one unit increase in $x$. If we are interested in describing the relationship between two variables, $\hat\beta_1$ is what we will focus on.
+
+$\hat y$ is the predicted values of $y$, which means we can also use the fitted values to make predictions. Just plug in values of $x$, and the fitted values equation will output a prediction $\hat y$.
+
+-   While this course does not focus on prediction, the subsequent course on Applied Machine Learning will dive much more into this topic.
+
+For example, let us say $x$ is age, and $y$ is income. Given any $x$ (age) value, we can predict the income value by plugging in $x$. If we are interested in the income of a 30 year old, we would plug in 30 for $x$:
+
+$$
+\hat y_i = \hat\beta_0 + \hat\beta_1(30)
+$$
+
+Of course, to actually calculate the $\hat y$, we will need to estimate $\hat \beta_0$ and $\hat\beta_1$.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.4.3: Sum of Squared Errors
+
+As I mentioned previously, to get a best-fit line, we need some way to estimate $\beta_0$ (intercept) and $\beta_1$ (slope) to get $\hat\beta_0$ and $\hat\beta_1$.
+
+The question is, how do we do this? For example, which best-fit line is better below - red, orange, or blue?
+
+![](images/clipboard-1675702582.png){fig-align="center" width="80%"}
+
+To fit a best-fit line, we obviously want the line to fit the data well - i.e. have minimal errors compared to the actual data.
+
+-   What is an error? Recall that our original values of $y$ from the data for any observation $i$ are $y_i$.
+-   We also have predictions for the value of any observation from our best-fit line, labelled $\hat y_i$
+-   Thus naturally, the error is how far away our prediction $\hat y_i$ is from the true observed value $y_i$.
+
+One way we can fit an accurate line is to find the best-fit line that minimises the sum of squared errors (SSE).
+
+::: callout-tip
+## Definition: Sum of Squared Errors
+
+The sum of squared errors (SSE) is as follows:
+
+$$
+\begin{split}
+SSE & = \sum\limits_{i=1}^n (y_i - \hat y_i)^2 \\
+& = \sum\limits_{i=1}^n (y_i - \hat\beta_0 - \hat\beta_1 x_i)^2
+\end{split}
+$$
+
+-   The sum of squared errors is exactly as it sounds. Find the error, the distance between the actual $y_i$ and predicted $\hat y$, which is $y_i - \hat y$, then square that error $(y_i - \hat y_i)^2$, then sum up for all observations $i$ in the data.
+-   We get the second equation by substituting in the fitted values model (discussed in the previous section), where $\hat{y} = \hat\beta_0 + \hat\beta_1x_i$.
+:::
+
+More inuitively, the errors of a best-fit line are highlighted in red. We will square each error, then sum all the errors up, to get the sum of squared errors for that best-fit line:
+
+![](images/clipboard-846785636.png){fig-align="center" width="75%"}
+
+Why do we want to square the errors?
+
+-   This is because we do not care about the direction of errors - only the size of the errors.
+-   For example, the error in the above figure *d1* is positive, while *d2* is negative. If we sum them together, those almost cancel out, giving us an error of near zero. However, we do not want them to be cancelled out - we ace about the sizes of the errors.
+-   Thus, by squaring the errors, we make all errors positive, thus only focusing on the size of the errors, not their positive/negative direction.
+
+A common question is why we square the errors, and don't use absolute values of the errors. There are a few reasons this is the case.
+
+1.  As we will see in the next section, minimising functions relies on finding the derivative of the function. An absolute value function is not differentiable at its vertex, making it difficult to minimise (as we are trying to minimise the errors).
+2.  The least-squares method has several desirable properties for inference that we will cover mostly in the next chapter.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.4.4: Mathematics of the Ordinary Least Squares Estimator
+
+The Ordinary Least Squares (OLS) Estimator estimates the coefficients $\beta_0$ and $\beta_1$ by finding the values of $\hat\beta_0$ and $\hat\beta_1$ that result in the line with the smallest sum of squared errors (as discussed in the last section).
+
+We can describe the goal of OLS in a more mathematical way:
+
+::: callout-tip
+## Definition: Ordinary Least Squares (OLS) Estimator
+
+The goal of the Ordinary Least Squares (OLS) Estimator is to find the values of $\beta_0$ and $\beta_1$ that make the following statement true:
+
+$$
+\begin{split}
+(\hat{\beta}_0, \hat{\beta}_1) & = \min\limits_{\hat{\beta}_0, \hat{\beta}_1} \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_i)^2 \\
+& =\min\limits_{\hat{\beta_0}, \hat{\beta}_1} S(\hat{\beta}_0, \hat{\beta}_1)
+\end{split}
+$$
+
+Where function $S$ is the sum of squared errors.
+:::
+
+<br />
+
+How do we minimise $S$ (the function of the sum of squared errors)?
+
+-   From calculus, we know that a minimum/maximum of a function is where the derivative of the function is equal to 0.
+
+Thus, let us find the partial derivative of the function $S$ in respect to both $\hat\beta_0$ and $\hat\beta_1$, and set them equal to 0. This is also called the **first-order conditions**.
+
+<br />
+
+### First Order Conditions
+
+First, let us find the partial derivative of $S$ in respect to $\hat\beta_0$:
+
+$$
+\frac{\partial S(\hat{\beta}_0, \hat{\beta}_1)}{\partial \hat{\beta}_0} = \frac{\partial }{\partial \hat{\beta}_0} \left[ \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_i)^2 \right]
+$$
+
+First, ignore the summation. The partial derivative of the internal section, using chain rule, is the following:
+
+$$
+\frac{\partial}{\partial \hat{\beta}_0} \left[ (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i)^2 \right] = -2(y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i)
+$$
+
+But how do we deal with the summation? We know that there is the sum rule of derivatives $[f(x) + g(x)]' = f'(x) + g'(x)$. Thus, we know we just sum up the derivatives to get the derivative:
+
+$$
+\begin{split}
+\frac{\partial S(\hat{\beta}_0, \hat{\beta}_1)}{\partial \hat{\beta}_0} & = \sum\limits_{-i=1}^n \left[ -2(y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) \right] \\
+& = -2 \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i)
+\end{split}
+$$
+
+To find the value of $\hat\beta_0$ that minimises $S$, we set the derivative equal to 0. We can ignore the -2, since if the summation is equal to 0, the whole derivative will equal 0. Thus, the first order condition is:
+
+$$
+\sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0
+$$
+
+<br />
+
+Now, let us do the same for $\hat\beta_1$. Using the same steps as before
+
+$$
+\begin{split}
+\frac{\partial S(\hat{\beta}_0, \hat{\beta}_1)}{\partial \hat{\beta}_1} & = \sum\limits_{i=1}^n \left[ -2x_i(y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) \right] \\
+& = -2 \sum\limits_{i=1}^n x_i(y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i)
+\end{split}
+$$
+
+The first order condition for $\hat\beta_1$ will be (again, ignoring the -2 for the same reason as before):
+
+$$
+\sum\limits_{i=1}^n x_i(y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0
+$$
+
+<br />
+
+::: callout-tip
+## Definition: First Order Conditions of OLS
+
+Thus, the first order conditions of OLS are:
+
+$$
+\begin{split}
+& \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0 \\
+& \sum\limits_{i=1}^n x_i (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0
+\end{split}
+$$
+:::
+
+<br />
+
+### Solving the System of Equations
+
+We now have our two first-order conditions. Now, we basically have a 2-equation system of equations, with 2 variables.
+
+-   We can solve this through substitution - in the first equation, solve for $\hat\beta_0$ in terms of $\hat\beta_1$.
+-   Then, plug in $\hat\beta_0$ in terms of $\hat\beta_1$ into the second equation, thus making that a one-variable equation. We can solve that equation for $\hat\beta_1$, then find $\hat\beta_0$.
+
+<br />
+
+First, let us solve the first equation for $\hat\beta_0$ in terms of $\hat\beta_1$:
+
+$$
+\begin{split}\sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) & =  0 \\
+\sum\limits_{i=1}^n y_i - n \hat{\beta}_0 - \hat{\beta}_1 \sum\limits_{i=1}^n x_i & = 0 \\
+-n\hat{\beta}_0 &= -\sum\limits_{i=1}^n y_i + \hat{\beta}_1\sum\limits_{i=1}^nx_i \\
+\hat{\beta}_0 & = \frac{1}{n} \sum\limits_{i=1}^n y_i - \frac{1}{n}\hat{\beta}_1 \sum\limits_{i=1}^n x_i \\
+& = \bar{y} - \hat{\beta}_1 \bar{x}
+\end{split}
+$$
+
+Now, let us substitute our calculated $\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}$ into the $\hat{\beta}_1$ condition and solve for $\hat{\beta}_1$:
+
+$$
+\begin{split}
+0 & =\sum\limits_{i=1}^n x_i (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i)  \\
+& = \sum\limits_{i=1}^n \left[ x_i(y_i - [\bar{y} - \hat{\beta}_1\bar{x}] - \hat{\beta}_1x_i) \right] \\
+& = \sum\limits_{i=1}^n \left[ x_i(y_i - \bar{y} - \hat{\beta}_1 (x_i - \bar{x})) \right] \\
+& = \sum\limits_{i=1}^n \left[ x_i(y_i - \bar{y}) - x_i \hat{\beta}_1(x_i - \bar{x}) \right] \\
+& = \sum\limits_{i=1}^n x_i (y_i - \bar{y}) - \hat{\beta}_1 \sum\limits_{i=1}^nx_i (x_i - \bar{x})
+\end{split}
+$$
+
+::: callout-note
+## Useful Properties of Summation
+
+To help us solve this problem, note these 3 properties of summation:
+
+$$
+\begin{split}& \sum\limits_{i=1}^n (x_i - \bar{x}) = 0 \\& \sum\limits_{i=1}^n x_i(y_i - \bar{y}) = \sum\limits_{i=1}^n(x_i - \bar{x}) (y_i - \bar{y}) \\& \sum\limits_{i=1}^n x_i(x_i - \bar{x}) = \sum\limits_{i=1}^n(x_i - \bar{x})^2\end{split}
+$$
+:::
+
+Knowing these properties of summation, we can transform what we had before:
+
+$$
+\begin{split}
+0 & = \sum\limits_{i=1}^n x_i (y_i - \bar{y}) - \hat{\beta}_1 \sum\limits_{i=1}^nx_i (x_i - \bar{x}) \\
+0 & = \sum\limits_{i=1}^n(x_i - \bar{x})(y_i - \bar{y}) - \hat{\beta}_1 \sum\limits_{i=1}^n (x_i - \bar{x})^2 \\
+\hat{\beta}_1 \sum\limits_{i=1}^n (x_i - \bar{x})^2 & = \sum\limits_{i=1}^n(x_i - \bar{x})(y_i - \bar{y}) \\
+\hat{\beta}_1 & = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n(x_i - \bar{x})^2}
+\end{split}
+$$
+
+Note that the numerator is equivalent to the formula of covariance $Cov(x,y)$, and the denominator is equal to the variance $Var(x)$.
+
+::: callout-tip
+## Definition: OLS Estimate of Coefficient
+
+Thus, the OLS estimate $\hat\beta_1$ (slope) of the linear regression model is:
+
+$$
+\hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n(x_i - \bar{x})^2} = \frac{Cov(x, y)}{Var(x)}
+$$
+
+This is the expected change in $y$ given a one unit increase in $x$.
+
+-   Remember, this is the **relationship** between $x$ and $y$, [**not** the causal effect]{.underline}.
+:::
+
+<br />
+
+Of course, we still need to find $\hat\beta_0$ (the slope). We found that $\hat\beta_0 = \bar{y} - \hat{\beta}_1 \bar{x}$ earlier, so we just plug our solution of $\hat\beta_1$ in.
+
+And now, we have our estimates $\hat\beta_0$ and $\hat\beta_1$, and thus we now have a best-fit line and an estimate of the relationship between $x$ and $y$.
+
+Note: in the [next chapter](https://politicalscience.github.io/metrics/5.html), we will discuss if the OLS estimator is a good estimator or not. For now, we just care about the mechanics of the estimator.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.4.5: Interpretation and Standardisation
+
+We now have estimated $\hat\beta_0$ and $\hat\beta_1$. But what do these actually mean in the context of the relationship between $x$ and $y$?
+
+-   Let us start with $\hat\beta_1$, which is the slope, the more important of the two coefficients.
+
+<br />
+
+### Interpretation of $\hat\beta_1$
+
+We know that in a linear fitted-values model, $\hat y_i = \hat\beta_0 + \hat\beta_1 x_i$, the coefficient $\beta_1$ is the slope.
+
+-   And the slope is the change in $y$ given a one unit increase in $x$.
+
+Using this knowledge, we can interpret estimate $\hat\beta_1$.
+
+::: callout-tip
+## Interpretation of $\hat\beta_1$
+
+When $x$ increases by one unit, there is an expected $\hat{\beta}_1$ unit change in $y$.
+:::
+
+::: callout-warning
+## Warning!
+
+Note how I have been using the word **relationship**, not causal effect.
+
+Causality is not established through estimators, it is established through a strong experimental design (which we will cover in part II of the course).
+:::
+
+Note that this interpretation of $\hat\beta_1$ only applies to continuous $x$ variables and continuous/ordinal $y$ variables. We will discuss more about this in Chapter 9.
+
+<br />
+
+### Interpretation of $\hat\beta_0$
+
+We know that in a linear fitted-values model, $\hat y_i = \hat\beta_0 + \hat\beta_1 x_i$, the coefficient $\beta_0$ is the y-intercept.
+
+-   And the y-intercept is the change value of $y$ given $x=0$.
+
+We can prove this mathematically:
+
+$$
+\begin{split}
+\hat y_{i, \ x_i = 0} & = \hat\beta_0 + \hat\beta_1 x_i \\
+& = \hat\beta_0 + \hat\beta_1(0) \\
+& = \hat\beta_0
+\end{split}
+$$
+
+Thus, knowing this, we can interpret $\hat\beta_0$.
+
+::: callout-tip
+## Interpretation of $\hat\beta_0$
+
+When $x=0$, the expected value of $y$ is $\hat{\beta}_0$
+:::
+
+<br />
+
+### Standardising $\beta_1$ in Terms of Standard Deviations
+
+Sometimes, it is hard to understand what changes in $y$ and $x$ mean in terms of units. For example, if we are measuring "democracy", what does a 5 unit change in democracy mean? Is that a lot?
+
+We can add more relevant detail by expressing the change of $y$ and $x$ in standard deviations.
+
+How do we calculate this? Well, let us solve for the change in $\hat{y}_i/\sigma_y$ given $x_i = x$ and $x = x + \sigma_X$. This will tell us how much $\hat{y}$ changes by given a increase of one standard deviation in $x$:
+
+$$
+\begin{split}
+\frac{\hat y_{i, \ x_i = x + \sigma_x}}{\sigma_y} - \frac{\hat y_{i, \ x_i = x}}{\sigma_y} & = \frac{\hat\beta_0 + \hat\beta_1 x_i}{\sigma_y} - \frac{\hat\beta_0 + \hat\beta_1 x_i}{\sigma_y} \\
+& = \frac{\hat\beta_0 + \hat\beta_1 (x+\sigma_x) - (\hat\beta_0 + \hat\beta_1 (x))}{\sigma_y} \\
+& = \frac{\hat\beta_0 - \hat\beta_0 + \hat\beta_1x - \hat\beta_1x+\hat\beta_1\sigma_x}{\sigma_y} \\
+& = \frac{\hat\beta_1 \sigma_x}{\sigma_y}
+\end{split}
+$$
+
+::: callout-tip
+## Interpretation in Terms of Standard Deviation
+
+For a one-std. deviation increase in $x$, there is an expected $\hat{\beta}_1 \sigma_x / \sigma_y$-std. deviation change in $Y$.
+:::
+
+::: callout-warning
+## Warning!
+
+Note how I have been using the word **relationship**, not causal effect.
+
+Causality is not established through estimators, it is established through a strong experimental design (which we will cover in part II of the course).
+:::
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.4.6: R-Squared and Goodness of Fit
+
+For each observation, we know that the actual $y_i$ value is the predicted $\hat y_i$ plus the residual term $\hat u_i$. Thus:
+
+$$
+y_i = \hat y_i + \hat u_i
+$$
+
+Now, let us define these three concepts: the total sum of squares (SST), explained sum of squares (SSE), and residual sum of squares (SSR):
+
+$$
+\begin{split}
+& SST = \sum\limits_{i=1}^n (y_i - \bar y)^2 \\
+& SSE = \sum\limits_{i=1}^n (\hat y_i - \bar y)^2 \\
+& SSR = \sum\limits_{i=1}^n (\hat u_i)^2
+\end{split}
+$$
+
+-   The SST explains the total amount of variation in $y$
+-   The SSE is the amount of variation in $y$ explained by our model
+-   The SSR is the amount of variation in $y$ not explained by our model
+
+Let us look at the total sum of squares (SST). We can manipulate it as follows:
+
+$$
+\begin{split}
+SST & = \sum\limits_{i=1}^n (y_i - \bar y)^2 \\
+& = \sum\limits_{i=1}^n(y_i - \hat y_i+ \hat y_i - \bar y)^2 \\
+& = \sum\limits_{i=1}^n((y_i - \hat y_i)+ \hat y_i - \bar y)^2 \\
+& = \sum\limits_{i=1}^n[\hat u_i + \hat y_i - \bar y]^2 \\
+& = \sum\limits_{i=1}^n[\hat u_i^2 + \hat u_i \hat y_i - \hat u_i \bar y + \hat y_i \hat u_i + \hat y_i^2 - \hat y_i \bar y-\bar y \hat u_i -\bar y \hat  y_i+\hat y^2_i] \\
+& = \sum\limits_{i=1}^n[ \hat u_i^2 + 2 \hat u_i \hat y_i+ \hat y_i^2 - 2 \hat u_i \bar y - 2 \hat y_i \bar y + \bar y ^2]
+\end{split}
+$$
+
+And since we know $\sum \hat y_i \hat u_i = 0$, we can further simplify to:
+
+$$
+\begin{split}
+SST & = \sum\limits_{i=1}^n[ \hat u_i^2 + \hat y_i^2 - 2 \hat u_i \bar y - 2 \hat y_i \bar y + \bar y ^2] \\
+& = \sum\limits_{i=1}^n[\hat u_i^2 + (\hat y_i - \bar y)^2]\\
+& = \sum\limits_{i=1}^n \hat u_i^2 + \sum\limits_{i=1}^n(\hat y_i - \bar y)^2 \\
+& = SSE + SSR
+\end{split}
+$$
+
+This makes sense: After all, SSE is the squared errors explained by the model, and SSR is the residual (non-explained) parts of the model, so together, they should be equal to the total sum of squares.
+
+<br />
+
+Using these properties, we can create a statistic which explains how well our model explains the variation in $y$. This statistic is called $R^2$.
+
+::: callout-tip
+## Definition: R-Squared
+
+The R-squared metric is a metric describing how good of a fit our model is. Mathematically:
+
+$$
+R^2 = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}
+$$
+
+What does this $R^2$ value mean?
+
+-   Well SSE is the amount of variation in $y$ explained by our model, and SST is the total amount of variation in $y$.
+-   Thus, $R^2$ is the proportion of variation in $y$ explained by our model.
+:::
+
+$R^2$ is always between 0 and 1:
+
+-   This is because it is a proportion, so and $0 ≤ SSE ≤ SST$, so this must be true.
+-   Values closer to 1 mean our model explains the variance in $y$ more
+-   Values closer to 0 mean our model explains less of the variance in $y$.
+
+However, be careful when using $R^2$. Just because it is high, does not mean we can infer anything from it.
+
+Extra notes about $R^2$:
+
+-   $R^2$ is also equal to the correlation coefficient between $y_i$ and $\hat y_i$.
+-   In simple linear regression, $R^2$ is also equal to the square of the correlation coefficient $r$ between $x$ and $y$.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.4.7: OLS Regression as a Conditional Expectation Function
+
+We previously discussed random variables and distributions in [chapter 1](https://politicalscience.github.io/metrics/1.html). There, we learned that random variables can be characterised by distributions, which can be summarised with the expectation and variance.
+
+$y$ in a regression is also a random variable.
+
+-   For example, imagine income was $y$.
+-   There is a distribution of income in a population - such that if we randomly selected someone from the population, there would be a probability associated with selecting someone with an income between \$60,000-\$70,000.
+
+We can characterise the distribution of $y$ with its expected value: $E(y)$.
+
+A **conditional expectation function** says that the value of $E(y)$ depends on the value of $x$. We notate a conditional expectation function as $E(y|x)$.
+
+-   For example, imagine $y$ is income and $x$ is age.
+-   A conditional expectation function $E(y|x)$ says that as $x$ (age) changes, the expected value of $y$ (income) also changes.
+-   For example, you would probably expect the expected value of a 20 year old's income to be different than a 50 year old's.
+
+<br />
+
+The Ordinary Least Squares Regression line also is the best approximation of the conditional expectation function $E(y|x)$. That means, we can view a regression as also a conditional expectation function.
+
+::: callout-tip
+## Definition: Linear Conditional Expectation Function
+
+A linear conditional expectation function, can take the following form:
+
+$$
+E(y_i|x_i) = b_0 + b_1x_i
+$$
+
+-   Where $b_0$ and $b_1$ are the parameters/coefficients of the model.
+-   Where $E(y_i|x_i)$ is the expectation of the conditional distribution $y|x$.
+-   Where the conditional distribution $y|x$ has variance $\sigma^2$ (this assumption we will explore in more detail in the next few chapters).
+
+A conditional expectation function is defined as the parameters that minimise the mean squared errors (MSE).
+
+$$
+\begin{split}
+MSE & = E(y_i - E(y_i|x_i))^2 \\
+& = \frac{1}{n}\sum\limits_{i=1}^n( y_i - E(y_i|x_i))^2
+\end{split}
+$$
+:::
+
+<br />
+
+### Proof that OLS is a Conditional Expectation Function
+
+What we want to prove is that the OLS estimates $\hat\beta_0$ and $\hat\beta_1$ estimate the parameters $b_0$ and $b_1$ of the Conditional Expectation Function, which means that if true, OLS is the best approximation of the conditional expectation function.
+
+Suppose we have the conditional expectation function:
+
+$$
+E(y_i|x_i) = b_0 + b_1x_i
+$$
+
+We also know that our typical regression equation is:
+
+$$
+y_i = \beta_0 + \beta_1 x_i + u_i
+$$
+
+We know that $E(u_i|x_i) = 0$ (expected value of error term is always 0, we will discuss this the next time). Let us define $u_i$ as the following.
+
+$$
+u_i = y_i - E(y_i|x_i)
+$$
+
+If the above defined $u_i$ is true, $E(u_i|x_i)$ should also be equal to 0. So, let us plug in the above $u_i$ into $E(u_i | x_i)$.
+
+$$
+\begin{split}
+E(u_i|x_i) & = E(y_i - E(y_i|x_i) \ | \ x_i) \\
+& = E(y_i|x_i) - E(y_i|x_i) \\
+& = 0
+\end{split}
+$$
+
+Thus, we know $u_i = y_i - E(y_i|x_i)$ to be true. Thus, rearranging, we know:
+
+$$
+y_i = E(y_i|x_i) + u_i
+$$
+
+We also know that $y_i = \beta_0 + \beta_1 x_i + u_i$. Thus, the following is true:
+
+$$
+\begin{split}
+E(y_i|x_i) + u_i & = \beta_0 + \beta_1 + u_i \\
+b_0 + b_1 + u_i & = \beta_0 + \beta_1 + u_i \\
+b_0 + b_1 & = \beta_0 + \beta_1
+\end{split}
+$$
+
+Well, you might point out, it is still possible that $b_1 ≠ \beta_1$ in this scenario. We can go further. We know that the conditional expectation function minimises the mean of squared errors.
+
+$$
+\begin{split}
+MSE & = \min\limits_{b_0, b_1} E(y_i - E(y_i|x_i))^2 \\
+& = \min\limits_{b_0, b_1} E(y_i - \beta_0 - \beta_1x_i)^2
+\end{split}
+$$
+
+The first order conditions are (using chain rule and partial derivatives, just like in the OLS derivation):
+
+$$
+\begin{split}
+& E(y_i - b_0 - b_1x_i) = 0 \\
+& E(x_i(y_i - b_0 - b_1x_i) = 0
+\end{split}
+$$
+
+<br />
+
+Remember our OLS minimisation conditions (from section 4.4)
+
+$$
+\begin{split}
+& \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0 \\
+& \sum\limits_{i=1}^n x_i (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0
+\end{split}
+$$
+
+We can rewrite these functions as (since an average value is just a sum divided by $n$):
+
+$$
+\begin{split}
+& n \times E(y_i - \hat\beta_0 - \hat\beta_1x_i) = 0 \\
+& n \times E(x_i(y_i - \hat\beta_0 - \hat\beta_1x_i)) = 0
+\end{split}
+$$
+
+And since anything multiplied to a zero turns into zero, we can ignore the $n$ in the first order condition, and only focus on the expected value part. Thus, our conditions are:
+
+$$
+\begin{split}
+& E(y_i - \hat\beta_0 - \hat\beta_1x_i) = 0 \\
+& E(x_i(y_i - \hat\beta_0 - \hat\beta_1x_i)) = 0
+\end{split}
+$$
+
+Which as we can see, are the exact same minimisation conditions as the conditional expectation function. This shows that the OLS estimation produces the same parameters as the conditional expectation function.
+
+-   This property will be very useful for causal inference, as we will show in Part II of the course.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Course Homepage](https://politicalscience.github.io/metrics/)
