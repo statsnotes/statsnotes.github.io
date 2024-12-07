@@ -36,7 +36,7 @@ This lesson covers the following topics:
 
 # 1.6.1: Motivation Behind Multiple Linear Regression
 
-In [section 5.2](https://politicalscience.github.io/metrics/5.html#unbiasedness-of-ols-under-the-gauss-markov-theorem), we discussed how the simple linear regression with the OLS estimator is only unbiased under 4 conditions.
+In [1.5.2](https://statsnotes.github.io/theory/5.html#unbiasedness-of-ols-under-the-gauss-markov-theorem), we discussed how the simple linear regression with the OLS estimator is only unbiased under 4 conditions.
 
 ::: callout-tip
 ## Definition: Gauss-Markov Theorem
@@ -57,9 +57,11 @@ $$
 Cov(x, u) = 0
 $$
 
-Why is this condition frequently violated? Recall from [section 4.1](https://politicalscience.github.io/metrics/4.html#the-simple-linear-regression-model), where we discussed that the error term $u_i$ represents the effect of anything else on $y$ other than our explanatory variable $x$.
+Why is this condition frequently violated? Recall from [1.4.1](https://statsnotes.github.io/theory/4.html#the-simple-linear-regression-model), where we discussed that the error term $u_i$ represents the effect of anything else on $y$ other than our explanatory variable $x$.
 
 -   For example, if $x$ is age, and $y$ is income, there are other factors that also affect income $y$ besides age $x$. Those other factors are included in the error term $u_i$.
+
+<br />
 
 However, if our explanatory variable $x$ is correlated with any of these other factors in $u_i$, that also means that $Cov(x,u)≠0$.
 
@@ -71,13 +73,13 @@ However, if our explanatory variable $x$ is correlated with any of these other f
 These variables $w$ that are correlated with both $x$ and $y$ are called **confounding variables**.
 
 -   Note: there can be (and almost always are) more than one confounding variable.
--   Note: This concept will be further discussed in chapter 7 with omitted variable bias and Endogeniety.
+-   Note: This concept will be further discussed in lesson 1.7 with omitted variable bias and Endogeniety.
 
 <br />
 
 How do we address this violation of the Zero Conditional Mean resulting from the extra variable $w$?
 
--   Well, there are actually several ways to do this, which we briefly mentioned at the end of [section 5.3](https://politicalscience.github.io/metrics/5.html#proof-of-unbiasedness-of-ols-under-gauss-markov).
+-   Well, there are actually several ways to do this, which we briefly mentioned at the end of [1.5.3](https://statsnotes.github.io/theory/5.html#proof-of-unbiasedness-of-ols-under-gauss-markov).
 
 The simplest way to address it is to include the extra variable $w$ into our regression as another explanatory variable.
 
@@ -97,7 +99,7 @@ Multiple Linear Regression is a way to implement this solution - it allows us to
 
 Multiple linear regression is an extension of simple linear regression, that can help us deal with confounding variables.
 
--   Multiple linear regression allows us to "control for the effect" of confounders. We will discuss this in [section 6.5](https://politicalscience.github.io/metrics/6.html#regression-anatomy-and-controlling-for-confounders).
+-   Multiple linear regression allows us to "control for the effect" of confounders. We will discuss this in [1.6.5](https://statsnotes.github.io/theory/6.html#regression-anatomy-and-controlling-for-confounders).
 
 The **response variable** (outcome variable) is notated $y$, just like in single linear regression.
 
@@ -122,7 +124,7 @@ $$
 -   Where the coefficients (that need to be estimated) are vector$\overrightarrow{\beta} = \beta_0, \beta_1, ..., \beta_k$. That means we have $k$ number of variables and $k+1$ number of coefficients (with the one not attached to a variable being the intercept).
 -   Where $u_i$ is the error term function - that determines the error for each unit $i$. Error $u_i$ has a variance of $\sigma^2$, and expectation $E(u_i) = 0$.
 
-In [section 4.7](https://politicalscience.github.io/metrics/4.html#ols-regression-as-a-conditional-expectation-function), we also established that the linear regression model is equivalent to the conditional expectation function. This is also true with multiple linear regression. Thus, we can also write multiple linear regression as:
+In [1.4.7](https://statsnotes.github.io/theory/4.html#ols-regression-as-a-conditional-expectation-function), we also established that the linear regression model is equivalent to the conditional expectation function. This is also true with multiple linear regression. Thus, we can also write multiple linear regression as:
 
 $$
 E(y_i|x_i) = \beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki}
@@ -131,7 +133,7 @@ $$
 
 <br />
 
-Same as in Simple Linear Regression, once we have estimated $\overrightarrow\beta$, we will have a best-fit **plane**, also called a fitted-values model (see [section 4.2](https://politicalscience.github.io/metrics/4.html#fitted-values-and-best-fit-lines)). The fitted values model takes the form:
+Same as in Simple Linear Regression, once we have estimated $\overrightarrow\beta$, we will have a best-fit **plane**, also called a fitted-values model (see [1.4.2](https://statsnotes.github.io/theory/4.html#fitted-values-and-best-fit-lines)). The fitted values model takes the form:
 
 $$
 \hat y_i = \hat\beta_0 + \hat\beta_1 x_{1i} + \dots + \hat\beta_k x_{ki}
@@ -263,7 +265,7 @@ The point of expressing the model in linear algebra is that it makes the estimat
 This section contains Linear Algebra. It is not essential that you understand this section, however, it can be helpful to develop intuition.
 :::
 
-As we remember from Chapter 1, the goal of Ordinary Least Squares Estimation is to minimise the sum of squared errors. The sum of squared errors in multiple regression is:
+As we remember from [1.4.4](https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator), the goal of Ordinary Least Squares Estimation is to minimise the sum of squared errors. The sum of squared errors in multiple regression is:
 
 $$
 \begin{split}
@@ -447,6 +449,8 @@ $$
 -   The $\beta_2 x_{2i} + \dots + \beta_k x_{ki}$ is analogous to $\delta_1 x_{2i} + ... + \delta_{k-1} x_{ki}$.
 -   The $u_i$ is in both regressions.
 
+<br />
+
 Importantly we know the $\beta_1 x_{1i}$ in the original is analogous to $\alpha_1 \widetilde{r_{1i}}$. Thus, [the estimate of $\alpha_1$ will be the same as $\beta_1$ in the original regression]{.underline}.
 
 -   The coefficient $\alpha_1$ (which is equal to $\beta_1$) explains the expected change in $y$, given an increase in the part of $x_1$ uncorrelated with $x_2, ..., x_k$.
@@ -470,7 +474,7 @@ The interpretation of $\hat\beta_j$ coefficient, multiplied to variable $x_j$ is
 The interpretation of intercept $\hat\beta_0$ is still the same: it is the expected value of $y$ when all explanatory variables equal 0.
 :::
 
-We can also standardise our interpretations as shown in [section 4.5](https://politicalscience.github.io/metrics/4.html#interpretation-and-standardisation).
+We can also standardise our interpretations as shown in [1.4.5](https://statsnotes.github.io/theory/4.html#interpretation-and-standardisation).
 
 <br />
 
@@ -486,11 +490,11 @@ In the last section, we discussed the idea of regression anatomy, and how includ
 
 -   That instead of finding the effect of $x_j$ entirely on $y$, we partial out the effect of other explanatory variables, and only find the effect of the uncorrelated part of $x_j$ (labelled $\widetilde {r_{ji}}$) on $y$.
 
-We have already discussed the mathematical solution of OLS in relation to linear algebra (see section 6.4). However, we can also express the estimation solution of $\hat\beta_j$ in relation to the regression anatomy formula.
+We have already discussed the mathematical solution of OLS in relation to linear algebra (see [1.6.4](https://statsnotes.github.io/theory/6.html#mathematics-of-the-ordinary-least-squares-estimator)). However, we can also express the estimation solution of $\hat\beta_j$ in relation to the regression anatomy formula.
 
 <br />
 
-Let us start off with the OLS estimator for simple linear regression, which calculates the $\hat\beta_1$, the relationship between $x$ and $y$ (which we derived in [section 4.4](https://politicalscience.github.io/metrics/4.html#mathematics-of-the-ordinary-least-squares-estimator)):
+Let us start off with the OLS estimator for simple linear regression, which calculates the $\hat\beta_1$, the relationship between $x$ and $y$ (which we derived in [1.4.4](https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator)):
 
 $$
 \hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n(x_i - \bar{x})^2}
@@ -581,7 +585,7 @@ $$
 $$
 :::
 
-This formula will be very useful in analysing the properties of the OLS estimator (in chapter 7).
+This formula will be very useful in analysing the properties of the OLS estimator (in lesson 7).
 
 <br />
 
@@ -589,7 +593,7 @@ The key implication of this formula is that when we add more explanatory variabl
 
 -   This is because if the new explanatory variable is at all correlated with our explanatory variable of interest, that correlation will be partialed out of our estimate.
 
-This explains intuitively why the Zero-Conditional mean assumption (discussed in [section 5.2](https://politicalscience.github.io/metrics/5.html#unbiasedness-of-ols-under-the-gauss-markov-theorem)), when violated, results in biased OLS estimates.
+This explains intuitively why the Zero-Conditional mean assumption (discussed in [1.5.2](https://statsnotes.github.io/theory/5.html#unbiasedness-of-ols-under-the-gauss-markov-theorem)), when violated, results in biased OLS estimates.
 
 -   Zero-Conditional Mean $E(u|x)$, which also means $Cov(x,u) = 0$, is often violated when there is some confounding variable $w$ that is correlated with both $x$ and $y$, which causes $x$ to be correlated with $u$.
 -   When we actually include $w$ in the regression, the part of $x$ and $w$ being correlated together will be partialled out of the $\hat\beta_1$ of variable $x$'s effect on $y$.
@@ -598,9 +602,9 @@ This explains intuitively why the Zero-Conditional mean assumption (discussed in
 
 Of course, this also implies that if there are more than one confounder $w$, to get an accurate OLS estimate, we will need to include every single possible confounder.
 
--   We will discuss this more when we discuss the Gauss-Markov conditions of Multiple Linear Regression in Chapter 7.
+-   We will discuss this more when we discuss the Gauss-Markov conditions of Multiple Linear Regression in Lesson 7.
 
--   We will also discuss in Chapter 7, how much (quantitatively) our estimates will be biased when we fail to include a confounder $w$.
+-   We will also discuss in Lesson 7, how much (quantitatively) our estimates will be biased when we fail to include a confounder $w$.
 
 <br />
 
@@ -612,7 +616,7 @@ Of course, this also implies that if there are more than one confounder $w$, to 
 
 # 1.6.7: R-Squared and Goodness of Fit
 
-In [section 4.6](https://politicalscience.github.io/metrics/4.html#r-squared-and-goodness-of-fit), we discussed R-squared as a measure of the goodness of fit of a model.
+In [1.4.6](https://statsnotes.github.io/theory/4.html#r-squared-and-goodness-of-fit), we discussed R-squared as a measure of the goodness of fit of a model.
 
 In multiple linear regression, R-squared is the exact same.
 

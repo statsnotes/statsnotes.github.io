@@ -134,7 +134,7 @@ window.Quarto = {
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
 <section id="motivation-behind-multiple-linear-regression" class="level1">
 <h1>1.6.1: Motivation Behind Multiple Linear Regression</h1>
-<p>In <a href="https://politicalscience.github.io/metrics/5.html#unbiasedness-of-ols-under-the-gauss-markov-theorem">section 5.2</a>, we discussed how the simple linear regression with the OLS estimator is only unbiased under 4 conditions.</p>
+<p>In <a href="https://statsnotes.github.io/theory/5.html#unbiasedness-of-ols-under-the-gauss-markov-theorem">1.5.2</a>, we discussed how the simple linear regression with the OLS estimator is only unbiased under 4 conditions.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -159,10 +159,11 @@ Definition: Gauss-Markov Theorem
 <p><span class="math display">
 Cov(x, u) = 0
 </span></p>
-<p>Why is this condition frequently violated? Recall from <a href="https://politicalscience.github.io/metrics/4.html#the-simple-linear-regression-model">section 4.1</a>, where we discussed that the error term <span class="math inline">u_i</span> represents the effect of anything else on <span class="math inline">y</span> other than our explanatory variable <span class="math inline">x</span>.</p>
+<p>Why is this condition frequently violated? Recall from <a href="https://statsnotes.github.io/theory/4.html#the-simple-linear-regression-model">1.4.1</a>, where we discussed that the error term <span class="math inline">u_i</span> represents the effect of anything else on <span class="math inline">y</span> other than our explanatory variable <span class="math inline">x</span>.</p>
 <ul>
 <li>For example, if <span class="math inline">x</span> is age, and <span class="math inline">y</span> is income, there are other factors that also affect income <span class="math inline">y</span> besides age <span class="math inline">x</span>. Those other factors are included in the error term <span class="math inline">u_i</span>.</li>
 </ul>
+<p><br></p>
 <p>However, if our explanatory variable <span class="math inline">x</span> is correlated with any of these other factors in <span class="math inline">u_i</span>, that also means that <span class="math inline">Cov(x,u)≠0</span>.</p>
 <ul>
 <li>For example, if <span class="math inline">x</span> is age, and <span class="math inline">y</span> is income, another factor that could affect income <span class="math inline">y</span> is a third variable, years of work experience (let us label that <span class="math inline">w</span>).</li>
@@ -173,12 +174,12 @@ Cov(x, u) = 0
 <p>These variables <span class="math inline">w</span> that are correlated with both <span class="math inline">x</span> and <span class="math inline">y</span> are called <strong>confounding variables</strong>.</p>
 <ul>
 <li>Note: there can be (and almost always are) more than one confounding variable.</li>
-<li>Note: This concept will be further discussed in chapter 7 with omitted variable bias and Endogeniety.</li>
+<li>Note: This concept will be further discussed in lesson 1.7 with omitted variable bias and Endogeniety.</li>
 </ul>
 <p><br></p>
 <p>How do we address this violation of the Zero Conditional Mean resulting from the extra variable <span class="math inline">w</span>?</p>
 <ul>
-<li>Well, there are actually several ways to do this, which we briefly mentioned at the end of <a href="https://politicalscience.github.io/metrics/5.html#proof-of-unbiasedness-of-ols-under-gauss-markov">section 5.3</a>.</li>
+<li>Well, there are actually several ways to do this, which we briefly mentioned at the end of <a href="https://statsnotes.github.io/theory/5.html#proof-of-unbiasedness-of-ols-under-gauss-markov">1.5.3</a>.</li>
 </ul>
 <p>The simplest way to address it is to include the extra variable <span class="math inline">w</span> into our regression as another explanatory variable.</p>
 <ul>
@@ -194,7 +195,7 @@ Cov(x, u) = 0
 <h1>1.6.2: The Multiple Linear Regression Model</h1>
 <p>Multiple linear regression is an extension of simple linear regression, that can help us deal with confounding variables.</p>
 <ul>
-<li>Multiple linear regression allows us to “control for the effect” of confounders. We will discuss this in <a href="https://politicalscience.github.io/metrics/6.html#regression-anatomy-and-controlling-for-confounders">section 6.5</a>.</li>
+<li>Multiple linear regression allows us to “control for the effect” of confounders. We will discuss this in <a href="https://statsnotes.github.io/theory/6.html#regression-anatomy-and-controlling-for-confounders">1.6.5</a>.</li>
 </ul>
 <p>The <strong>response variable</strong> (outcome variable) is notated <span class="math inline">y</span>, just like in single linear regression.</p>
 <p>The <strong>explanatory variable</strong>s are <span class="math inline">x_1, x_2, ..., x_k</span>. We sometimes also denote all explanatory variables as the vector <span class="math inline">\overrightarrow{x}</span>.</p>
@@ -222,14 +223,14 @@ y_i = \beta_0 + \beta_1x_{1i} + \dots + \beta_k x_{ki} + u_i
 <li>Where the coefficients (that need to be estimated) are vector<span class="math inline">\overrightarrow{\beta} = \beta_0, \beta_1, ..., \beta_k</span>. That means we have <span class="math inline">k</span> number of variables and <span class="math inline">k+1</span> number of coefficients (with the one not attached to a variable being the intercept).</li>
 <li>Where <span class="math inline">u_i</span> is the error term function - that determines the error for each unit <span class="math inline">i</span>. Error <span class="math inline">u_i</span> has a variance of <span class="math inline">\sigma^2</span>, and expectation <span class="math inline">E(u_i) = 0</span>.</li>
 </ul>
-<p>In <a href="https://politicalscience.github.io/metrics/4.html#ols-regression-as-a-conditional-expectation-function">section 4.7</a>, we also established that the linear regression model is equivalent to the conditional expectation function. This is also true with multiple linear regression. Thus, we can also write multiple linear regression as:</p>
+<p>In <a href="https://statsnotes.github.io/theory/4.html#ols-regression-as-a-conditional-expectation-function">1.4.7</a>, we also established that the linear regression model is equivalent to the conditional expectation function. This is also true with multiple linear regression. Thus, we can also write multiple linear regression as:</p>
 <p><span class="math display">
 E(y_i|x_i) = \beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki}
 </span></p>
 </div>
 </div>
 <p><br></p>
-<p>Same as in Simple Linear Regression, once we have estimated <span class="math inline">\overrightarrow\beta</span>, we will have a best-fit <strong>plane</strong>, also called a fitted-values model (see <a href="https://politicalscience.github.io/metrics/4.html#fitted-values-and-best-fit-lines">section 4.2</a>). The fitted values model takes the form:</p>
+<p>Same as in Simple Linear Regression, once we have estimated <span class="math inline">\overrightarrow\beta</span>, we will have a best-fit <strong>plane</strong>, also called a fitted-values model (see <a href="https://statsnotes.github.io/theory/4.html#fitted-values-and-best-fit-lines">1.4.2</a>). The fitted values model takes the form:</p>
 <p><span class="math display">
 \hat y_i = \hat\beta_0 + \hat\beta_1 x_{1i} + \dots + \hat\beta_k x_{ki}
 </span></p>
@@ -362,7 +363,7 @@ Warning
 <p>This section contains Linear Algebra. It is not essential that you understand this section, however, it can be helpful to develop intuition.</p>
 </div>
 </div>
-<p>As we remember from Chapter 1, the goal of Ordinary Least Squares Estimation is to minimise the sum of squared errors. The sum of squared errors in multiple regression is:</p>
+<p>As we remember from <a href="https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator">1.4.4</a>, the goal of Ordinary Least Squares Estimation is to minimise the sum of squared errors. The sum of squared errors in multiple regression is:</p>
 <p><span class="math display">
 \begin{split}
 SSE &amp; = \sum\limits_{i=1}^n (y_i - \hat y_i)^2\\
@@ -511,6 +512,7 @@ y_i &amp; = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \dots + \beta_k x_{ki} +
 <li>The <span class="math inline">\beta_2 x_{2i} + \dots + \beta_k x_{ki}</span> is analogous to <span class="math inline">\delta_1 x_{2i} + ... + \delta_{k-1} x_{ki}</span>.</li>
 <li>The <span class="math inline">u_i</span> is in both regressions.</li>
 </ul>
+<p><br></p>
 <p>Importantly we know the <span class="math inline">\beta_1 x_{1i}</span> in the original is analogous to <span class="math inline">\alpha_1 \widetilde{r_{1i}}</span>. Thus, <u>the estimate of <span class="math inline">\alpha_1</span> will be the same as <span class="math inline">\beta_1</span> in the original regression</u>.</p>
 <ul>
 <li>The coefficient <span class="math inline">\alpha_1</span> (which is equal to <span class="math inline">\beta_1</span>) explains the expected change in <span class="math inline">y</span>, given an increase in the part of <span class="math inline">x_1</span> uncorrelated with <span class="math inline">x_2, ..., x_k</span>.</li>
@@ -539,7 +541,7 @@ Interpretation of Coefficients in OLS
 <p>The interpretation of intercept <span class="math inline">\hat\beta_0</span> is still the same: it is the expected value of <span class="math inline">y</span> when all explanatory variables equal 0.</p>
 </div>
 </div>
-<p>We can also standardise our interpretations as shown in <a href="https://politicalscience.github.io/metrics/4.html#interpretation-and-standardisation">section 4.5</a>.</p>
+<p>We can also standardise our interpretations as shown in <a href="https://statsnotes.github.io/theory/4.html#interpretation-and-standardisation">1.4.5</a>.</p>
 <p><br></p>
 <p><br></p>
 <hr>
@@ -551,9 +553,9 @@ Interpretation of Coefficients in OLS
 <ul>
 <li>That instead of finding the effect of <span class="math inline">x_j</span> entirely on <span class="math inline">y</span>, we partial out the effect of other explanatory variables, and only find the effect of the uncorrelated part of <span class="math inline">x_j</span> (labelled <span class="math inline">\widetilde {r_{ji}}</span>) on <span class="math inline">y</span>.</li>
 </ul>
-<p>We have already discussed the mathematical solution of OLS in relation to linear algebra (see section 6.4). However, we can also express the estimation solution of <span class="math inline">\hat\beta_j</span> in relation to the regression anatomy formula.</p>
+<p>We have already discussed the mathematical solution of OLS in relation to linear algebra (see <a href="https://statsnotes.github.io/theory/6.html#mathematics-of-the-ordinary-least-squares-estimator">1.6.4</a>). However, we can also express the estimation solution of <span class="math inline">\hat\beta_j</span> in relation to the regression anatomy formula.</p>
 <p><br></p>
-<p>Let us start off with the OLS estimator for simple linear regression, which calculates the <span class="math inline">\hat\beta_1</span>, the relationship between <span class="math inline">x</span> and <span class="math inline">y</span> (which we derived in <a href="https://politicalscience.github.io/metrics/4.html#mathematics-of-the-ordinary-least-squares-estimator">section 4.4</a>):</p>
+<p>Let us start off with the OLS estimator for simple linear regression, which calculates the <span class="math inline">\hat\beta_1</span>, the relationship between <span class="math inline">x</span> and <span class="math inline">y</span> (which we derived in <a href="https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator">1.4.4</a>):</p>
 <p><span class="math display">
 \hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n(x_i - \bar{x})^2}
 </span></p>
@@ -647,13 +649,13 @@ Definition: Regression Anatomy Formula
 </span></p>
 </div>
 </div>
-<p>This formula will be very useful in analysing the properties of the OLS estimator (in chapter 7).</p>
+<p>This formula will be very useful in analysing the properties of the OLS estimator (in lesson 7).</p>
 <p><br></p>
 <p>The key implication of this formula is that when we add more explanatory variables, our existing coefficient estimates might change.</p>
 <ul>
 <li>This is because if the new explanatory variable is at all correlated with our explanatory variable of interest, that correlation will be partialed out of our estimate.</li>
 </ul>
-<p>This explains intuitively why the Zero-Conditional mean assumption (discussed in <a href="https://politicalscience.github.io/metrics/5.html#unbiasedness-of-ols-under-the-gauss-markov-theorem">section 5.2</a>), when violated, results in biased OLS estimates.</p>
+<p>This explains intuitively why the Zero-Conditional mean assumption (discussed in <a href="https://statsnotes.github.io/theory/5.html#unbiasedness-of-ols-under-the-gauss-markov-theorem">1.5.2</a>), when violated, results in biased OLS estimates.</p>
 <ul>
 <li>Zero-Conditional Mean <span class="math inline">E(u|x)</span>, which also means <span class="math inline">Cov(x,u) = 0</span>, is often violated when there is some confounding variable <span class="math inline">w</span> that is correlated with both <span class="math inline">x</span> and <span class="math inline">y</span>, which causes <span class="math inline">x</span> to be correlated with <span class="math inline">u</span>.</li>
 <li>When we actually include <span class="math inline">w</span> in the regression, the part of <span class="math inline">x</span> and <span class="math inline">w</span> being correlated together will be partialled out of the <span class="math inline">\hat\beta_1</span> of variable <span class="math inline">x</span>’s effect on <span class="math inline">y</span>.</li>
@@ -662,8 +664,8 @@ Definition: Regression Anatomy Formula
 </ul>
 <p>Of course, this also implies that if there are more than one confounder <span class="math inline">w</span>, to get an accurate OLS estimate, we will need to include every single possible confounder.</p>
 <ul>
-<li><p>We will discuss this more when we discuss the Gauss-Markov conditions of Multiple Linear Regression in Chapter 7.</p></li>
-<li><p>We will also discuss in Chapter 7, how much (quantitatively) our estimates will be biased when we fail to include a confounder <span class="math inline">w</span>.</p></li>
+<li><p>We will discuss this more when we discuss the Gauss-Markov conditions of Multiple Linear Regression in Lesson 7.</p></li>
+<li><p>We will also discuss in Lesson 7, how much (quantitatively) our estimates will be biased when we fail to include a confounder <span class="math inline">w</span>.</p></li>
 </ul>
 <p><br></p>
 <p><br></p>
@@ -672,7 +674,7 @@ Definition: Regression Anatomy Formula
 </section>
 <section id="r-squared-and-goodness-of-fit" class="level1">
 <h1>1.6.7: R-Squared and Goodness of Fit</h1>
-<p>In <a href="https://politicalscience.github.io/metrics/4.html#r-squared-and-goodness-of-fit">section 4.6</a>, we discussed R-squared as a measure of the goodness of fit of a model.</p>
+<p>In <a href="https://statsnotes.github.io/theory/4.html#r-squared-and-goodness-of-fit">1.4.6</a>, we discussed R-squared as a measure of the goodness of fit of a model.</p>
 <p>In multiple linear regression, R-squared is the exact same.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">

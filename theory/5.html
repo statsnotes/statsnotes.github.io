@@ -134,7 +134,7 @@ window.Quarto = {
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
 <section id="algebraic-properties-of-ols" class="level1">
 <h1>1.5.1: Algebraic Properties of OLS</h1>
-<p>Once we have our OLS estimates <span class="math inline">\hat\beta_0</span> and <span class="math inline">\hat\beta_1</span> (explained in <a href="https://politicalscience.github.io/metrics/4.html#mathematics-of-the-ordinary-least-squares-estimator">section 4.4</a>), we can obtain both our fitted values, and the OLS residuals <span class="math inline">\hat u_i</span>:</p>
+<p>Once we have our OLS estimates <span class="math inline">\hat\beta_0</span> and <span class="math inline">\hat\beta_1</span> (explained in <a href="https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator">1.4.4</a>), we can obtain both our fitted values, and the OLS residuals <span class="math inline">\hat u_i</span>:</p>
 <p><span class="math display">
 \begin{split}
 \hat u_i &amp; = y_i - \hat y_i \\
@@ -155,7 +155,7 @@ window.Quarto = {
 </figure>
 </div>
 <p><br></p>
-<p>Recall that the OLS estimates <span class="math inline">\hat\beta_0</span> and <span class="math inline">\hat\beta_1</span> are chosen to satisfy the following first order conditions (see <a href="https://politicalscience.github.io/metrics/4.html#mathematics-of-the-ordinary-least-squares-estimator">section 4.4</a>):</p>
+<p>Recall that the OLS estimates <span class="math inline">\hat\beta_0</span> and <span class="math inline">\hat\beta_1</span> are chosen to satisfy the following first order conditions (see <a href="https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator">1.4.4</a>):</p>
 <p><span class="math display">
 \begin{split}
 &amp; \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0 \\
@@ -181,9 +181,9 @@ window.Quarto = {
 </ul>
 <p><br></p>
 </section>
-<section id="property-2-no-covariance-between-regressor-and-residual." class="level3">
-<h3 class="anchored" data-anchor-id="property-2-no-covariance-between-regressor-and-residual.">Property 2: No Covariance Between Regressor and Residual.</h3>
-<p>Using the first order conditions of OLS, and the defintion of <span class="math inline">\hat u_i</span> from above, we know the following to be true:</p>
+<section id="property-2-no-covariance-between-x-and-residual." class="level3">
+<h3 class="anchored" data-anchor-id="property-2-no-covariance-between-x-and-residual.">Property 2: No Covariance Between <span class="math inline">x</span> and Residual.</h3>
+<p>Using the first order conditions of OLS, and the definition of <span class="math inline">\hat u_i</span> from above, we know the following to be true:</p>
 <p><span class="math display">
 \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = \sum\limits_{i=1}^n \hat u_i = 0
 </span></p>
@@ -192,7 +192,7 @@ window.Quarto = {
 <p><span class="math display">
 \sum\limits_{i=1}^n x_i (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = \sum\limits_{i=1}^n x_i \hat u_i = 0
 </span></p>
-<p>Now, recall the formula for covariance discussed in <a href="https://politicalscience.github.io/metrics/3.html#quantifying-relationships-with-covariance">section 3.4</a>:</p>
+<p>Now, recall the formula for covariance discussed in <a href="https://statsnotes.github.io/theory/3.html#quantifying-relationships-with-covariance">1.3.4</a>:</p>
 <p><span class="math display">
 Cov(x,y) = \frac{1}{n}\sum\limits_{i=1}^n [(x_i - \bar x)(y_i - \bar y)] \\
 </span></p>
@@ -229,7 +229,7 @@ cov(x, \hat u) &amp; = \frac{1}{n}\sum\limits_{i=1}^n [(x_i - \bar x)(\hat u_i -
 </section>
 <section id="unbiasedness-of-ols-under-the-gauss-markov-theorem" class="level1">
 <h1>1.5.2: Unbiasedness of OLS Under the Gauss-Markov Theorem</h1>
-<p>An unbiased estimator, if we recall from <a href="https://politicalscience.github.io/metrics/2.html#properties-of-estimators">section 2.8</a>, means that over many different estimates, the expected value of all the estimates is the true parameter value: <span class="math inline">E(\hat{\theta}_n) = \theta</span>.</p>
+<p>An unbiased estimator, if we recall from <a href="https://statsnotes.github.io/theory/2.html#properties-of-estimators">1.2.8</a>, means that over many different estimates, the expected value of all the estimates is the true parameter value: <span class="math inline">E(\hat{\theta}_n) = \theta</span>.</p>
 <p>Unbiasedness is desirable property of causal estimators. Is OLS Unbiased? The Gauss-Markov Theorem proves that OLS is unbiased when 4 conditions are met.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -319,11 +319,11 @@ Cov(x,u) = 0
 <p>This alternative statement relating to correlation/covariance is called <strong>exogeneity</strong>.</p>
 <ul>
 <li>If this assumption is violated (where <span class="math inline">x</span> is correlated with error <span class="math inline">u</span>), then we have <strong>endogeneity</strong>, and <span class="math inline">x</span> is considered an <strong>endogeneous regressor</strong>.</li>
-<li>We will discuss endogeneity in more detail in chapter 7.</li>
+<li>We will discuss endogeneity in more detail in lesson 1.7.</li>
 </ul>
 <p>This is the most frequently violated of assumptions, yet arguable the most important of assumptions to ensure OLS is unbiased.</p>
 <ul>
-<li>We will mathematically show this in the next chapter.</li>
+<li>We will mathematically show this in the next lesson.</li>
 <li>Because it is so frequently violated, we will need to introduce further methods beyond simple linear regression for accurate estimation.</li>
 </ul>
 <p><br></p>
@@ -334,7 +334,7 @@ Cov(x,u) = 0
 </section>
 <section id="proof-of-unbiasedness-of-ols-under-gauss-markov" class="level1">
 <h1>1.5.3: Proof of Unbiasedness of OLS under Gauss-Markov</h1>
-<p>In the last section, we covered the Gauss-Markov assuptions, and how when they are met, OLS is unbiased.</p>
+<p>In the last section, we covered the Gauss-Markov assumptions, and how when they are met, OLS is unbiased.</p>
 <p>In this section, we will use those assumptions to prove the unbiasedness of OLS.</p>
 <ul>
 <li>Or in other words, we want to show <span class="math inline">E(\beta_1) = \beta_1</span></li>
@@ -355,7 +355,7 @@ Useful Property of Summations
 </span></p>
 </div>
 </div>
-<p>We want to show <span class="math inline">E(\beta_1) = \beta_1</span>. Let us start off with the OLS estimator (which we derived in <a href="https://politicalscience.github.io/metrics/4.html#mathematics-of-the-ordinary-least-squares-estimator">section 4.4</a>):</p>
+<p>We want to show <span class="math inline">E(\beta_1) = \beta_1</span>. Let us start off with the OLS estimator (which we derived in <a href="https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator">1.4.4</a>):</p>
 <p><span class="math display">
 \hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n(x_i - \bar{x})^2}
 </span></p>
@@ -494,15 +494,15 @@ E(\hat\beta_1) &amp; = E[E(\hat\beta_1|x)] \\
 <p><br></p>
 <p>The key assumption is Zero conditional mean (SLR.4). What causes this final assumption, zero conditional mean <span class="math inline">E(u|x) = 0</span>, to be violated?</p>
 <ol type="1">
-<li>Omitted Variable Bias. This is because if we have any other variable correlated with <span class="math inline">y</span> and <span class="math inline">x</span> in the error term <span class="math inline">u_i</span>, <span class="math inline">E(u|x)</span> will be violated. (we will discuss this more in chapter 7)</li>
+<li>Omitted Variable Bias. This is because if we have any other variable correlated with <span class="math inline">y</span> and <span class="math inline">x</span> in the error term <span class="math inline">u_i</span>, <span class="math inline">E(u|x)</span> will be violated. (we will discuss this more in lesson 1.7)</li>
 <li>Measurement Error in our variables (this is discussed in part III of the course).</li>
 <li>Sample Selection is not random.</li>
 <li>Simultaneity, when <span class="math inline">x</span> has an effect on <span class="math inline">y</span> and <span class="math inline">y</span> has an effect on <span class="math inline">x</span>.</li>
 </ol>
 <p>What can we do to remedy this assumption so OLS is not biased?</p>
 <ol type="1">
-<li>Add control variables with multiple linear regression (discussed in <a href="https://politicalscience.github.io/metrics/6.html">chapters 6</a> and 7)</li>
-<li>Use instrumental variables estimation to address the entire problem (discussed in chapter 11).</li>
+<li>Add control variables with multiple linear regression (discussed in <a href="https://statsnotes.github.io/theory/6.html">lesson 1.6</a> and 1.7)</li>
+<li>Use instrumental variables estimation to address the entire problem (discussed in lesson 1.11).</li>
 </ol>
 <p><br></p>
 <p><br></p>
@@ -512,7 +512,7 @@ E(\hat\beta_1) &amp; = E[E(\hat\beta_1|x)] \\
 <section id="variance-of-the-ols-estimator-and-homoscedasticity" class="level1">
 <h1>1.5.4: Variance of the OLS Estimator and Homoscedasticity</h1>
 <p>We have proved that OLS is unbiased under 4 conditions.</p>
-<p>However, if we recall from <a href="https://politicalscience.github.io/metrics/2.html#properties-of-estimators">section 2.8</a>, unbiasedness is not the only thing we care about in an estimator. We also care about the estimator’s variance.</p>
+<p>However, if we recall from <a href="https://statsnotes.github.io/theory/2.html#properties-of-estimators">1.2.8</a>, unbiasedness is not the only thing we care about in an estimator. We also care about the estimator’s variance.</p>
 <p>For example, in the figure below, we have two unbiased estimators centred on the same real parameter value. However, the second estimator <span class="math inline">w_2</span> is far more varied than the first estimator <span class="math inline">w_1</span>. That means while both are unbiased, the estimator <span class="math inline">w_2</span> often produces specific sample estimates that are farther from the true parameter value.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -573,9 +573,9 @@ Var(u|x) = \sigma^2 \text{ for all } x
 <h1>1.5.5: Deriving Variance of OLS Estimates</h1>
 <p>Assuming Homoscedasticity is met, we know <span class="math inline">Var(u|x) = \sigma^2</span>.</p>
 <ul>
-<li>When homoscedasticity is not met, nothing in this section applies. See chapter 8 for more information on how to do estimates when this is violated.</li>
+<li>When homoscedasticity is not met, nothing in this section applies. See lesson 1.8 for more information on how to do estimates when this is violated.</li>
 </ul>
-<p>What is variance? From <a href="https://politicalscience.github.io/metrics/1.html#variance-and-standard-deviation">section 1.5</a>, we know that the formula for variance is:</p>
+<p>What is variance? From <a href="https://statsnotes.github.io/theory/1.html#variance-and-standard-deviation">1.1.5</a>, we know that the formula for variance is:</p>
 <p><span class="math display">
 E(x - \mu)^2
 </span></p>
@@ -621,8 +621,8 @@ Var(\hat\beta_1 | x) &amp; = \sum\limits_{i=1}^n w_i^2 Var(u_i | x_i) \\
 &amp; = \sigma^2 \sum\limits_{i=1}^n w_i^2
 \end{split}
 </span></p>
-<p>Remember, <span class="math inline">w_i</span> is its own function of <span class="math inline">x</span>, where <span class="math inline">w_i = \frac{x_i - \bar{x}}{\sum (x_i - \bar{x})^2}</span>, or can be written as <span class="math inline">\frac{x_i - \bar{x}}{SST_x}</span> (see section 5.3 for derivation).</p>
-<p>We have <span class="math inline">\sum w_i^2</span> in our final equation, and we can do some quick algebra to rearrange it (note, if you are not familiar with SST, see <a href="https://politicalscience.github.io/metrics/4.html#r-squared-and-goodness-of-fit">section 4.6</a>):</p>
+<p>Remember, <span class="math inline">w_i</span> is its own function of <span class="math inline">x</span>, where <span class="math inline">w_i = \frac{x_i - \bar{x}}{\sum (x_i - \bar{x})^2}</span>, or can be written as <span class="math inline">\frac{x_i - \bar{x}}{SST_x}</span> (see <a href="https://statsnotes.github.io/theory/5.html#proof-of-unbiasedness-of-ols-under-gauss-markov">1.5.3</a> for derivation).</p>
+<p>We have <span class="math inline">\sum w_i^2</span> in our final equation, and we can do some quick algebra to rearrange it (note, if you are not familiar with SST, see <a href="https://statsnotes.github.io/theory/4.html#r-squared-and-goodness-of-fit">1.4.6</a>):</p>
 <p><span class="math display">
 \begin{split}
 \sum\limits_{i=1}^n w_i^2 &amp; = \sum\limits_{i=1}^n \frac{(x_i - \bar{x})^2}{(SST_x)^2} \\
@@ -673,10 +673,10 @@ sd(\hat\beta_1) = \frac{\sigma}{\sqrt{SST_x}}
 \end{split}
 </span></p>
 <ul>
-<li>Where <span class="math inline">SSR</span> is the square sum of residuals (see <a href="https://politicalscience.github.io/metrics/4.html#r-squared-and-goodness-of-fit">section 4.6</a> for more details).</li>
+<li>Where <span class="math inline">SSR</span> is the square sum of residuals (see <a href="https://statsnotes.github.io/theory/4.html#r-squared-and-goodness-of-fit">1.4.6</a> for more details).</li>
 </ul>
 <p>However, there is an issue with this estimate of <span class="math inline">\sigma^2</span>. It is biased - the expected value is actually slightly less than <span class="math inline">\sigma^2</span>.</p>
-<p>We will not prove this mathematically, but this bias is because OLS imposes two conditions on its estimation process (that we discussed in section 5.1):</p>
+<p>We will not prove this mathematically, but this bias is because OLS imposes two conditions on its estimation process (that we discussed in <a href="https://statsnotes.github.io/theory/5.html#algebraic-properties-of-ols">1.5.1</a>):</p>
 <p><span class="math display">
 \begin{split}
 &amp; \sum\limits_{i=1}^n \hat u_i = 0 \\
@@ -692,7 +692,7 @@ sd(\hat\beta_1) = \frac{\sigma}{\sqrt{SST_x}}
 </span></p>
 <p>With that estimate of <span class="math inline">\sigma^2</span>, we can plug it back into our formula for the standard deviation of <span class="math inline">\hat\beta_1</span>.</p>
 <ul>
-<li>We call this standard deviation the standard error (as discussed in <a href="https://politicalscience.github.io/metrics/2.html#uncertainty-in-estimates-and-sampling-distributions">section 2.3</a>)</li>
+<li>We call this standard deviation the standard error (as discussed in <a href="https://statsnotes.github.io/theory/2.html#uncertainty-in-estimates-and-sampling-distributions">1.2.3</a>)</li>
 </ul>
 <p><span class="math display">
 \widehat{se}(\hat\beta_1) = \frac{\hat\sigma}{\sqrt{SST_x}}
@@ -729,14 +729,14 @@ SST_x = \sum_{i=1}^n(x_i - \bar x)^2
 <section id="statistical-inference-in-simple-linear-regression" class="level1">
 <h1>1.5.7: Statistical Inference in Simple Linear Regression</h1>
 <p>In the last section, we calculated the standard error of OLS estimates of <span class="math inline">\hat\beta_1</span>.</p>
-<p>If we remember from <a href="https://politicalscience.github.io/metrics/2.html">Chapter 2</a>, the standard error is a measurement of uncertainty, and allows us to conduct statistical inference tests, such as hypothesis testing and confidence intervals.</p>
+<p>If we remember from <a href="https://statsnotes.github.io/theory/2.html">Lesson 1.2</a>, the standard error is a measurement of uncertainty, and allows us to conduct statistical inference tests, such as hypothesis testing and confidence intervals.</p>
 <ul>
 <li>Note: the statistical tests are only really useful if we are comfortable with the assertion that OLS is unbiased - or in other words, they are only really useful if the first 4 Gauss-Markov conditions are met.</li>
 </ul>
 <p><br></p>
 <section id="hypothesis-testing" class="level3">
 <h3 class="anchored" data-anchor-id="hypothesis-testing">Hypothesis Testing</h3>
-<p>Hypothesis testing follows the same procedure as outlined in <a href="https://politicalscience.github.io/metrics/2.html#intuition-of-hypothesis-testing">section 2.5</a> and <a href="https://politicalscience.github.io/metrics/2.html#implementing-a-hypothesis-test">section 2.6</a>. Reread these sections to understand the intuition.</p>
+<p>Hypothesis testing follows the same procedure as outlined in <a href="https://statsnotes.github.io/theory/2.html#intuition-of-hypothesis-testing">1.2.5</a> and <a href="https://statsnotes.github.io/theory/2.html#implementing-a-hypothesis-test">1.2.6</a>. Reread these sections to understand the intuition.</p>
 <p>In regression, our typical null hypotheses is that there is no relationship between <span class="math inline">x</span> and <span class="math inline">y</span>, and our alternate hypothesis is that there is a relationship between <span class="math inline">x</span> and <span class="math inline">y</span>. Thus, our hypotheses are:</p>
 <p><span class="math display">
 \begin{split}
@@ -753,7 +753,7 @@ t = \frac{\hat\beta_1 - 0}{\widehat{se}(\hat\beta_1)}
 </ul>
 <p>Now, we will consult a t-distribution (not a normal distribution) to calculate the p-values.</p>
 <ul>
-<li><p>We use a t-distribution, not a normal distribution, even if we have met the central limit theorem (see <a href="https://politicalscience.github.io/metrics/2.html#central-limit-theorem">section 2.4</a> if you do not know what the central limit theorem is).</p></li>
+<li><p>We use a t-distribution, not a normal distribution, even if we have met the central limit theorem (see <a href="https://statsnotes.github.io/theory/2.html#central-limit-theorem">1.2.4</a> if you do not know what the central limit theorem is).</p></li>
 <li><p>The reason we do this is because our estimate of variance <span class="math inline">\hat\sigma^2</span> is not exactly the same as the true variance <span class="math inline">\sigma^2</span>, and the t-distribution better accounts for this issue.</p></li>
 </ul>
 <p>Once we have obtained our p-values from the t-distribution, we can interpret the p-values as follows:</p>
@@ -792,8 +792,8 @@ Warning!
 </section>
 <section id="confidence-intervals" class="level3">
 <h3 class="anchored" data-anchor-id="confidence-intervals">Confidence Intervals</h3>
-<p>We can also create confidence intervals of plausible true <span class="math inline">\beta_1</span> values from the population, given our estimate <span class="math inline">\hat\beta_1</span>. The intuition is the same as discussed in <a href="https://politicalscience.github.io/metrics/2.html#confidence-intervals">section 2.7</a>.</p>
-<p>Just like previously discussed in <a href="https://politicalscience.github.io/metrics/2.html#confidence-intervals">section 2.7</a>, the 95% confidence interval has the bounds:</p>
+<p>We can also create confidence intervals of plausible true <span class="math inline">\beta_1</span> values from the population, given our estimate <span class="math inline">\hat\beta_1</span>. The intuition is the same as discussed in <a href="https://statsnotes.github.io/theory/2.html#confidence-intervals">1.2.7</a>.</p>
+<p>Just like previously discussed in <a href="https://statsnotes.github.io/theory/2.html#confidence-intervals">1.2.7</a>, the 95% confidence interval has the bounds:</p>
 <p><span class="math display">
 \hat\beta_1 - 1.96 \widehat{se}(\hat\beta_1), \ \hat\beta_1 + 1.96 \widehat{se}(\hat\beta_1)
 </span></p>

@@ -49,7 +49,7 @@ I recommend using a laptop or tablet to access this page. Use the sidebar for ea
 
 *This part introduces the key topics, regression models, and estimators used in statistics and econometrics.*
 
-Pre-requisites: Single Variable Calculus (see Appendix A). Linear Algebra and Multivariate Calculus is helpful (see Appendix B).
+[Pre-requisites]{.underline}: Single Variable Calculus (see Appendix A, lessons A.1 through A.6). Linear Algebra and Multivariate Calculus is helpful.
 
 -   [1.1: Random Variables and Distributions](https://statsnotes.github.io/theory/1.html)
 -   [1.2: Estimates and Statistical Inference](https://statsnotes.github.io/theory/2.html)
