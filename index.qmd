@@ -1,0 +1,180 @@
+---
+title: "StatsNotes by Kevin"
+subtitle: "Guide to Statistical/Quantitative Methods (Focused on the Social Sciences)"
+format:
+    html:
+        page-layout: article
+        grid:
+          sidebar-width: 300px
+          body-width: 750px
+          margin-width: 250px
+          gutter-width: 2em
+        fontsize: 12.5pt
+        theme: yeti
+        toc: TRUE
+        toc-depth: 2
+        toc-location: left
+        toc-expand: true
+        toc-title: "Guide to Statistical Methods"
+        mainfont: "Computer Modern"
+        title-block-banner: true
+        classoption: fleqn
+        html-math-method: katex
+---
+
+## Introduction
+
+This website is a guide on applied statistics and quantitative methods, with a focus on applications to social science (economics, political science, sociology, psychology). This guide was created during my masters degree, as a way to consolidate all my knowledge and skills in one area.
+
+The guide is divided into parts, with each part containing lessons. You do not have to undertake the parts in order, except that *Part I* is a prerequisite for subsequent parts.
+
+I recommend using a laptop or tablet to access this page. Use the sidebar for easy navigation.
+
+*Table of Contents:*
+
+-   Part I: Statistical and Econometric Theory
+-   Part II: Econometric Methods for Causal Inference
+-   Part III: Multivariate Statistical Methods
+-   Part IV: Time Series and Forecasting
+-   Part V: Applied Machine Learning
+-   Part VI: Text Analysis
+-   Part VII: Spatial Econometrics
+-   Appendix A: Mathematical Methods
+-   Appendix B: Game Theory and Political Economics
+-   Appendix C: Programming in R
+
+<br />
+
+## Part I: Statistical and Econometric Theory
+
+*This part introduces the key topics, regression models, and estimators used in statistics and econometrics.*
+
+Pre-requisites: Single Variable Calculus (see Appendix A). Linear Algebra and Multivariate Calculus is helpful (see Appendix B).
+
+-   1.1: Random Variables and Distributions
+-   1.2: Estimates and Statistical Inference
+-   1.3: Relationships with Correlation and Covariance
+-   1.4: Simple Linear Regression - Estimation and Interpretation
+-   1.5: Simple Linear Regression - Properties and Inference
+-   1.6: Multiple Linear Regression - Estimation and Interpretation
+-   1.7: Multiple Linear Regression - Estimation and Interpretation
+-   1.8: Further Topics in Inference with Linear Regression
+-   1.9: Extensions of Linear Regression
+-   1.10: Method of Moments Estimator
+-   1.11: Instrumental Variables Estimator
+-   1.12: Logistic Regression - Maximum Likelihood Estimator
+-   1.13: Ordinal and Multinomial Logistic Regression
+-   1.14: Regression for Count and Rate Outcomes
+
+<br />
+
+## Part II: Econometric Methods for Causal Inference
+
+*This part introduces the most popular statistics and econometrics research designs for proving causal relationships in the social sciences.*
+
+Pre-requisites: Part I (specifically 1.1 through 1.12).
+
+-   2.1: Causal Inference and Causal Frameworks
+-   2.2: Randomised Controlled Trials
+-   2.3: Selection on Observables - Regression
+-   2.4: Selection on Observables - Matching and Weighting
+-   2.5: Differences-in-Differences Designs
+-   2.6: Generalised Differences-in-Differences
+-   2.7: Instrumental Variables - Non-Compliance Designs
+-   2.8: Instrumental Variables - Further Designs
+-   2.9: Regression Discontinuity Designs
+
+<br />
+
+## Part III: Multivariate Statistical Methods
+
+*This part introduces the modern multivariate methods in statistics, relating to both dimensional reduction, as well as latent variable models.*
+
+Pre-requisites: Part I
+
+-   3.1: Principle Components Analysis
+-   3.2: Exploratory Factor Analysis
+-   3.3: Confirmatory Factor Analysis
+-   3.4: Latent Trait Models
+-   3.5: Latent Class Models
+-   3.6: Cluster Anlaysis
+-   3.7: Structural Equation Modelling
+-   3.8: Extensions to Structural Equation Modelling
+
+<br />
+
+## Part IV: Time Series and Forecasting
+
+*This section introduces the statistical methods used for the analysis of time-series data.*
+
+Pre-requisites: Part I
+
+<br />
+
+## Part V: Applied Machine Learning
+
+*This section introduces machine learning techniques for improved prediction making*.
+
+Pre-requisites: Part I (Part III and IV are helpful, but not necessary).
+
+<br />
+
+## Part VI: Text Analysis
+
+*This section introduces how we can statistically analyse textual data*
+
+Pre-requisites: Part I and Part V.
+
+<br />
+
+## Part VII: Spatial Econometrics
+
+*This section introduces the concepts behind spatial econometrics and spatial data*.
+
+<br />
+
+## Appendix A: Mathematical Methods
+
+*This appendix discusses some key mathematical concepts needed for the courses above. Specifically, lessons A.1-A.6 are mandatory for Part I.*
+
+Pre-requisites: Good background in High-School Algebra.
+
+-   A.1: Set Theory and Algebra Review
+-   A.2: Precalculus - Functions and Limits
+-   A.3: Derivatives and Partial Derivatives
+-   A.4: Simple Optimisation
+-   A.5: Integration
+-   A.6: Basics of Vectors and Matrices
+-   A.7: General Linear Systems
+-   A.8: Vector Spaces
+-   A.9: Linear Operators and Diagonalisation
+-   A.10: Multivariate Differentiation
+-   A.11: Multivariate Optimisation
+
+<br />
+
+## Appendix B: Game Theory and Political Economics
+
+*This guide focuses on testing theories with statistics. But where do the theories come from? Game Theory is a way to make mathematical models of the world to create hypotheses that we can test with statistics*.
+
+Pre-requisites: Appendix A (A.1-A.6), and some basic microeconomics is helpful.
+
+-   B.1: Preferences, Utility, and Basics of Game Theory
+-   B.2: Dominant Strategies and Nash Equilibrium
+-   B.3: Further Topics in Nash Equilibrium
+-   B.4: Mixed Strategy Nash Equilibrium
+-   B.5: Downsian Model of Electoral Competition
+-   B.6: Further Applied Spatial Models
+-   B.7: Subgame Perfect Nash Equilibrium
+-   B.8: Applied Dynamic Games
+-   B.9: Games of Imperfect and Incomplete Information
+-   B.10: Bayesian Perfect Equilibrium
+-   B.11: Signalling Games
+
+<br />
+
+## Appendix C: Programming in R
+
+*This is not a full course in the R-language. This provides a brief guide to useful tips in R*.
+
+<br />
