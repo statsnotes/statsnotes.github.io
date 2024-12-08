@@ -506,7 +506,7 @@ Luckily, the Gauss-Markov Theorem does not stop at unbiasedness. With an additio
 ::: callout-tip
 ## Definition: Gauss-Markov Theorem
 
-The Gauss-Markov Theorem states that under 4 conditions, the OLS estimator is the Best Linear Unbiased Estimator (BLUE) for $\beta_1$, being the unbiased linear estimator with the least variance.
+The Gauss-Markov Theorem states that under 5 conditions, the OLS estimator is the Best Linear Unbiased Estimator (BLUE) for $\beta_1$, being the unbiased linear estimator with the least variance.
 
 -   **SLR.1 (Linearity in Parameters)**: The parameters of the model are linear.
 -   **SLR.2 (Random Sampling)**: All observations in our sample are randomly sampled from the population.
@@ -580,7 +580,7 @@ $$
 
 <br />
 
-Remember when we were proving unbiasedness of OLS in section 5.3, we got to this stage:
+Remember when we were proving unbiasedness of OLS in [1.5.3](https://statsnotes.github.io/theory/5.html#proof-of-unbiasedness-of-ols-under-gauss-markov), we got to this stage:
 
 $$
 \hat\beta_1 = \beta_1 + \sum\limits_{i=1}^n w_i u_i

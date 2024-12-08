@@ -24,9 +24,14 @@ format:
 
 This lesson covers the following topics:
 
+-   Some simple algebraic properties of our best-fit plane through OLS estimation.
 -   The conditions on which OLS estimation is an unbiased estimator for multiple regression (Gauss-Markov conditions), and how violations of these conditions will lead to biased estimates.
 -   Omitted Variable Bias, and how it causes violations of the Gauss-Markov conditions.
 -   How we can conduct hypothesis testing in multiple linear regression.
+
+::: callout-note
+This entire lesson will mirror [lesson 1.5](https://statsnotes.github.io/theory/5.html), but will adjust the properties of bivariate regression to multiple regression. I recommend a strong understanding of those topics before starting this chapter.
+:::
 
 <br />
 
@@ -35,10 +40,6 @@ This lesson covers the following topics:
 [Homepage](https://statsnotes.github.io)
 
 # 1.7.1: Residuals and Algebraic Properties of OLS
-
-::: callout-note
-This entire lesson will mirror [lesson 1.5](https://statsnotes.github.io/theory/5.html), but will adjust the properties of bivariate regression to multiple regression. I recommend a strong understanding of those topics before starting this chapter.
-:::
 
 Once we have our OLS estimates of parameters $\hat\beta_0 , \dots \hat\beta_k$ (estimated in [1.6.4](https://statsnotes.github.io/theory/6.html#mathematics-of-the-ordinary-least-squares-estimator)), we can obtain the OLS residuals $\hat u_i$:
 
@@ -247,7 +248,7 @@ But practically, what does that mean when choosing our explanatory variables?
 
 This only applies if variables are **perfectly** correlated.
 
--   However, even if there is no perfect correlation, but a high correlation, this can cause some issues (not related to unbiasedness). We will discuss this later.
+-   However, even if there is no perfect correlation, but a high correlation, this can cause some issues (not related to unbiasedness). We will discuss this later in section 1.7.6.
 
 <br />
 
@@ -321,7 +322,7 @@ $$
 \sum\limits_{i=1}^n \widetilde{r_{1i}} x_{ji} = 0, \text{ given } j=2, \dots, k 
 $$
 
--   Because for OLS, $\sum x_i \hat u_i = 0$ (1.7.1), and we know $\widetilde{r_{1i}}$ is the residual $\hat u_i$ in a regression with explanatory variables $x_2, \dots, x_k$ and outcome variable $x_1$.
+-   Because for OLS, $\sum x_i \hat u_i = 0$ ([1.7.1](https://statsnotes.github.io/theory/7.html#residuals-and-algebraic-properties-of-ols)), and we know $\widetilde{r_{1i}}$ is the residual $\hat u_i$ in a regression with explanatory variables $x_2, \dots, x_k$ and outcome variable $x_1$.
 
 **Property 3:**
 
@@ -343,11 +344,448 @@ $$
 
 -   Where $\widetilde{r_{1i}}$ is the part of $x_1$ uncorrelated with $x_2, \dots, x_k$.
 
-Now, let us plug in $y_i = \beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki} + u_i$ into our regression anatomy formula, and using the properties above, we can solve:
+::: callout-note
+## MLR.3 No Perfect Multicollinearity
+
+The existence of $\hat\beta_1$ is guaranteed by condition 3 from above, since the denominator $\sum\widetilde{r_{1i}}^2$ must not be 0.
+:::
+
+Now, let us plug in $y_i = \beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki} + u_i$ into our regression anatomy formula:
 
 $$
 \begin{split}
 \hat\beta_1 & = \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ y_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
-& = \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ (\beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki} + u_i)}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+& = \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ (\beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki} + u_i)}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
 \end{split}
 $$
+
+Now, focusing on the numerator, and using the summation properties above, let us simplify:
+
+$$
+\begin{split}
+& \sum\limits_{i=1}^n \widetilde{r_{1i}} \ (\beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki} + u_i) \\
+& = \sum\limits_{i=1}^n (\widetilde{r_{1i}}\beta_0 + \widetilde{r_{1i}}\beta_1x_{1i} + \dots + \widetilde{r_{1i}}\beta_k x_{ki} + \widetilde{r_{1i}} u_i) \\
+& = \sum\limits_{i=1}^n \widetilde{r_{1i}}\beta_0 + \sum\limits_{i=1}^n \widetilde{r_{1i}}\beta_1 x_{1i} + \dots + \sum\limits_{i=1}^n \widetilde{r_{1i}}\beta_k x_{ki} + \sum\limits_{i=1}^n \widetilde{r_{1i}} u_i \\
+& = \beta_0 \sum\limits_{i=1}^n \widetilde{r_{1i}} + \beta_1 \sum\limits_{i=1}^n \widetilde{r_{1i}} x_{1i} + \dots + \beta_k \sum\limits_{i=1}^n \widetilde{r_{1i}} x_{ki} + \sum\limits_{i=1}^n \widetilde{r_{1i}} u_i \\
+& = \beta_0 (0) + \beta_1 \sum\limits_{i=1}^n \widetilde{r_{1i}}^2 + \beta_2 (0) + \dots + \beta_k (0) + \sum\limits_{i=1}^n \widetilde{r_{1i}} u_i \\
+& = \beta_1 \sum\limits_{i=1}^n \widetilde{r_{1i}}^2 + \sum\limits_{i=1}^n \widetilde{r_{1i}} u_i
+\end{split}
+$$
+
+Now, putting the numerator back in, we can simplify:
+
+$$
+\begin{split}
+\hat\beta_1 & = \frac{\beta_1 \sum_{i=1}^n \widetilde{r_{1i}}^2 + \sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
+& \\
+& = \frac{\beta_1 \sum_{i=1}^n \widetilde{r_{1i}}^2}{\sum_{i=1}^n \widetilde{r_{1i}}^2} + \frac{\sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
+& \\
+& = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+\end{split}
+$$
+
+<br />
+
+Now, we want to find $E(\hat\beta_1)$. Note that the second part of the equation is a function of $\widetilde{r_{1i}}$, of which itself is a function of all explanatory variables $x_{1i}, \dots, x_{ki}$. Thus, we know:
+
+$$
+\begin{split}
+E(\hat\beta_1 | x_{1i}, \dots x_{ki}) & = \beta_1 + E\left( \frac{\sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \biggr|x_{1i},\dots, x_{ki} \right) \\
+& = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ E(u_i|x_{1i}, \dots,x_{ki})}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+\end{split}
+$$
+
+But what is $E(u_i|x_{1i}, \dots , x_{ki})$? We can use two Gauss-Markov conditions to evaluate this:
+
+::: callout-note
+## MLR.4 Zero Conditional Mean
+
+The Zero-Conditional Mean assumption says $E(u|x_1, \dots, x_k) = 0$.
+:::
+
+::: callout-note
+## MLR.2 Random Sampling
+
+Random sampling allows us to put subscripts $i$ on our equations.
+
+Similarly, it allows us to say that $E(u|x_1, \dots, x_k)$ is the same as $E(u_i|x_{1i}, \dots, x_{ki})$, where both equal 0.
+:::
+
+Thus, with these two assumptions, we know that:
+
+$$
+E(u_i|x_{1i}, \dots, x_{ki}) = 0
+$$
+
+Which means that:
+
+$$
+\begin{split}
+E(\hat\beta_1 | x_{1i}, \dots x_{ki}) 
+& = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ E(u_i|x_{1i}, \dots,x_{ki})}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
+& = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ (0)}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
+& = \beta_1 + 0 \\
+& = \beta_1
+\end{split}
+$$
+
+Now, just like in simple linear regression (see [1.5.3](https://statsnotes.github.io/theory/5.html#proof-of-unbiasedness-of-ols-under-gauss-markov)), we use the **law of iterated expectations** to conclude this proof:
+
+$$
+\begin{split}
+E(\hat\beta_1) & = E[E(\hat\beta_1|x_{1i}, \dots, x_{ki})] \\
+& = E(\beta_1) \\
+& = \beta_1
+\end{split}
+$$
+
+Thus, OLS is unbiased under the Gauss-Markov conditions.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.7.4: Omitted Variable Bias
+
+In the previous section (and in simple linear regression section [1.5.2](https://statsnotes.github.io/theory/5.html#unbiasedness-of-ols-under-the-gauss-markov-theorem)), we discussed how the assumption of **zero-conditional mean** $E(u | x_1, \dots, x_k) = 0$ is critical to the unbiasdness of OLS.
+
+-   This assumption is also called **exogeneity**.
+
+However, this assumption is frequently violated. The most common reason for this is because of **omitted variable bias**.
+
+<br />
+
+Consider two regressions, one with only our variable of interest $D$, and, and one with an extra control variable $x$ that is omitted from the first regression:
+
+$$
+\begin{split}y_i & = \beta_0^S + \beta_1^SD_i + u_i^S \quad \text{short} \\y_i & = \beta_0 + \beta_1D_i + \beta_2x_i + u_i \quad \text{long}\end{split}
+$$
+
+Now consider an auxiliary regression, where the omitted variable $x$ is the outcome variable, and $D_i$ is the explanatory variable:
+
+$$
+x_i = \delta_0 + \delta_1 D_i + v_i
+$$
+
+-   where $\delta_0, \delta_1$ are coefficients and $v_i$ is the error term
+
+<br />
+
+Now we have $x_i$ in terms of $D_i$, let us plug $x_i$ into our long regression to "recreate" the short regression:
+
+$$
+\begin{split}y_i & = \beta_0 + \beta_1D_i + \beta_2x_i + u_i \\y_i & = \beta_0 + \beta_1 D_i + \beta_2(\delta_0 + \delta_1D_i + v_i) + u_i \\y_i & = \beta_0 + \beta_1 D_i + \beta_2 \delta_0 + \beta_2 \delta_1 D_i + \beta_2v_i + u_i \\y_i & = \beta_0 + \beta_2 \delta_0 + (\beta_1 + \beta_2 \delta_1)D_i + \beta_2v_i + u_i\end{split}
+$$
+
+We have "recreated" the short regression with one variable $D$. Let us see our recreation next to the original short regression:
+
+$$
+\begin{split}
+y_i & = \beta_0^S + \beta_1^SD_i + u_i^S \\
+y_i & = \beta_0 + \beta_2 \delta_0 + (\beta_1 + \beta_2 \delta_1)D_i + \beta_2v_i + u_i
+\end{split}
+$$
+
+-   The short regression $\beta_0^S$ is analogous to the $\beta_0 + \beta_2 \delta_0$ in the recreation (both are the intercepts)
+-   The short regression $\beta_1^S D_i$ is analogous to the $(\beta_1 + \beta_2 \delta_1)D_i$ in the recreation (both are the slope and variable of interest)
+-   The short regression $u_i^S$ is analogous to the $\beta_2 v_i + u_i$ in the recreation (both are the error terms).
+
+Since the short regression $\beta_1^S D_i$ is analogous to the $(\beta_1 + \beta_2 \delta_1)D_i$ in the recreation, that means coefficient $\beta_1^S = \beta_1 + \beta_2 \delta_1$.
+
+<br />
+
+The difference between the short regression coefficient $\beta_1^S$, and the original long regression coefficient $\beta_1$, is $\beta_2 \delta_1$.
+
+-   Or in other words, $\beta_2 \delta_1$, which is actually some of the effect of omitted $x$ on $y$, is being "tangled up" into the coefficient of the short regression $\beta_1^S$ (which is only supposed to describe the relationship between $D$ and $y$).
+
+If $\beta_2 = 0$ (meaning no relationship between omitted $x_i$ and $y$), or $\delta_1 = 0$ (meaning no relationship between omitted $x_i$ and $D_i$), then difference $\beta_2 \delta_1 = 0$, thus there is no issue.
+
+-   But if either of those facts are not true, then $\beta_2 \delta_1 ≠ 0$, and omitted variable bias is non-zero.
+
+In the next section, we will talk about the implications of this.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.7.5: Endogeneity and Violation of Gauss-Markov
+
+In the last section, we discussed omitted variable bias. But why is omitted variable bias (if non-zero) an issue?
+
+-   The omitted variable $x$'s effect is mostly subsumed into the error term $u_i^S$ of the short regression.
+-   But some bit of $x$ (that is correlated with $D$) is included in our coefficient (specifically, $\beta_2 \delta_1$).
+-   That means our treatment variable $D$ will be correlated with the error term, [violating the Gauss-Markov assumption of zero-conditional mean, and producing biased OLS results]{.underline}.
+
+::: callout-tip
+## Definition: Endogeneity
+
+Endogeneity is when a regressor/explanatory variable $x_j$ is correlated with the error term $u_i$.
+
+-   This frequently occurs due to **omitted variable bias**.
+-   The explanatory variable that is correlated with the error term is called an **endogenous variable**.
+
+Mathematically, endogeneity is defined as when:
+
+$$
+Cov(x_j, u) ≠ 0
+$$
+
+When endogeneity exists, the assumption of zero-conditional mean/exogeneity $E(u|x_1, \dots, x_k) = 0$ is violated (this assumption was introduced in [1.7.2](https://statsnotes.github.io/theory/7.html#unbiasedness-of-ols-under-the-gauss-markov-theorem)).
+
+-   This means that OLS estimates are no longer unbiased if endogeneity/an endogenous variable are present.
+:::
+
+<br />
+
+[Thus, the violation of the MLR.4 Zero-Conditional Mean Asusmption frequently results from omitting confounding variables that are correlated with both our explanatory variable of interest and the outcome variable.]{.underline}
+
+-   Endogeneity can also be caused by other factors, such as measurement error, or simultaneity (when both the explanatory variable and outcome variable explain each other). However, the primary concern that we worry about in econometrics is omitted variable bias.
+
+How can we solve this problem?
+
+-   The easiest way is to add more control variables.
+-   If we include every single possible confounder that is correlated both with our explanatory variable of interest, and the outcome variable, then, there will be no more omitted variable bias, and no more endogeneity.
+
+However, as we will discuss a lot more in Part II on causal inference, including all confounding variables is often impossible, as many social science situations will have thousands of them, many of them **unobservable** or impossible to measure.
+
+-   Thus, there are also other techniques to "unbias" OLS without including all possible confounders. We will discuss an example of this in lesson 1.11 on instrumental variables.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.7.6: Variance of the OLS Estimator
+
+We have proved that OLS is unbiased under 4 conditions.
+
+However, if we recall from [1.2.8](https://statsnotes.github.io/theory/2.html#properties-of-estimators), unbiasedness is not the only thing we care about in an estimator. We also care about the estimators variance.
+
+-   This was further discussed in [1.5.4](https://statsnotes.github.io/theory/5.html#variance-of-the-ols-estimator-and-homoscedasticity) about the simple linear regression model.
+
+Just like in simple linear regression, an additional condition, homoscedasticity, can be added to the 4 existing conditions to determine that OLS is the linear estimator with the least variance (see [1.5.4](https://statsnotes.github.io/theory/5.html#variance-of-the-ols-estimator-and-homoscedasticity) for more details on homoscedasticity):
+
+::: callout-tip
+## Definition: Gauss-Markov Theorem
+
+The Gauss-Markov Theorem states that under 5 conditions, the OLS estimator is the Best Linear Unbiased Estimator (BLUE) for $\beta_j$, being the unbiased linear estimator with the least variance.
+
+-   **MLR.1 (Linearity in Parameters)**: The parameters of the model are linear.
+-   **MLR.2 (Random Sampling)**: All observations in our sample are randomly sampled from the population.
+-   **MLR.3 (No Perfect Mutlicollinearity)**: There are no exact linear relationships among variables (where correlation coefficient equals 1).
+-   **MLR.4 (Zero Conditional Mean)**. The error term $u$ has an expectation of 0, given any value of $x_j$ for any explanatory variable.
+-   **MLR.5 (Homoscedasticity)**: The error term has the same variance given any value of $x$: $Var(u|x_1, \dots, x_k) = \sigma^2$.
+:::
+
+<br />
+
+Assuming homoscedasticity is met, we know $Var(u|x_1, \dots, x_k) = \sigma^2$.
+
+-   When homoscedasticity is not met, nothing in this section applies. See lesson 1.8 for more information on how to do estimates when this is violated.
+
+Let us find the variance of OLS estimates (we will use $\hat\beta_1$ for simplicity, but this applies to any other coefficient $\hat\beta_1 , \dots, \hat\beta_k$. In proving unbiasedness of OLS in [1.7.3](https://statsnotes.github.io/theory/7.html#proof-of-unbiasedness-of-ols-under-gauss-markov), we got to this stage:
+
+$$
+\hat\beta_1 = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+$$
+
+We know that $\beta_1$ is a constant (the true value in the population), so that never changes. Thus, it cannot be the variance in $\hat\beta_1$. Thus, the second part is the variance in $\hat\beta_1$.
+
+Let us define $w_i$ as following, as a function of $x_1, \dots, x_k$:
+
+$$
+w_i = \frac{\widetilde{r_{1i}}}{\sum_{i=1}^n\widetilde{r_{1i}}^2}
+$$
+
+This allows us to write $\hat\beta_1$ as:
+
+$$
+\hat\beta_1 = \beta_1 + \sum\limits_{i=1}^nw_i u_i
+$$
+
+<br />
+
+Thus, we can proceed in the same way as the simple linear regression case (see [1.5.4](https://statsnotes.github.io/theory/5.html#variance-of-the-ols-estimator-and-homoscedasticity) for more details):
+
+$$
+\begin{split}
+Var(\hat\beta_1|x_1, \dots, x_k) & = Var\left( \sum\limits_{i=1}^nw_i u_i \biggr|x_1, \dots ,x_k \right) \\ & = \sum\limits_{i=1}^n Var(w_i u_i | x_1, \dots, x_k) \\
+& = \sum\limits_{i=1}^n w_i^2 \ Var(u_i | x_1, \dots, x_k) \\
+& = \sum\limits_{i=1}^n w_i^2 \sigma^2 \\
+& = \sigma^2 \sum\limits_{i=1}^n w_i^2
+\end{split}
+$$
+
+Now, plugging back in $w_i$, we get:
+
+$$
+\begin{split}
+Var(\hat\beta_1|x_1, \dots, x_k) & = \sigma^2 \sum\limits_{i=1}^n w_i^2 \\
+& = \sigma^2 \sum_{i=1}^n \left( \frac{\widetilde{r_{1i}}}{\sum_{i=1}^n\widetilde{r_{1i}}^2} \right) \\
+& = \sigma^2 \frac{\sum_{i=1}^n \widetilde{r_{1i}}}{\sum_{i=1}^n\widetilde{r_{1i}}^2} \\
+& = \frac{\sigma^2}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+\end{split}
+$$
+
+And assuming homoscedasticity (where $Var(\hat\beta_1)$ does not depend on $x_1, \dots, x_k$, we thus know:
+
+$$
+Var(\hat\beta_1) = \frac{\sigma^2}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+$$
+
+<br />
+
+Notice how the denominator is $\sum\widetilde{r_{1i}}^2$. That means, the smaller $\widetilde{r_{1i}}^2$ is, the larger the variance is.
+
+-   $\widetilde{r_{1i}}^2$ is smaller when our explanatory variable of interest $x_1$ is highly correlated with another explanatory variable, since $\widetilde{r_{1i}}^2$ represents the part of $x_1$ that is uncorrelated with other explanatory variables.
+-   This means that if we have highly correlated explanatory variables, our variance will in our OLS estimates will be high.
+
+This is something important to think about when choosing explanatory variables. We want to include all confounding variables, but highly correlated confounders will make our variance very high for our estimates.
+
+-   One way of dealing with this is dimensional reduction techniques, which we will discuss in Part III of the guide dealing with multivariate anlaysis.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.7.7: Statistical Inference in Multiple Linear Regression
+
+### Standard Error of OLS Estimates
+
+In the last section, we calculated the variance of the OLS estimates of $\hat\beta_1$.
+
+However, just like we mentioned in [1.5.6](https://statsnotes.github.io/theory/5.html#standard-errors-of-the-ols-estimator), the real value of $\sigma^2$ of a regression not calculable. This is an issue because our variance formula has $\sigma^2$ in the numerator.
+
+Just like in simple linear regression (see [1.5.6](https://statsnotes.github.io/theory/5.html#standard-errors-of-the-ols-estimator)), we can estimate $\sigma^2$ by using the residual term $\hat u_i$ with a degrees of freedom adjustment.
+
+$$
+\hat\sigma^2 = \frac{SSR}{n-k-1} = \frac{\sum_{i=1}^n \hat u_i^2}{n-k-1}
+$$
+
+-   Where $n$ is the number of observations in our sample data.
+-   Where $k$ is the number of explanatory variables in our model.
+
+Thus, with this estimate, we can calculate the **standard errors** (square root of variance) of our estimates of coefficients $\hat\beta_j$.
+
+::: callout-tip
+## Definition: Standard Errors for Multiple Linear Regression
+
+The standard error for the coefficient $\hat\beta_j$ from an OLS estimator in multiple linear regression is:
+
+$$
+\widehat{se}(\hat\beta_j) = \frac{\hat\sigma}{\sqrt{\sum_{i=1}^n \widetilde{r_{1i}}^2}}
+$$
+
+-   We will never calculate this by hand, we will use a statistical software to do this.
+
+Where $\hat\sigma$ is defined as:
+
+$$
+\hat\sigma = \sqrt{\frac{SSR}{n-k-1}} = \sqrt{\frac{\sum_{i=1}^n \hat u_i^2}{n-k-1}}
+$$
+:::
+
+<br />
+
+### Hypothesis Tests
+
+With the standard error, we can conduct hypothesis tests.
+
+-   The procedure is identical to simple linear regression, see [1.5.7](https://statsnotes.github.io/theory/5.html#statistical-inference-in-simple-linear-regression).
+-   The intuition of hypothesis testing was outlined in [1.2.5](https://statsnotes.github.io/theory/2.html#intuition-of-hypothesis-testing) and [1.2.6](https://statsnotes.github.io/theory/2.html#implementing-a-hypothesis-test).
+
+Our hypotheses will typically be:
+
+$$
+\begin{split}
+& H_0 : \beta_j = 0 \\
+& H_1: \beta_j ≠ 0
+\end{split}
+$$
+
+Our t-test statistic will be:
+
+$$
+t = \frac{\hat\beta_j - 0}{\widehat{se}(\hat\beta_j)}
+$$
+
+And through a t-distribution, we will calculate the p-values.
+
+::: callout-tip
+## Interpretation of p-Values for Regression
+
+The p-value is the probability of getting a test statistic equally or more extreme than the one we got with our sample estimate $\hat\beta_j$, given the null hypothesis is true.
+
+-   If $p<0.05$, we believe the probability of the null hypothesis is low enough, such that we reject the null hypothesis (that there is no relationship between $x_j$ and $y$), and conclude our alternate hypothesis (that there is a relationship between $x_j$ and $y$).
+
+-   If $p>0.05$, we cannot reject the null hypothesis, and cannot reject that there is no relationship between $x_j$ and $y$.
+:::
+
+::: callout-warning
+## Warning!
+
+Note how I have been using the word **relationship**, not causal effect.
+
+Causality is not established through estimators, it is established through a strong experimental design (which we will cover in part II of the course).
+:::
+
+<br />
+
+### Confidence Intervals
+
+We can also create confidence intervals of plausible true $\beta_j$ values from the population, given our estimate $\hat\beta_j$. The intuition is the same as discussed in [1.2.7](https://statsnotes.github.io/theory/2.html#confidence-intervals).
+
+Just like previously discussed in [1.2.7](https://statsnotes.github.io/theory/2.html#confidence-intervals), the 95% confidence interval has the bounds:
+
+$$
+\hat\beta_j - 1.96 \widehat{se}(\hat\beta_j), \ \hat\beta_j + 1.96 \widehat{se}(\hat\beta_j)
+$$
+
+::: callout-tip
+## Interpretation of Confidence Intervals
+
+The confidence interval means that under repeated sampling and estimating $\hat\beta_j$, 95% of the confidence intervals we construct will include the true $\beta_j$ value in the population.
+:::
+
+::: callout-warning
+## Interpretation Warning!
+
+It is very important to note that confidence intervals do not mean a 95% probability that the true $\beta_1$ is within any specific confidence interval we calculated.
+
+We cannot know based on one confidence interval, whether it covers or does not cover the true $\beta_j$.
+
+The correct interpretation is that over many samples from the same population, we would expect 95% of our confidence intervals to contain the true $\beta_j$ value.
+:::
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.7.8: Hypothesis Testing with More than One Coefficient
+
+Sometimes, we want to test more than one coefficient at a time in a hypothesis test.
+
+-   This will be especially obvious why after lesson 1.9.
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
