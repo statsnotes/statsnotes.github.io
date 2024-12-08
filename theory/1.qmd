@@ -1,5 +1,5 @@
 ---
-title: "StatsNotes by Kevin"
+title: "Statistics for Social Scientists"
 subtitle: "Lesson 1.1: Random Variables and Distributions"
 format:
     html:

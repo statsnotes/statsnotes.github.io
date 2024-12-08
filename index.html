@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>StatsNotes by Kevin</title>
+<title>Statistics for Social Scientists</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -42,8 +42,8 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">StatsNotes by Kevin</h1>
-            <p class="subtitle lead">Guide to Statistical/Quantitative Methods (Focused on the Social Sciences)</p>
+      <h1 class="title">Statistics for Social Scientists</h1>
+            <p class="subtitle lead">Kevin’s Guide to Quantitative Social Science</p>
                       </div>
   </div>
     
@@ -64,15 +64,13 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#part-i-statistical-and-econometric-theory" id="toc-part-i-statistical-and-econometric-theory" class="nav-link" data-scroll-target="#part-i-statistical-and-econometric-theory">Part I: Statistical and Econometric Theory</a></li>
-  <li><a href="#part-ii-econometric-methods-for-causal-inference" id="toc-part-ii-econometric-methods-for-causal-inference" class="nav-link" data-scroll-target="#part-ii-econometric-methods-for-causal-inference">Part II: Econometric Methods for Causal Inference</a></li>
+  <li><a href="#part-ii-econometrics-for-causal-inference" id="toc-part-ii-econometrics-for-causal-inference" class="nav-link" data-scroll-target="#part-ii-econometrics-for-causal-inference">Part II: Econometrics for Causal Inference</a></li>
   <li><a href="#part-iii-multivariate-statistical-methods" id="toc-part-iii-multivariate-statistical-methods" class="nav-link" data-scroll-target="#part-iii-multivariate-statistical-methods">Part III: Multivariate Statistical Methods</a></li>
   <li><a href="#part-iv-time-series-and-forecasting" id="toc-part-iv-time-series-and-forecasting" class="nav-link" data-scroll-target="#part-iv-time-series-and-forecasting">Part IV: Time Series and Forecasting</a></li>
-  <li><a href="#part-v-applied-machine-learning" id="toc-part-v-applied-machine-learning" class="nav-link" data-scroll-target="#part-v-applied-machine-learning">Part V: Applied Machine Learning</a></li>
-  <li><a href="#part-vi-text-analysis" id="toc-part-vi-text-analysis" class="nav-link" data-scroll-target="#part-vi-text-analysis">Part VI: Text Analysis</a></li>
-  <li><a href="#part-vii-spatial-econometrics" id="toc-part-vii-spatial-econometrics" class="nav-link" data-scroll-target="#part-vii-spatial-econometrics">Part VII: Spatial Econometrics</a></li>
+  <li><a href="#part-v-spatial-econometrics-and-statistics" id="toc-part-v-spatial-econometrics-and-statistics" class="nav-link" data-scroll-target="#part-v-spatial-econometrics-and-statistics">Part V: Spatial Econometrics and Statistics</a></li>
+  <li><a href="#part-vi-statistical-learning-and-text-analysis" id="toc-part-vi-statistical-learning-and-text-analysis" class="nav-link" data-scroll-target="#part-vi-statistical-learning-and-text-analysis">Part VI: Statistical Learning and Text Analysis</a></li>
   <li><a href="#appendix-a-mathematical-methods" id="toc-appendix-a-mathematical-methods" class="nav-link" data-scroll-target="#appendix-a-mathematical-methods">Appendix A: Mathematical Methods</a></li>
-  <li><a href="#appendix-b-game-theory-and-political-economics" id="toc-appendix-b-game-theory-and-political-economics" class="nav-link" data-scroll-target="#appendix-b-game-theory-and-political-economics">Appendix B: Game Theory and Political Economics</a></li>
-  <li><a href="#appendix-c-programming-in-r" id="toc-appendix-c-programming-in-r" class="nav-link" data-scroll-target="#appendix-c-programming-in-r">Appendix C: Programming in R</a></li>
+  <li><a href="#appendix-b-programming-in-r" id="toc-appendix-b-programming-in-r" class="nav-link" data-scroll-target="#appendix-b-programming-in-r">Appendix B: Programming in R</a></li>
   <li><a href="#about-the-author" id="toc-about-the-author" class="nav-link" data-scroll-target="#about-the-author">About the Author</a></li>
   </ul>
 </nav>
@@ -87,28 +85,23 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>This website is a guide on applied statistics and quantitative methods, with a focus on applications to social science (economics, political science, sociology, psychology). This guide was created during my masters degree, as a way to consolidate all my knowledge and skills in one area.</p>
-<p>The guide is divided into parts, with each part containing lessons. You do not have to undertake the parts in order, except that <em>Part I</em> is a prerequisite for subsequent parts.</p>
-<p>I recommend using a laptop or tablet to access this page. Use the sidebar for easy navigation.</p>
-<p><em>Table of Contents:</em></p>
+<p>This is a guide on applied statistics, with a focus on applications to the social sciences. This guide was created during my masters degree, as a way to consolidate all my knowledge and skills in one area.</p>
 <ul>
-<li><a href="https://statsnotes.github.io/#part-i-statistical-and-econometric-theory">Part I: Statistical and Econometric Theory</a></li>
-<li><a href="https://statsnotes.github.io/#part-ii-econometric-methods-for-causal-inference">Part II: Econometric Methods for Causal Inference</a></li>
-<li><a href="https://statsnotes.github.io/#part-iii-multivariate-statistical-methods">Part III: Multivariate Statistical Methods</a></li>
-<li><a href="https://statsnotes.github.io/#part-iv-time-series-and-forecasting">Part IV: Time Series and Forecasting</a></li>
-<li><a href="https://statsnotes.github.io/#part-v-applied-machine-learning">Part V: Applied Machine Learning</a></li>
-<li><a href="https://statsnotes.github.io/#part-vi-text-analysis">Part VI: Text Analysis</a></li>
-<li><a href="https://statsnotes.github.io/#part-vii-spatial-econometrics">Part VII: Spatial Econometrics</a></li>
-<li><a href="https://statsnotes.github.io/#appendix-a-mathematical-methods">Appendix A: Mathematical Methods</a></li>
-<li><a href="https://statsnotes.github.io/#appendix-b-game-theory-and-political-economics">Appendix B: Game Theory and Political Economics</a></li>
-<li><a href="https://statsnotes.github.io/#appendix-c-programming-in-r">Appendix C: Programming in R</a></li>
+<li>If you are interested in non-statistics quantitative methods, see <a href="https://statsnotes.github.io/games">Game Theory for Social Scientists</a>.</li>
 </ul>
+<p>The guide is divided into parts, with each part containing lessons. The guide covers a variety of topics, including statistical theory, causal inference, multivariate statistics, spatial and time-series data, and statistical learning.</p>
+<p>You do not have to undertake the parts in order, except that <em>Part I</em> is a prerequisite for subsequent parts. Each lesson provides R-code for implementation purposes.</p>
+<ul>
+<li>I recommend using a laptop or tablet to access this page. Use the sidebar for easy navigation.</li>
+<li>In the appendix, I provide some guides on useful mathematical methods.</li>
+</ul>
+<hr>
 <p><br></p>
 </section>
 <section id="part-i-statistical-and-econometric-theory" class="level2">
 <h2 class="anchored" data-anchor-id="part-i-statistical-and-econometric-theory">Part I: Statistical and Econometric Theory</h2>
-<p><em>This part introduces the key topics, regression models, and estimators used in statistics and econometrics.</em></p>
-<p><u>Pre-requisites</u>: Single Variable Calculus (see Appendix A, lessons A.1 through A.6). Linear Algebra and Multivariate Calculus is helpful.</p>
+<p><em>This part introduces the key topics, regression models, and estimators used in statistics and econometrics, that form the basics of applied statistical methods.</em></p>
+<p>Pre-requisites: Single Variable Calculus (see Appendix A, lessons A.1 through A.6). Linear Algebra and Multivariate Calculus is helpful.</p>
 <ul>
 <li><a href="https://statsnotes.github.io/theory/1.html">1.1: Random Variables and Distributions</a></li>
 <li><a href="https://statsnotes.github.io/theory/2.html">1.2: Estimates and Statistical Inference</a></li>
@@ -127,8 +120,8 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p><br></p>
 </section>
-<section id="part-ii-econometric-methods-for-causal-inference" class="level2">
-<h2 class="anchored" data-anchor-id="part-ii-econometric-methods-for-causal-inference">Part II: Econometric Methods for Causal Inference</h2>
+<section id="part-ii-econometrics-for-causal-inference" class="level2">
+<h2 class="anchored" data-anchor-id="part-ii-econometrics-for-causal-inference">Part II: Econometrics for Causal Inference</h2>
 <p><em>This part introduces the most popular statistics and econometrics research designs for proving causal relationships in the social sciences.</em></p>
 <p>Pre-requisites: Part I (specifically 1.1 through 1.12).</p>
 <ul>
@@ -162,25 +155,39 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="part-iv-time-series-and-forecasting" class="level2">
 <h2 class="anchored" data-anchor-id="part-iv-time-series-and-forecasting">Part IV: Time Series and Forecasting</h2>
-<p><em>This section introduces the statistical methods used for the analysis of time-series data.</em></p>
+<p><em>This section introduces the statistical methods used for the analysis of time-series data, and how this can be used to make forecasts.</em></p>
 <p>Pre-requisites: Part I</p>
 <p><br></p>
 </section>
-<section id="part-v-applied-machine-learning" class="level2">
-<h2 class="anchored" data-anchor-id="part-v-applied-machine-learning">Part V: Applied Machine Learning</h2>
-<p><em>This section introduces machine learning techniques for improved prediction making</em>.</p>
+<section id="part-v-spatial-econometrics-and-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="part-v-spatial-econometrics-and-statistics">Part V: Spatial Econometrics and Statistics</h2>
+<p><em>This section introduces the concepts and methods behind spatial econometrics and the analysis of spatial data</em>.</p>
+<p>Pre-requisites: Part I</p>
+<ul>
+<li>5.1: Introduction to Spatial Data</li>
+<li>5.2: Descriptive Statistics with Spatial Data</li>
+<li>5.3: Spatial Weights, Aggregation, and Smoothing</li>
+<li>5.4: Spatial Regression and Neighbourhood Effects</li>
+<li>5.5: Causal Inference with Spatial Econometrics</li>
+<li>5.6: Spatial Interaction and Discrete Choice</li>
+<li>5.7: The Modifiable Areal Unit Problem</li>
+</ul>
+<p><br></p>
+</section>
+<section id="part-vi-statistical-learning-and-text-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="part-vi-statistical-learning-and-text-analysis">Part VI: Statistical Learning and Text Analysis</h2>
+<p><em>This section introduces modern machine learning techniques for improved prediction making, and how they can be used for the analysis of textual data.</em></p>
 <p>Pre-requisites: Part I (Part III and IV are helpful, but not necessary).</p>
+<ul>
+<li>6.1: Non-Linear Prediction and Generalised Additive Models</li>
+<li>6.2: Regression Trees, Bagging, and Random Forests</li>
+<li>6.3: Model Selection and Resampling Methods</li>
+<li>6.4: Classification with Naive Bayes and Random Forest</li>
+<li>6.5: Basics of Text Analysis and Dictionary Methods</li>
+<li>6.6: Similarity Metrics and Supervised Learning for Text</li>
+<li>6.7: Structural Topic Models</li>
+</ul>
 <p><br></p>
-</section>
-<section id="part-vi-text-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="part-vi-text-analysis">Part VI: Text Analysis</h2>
-<p><em>This section introduces how we can statistically analyse textual data</em></p>
-<p>Pre-requisites: Part I and Part V.</p>
-<p><br></p>
-</section>
-<section id="part-vii-spatial-econometrics" class="level2">
-<h2 class="anchored" data-anchor-id="part-vii-spatial-econometrics">Part VII: Spatial Econometrics</h2>
-<p><em>This section introduces the concepts behind spatial econometrics and spatial data</em>.</p>
 <p><br></p>
 <hr>
 </section>
@@ -194,36 +201,18 @@ ul.task-list li input[type="checkbox"] {
 <li>A.3: Derivatives and Partial Derivatives</li>
 <li>A.4: Simple Optimisation</li>
 <li>A.5: Integration</li>
-<li>A.6: Basics of Vectors and Matrices</li>
-<li>A.7: General Linear Systems</li>
-<li>A.8: Vector Spaces</li>
-<li>A.9: Linear Operators and Diagonalisation</li>
-<li>A.10: Multivariate Differentiation</li>
-<li>A.11: Multivariate Optimisation</li>
+<li>A.6: Introductory Probability Theory</li>
+<li>A.7: Basics of Vectors and Matrices</li>
+<li>A.8: General Linear Systems</li>
+<li>A.9: Vector Spaces</li>
+<li>A.10: Linear Operators and Diagonalisation</li>
+<li>A.11: Multivariate Differentiation</li>
+<li>A.12: Multivariate Optimisation</li>
 </ul>
 <p><br></p>
 </section>
-<section id="appendix-b-game-theory-and-political-economics" class="level2">
-<h2 class="anchored" data-anchor-id="appendix-b-game-theory-and-political-economics">Appendix B: Game Theory and Political Economics</h2>
-<p><em>This guide focuses on testing theories with statistics. But where do the theories come from? Game Theory is a way to make mathematical models of the world to create hypotheses that we can test with statistics</em>.</p>
-<p>Pre-requisites: Appendix A (A.1-A.6), and some basic microeconomics is helpful.</p>
-<ul>
-<li>B.1: Preferences, Utility, and Basics of Game Theory</li>
-<li>B.2: Dominant Strategies and Nash Equilibrium</li>
-<li>B.3: Further Topics in Nash Equilibrium</li>
-<li>B.4: Mixed Strategy Nash Equilibrium</li>
-<li>B.5: Downsian Model of Electoral Competition</li>
-<li>B.6: Further Applied Spatial Models</li>
-<li>B.7: Subgame Perfect Nash Equilibrium</li>
-<li>B.8: Applied Dynamic Games</li>
-<li>B.9: Games of Imperfect and Incomplete Information</li>
-<li>B.10: Bayesian Perfect Equilibrium</li>
-<li>B.11: Signalling Games</li>
-</ul>
-<p><br></p>
-</section>
-<section id="appendix-c-programming-in-r" class="level2">
-<h2 class="anchored" data-anchor-id="appendix-c-programming-in-r">Appendix C: Programming in R</h2>
+<section id="appendix-b-programming-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="appendix-b-programming-in-r">Appendix B: Programming in R</h2>
 <p><em>This is not a full course in the R-language. This provides a brief guide to useful tips in R</em>.</p>
 <p><br></p>
 <hr>

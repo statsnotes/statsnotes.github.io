@@ -1,5 +1,5 @@
 ---
-title: "StatsNotes by Kevin"
+title: "Statistics for Social Scientists"
 subtitle: "Lesson 1.2: Estimates and Statistical Inference"
 format:
     html:
@@ -118,7 +118,7 @@ Once we have run the estimator, it will output an estimate, a prediction of the 
 An estimate is the value produced by an estimator. It is our guess of what the true population parameter is. We typically notate an estimate as $\hat\theta_n$ (the hat above means estimate).
 :::
 
-The rest of this chapter will be focused on the properties of these estimates.
+The rest of this lesson will be focused on the properties of these estimates.
 
 <br />
 
@@ -191,7 +191,7 @@ The central limit theorem says that when you have a sufficiently large sample si
 
 So cool, the sampling distribution mimics a normal distribution. Why is that important?
 
-Recall from [section 1.6](https://politicalscience.github.io/metrics/1.html#the-normal-distribution), we explained how the normal distribution has some very useful properties in terms of standard deviations.
+Recall from [1.1.6](https://statsnotes.github.io/theory/1.html#the-normal-distribution), we explained how the normal distribution has some very useful properties in terms of standard deviations.
 
 ![](images/clipboard-2691725554.png){fig-align="center" width="85%"}
 
@@ -359,7 +359,7 @@ The correct interpretation is that over many samples from the same population, w
 
 # 1.2.8: Properties of Estimators
 
-In this chapter, we have mostly discussed sampling distributions. Notably, we said two things about sampling distributions:
+In this lesson, we have mostly discussed sampling distributions. Notably, we said two things about sampling distributions:
 
 -   The mean (if the estimator is unbiased) is the true population value of $\theta$.
 -   The variance indicates how spread-out our estimates are.
