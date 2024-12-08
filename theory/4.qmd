@@ -1,6 +1,6 @@
 ---
 title: "Statistics for Social Scientists"
-subtitle: "Lesson 1.4: Simple Linear Regression - Estimation and Interpretation"
+subtitle: "Lesson 1.4: Bivariate Regression - Estimation and Interpretation"
 format:
     html:
         page-layout: article
@@ -24,7 +24,7 @@ format:
 
 This lesson covers the following topics:
 
--   The basic form of the simple linear regression model.
+-   The basic form of the simple linear regression model (bivariate regression).
 -   How we can mathematically estimate the slope and intercept of the best-fit line using the Ordinary Least Squares Estimator.
 -   How we can interpret the OLS estimates as the relationships between two variables.
 -   How we can describe the *goodness of fit* with the R-squared metric.
@@ -57,6 +57,8 @@ $$
 -   Where $\beta_0$ (intercept) and $\beta_1$ (slope) are coefficients of the model that need to be estimated (since they will differ in value between different samples and data).
 -   Where $\beta_1$ (slope) describes the association of $x$ and $y$.
 -   Where $u_i$ is the error term (see below for more details)
+
+The simple linear regression model is also called the bivariate regression model, since there are two variables $y$ and $x$.
 :::
 
 <br />
@@ -332,15 +334,44 @@ $$
 \end{split}
 $$
 
+<br />
+
 ::: callout-note
 ## Useful Properties of Summation
 
-To help us solve this problem, note these 3 properties of summation:
+Before we finish, here are a few key properties of summation
+
+**Property 1:**
 
 $$
-\begin{split}& \sum\limits_{i=1}^n (x_i - \bar{x}) = 0 \\& \sum\limits_{i=1}^n x_i(y_i - \bar{y}) = \sum\limits_{i=1}^n(x_i - \bar{x}) (y_i - \bar{y}) \\& \sum\limits_{i=1}^n x_i(x_i - \bar{x}) = \sum\limits_{i=1}^n(x_i - \bar{x})^2\end{split}
+\sum\limits_{i=1}^n (x_i - \bar{x}) = 0
 $$
+
+-   This is because we can expand the left to $\sum x_i - \sum \bar x$.
+-   Then, we know $\sum x_i = \sum \bar x$ (by the formula for mean), so $\sum x_i - \sum \bar x = 0$.
+
+**Property 2:**
+
+$$
+\sum\limits_{i=1}^n x_i(y_i - \bar{y}) = \sum\limits_{i=1}^n(x_i - \bar{x}) (y_i - \bar{y}) 
+$$
+
+-   This is because on the right side can expand to $\sum [x_i(y_i - \bar y) - \bar x (y_i - \bar y)]$.
+-   Then, split into $\sum x_i (y_i - \bar y) - \bar x \sum (y_i - \bar y)$.
+-   We know that by property 1 (which applies to any variable), $\sum (y_i - \bar y) = 0$. Thus, the right side disappears, and we are left with $\sum x_i (y_i - \bar y)$.
+
+**Property 3:**
+
+$$
+\sum\limits_{i=1}^n x_i(x_i - \bar{x}) = \sum\limits_{i=1}^n(x_i - \bar{x})^2
+$$
+
+-   Start by expanding right side to $\sum [ x_i ( x_i - \bar x) - \bar x (x_i - \bar x)]$
+-   Which splits into $\sum x_i (x_i - \bar x) - \bar x \sum (x_i - \bar x)$
+-   By the first property, we know $\sum x_i - \bar x = 0$, so we are only left with $\sum x_i (x_i - \bar x)$
 :::
+
+<br />
 
 Knowing these properties of summation, we can transform what we had before:
 

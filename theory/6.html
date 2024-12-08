@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>StatsNotes by Kevin</title>
+<title>Statistics for Social Scientists</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,8 +85,8 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">StatsNotes by Kevin</h1>
-            <p class="subtitle lead">Lesson 1.6: Multiple Linear Regression - Estimation and Interpretation</p>
+      <h1 class="title">Statistics for Social Scientists</h1>
+            <p class="subtitle lead">Lesson 1.6: Multiple Regression - Estimation and Interpretation</p>
                       </div>
   </div>
     
@@ -380,8 +380,8 @@ SSE &amp; = \sum\limits_{i=1}^n (y_i - \hat y_i)^2\\
 <p><br></p>
 <p>Taking the partial derivatives of each parameter like in simple linear regression, we get first order conditions:</p>
 <p><span class="math display">
-\begin{split}&amp; \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\&amp; \sum\limits_{i=1}^n X_{1i}(y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\
-&amp; \sum\limits_{i=1}^n X_{2i} (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0
+\begin{split}&amp; \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\&amp; \sum\limits_{i=1}^n x_{1i}(y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\
+&amp; \sum\limits_{i=1}^n x_{2i} (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0
 \end{split}
 </span></p>
 <ul>

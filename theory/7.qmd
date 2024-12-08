@@ -1,0 +1,353 @@
+---
+title: "Statistics for Social Scientists"
+subtitle: "Lesson 1.7: Multiple Regression - Properties and Inference"
+format:
+    html:
+        page-layout: article
+        grid:
+          sidebar-width: 300px
+          body-width: 750px
+          margin-width: 250px
+          gutter-width: 2em
+        fontsize: 12.5pt
+        theme: yeti
+        toc: TRUE
+        toc-depth: 2
+        toc-location: left
+        toc-expand: true
+        toc-title: "Lesson 1.7: Multiple Regression - Properties and Inference"
+        mainfont: "Computer Modern"
+        title-block-banner: true
+        classoption: fleqn
+        html-math-method: katex
+---
+
+This lesson covers the following topics:
+
+-   The conditions on which OLS estimation is an unbiased estimator for multiple regression (Gauss-Markov conditions), and how violations of these conditions will lead to biased estimates.
+-   Omitted Variable Bias, and how it causes violations of the Gauss-Markov conditions.
+-   How we can conduct hypothesis testing in multiple linear regression.
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.7.1: Residuals and Algebraic Properties of OLS
+
+::: callout-note
+This entire lesson will mirror [lesson 1.5](https://statsnotes.github.io/theory/5.html), but will adjust the properties of bivariate regression to multiple regression. I recommend a strong understanding of those topics before starting this chapter.
+:::
+
+Once we have our OLS estimates of parameters $\hat\beta_0 , \dots \hat\beta_k$ (estimated in [1.6.4](https://statsnotes.github.io/theory/6.html#mathematics-of-the-ordinary-least-squares-estimator)), we can obtain the OLS residuals $\hat u_i$:
+
+$$
+\begin{split}
+\hat u_i & = y_i - \hat y_i \\
+& = y_i - (\hat \beta_0 + \hat\beta_1x_{1i} + \dots + \hat\beta_k x_{ki}) \\
+& = y_i - \hat \beta_0 - \hat\beta_1x_{1i} - \dots - \hat\beta_k x_{ki}
+\end{split}
+$$
+
+-   If you do not know what residuals $\hat u_i$ are, and why they are different from $u_i$ error term, see [1.5.1](https://statsnotes.github.io/theory/5.html#algebraic-properties-of-ols).
+
+We can also derive our residuals $\hat u$ from the linear algebra solution of OLS.
+
+$$
+\begin{split}
+\hat u & = y - \hat y \\
+& = y - X \hat\beta \\
+& = y - X(X'X)^{-1}X'y
+\end{split}
+$$
+
+<br />
+
+Recall that the OLS estimates of $\hat\beta_0 , \dots \hat\beta_k$ are chosen to satisfy the following first order conditions (see [1.6.4](https://statsnotes.github.io/theory/6.html#mathematics-of-the-ordinary-least-squares-estimator)):
+
+$$
+\begin{split}& \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\& \sum\limits_{i=1}^n x_{1i}(y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\
+& \sum\limits_{i=1}^n x_{2i} (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0
+\end{split}
+$$
+
+-   and so on for $x_{3i}, ..., x_{ki}$.
+
+Using these properties, we can plug in $\hat u_i = y_i - \hat \beta_0 - \hat\beta_1x_{1i} - \dots - \hat\beta_k x_{ki}$ to get the above conditions:
+
+$$
+\begin{split}
+& \sum\limits_{i=1}^n \hat u_i = 0 \\
+& \sum\limits_{i=1}^n x_{1i} \hat u_i = 0 \\
+& \sum\limits_{i=1}^n x_{2i} \hat u_i = 0 
+\end{split}
+$$
+
+-   and so on for $x_{3i}, ..., x_{ki}$.
+
+These conditions can be used to find a few properties of OLS in multiple linear regression.
+
+<br />
+
+### Property 1: Sum of Residuals is 0
+
+OLS residuals always add up to zero, since:
+
+$$
+\sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = \sum\limits_{i=1}^n \hat u_i = 0
+$$
+
+-   This property ensures that the average value of $y_i$ in our data is the same as the average value of our predictions $\hat y_i$.
+
+<br />
+
+### Property 2: No Covariance Between Any $x$ and Residual.
+
+Using the first order conditions of OLS, and the definition of $\hat u_i$ from above, we know the following to be true:
+
+$$
+\begin{split}
+& \sum\limits_{i=1}^n x_{1i} \hat u_i = 0 \\
+& \sum\limits_{i=1}^n x_{2i} \hat u_i = 0 
+\end{split}
+$$
+
+-   and so on for $x_{3i}, ..., x_{ki}$.
+
+Using the same proof from [1.5.1](https://statsnotes.github.io/theory/5.html#algebraic-properties-of-ols), we know the following are true:
+
+$$
+\begin{split}
+& Cov(x_1, \hat u) = 0 \\
+& Cov(x_2, \hat u) = 0
+\end{split}
+$$
+
+-   and so on for $x_{3i}, ..., x_{ki}$.
+
+Thus, the covariances (and thus correlations) between all explanatory variables $x_1, \dots, x_k$ and $\hat u$ must be zero.
+
+<br />
+
+### Property 3: Regression Line Passes Through Means
+
+For a similar proof in [1.5.1](https://statsnotes.github.io/theory/5.html#algebraic-properties-of-ols), we know that the point $(\bar y, \bar x_1, \dots, \bar x_k)$ is on the regression plane.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.7.2: Unbiasedness of OLS Under the Gauss-Markov Theorem
+
+Unbiasedness, as we have discussed in both [1.2.8](https://statsnotes.github.io/theory/2.html#properties-of-estimators) and [1.5.2](https://statsnotes.github.io/theory/5.html#unbiasedness-of-ols-under-the-gauss-markov-theorem), is a desirable property of estimators.
+
+Just like for simple linear regression, the Gauss-Markov Theorem proves that OLS is unbiased under 4 conditions.
+
+-   Notation note: $\beta_j$ refers to any one of $\beta_1, \dots, \beta_k$. It can be generalised to any of the coefficients besides the intercept.
+
+::: callout-tip
+## Definition: Gauss-Markov Theorem
+
+The Gauss-Markov Theorem states that under 4 conditions, the OLS estimator is an unbiased estimator for $\beta_j$.
+
+-   **MLR.1 (Linearity in Parameters)**: The parameters of the model are linear.
+-   **MLR.2 (Random Sampling)**: All observations in our sample are randomly sampled from the population.
+-   **MLR.3 (No Perfect Mutlicollinearity)**: There are no exact linear relationships among variables (where correlation coefficient equals 1).
+-   **MLR.4 (Zero Conditional Mean)**. The error term $u$ has an expectation of 0, given any value of $x_j$ for any explanatory variable.
+
+[Note specifically that MLR.3 is different than the equivalent condition for simple linear regression]{.underline}. We will explore each condition in detail.
+:::
+
+<br />
+
+### Assumption MLR.1: Linearity
+
+Assumption MLR.1 states that a model must be **linear in parameters**.
+
+This means that the parameters of the model $\beta_0$ and $\beta_1$ must not be multiplied together - they must be added together.
+
+For example, the following is linear:
+
+$$
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u
+$$
+
+While the following is not linear (since parameters $\beta_1$ and $\beta_2$ are multiplied):
+
+$$
+y = \beta_0 + \beta_1\beta_2x_1 + \beta_3 x_2 + u
+$$
+
+Note: This does not mean that the actual regression line must be linear - only the parameters/coefficients must not be multiplied, the variables can be. For example, the following model is still linear in parameters:
+
+$$
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + u
+$$
+
+<br />
+
+### Assumption MLR.2: Random Sampling
+
+All observations in our sample are randomly sampled from the population.
+
+To meet this condition, two criteria must be met:
+
+-   Observations $i$ must be independent of each other - i.e. if you get $y_1$, that does not affect your chances of getting $y_2$.
+-   All observations $i$ must come from the same population.
+
+This assumption allows us to go from:
+
+$$
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u
+$$
+
+To the equation with indexes $i$:
+
+$$
+y_i = \beta_0 + \beta_1 x_{1i} + \beta_2x_{2i} + u_i
+$$
+
+<br />
+
+### Assumption MLR.3: No Perfect Multicollinearity
+
+Recall that in [1.6.6](https://statsnotes.github.io/theory/6.html#regression-anatomy-formula-for-ols-estimation), we derived the OLS estimator in terms of regression anatomy as:
+
+$$
+\hat\beta_j = \frac{\sum_{i=1}^n \widetilde{r_{ji}} \ y_i}{\sum_{i=1}^n \widetilde{r_{ji}}^2}
+$$
+
+Where $\widetilde{r_{ij}}$ is the part of $x_j$ that is uncorrelated with any other explanatory variables.
+
+Obviously, as we know from mathematics, the denominator cannot be zero, or else, $\hat\beta_j$ will not exists. This implies that we cannot derive $\hat\beta_j$ if $\widetilde{r_{ij}} = 0$.
+
+-   What causes $\widetilde{r_{ij}} = 0$?
+-   If $\widetilde{r_{ij}} = 0$, that means there is no part of $x_j$ that is completely uncorrelated with any other explanatory variable.
+-   In other words, that means $x_j$ is **perfectly correlated** to at least one other explanatory variable.
+
+Thus, if $x_j$ is perfectly correlated with any other explanatory variable, coefficient $\hat\beta_j$ is not calculable.
+
+<br />
+
+But what does perfectly correlated mean? Mathematically, it means the correlation coefficient between $x_j$ and any other explanatory variable $x_m$ is equal to 1 or -1.
+
+$$
+|Corr(x_j, x_m)| = 1
+$$
+
+But practically, what does that mean when choosing our explanatory variables?
+
+-   It means that we cannot choose measurements of the same concept in different units.
+-   For example, you cannot include the two variables *height in inches* and *height in cm* in the same regression. This is because both variables are perfectly correlated, just differing only by a common factor.
+
+This only applies if variables are **perfectly** correlated.
+
+-   However, even if there is no perfect correlation, but a high correlation, this can cause some issues (not related to unbiasedness). We will discuss this later.
+
+<br />
+
+### Assumption MLR.4: Zero-Conditional Mean
+
+In the population, the error term $u$ must have an expecation of 0, given all values of $x$. Mathematically:
+
+$$
+E(u|x_1, \dots x_k) = 0 \text{ for all } (x_1, \dots , x_k)
+$$
+
+This also implies that the error term $u$ and any $x_1, \dots , x_k$ are uncorrelated with each other.
+
+-   This is because if $u$ was correlated with $x_j$, it would not always be equal to 0 no matter the value of $x$.
+
+Since the correlation is 0, the covariance between $u$ and any $x_1, \dots, x_k$ must also be 0:
+
+$$
+\begin{split}
+& Cov(x_1,u) = 0 \\
+& Cov(x_2, u) = 0
+\end{split}
+$$
+
+-   and so on for $x_{3i}, ..., x_{ki}$.
+
+<br />
+
+This alternative statement relating to correlation/covariance is called **exogeneity**.
+
+-   If this assumption is violated (where $x_j$ is correlated with error $u$), then we have **endogeneity**, and $x_j$ is considered an **endogeneous regressor**.
+-   We will discuss endogeneity in more detail in lesson 1.7.
+
+This is the most frequently violated of assumptions, yet arguable the most important of assumptions to ensure OLS is unbiased.
+
+-   We will mathematically show this in the next lesson.
+-   Because it is so frequently violated, we will need to introduce further methods beyond simple linear regression for accurate estimation.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.7.3: Proof of Unbiasedness of OLS under Gauss-Markov
+
+In the last section, we covered the Gauss-Markov assumptions, and how when they are met, OLS is unbiased. In this section, we will use those assumptions to prove the unbiasedness of OLS.
+
+-   Or in other words, we want to show $E(\hat\beta_j) = \beta_j$.
+
+For simplicity, let us focus on $\hat\beta_1$. However, this can be generalised to any $\hat\beta_2, \dots, \hat\beta_k$.
+
+::: callout-note
+## Useful Properties of Summations
+
+Before we start, here are a few key properties of summation
+
+**Property 1:**
+
+$$
+\sum\limits_{i=1}^n \widetilde{r_{1i}} = 0
+$$
+
+-   This is because $\widetilde{r_{1i}}$ is a residual term of a OLS regression of outcome $x_1$ and explanatory variables $x_2, \dots, x_k$, and we know OLS residuals sum to 0 (algebraic properties discussed in 1.7.1).
+
+**Property 2:**
+
+$$
+\sum\limits_{i=1}^n \widetilde{r_{1i}} x_{ji} = 0, \text{ given } j=2, \dots, k 
+$$
+
+-   Because for OLS, $\sum x_i \hat u_i = 0$ (1.7.1), and we know $\widetilde{r_{1i}}$ is the residual $\hat u_i$ in a regression with explanatory variables $x_2, \dots, x_k$ and outcome variable $x_1$.
+
+**Property 3:**
+
+$$
+\sum\limits_{i=1}^n \widetilde{r_{1i}} x_{1i} = \sum\limits_{i=1}^n \widetilde{r_{1i}}(\hat x_{1i} + \sum\limits_{i=1}^n \widetilde{r_{1i}}) = \sum\limits_{i=1}^n \widetilde{r_{1i}}^2
+$$
+
+-   Because we have the regression fitted values $\hat x_{1i} = \hat \gamma_0 + \hat\gamma_1 x_2 + \dots + \hat\gamma_{k-1} x_{k} + \widetilde{r_{1i}}$ from [1.6.6](https://statsnotes.github.io/theory/6.html#regression-anatomy-formula-for-ols-estimation).
+-   And we know with regression, actual values are the predicted plus residual: $y_i = \hat y_i + \hat u_i$. Thus, $x_i = \hat x_i + \widetilde{r_{1i}}$.
+:::
+
+<br />
+
+Recall the regression anatomy solution of OLS for $\hat\beta_1$ (derived in [1.6.6](https://statsnotes.github.io/theory/6.html#regression-anatomy-formula-for-ols-estimation)):
+
+$$
+\hat\beta_1 = \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ y_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+$$
+
+-   Where $\widetilde{r_{1i}}$ is the part of $x_1$ uncorrelated with $x_2, \dots, x_k$.
+
+Now, let us plug in $y_i = \beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki} + u_i$ into our regression anatomy formula, and using the properties above, we can solve:
+
+$$
+\begin{split}
+\hat\beta_1 & = \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ y_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
+& = \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ (\beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki} + u_i)}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+\end{split}
+$$

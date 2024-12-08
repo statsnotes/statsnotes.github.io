@@ -86,7 +86,7 @@ window.Quarto = {
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Statistics for Social Scientists</h1>
-            <p class="subtitle lead">Lesson 1.4: Simple Linear Regression - Estimation and Interpretation</p>
+            <p class="subtitle lead">Lesson 1.4: Bivariate Regression - Estimation and Interpretation</p>
                       </div>
   </div>
     
@@ -125,7 +125,7 @@ window.Quarto = {
 
 <p>This lesson covers the following topics:</p>
 <ul>
-<li>The basic form of the simple linear regression model.</li>
+<li>The basic form of the simple linear regression model (bivariate regression).</li>
 <li>How we can mathematically estimate the slope and intercept of the best-fit line using the Ordinary Least Squares Estimator.</li>
 <li>How we can interpret the OLS estimates as the relationships between two variables.</li>
 <li>How we can describe the <em>goodness of fit</em> with the R-squared metric.</li>
@@ -161,6 +161,7 @@ y_i = \beta_0 + \beta_1 x_i + u_i
 <li>Where <span class="math inline">\beta_1</span> (slope) describes the association of <span class="math inline">x</span> and <span class="math inline">y</span>.</li>
 <li>Where <span class="math inline">u_i</span> is the error term (see below for more details)</li>
 </ul>
+<p>The simple linear regression model is also called the bivariate regression model, since there are two variables <span class="math inline">y</span> and <span class="math inline">x</span>.</p>
 </div>
 </div>
 <p><br></p>
@@ -420,6 +421,7 @@ Definition: First Order Conditions of OLS
 &amp; = \sum\limits_{i=1}^n x_i (y_i - \bar{y}) - \hat{\beta}_1 \sum\limits_{i=1}^nx_i (x_i - \bar{x})
 \end{split}
 </span></p>
+<p><br></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -430,12 +432,36 @@ Useful Properties of Summation
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>To help us solve this problem, note these 3 properties of summation:</p>
+<p>Before we finish, here are a few key properties of summation</p>
+<p><strong>Property 1:</strong></p>
 <p><span class="math display">
-\begin{split}&amp; \sum\limits_{i=1}^n (x_i - \bar{x}) = 0 \\&amp; \sum\limits_{i=1}^n x_i(y_i - \bar{y}) = \sum\limits_{i=1}^n(x_i - \bar{x}) (y_i - \bar{y}) \\&amp; \sum\limits_{i=1}^n x_i(x_i - \bar{x}) = \sum\limits_{i=1}^n(x_i - \bar{x})^2\end{split}
+\sum\limits_{i=1}^n (x_i - \bar{x}) = 0
 </span></p>
+<ul>
+<li>This is because we can expand the left to <span class="math inline">\sum x_i - \sum \bar x</span>.</li>
+<li>Then, we know <span class="math inline">\sum x_i = \sum \bar x</span> (by the formula for mean), so <span class="math inline">\sum x_i - \sum \bar x = 0</span>.</li>
+</ul>
+<p><strong>Property 2:</strong></p>
+<p><span class="math display">
+\sum\limits_{i=1}^n x_i(y_i - \bar{y}) = \sum\limits_{i=1}^n(x_i - \bar{x}) (y_i - \bar{y})
+</span></p>
+<ul>
+<li>This is because on the right side can expand to <span class="math inline">\sum [x_i(y_i - \bar y) - \bar x (y_i - \bar y)]</span>.</li>
+<li>Then, split into <span class="math inline">\sum x_i (y_i - \bar y) - \bar x \sum (y_i - \bar y)</span>.</li>
+<li>We know that by property 1 (which applies to any variable), <span class="math inline">\sum (y_i - \bar y) = 0</span>. Thus, the right side disappears, and we are left with <span class="math inline">\sum x_i (y_i - \bar y)</span>.</li>
+</ul>
+<p><strong>Property 3:</strong></p>
+<p><span class="math display">
+\sum\limits_{i=1}^n x_i(x_i - \bar{x}) = \sum\limits_{i=1}^n(x_i - \bar{x})^2
+</span></p>
+<ul>
+<li>Start by expanding right side to <span class="math inline">\sum [ x_i ( x_i - \bar x) - \bar x (x_i - \bar x)]</span></li>
+<li>Which splits into <span class="math inline">\sum x_i (x_i - \bar x) - \bar x \sum (x_i - \bar x)</span></li>
+<li>By the first property, we know <span class="math inline">\sum x_i - \bar x = 0</span>, so we are only left with <span class="math inline">\sum x_i (x_i - \bar x)</span></li>
+</ul>
 </div>
 </div>
+<p><br></p>
 <p>Knowing these properties of summation, we can transform what we had before:</p>
 <p><span class="math display">
 \begin{split}

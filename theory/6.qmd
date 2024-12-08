@@ -1,6 +1,6 @@
 ---
-title: "StatsNotes by Kevin"
-subtitle: "Lesson 1.6: Multiple Linear Regression - Estimation and Interpretation"
+title: "Statistics for Social Scientists"
+subtitle: "Lesson 1.6: Multiple Regression - Estimation and Interpretation"
 format:
     html:
         page-layout: article
@@ -288,8 +288,8 @@ $$
 Taking the partial derivatives of each parameter like in simple linear regression, we get first order conditions:
 
 $$
-\begin{split}& \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\& \sum\limits_{i=1}^n X_{1i}(y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\
-& \sum\limits_{i=1}^n X_{2i} (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0
+\begin{split}& \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\& \sum\limits_{i=1}^n x_{1i}(y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\
+& \sum\limits_{i=1}^n x_{2i} (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0
 \end{split}
 $$
 

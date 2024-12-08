@@ -1,6 +1,6 @@
 ---
-title: "StatsNotes by Kevin"
-subtitle: "Lesson 1.5: Simple Linear Regression - Properties and Inference"
+title: "Statistics for Social Scientists"
+subtitle: "Lesson 1.5: Bivariate Regression - Properties and Inference"
 format:
     html:
         page-layout: article
@@ -34,7 +34,7 @@ This lesson covers the following topics:
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.5.1: Algebraic Properties of OLS
+# 1.5.1: Residuals and Algebraic Properties of OLS
 
 Once we have our OLS estimates $\hat\beta_0$ and $\hat\beta_1$ (explained in [1.4.4](https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator)), we can obtain both our fitted values, and the OLS residuals $\hat u_i$:
 
@@ -78,6 +78,8 @@ $$
 \end{split}
 $$
 
+We can use these conditions to obtain a few properties about the OLS best-fit line.
+
 <br />
 
 ### Property 1: Sum of Residuals is 0
@@ -118,7 +120,7 @@ Thus, the covariance between $x$ and $\hat u$ is (by expanding, then recalling t
 
 $$
 \begin{split}
-cov(x, \hat u) & = \frac{1}{n}\sum\limits_{i=1}^n [(x_i - \bar x)(\hat u_i - \bar{\hat u})] \\
+Cov(x, \hat u) & = \frac{1}{n}\sum\limits_{i=1}^n [(x_i - \bar x)(\hat u_i - \bar{\hat u})] \\
 & = \frac{1}{n}\sum\limits_{i=1}^n(x_i \hat u_i - x_i \bar{\hat u} - \bar x \hat u_i + \bar x \bar {\hat u}) \\
 & = \frac{1}{n} \left( \sum\limits_{i=1}^nx_i \hat u_i - \sum\limits_{i=1}^n x_i\bar{\hat u} - \sum\limits_{i=1}^n \bar x \hat u_i + \sum\limits_{i=1}^n\bar x \bar{\hat u} \right) \\
 & = \frac{1}{n} \left( \sum\limits_{i=1}^nx_i \hat u_i - \sum\limits_{i=1}^n x_i\bar{\hat u} - \bar x\sum\limits_{i=1}^n \hat u_i + \sum\limits_{i=1}^n\bar x \bar{\hat u} \right) \\
@@ -157,7 +159,7 @@ Thus, the OLS estimated best-fit line always passes though point $(\bar x, \bar 
 
 An unbiased estimator, if we recall from [1.2.8](https://statsnotes.github.io/theory/2.html#properties-of-estimators), means that over many different estimates, the expected value of all the estimates is the true parameter value: $E(\hat{\theta}_n) = \theta$.
 
-Unbiasedness is desirable property of causal estimators. Is OLS Unbiased? The Gauss-Markov Theorem proves that OLS is unbiased when 4 conditions are met.
+Unbiasedness is desirable property of estimators. Is OLS Unbiased? The Gauss-Markov Theorem proves that OLS is unbiased when 4 conditions are met.
 
 ::: callout-tip
 ## Definition: Gauss-Markov Theorem
@@ -185,19 +187,19 @@ This means that the parameters of the model $\beta_0$ and $\beta_1$ must not be 
 For example, the following is linear:
 
 $$
-y = \beta_0 + \beta_1 x
+y = \beta_0 + \beta_1 x + u
 $$
 
 While the following is not linear (since parameters are multiplied):
 
 $$
-y = \beta_0\beta_1x
+y = \beta_0\beta_1x + u
 $$
 
 Note: This does not mean that the actual regression line must be linear - only the parameters/coefficients must not be multiplied, the variables can be. For example, the following model is still linear in parameters:
 
 $$
-y = \beta_0 + \beta_1 x^2
+y = \beta_0 + \beta_1 x^2 + u
 $$
 
 <br />
@@ -249,7 +251,7 @@ $$
 E(u|x) = 0 \text{ for all } x
 $$
 
-This also implies that the error term $u$ an $x$ are uncorrelated with each other.
+This also implies that the error term $u$ and $x$ are uncorrelated with each other.
 
 -   This is because if $u$ was correlated with $x$, it would not always be equal to 0 no matter the value of $x$.
 
@@ -279,23 +281,48 @@ This is the most frequently violated of assumptions, yet arguable the most impor
 
 # 1.5.3: Proof of Unbiasedness of OLS under Gauss-Markov
 
-In the last section, we covered the Gauss-Markov assumptions, and how when they are met, OLS is unbiased.
+In the last section, we covered the Gauss-Markov assumptions, and how when they are met, OLS is unbiased. In this section, we will use those assumptions to prove the unbiasedness of OLS.
 
-In this section, we will use those assumptions to prove the unbiasedness of OLS.
-
--   Or in other words, we want to show $E(\beta_1) = \beta_1$
+-   Or in other words, we want to show $E(\hat\beta_1) = \beta_1$
 
 ::: callout-note
 ## Useful Property of Summations
 
 Before we start, here are a few key properties of summation
 
+**Property 1:**
+
 $$
-\begin{split}& \sum\limits_{i=1}^n (x_i - \bar{x}) = 0 \\& \sum\limits_{i=1}^n x_i(y_i - \bar{y}) = \sum\limits_{i=1}^n(x_i - \bar{x}) (y_i - \bar{y}) \\& \sum\limits_{i=1}^n x_i(x_i - \bar{x}) = \sum\limits_{i=1}^n(x_i - \bar{x})^2\end{split}
+\sum\limits_{i=1}^n (x_i - \bar{x}) = 0
 $$
+
+-   This is because we can expand the left to $\sum x_i - \sum \bar x$.
+-   Then, we know $\sum x_i = \sum \bar x$ (by the formula for mean), so $\sum x_i - \sum \bar x = 0$.
+
+**Property 2:**
+
+$$
+\sum\limits_{i=1}^n x_i(y_i - \bar{y}) = \sum\limits_{i=1}^n(x_i - \bar{x}) (y_i - \bar{y}) 
+$$
+
+-   This is because on the right side can expand to $\sum [x_i(y_i - \bar y) - \bar x (y_i - \bar y)]$.
+-   Then, split into $\sum x_i (y_i - \bar y) - \bar x \sum (y_i - \bar y)$.
+-   We know that by property 1 (which applies to any variable), $\sum (y_i - \bar y) = 0$. Thus, the right side disappears, and we are left with $\sum x_i (y_i - \bar y)$.
+
+**Property 3:**
+
+$$
+\sum\limits_{i=1}^n x_i(x_i - \bar{x}) = \sum\limits_{i=1}^n(x_i - \bar{x})^2
+$$
+
+-   Start by expanding right side to $\sum [ x_i ( x_i - \bar x) - \bar x (x_i - \bar x)]$
+-   Which splits into $\sum x_i (x_i - \bar x) - \bar x \sum (x_i - \bar x)$
+-   By the first property, we know $\sum x_i - \bar x = 0$, so we are only left with $\sum x_i (x_i - \bar x)$
 :::
 
-We want to show $E(\beta_1) = \beta_1$. Let us start off with the OLS estimator (which we derived in [1.4.4](https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator)):
+<br />
+
+We want to show $E(\hat\beta_1) = \beta_1$. Let us start off with the OLS estimator (which we derived in [1.4.4](https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator)):
 
 $$
 \hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n(x_i - \bar{x})^2}
