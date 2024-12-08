@@ -804,4 +804,4 @@ The correct interpretation is that over many samples from the same population, w
 
 ------------------------------------------------------------------------
 
-[Course Homepage](https://politicalscience.github.io/metrics/)
+[Homepage](https://statsnotes.github.io)

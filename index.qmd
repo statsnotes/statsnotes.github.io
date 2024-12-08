@@ -26,16 +26,14 @@ format:
 
 This is a guide on applied statistics, with a focus on applications to the social sciences. This guide was created during my masters degree, as a way to consolidate all my knowledge and skills in one area.
 
--   If you are interested in non-statistics quantitative methods, see [Game Theory for Social Scientists](https://statsnotes.github.io/games).
+The guide covers a variety of topics, including statistical theory, causal inference, multivariate statistics, spatial and time-series data, and statistical learning.
 
-The guide is divided into parts, with each part containing lessons. The guide covers a variety of topics, including statistical theory, causal inference, multivariate statistics, spatial and time-series data, and statistical learning.
-
-You do not have to undertake the parts in order, except that *Part I* is a prerequisite for subsequent parts. Each lesson provides R-code for implementation purposes.
+The guide is divided into parts, with each part containing lessons. You do not have to undertake the parts in order, except that *Part I* is a prerequisite for subsequent parts. Each lesson provides R-code for implementation purposes.
 
 -   I recommend using a laptop or tablet to access this page. Use the sidebar for easy navigation.
 -   In the appendix, I provide some guides on useful mathematical methods.
 
-------------------------------------------------------------------------
+Also, if you are interested in political science, I recommend checking out my [Political Science and Political Economics Guide](https://politicalscience.github.io).
 
 <br />
 

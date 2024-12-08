@@ -411,4 +411,4 @@ The later lessons will explore many different estimators, and their properties o
 
 ------------------------------------------------------------------------
 
-[Course Homepage](https://politicalscience.github.io/metrics/)
+[Homepage](https://statsnotes.github.io)
