@@ -110,8 +110,7 @@ window.Quarto = {
   <li><a href="#proof-of-unbiasedness-of-ols-under-gauss-markov" id="toc-proof-of-unbiasedness-of-ols-under-gauss-markov" class="nav-link" data-scroll-target="#proof-of-unbiasedness-of-ols-under-gauss-markov">1.7.3: Proof of Unbiasedness of OLS under Gauss-Markov</a></li>
   <li><a href="#omitted-variable-bias" id="toc-omitted-variable-bias" class="nav-link" data-scroll-target="#omitted-variable-bias">1.7.4: Omitted Variable Bias</a></li>
   <li><a href="#endogeneity-and-violation-of-gauss-markov" id="toc-endogeneity-and-violation-of-gauss-markov" class="nav-link" data-scroll-target="#endogeneity-and-violation-of-gauss-markov">1.7.5: Endogeneity and Violation of Gauss-Markov</a></li>
-  <li><a href="#method-of-moments-estimator" id="toc-method-of-moments-estimator" class="nav-link" data-scroll-target="#method-of-moments-estimator">1.7.6: Method of Moments Estimator</a></li>
-  <li><a href="#ols-as-a-method-of-moments-estimator-and-endogeneity" id="toc-ols-as-a-method-of-moments-estimator-and-endogeneity" class="nav-link" data-scroll-target="#ols-as-a-method-of-moments-estimator-and-endogeneity">1.7.7: OLS As a Method of Moments Estimator and Endogeneity</a></li>
+  <li><a href="#ols-as-a-method-of-moments-estimator" id="toc-ols-as-a-method-of-moments-estimator" class="nav-link" data-scroll-target="#ols-as-a-method-of-moments-estimator">1.7.6: OLS as a Method of Moments Estimator</a></li>
   </ul>
 </nav>
 </div>
@@ -604,7 +603,7 @@ Cov(x_j, u) ≠ 0
 </div>
 </div>
 <p><br></p>
-<p><u>Thus, the violation of the MLR.4 Zero-Conditional Mean Asusmption frequently results from omitting confounding variables that are correlated with both our explanatory variable of interest and the outcome variable.</u></p>
+<p><u>Thus, the violation of the MLR.4 Zero-Conditional Mean Assumption frequently results from omitting confounding variables that are correlated with both our explanatory variable of interest and the outcome variable.</u></p>
 <ul>
 <li>Endogeneity can also be caused by other factors, such as measurement error, or simultaneity (when both the explanatory variable and outcome variable explain each other). However, the primary concern that we worry about in econometrics is omitted variable bias.</li>
 </ul>
@@ -622,16 +621,121 @@ Cov(x_j, u) ≠ 0
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
-<section id="method-of-moments-estimator" class="level1">
-<h1>1.7.6: Method of Moments Estimator</h1>
+<section id="ols-as-a-method-of-moments-estimator" class="level1">
+<h1>1.7.6: OLS as a Method of Moments Estimator</h1>
+<p>So far, we have discussed why endogeneity is an issue through omitted variable bias. However, there is another way to show the issue with endogeneity and why it causes bias - by describing the OLS estimator as a method of moments estimator.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Method of Moments Estimator
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The Method of Moments Estimator is another estimator of the true value of populations in the parameter.</p>
+<p>The estimator defines key population <strong>moments</strong> of interest - which are the population parameters written in terms of expected values.</p>
+<p>Then, the Method of Moments uses the sample equivalents of the population moments to estimate the population parameter.</p>
+<ul>
+<li>For example, to estimate the population mean, the Method of Moments uses the sample mean.</li>
+</ul>
+<p>We should have <strong>at least</strong> as many population moments, as we have estimands.</p>
+</div>
+</div>
 <p><br></p>
+<p>This is a little hard to grasp. However, a simple example of the Method of Moments estimator can help us understand this.</p>
+<p>Let us say that we have some random variable <span class="math inline">y</span>, with a true population mean <span class="math inline">\mu</span>. We want to estimate <span class="math inline">\mu</span>, but we only have a sample of the population</p>
+<p>First, let us define the moment of interest <span class="math inline">\mu</span> in terms of expectation:</p>
+<p><span class="math display">
+\mu = E(y)
+</span></p>
+<p>The method of moments says we should use the sample equivalent of the population parameter. The sample equivalent of <span class="math inline">\mu</span> (the true mean of the population), is of course, the sample mean <span class="math inline">\bar y</span>.</p>
+<p>With the method of moments estimator, our “moment” estimate of the true mean <span class="math inline">\mu</span> of <span class="math inline">y</span> would be:</p>
+<p><span class="math display">
+\hat\mu = \bar y = \frac{1}{n}\sum\limits_{i=1}^ny_i
+</span></p>
+<p><br></p>
+<p>Another example of a Method of Moments estimator is if we have some random variable <span class="math inline">y</span>, and we want to estimate the population mean <span class="math inline">\mu</span> and variance <span class="math inline">\sigma^2</span>.</p>
+<p>Here, we have two population moments <span class="math inline">\mu</span> and <span class="math inline">\sigma^2</span>, that can be expressed in expected value:</p>
+<p><span class="math display">
+\begin{split}
+&amp; \mu = E(y) \\
+&amp; \sigma^2 = E((y - \mu)^2)
+\end{split}
+</span></p>
+<p>The method of moments estimator uses the sample equivalents of the population parameters to estimate it. Thus, our “moment” estimates are:</p>
+<p><span class="math display">
+\begin{split}
+&amp; \hat\mu = \bar y \\
+&amp; \hat\sigma^2 = S.Var(y)
+\end{split}
+</span></p>
+<ul>
+<li>Where <span class="math inline">S.Var(y)</span> is the variance of the sample <span class="math inline">y</span>.</li>
+</ul>
+<p><br></p>
+<p><u>OLS can also be considered a Method of Moments estimator</u>. We will have moments for each parameter we are trying to estimate.</p>
+<ul>
+<li>So for bivariate regression, we will have 2 moments for <span class="math inline">\beta_0</span> and <span class="math inline">\beta_1</span>.</li>
+<li>For multiple regression, we will have <span class="math inline">k</span> moments for <span class="math inline">\beta_0, \beta_1, \dots, \beta_k</span>.</li>
+</ul>
+<p>For example, let us take bivariate regression as an example.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Bivariate Regression as a Method of Moments Estimator
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider the bivariate regression model:</p>
+<p><span class="math display">
+y = \beta_0 + \beta_1x + u
+</span></p>
+<p>The OLS estimator can be derived as a method of moments estimator, with 2 moments, one for each parameter (<span class="math inline">\beta_0, \beta_1</span>):</p>
+<p><span class="math display">
+\begin{split}
+&amp; E(y-\beta_0 -\beta_1x) = 0 \\
+&amp; E(x(y - \beta_0 - \beta_1 x)) = 0
+\end{split}
+</span></p>
+<p>Since we know <span class="math inline">u = y - \beta_0 - \beta_1 x</span>, we can rewrite the two moments as:</p>
+<p><span class="math display">
+\begin{split}
+&amp; E(u) = 0 \\
+&amp; E(xu) = 0
+\end{split}
+</span></p>
+<p>The estimates of these moments would use the sample equivalents: <span class="math inline">\hat\beta_0</span> and <span class="math inline">\hat\beta_1</span>.</p>
+<p><span class="math display">
+\begin{split}
+&amp; E(y-\hat\beta_0 -\hat\beta_1x) = 0 \\
+&amp; E(x(y - \hat\beta_0 - \hat\beta_1 x)) = 0
+\end{split}
+</span></p>
+<p>These result in the same estimates as the OLS estimator.</p>
+</div>
+</div>
+<p><br></p>
+<p>The moment conditions that define OLS as a method of moments are <span class="math inline">E(u) = 0</span> and <span class="math inline">E(xu) = 0</span>. These two together imply that <span class="math inline">Cov(x,u) = 0</span> (a very similar proof provided in <a href="https://statsnotes.github.io/theory/5.html#residuals-and-algebraic-properties-of-ols">1.5.1</a>.</p>
+<ul>
+<li>An explanatory variable <span class="math inline">x</span> is an <strong>exogenous</strong> regressor if <span class="math inline">Cov(x,u) = 0</span>.</li>
+</ul>
+<p>However, if <span class="math inline">Cov(x,u) ≠ 0</span>, that means our moment conditions are invalid.</p>
+<ul>
+<li>An explanatory variable <span class="math inline">x</span> is an <strong>endogenous</strong> regressor if <span class="math inline">Cov(x,u)≠0</span>.</li>
+</ul>
+<p>Thus, when an endogenous regressor is present, our moment conditions are invalid, and thus, our estimates are biased.</p>
+<ul>
+<li>This is another way to show why endogeneity is an issue for regression, as we covered previously in <a href="https://statsnotes.github.io/theory/7.html#endogeneity-and-violation-of-gauss-markov">1.7.5</a>.</li>
+</ul>
+<p>We will come back to the Method of Moments estimator in lesson 1.10, when we discuss the Instrumental Variables Estimator, and how that estimator solves the issue of the invalid moment due to endogeneity.</p>
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
-</section>
-<section id="ols-as-a-method-of-moments-estimator-and-endogeneity" class="level1">
-<h1>1.7.7: OLS As a Method of Moments Estimator and Endogeneity</h1>
-<p><br></p>
 </section>
 
 </main>

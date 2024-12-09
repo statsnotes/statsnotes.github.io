@@ -540,7 +540,7 @@ When endogeneity exists, the assumption of zero-conditional mean/exogeneity $E(u
 
 <br />
 
-[Thus, the violation of the MLR.4 Zero-Conditional Mean Asusmption frequently results from omitting confounding variables that are correlated with both our explanatory variable of interest and the outcome variable.]{.underline}
+[Thus, the violation of the MLR.4 Zero-Conditional Mean Assumption frequently results from omitting confounding variables that are correlated with both our explanatory variable of interest and the outcome variable.]{.underline}
 
 -   Endogeneity can also be caused by other factors, such as measurement error, or simultaneity (when both the explanatory variable and outcome variable explain each other). However, the primary concern that we worry about in econometrics is omitted variable bias.
 
@@ -561,16 +561,134 @@ However, as we will discuss a lot more in Part II on causal inference, including
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.7.6: Method of Moments Estimator
+# 1.7.6: OLS as a Method of Moments Estimator
+
+So far, we have discussed why endogeneity is an issue through omitted variable bias. However, there is another way to show the issue with endogeneity and why it causes bias - by describing the OLS estimator as a method of moments estimator.
+
+::: callout-tip
+## Definition: Method of Moments Estimator
+
+The Method of Moments Estimator is another estimator of the true value of populations in the parameter.
+
+The estimator defines key population **moments** of interest - which are the population parameters written in terms of expected values.
+
+Then, the Method of Moments uses the sample equivalents of the population moments to estimate the population parameter.
+
+-   For example, to estimate the population mean, the Method of Moments uses the sample mean.
+
+We should have **at least** as many population moments, as we have estimands.
+:::
 
 <br />
+
+This is a little hard to grasp. However, a simple example of the Method of Moments estimator can help us understand this.
+
+Let us say that we have some random variable $y$, with a true population mean $\mu$. We want to estimate $\mu$, but we only have a sample of the population
+
+First, let us define the moment of interest $\mu$ in terms of expectation:
+
+$$
+\mu = E(y)
+$$
+
+The method of moments says we should use the sample equivalent of the population parameter. The sample equivalent of $\mu$ (the true mean of the population), is of course, the sample mean $\bar y$.
+
+With the method of moments estimator, our "moment" estimate of the true mean $\mu$ of $y$ would be:
+
+$$
+\hat\mu = \bar y = \frac{1}{n}\sum\limits_{i=1}^ny_i
+$$
+
+<br />
+
+Another example of a Method of Moments estimator is if we have some random variable $y$, and we want to estimate the population mean $\mu$ and variance $\sigma^2$.
+
+Here, we have two population moments $\mu$ and $\sigma^2$, that can be expressed in expected value:
+
+$$
+\begin{split}
+& \mu = E(y) \\
+& \sigma^2 = E((y - \mu)^2)
+\end{split}
+$$
+
+The method of moments estimator uses the sample equivalents of the population parameters to estimate it. Thus, our "moment" estimates are:
+
+$$
+\begin{split}
+& \hat\mu = \bar y \\
+& \hat\sigma^2 = S.Var(y)
+\end{split}
+$$
+
+-   Where $S.Var(y)$ is the variance of the sample $y$.
+
+<br />
+
+[OLS can also be considered a Method of Moments estimator]{.underline}. We will have moments for each parameter we are trying to estimate.
+
+-   So for bivariate regression, we will have 2 moments for $\beta_0$ and $\beta_1$.
+-   For multiple regression, we will have $k$ moments for $\beta_0, \beta_1, \dots, \beta_k$.
+
+For example, let us take bivariate regression as an example.
+
+::: callout-tip
+## Definition: Bivariate Regression as a Method of Moments Estimator
+
+Consider the bivariate regression model:
+
+$$
+y = \beta_0 + \beta_1x + u
+$$
+
+The OLS estimator can be derived as a method of moments estimator, with 2 moments, one for each parameter ($\beta_0, \beta_1$):
+
+$$
+\begin{split}
+& E(y-\beta_0 -\beta_1x) = 0 \\
+& E(x(y - \beta_0 - \beta_1 x)) = 0
+\end{split}
+$$
+
+Since we know $u = y - \beta_0 - \beta_1 x$, we can rewrite the two moments as:
+
+$$
+\begin{split}
+& E(u) = 0 \\
+& E(xu) = 0
+\end{split}
+$$
+
+The estimates of these moments would use the sample equivalents: $\hat\beta_0$ and $\hat\beta_1$.
+
+$$
+\begin{split}
+& E(y-\hat\beta_0 -\hat\beta_1x) = 0 \\
+& E(x(y - \hat\beta_0 - \hat\beta_1 x)) = 0
+\end{split}
+$$
+
+These result in the same estimates as the OLS estimator.
+:::
+
+<br />
+
+The moment conditions that define OLS as a method of moments are $E(u) = 0$ and $E(xu) = 0$. These two together imply that $Cov(x,u) = 0$ (a very similar proof provided in [1.5.1](https://statsnotes.github.io/theory/5.html#residuals-and-algebraic-properties-of-ols).
+
+-   An explanatory variable $x$ is an **exogenous** regressor if $Cov(x,u) = 0$.
+
+However, if $Cov(x,u) ≠ 0$, that means our moment conditions are invalid.
+
+-   An explanatory variable $x$ is an **endogenous** regressor if $Cov(x,u)≠0$.
+
+Thus, when an endogenous regressor is present, our moment conditions are invalid, and thus, our estimates are biased.
+
+-   This is another way to show why endogeneity is an issue for regression, as we covered previously in [1.7.5](https://statsnotes.github.io/theory/7.html#endogeneity-and-violation-of-gauss-markov).
+
+We will come back to the Method of Moments estimator in lesson 1.10, when we discuss the Instrumental Variables Estimator, and how that estimator solves the issue of the invalid moment due to endogeneity.
 
 <br />
 
 ------------------------------------------------------------------------
 
 [Homepage](https://statsnotes.github.io)
-
-# 1.7.7: OLS As a Method of Moments Estimator and Endogeneity
-
-<br />

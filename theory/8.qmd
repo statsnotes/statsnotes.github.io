@@ -26,7 +26,7 @@ This lesson covers the following topics:
 
 -   How standard errors are calculated under the assumption of homoscedasticity.
 -   How hypothesis tests (including multiple coefficients at once) and confidence intervals are conducted.
--   How the presence of heteroscedasticity affects our standard errors, and how we can adjust for this.
+-   How the presence of heteroscedasticity affects our standard errors, and how we can adjust for this with robust standard errors.
 -   How OLS estimates behave as our sample size increases (asymptotic properties).
 
 ::: callout-note
@@ -353,7 +353,86 @@ The p-value is the probability of getting a test statistic equally or more extre
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.8.5: Heteroscedasticity and Robust Standard Errors
+# 1.8.5: Robust Standard Errors for Bivariate Regression
+
+MLR.5 Homoscedasticity states that $Var(u|x_1, \dots x_k) = \sigma^2$.
+
+-   Or in other words, no matter the value of $x_1, \dots, x_k$, the variance of the error term is constant at $\sigma^2$.
+
+When this is violated (so when the values of the explanatory variables effect the variance of the error term), we have **heteroscedasticity**.
+
+-   We provided graphical examples of homoscedasticity in [1.5.4](https://statsnotes.github.io/theory/5.html#variance-of-the-ols-estimator-and-homoscedasticity).
+
+When MLR.5 Homoscedasticity is violated, the OLS estimator is still unbiased, however, it is no longer the unbiased linear estimator with the least variance.
+
+More importantly for us however, is that heteroscedasticity invalidates the variance and standard error formulas we have calculated earlier in [1.8.1](https://statsnotes.github.io/theory/8.html#variance-of-the-ols-estimator) and [1.8.2](https://statsnotes.github.io/theory/8.html#standard-errors-and-multicollinearity) (as well as for simple linear regression in [1.5.5](https://statsnotes.github.io/theory/5.html#deriving-variance-of-ols-estimates)).
+
+<br />
+
+Let us calculate these standard errors under heteroscedasticity. For simplicity, consider the bivariate regression:
+
+$$
+y_i = \beta_0 + \beta_1 x_i + u_i
+$$
+
+However, without MLR.5 Homoscedasticity, variance $Var(u|x)$ is no longer constant at $\sigma^2$. Instead, $Var(u|x)$ varies depending on the value of $x$. Let us define the variance as:
+
+$$
+Var(u_i|x_i) = \sigma_i^2
+$$
+
+-   Where $\sigma^2_1$ is the error term variance for $x_1$, and $\sigma_2^2$ is the error term variance for $x_2$, and so on $\sigma_3^2, \dots, \sigma_n^2$.
+
+Then, recalling from the start of [1.5.5](https://statsnotes.github.io/theory/5.html#deriving-variance-of-ols-estimates), we have the following formula for the simple linear regression $\hat\beta_1$ estimate:
+
+$$
+\hat\beta_1 = \beta_1 + \sum_{i=1}^nw_i u_i
+$$
+
+-   Where $w_i = \frac{x_i - \bar x}{\sum(x_i - \bar x)^2}$, which is a function of random variable $x$.
+-   We could also write $w_i$ as $\frac{x_i - \bar x}{SST_x}$.
+
+We know that $\beta_1$ is a constant (the true value in the population), so that never changes. Thus, it cannot be the variance in $\hat\beta_1$. Thus, the second part is the variance in $\hat\beta_1$. Thus:
+
+$$
+\begin{split}
+Var(\hat\beta_1|x) & = Var \left( \sum\limits_{i=1}^n w_i u_i \biggr| x \right) \\
+& = \sum\limits_{i=1}^n Var(w_i u_i |x) \\
+& = \sum\limits_{i=1}^n w_i^2 \ Var (u_i | x) \\
+& = \sum\limits_{i=1}^nw_i^2 \ Var(u_i|x_i) \\
+& = \sum\limits_{i=1}^n w_i^2 \sigma_i^2
+\end{split}
+$$
+
+Now, plugging back $w_i$ in, we get:
+
+$$
+\begin{split}
+Var(\hat\beta_1|x) & = \sum\limits_{i=1}^n w_i^2 \sigma_i^2 \\
+& = \sum\limits_{i=1}^n \left(\frac{x_i - \bar x}{SST_x} \right)^2 \sigma^2_i \\
+& = \frac{\sum_{i=1}^n (x_i - \bar x)^2 \sigma^2_i}{SST_x^2}
+\end{split}
+$$
+
+Of course, just like with homoscedasticity, we do not know $\sigma_i^2$, and have to estimate it with $\hat u$. We do not need a degrees of freedom adjustment in this case. Thus, our estimate of variance is:
+
+$$
+\widehat{Var}(\hat\beta_1|x) = \frac{\sum_{i=1}^n (x_i - \bar x)^2 \hat u^2_i}{SST_x^2}
+$$
+
+And thus, the standard error (square root of variance) of our estimate $\hat\beta_1$ under homoscedasticity is the square root of our estimate of variance.
+
+::: callout-tip
+## Definition: Robust Standard Error for Bivariate Regression
+
+The heteroscedasticity-robust standard error for $\hat\beta_1$ in bivariate regression is:
+
+$$
+\widehat{se}(\hat\beta_1|x) = \sqrt{\frac{\sum_{i=1}^n (x_i - \bar x)^2 \hat u^2_i}{SST_x^2}}
+$$
+
+-   Where SST is the total sum of squares $SST = \sum(y_i - \bar y)^2$.
+:::
 
 <br />
 
@@ -363,7 +442,77 @@ The p-value is the probability of getting a test statistic equally or more extre
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.8.6: Introduction to Asymptotic Properties
+# 1.8.6: Robust Standard Errors for Multiple Regression
+
+Let us do the same as the last section, but for multiple regression.
+
+Without MLR.5 Homoscedasticity, variance $Var(u|x)$ is no longer constant at $\sigma^2$. Instead, $Var(u|x)$ varies depending on the value of $x$. Let us define the variance as:
+
+$$
+Var(u_i|x_{1i}, \dots, x_{ki}) = \sigma_i^2
+$$
+
+Let us find the variance of OLS estimates (we will use $\hat\beta_1$ for simplicity, but this applies to any other coefficient $\hat\beta_1 , \dots, \hat\beta_k$. In proving unbiasedness of OLS in [1.7.3](https://statsnotes.github.io/theory/7.html#proof-of-unbiasedness-of-ols-under-gauss-markov), we got to this stage:
+
+$$
+\hat\beta_1 = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+$$
+
+We know that $\beta_1$ is a constant (the true value in the population), so that never changes. Thus, it cannot be the variance in $\hat\beta_1$. Thus, the second part is the variance in $\hat\beta_1$.
+
+Let us define $w_i$ as following, as a function of $x_1, \dots, x_k$:
+
+$$
+w_i = \frac{\widetilde{r_{1i}}}{\sum_{i=1}^n\widetilde{r_{1i}}^2}
+$$
+
+This allows us to write $\hat\beta_1$ as:
+
+$$
+\hat\beta_1 = \beta_1 + \sum\limits_{i=1}^nw_i u_i
+$$
+
+<br />
+
+Thus, we can proceed in the same way as the simple linear regression case in the last section.
+
+$$
+\begin{split}
+Var(\hat\beta_1|x_1, \dots, x_k) & = Var\left( \sum\limits_{i=1}^nw_i u_i \biggr|x_1, \dots ,x_k \right) \\ & = \sum\limits_{i=1}^n Var(w_i u_i | x_1, \dots, x_k) \\
+& = \sum\limits_{i=1}^n w_i^2 \ Var(u_i | x_1, \dots, x_k) \\
+& = \sum\limits_{i=1}^n w_i^2 \sigma^2_i
+\end{split}
+$$
+
+Now, plugging back in $w_i$, we get:
+
+$$
+\begin{split}
+Var(\hat\beta_1|x) & = \sum\limits_{i=1}^n w_i^2 \sigma_i^2 \\
+& = \sum\limits_{i=1}^n \left(\frac{\widetilde{r_{1i}}}{\sum_{i=1}^n\widetilde{r_{1i}}^2} \right)^2 \sigma^2_i \\
+& = \frac{\sum_{i=1}^n \widetilde{r_{1i}}^2 \sigma^2_i}{\sum_{i=1}^n\widetilde{r_{1i}}^2}
+\end{split}
+$$
+
+Of course, just like before, we do not know $\sigma_i^2$, and have to estimate it with $\hat u$. Thus, our estimate of variance is:
+
+$$
+\widehat{Var}(\hat\beta_1) = \frac{\sum_{i=1}^n \widetilde{r_{1i}}^2 \sigma^2_i}{\sum_{i=1}^n\widetilde{r_{1i}}^2}
+$$
+
+And thus, the standard error (square root of variance) of our estimate $\hat\beta_1$ under homoscedasticity is the square root of our estimate of variance.
+
+-   This can be generalised to any other coefficient $\hat\beta_1, \dots, \hat\beta_k$.
+
+::: callout-tip
+## Definition: Robust Standard Error for Multiple Regression
+
+The heteroscedasticity-robust standard error for $\hat\beta_1$ in multiple regression is:
+
+$$
+\widehat{se}(\hat\beta_j) = \sqrt{\frac{\sum_{i=1}^n \widetilde{r_{ji}}^2 \sigma^2_i}{\sum_{i=1}^n\widetilde{r_{ji}}^2}}
+$$
+:::
 
 <br />
 
@@ -372,6 +521,73 @@ The p-value is the probability of getting a test statistic equally or more extre
 [Homepage](https://statsnotes.github.io)
 
 # 1.8.7: Asymptotic Consistency of OLS
+
+Asymptotic properties are properties of estimators, when our sample size becomes very large.
+
+-   So in the case of OLS, the properties of the OLS estimator for $\hat\beta_j$ as sample size $n \rightarrow ∞$.
+
+The most important asymptotic property is consistency.
+
+::: callout-tip
+## Definition: Consistency of an Esimtator
+
+An estimator is consistent, if when the sample size $n$ becomes very large (towards infinity), the estimator $\hat\theta$ converges to the true value of the unknown parameter $\theta$.
+
+Or in other words, as the sample size trends towards infinity, the sample variance decreases significantly, and estimates $\hat\theta$ start to closely consolidate around the true population value.
+
+Mathematically:
+
+$$
+\text{plim}(\hat\theta_n) = \theta
+$$
+
+-   Where $\text{plim}$ is a probability limit, where the distribution of $\hat\theta$ becomes more and more concentrated around $\theta$ and collapses to constant $\theta$ at the limit towards infinity.
+:::
+
+Consistency is desirable, since this means that if we increase our sample sizes, we will get closer to the truth.
+
+<br />
+
+One estimator that is consistent is the sample mean estimator (for estimating the true population mean).
+
+Sample mean estimators are consistent because of the **law of large numbers**. The law of large numbers states:
+
+$$
+\text{plim}(\bar z_n) = \mu_z
+$$
+
+-   Where $z$ is a random variable, and $\bar z_n$ is the sample estimate.
+
+Why is this the case? Let us look at the variance of the estimator $\bar z_n$. Let population $Var(z_i) = \sigma^2$. Then, we can find the variance of $\bar z_n$.
+
+$$
+\begin{split}
+Var(\bar z_n) & = Var \left( \frac{1}{n} \sum\limits_{i=1}^nz_i \right) \\
+& = \left( \frac{1}{n} \right) ^2 Var \left( \sum\limits_{i=1}^n z_i \right) \\
+& = \frac{1}{n^2} \sum\limits_{i=1}^n Var(z_i) \\
+& = \frac{1}{n^2} \sum\limits_{i=1}^n \sigma^2 \\
+& = \frac{1}{n} n\sigma^2 \\
+& = \frac{\sigma^2}{n}
+\end{split}
+$$
+
+And when sample size $n$ approaches infinity, we know:
+
+$$
+\lim\limits_{n \rightarrow ∞} Var(\bar z_n) = \lim\limits_{n \rightarrow ∞} \frac{\sigma^2}{n} = 0
+$$
+
+Thus, the sample mean estimator is consistent, as the variance goes to zero as sample size increases infinitely, and it is unbiased.
+
+Not only is sample mean a consistent estimator for moment $E(z_i)$, the law of large number also says this is true for other sample moment estimators, such as sample variance.
+
+-   If you do not know what a moment is, see 1.7.7.
+
+<br />
+
+OLS is also a consistent estimator.
+
+<br />
 
 <br />
 
