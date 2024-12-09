@@ -158,7 +158,7 @@ Note
 \end{split}
 </span></p>
 <ul>
-<li>If you do not know what residuals <span class="math inline">\hat u_i</span> are, and why they are different from <span class="math inline">u_i</span> error term, see <a href="https://statsnotes.github.io/theory/5.html#algebraic-properties-of-ols">1.5.1</a>.</li>
+<li>If you do not know what residuals <span class="math inline">\hat u_i</span> are, and why they are different from <span class="math inline">u_i</span> error term, see <a href="https://statsnotes.github.io/theory/5.html#residuals-and-algebraic-properties-of-ols">1.5.1</a>.</li>
 </ul>
 <p>We can also derive our residuals <span class="math inline">\hat u</span> from the linear algebra solution of OLS.</p>
 <p><span class="math display">
@@ -214,7 +214,7 @@ Note
 <ul>
 <li>and so on for <span class="math inline">x_{3i}, ..., x_{ki}</span>.</li>
 </ul>
-<p>Using the same proof from <a href="https://statsnotes.github.io/theory/5.html#algebraic-properties-of-ols">1.5.1</a>, we know the following are true:</p>
+<p>Using the same proof from <a href="https://statsnotes.github.io/theory/5.html#residuals-and-algebraic-properties-of-ols">1.5.1</a>, we know the following are true:</p>
 <p><span class="math display">
 \begin{split}
 &amp; Cov(x_1, \hat u) = 0 \\
@@ -229,7 +229,7 @@ Note
 </section>
 <section id="property-3-regression-line-passes-through-means" class="level3">
 <h3 class="anchored" data-anchor-id="property-3-regression-line-passes-through-means">Property 3: Regression Line Passes Through Means</h3>
-<p>For a similar proof in <a href="https://statsnotes.github.io/theory/5.html#algebraic-properties-of-ols">1.5.1</a>, we know that the point <span class="math inline">(\bar y, \bar x_1, \dots, \bar x_k)</span> is on the regression plane.</p>
+<p>For a similar proof in <a href="https://statsnotes.github.io/theory/5.html#residuals-and-algebraic-properties-of-ols">1.5.1</a>, we know that the point <span class="math inline">(\bar y, \bar x_1, \dots, \bar x_k)</span> is on the regression plane.</p>
 <p><br></p>
 <p><br></p>
 <hr>
@@ -284,20 +284,22 @@ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + u
 </section>
 <section id="assumption-mlr.2-random-sampling" class="level3">
 <h3 class="anchored" data-anchor-id="assumption-mlr.2-random-sampling">Assumption MLR.2: Random Sampling</h3>
-<p>All observations in our sample are randomly sampled from the population.</p>
-<p>To meet this condition, two criteria must be met:</p>
+<p>This assumption says that all observations in our sample are randomly sampled from the same population.</p>
+<p>Why is this useful? Take the standard linear model:</p>
+<p><span class="math display">
+y = \beta_0 + \beta_1x_1 + \dots + \beta_kx_k + u
+</span></p>
+<p>The error term <span class="math inline">u</span> is some random variable (with its own probability distribution), that can be defined by its expectation <span class="math inline">E(u)</span>.</p>
 <ul>
-<li>Observations <span class="math inline">i</span> must be independent of each other - i.e.&nbsp;if you get <span class="math inline">y_1</span>, that does not affect your chances of getting <span class="math inline">y_2</span>.</li>
-<li>All observations <span class="math inline">i</span> must come from the same population.</li>
+<li>If we randomly select one observation <span class="math inline">i</span> from the data, each observation <span class="math inline">i</span> has an equal chance of being selected.</li>
+<li>The error term for that observation, <span class="math inline">u_i</span> should also have the same expectation as the random variable <span class="math inline">u</span>, since each observation <span class="math inline">i</span> within <span class="math inline">u</span> has the same chance of being selected.</li>
 </ul>
-<p>This assumption allows us to go from:</p>
-<p><span class="math display">
-y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u
-</span></p>
-<p>To the equation with indexes <span class="math inline">i</span>:</p>
-<p><span class="math display">
-y_i = \beta_0 + \beta_1 x_{1i} + \beta_2x_{2i} + u_i
-</span></p>
+<p>Thus, random sampling allows us to say <span class="math inline">E(u) = E(u_i)</span>.</p>
+<p>Why is this not the case when random sampling is not present?</p>
+<ul>
+<li>Imagine you are not random sampling. Perhaps, some observations <span class="math inline">i</span> with lower <span class="math inline">u_i</span> values are more likely to be sampled.</li>
+<li>If there is no random sampling, then <span class="math inline">E(u_i)</span> may not equal <span class="math inline">E(u)</span>.</li>
+</ul>
 <p><br></p>
 </section>
 <section id="assumption-mlr.3-no-perfect-multicollinearity" class="level3">
@@ -307,10 +309,10 @@ y_i = \beta_0 + \beta_1 x_{1i} + \beta_2x_{2i} + u_i
 \hat\beta_j = \frac{\sum_{i=1}^n \widetilde{r_{ji}} \ y_i}{\sum_{i=1}^n \widetilde{r_{ji}}^2}
 </span></p>
 <p>Where <span class="math inline">\widetilde{r_{ij}}</span> is the part of <span class="math inline">x_j</span> that is uncorrelated with any other explanatory variables.</p>
-<p>Obviously, as we know from mathematics, the denominator cannot be zero, or else, <span class="math inline">\hat\beta_j</span> will not exists. This implies that we cannot derive <span class="math inline">\hat\beta_j</span> if <span class="math inline">\widetilde{r_{ij}} = 0</span>.</p>
+<p>Obviously, as we know from mathematics, the denominator cannot be zero, or else, <span class="math inline">\hat\beta_j</span> will not exists. This implies that we cannot derive <span class="math inline">\hat\beta_j</span> if <span class="math inline">\sum \widetilde{r_{ij}}^2 = 0</span>.</p>
 <ul>
-<li>What causes <span class="math inline">\widetilde{r_{ij}} = 0</span>?</li>
-<li>If <span class="math inline">\widetilde{r_{ij}} = 0</span>, that means there is no part of <span class="math inline">x_j</span> that is completely uncorrelated with any other explanatory variable.</li>
+<li>What causes <span class="math inline">\sum\widetilde{r_{ij}}^2 = 0</span>?</li>
+<li>If <span class="math inline">\sum\widetilde{r_{ij}}^2 = 0</span>, that means there is no part of <span class="math inline">x_j</span> that is completely uncorrelated with any other explanatory variable.</li>
 <li>In other words, that means <span class="math inline">x_j</span> is <strong>perfectly correlated</strong> to at least one other explanatory variable.</li>
 </ul>
 <p>Thus, if <span class="math inline">x_j</span> is perfectly correlated with any other explanatory variable, coefficient <span class="math inline">\hat\beta_j</span> is not calculable.</p>
@@ -335,6 +337,10 @@ y_i = \beta_0 + \beta_1 x_{1i} + \beta_2x_{2i} + u_i
 <p>In the population, the error term <span class="math inline">u</span> must have an expecation of 0, given all values of <span class="math inline">x</span>. Mathematically:</p>
 <p><span class="math display">
 E(u|x_1, \dots x_k) = 0 \text{ for all } (x_1, \dots , x_k)
+</span></p>
+<p>And using condition MLR.2 Random Sampling (from above), we also know that:</p>
+<p><span class="math display">
+E(u|x_1, \dots ,x_k) = E(u_i|x_{1i}, \dots, x_{ki}) = 0
 </span></p>
 <p>This also implies that the error term <span class="math inline">u</span> and any <span class="math inline">x_1, \dots , x_k</span> are uncorrelated with each other.</p>
 <ul>
@@ -390,7 +396,7 @@ Useful Properties of Summations
 \sum\limits_{i=1}^n \widetilde{r_{1i}} = 0
 </span></p>
 <ul>
-<li>This is because <span class="math inline">\widetilde{r_{1i}}</span> is a residual term of a OLS regression of outcome <span class="math inline">x_1</span> and explanatory variables <span class="math inline">x_2, \dots, x_k</span>, and we know OLS residuals sum to 0 (algebraic properties discussed in 1.7.1).</li>
+<li>This is because <span class="math inline">\widetilde{r_{1i}}</span> is a residual term of a OLS regression of outcome <span class="math inline">x_1</span> and explanatory variables <span class="math inline">x_2, \dots, x_k</span>, and we know OLS residuals sum to 0 (algebraic properties discussed in <a href="https://statsnotes.github.io/theory/7.html#residuals-and-algebraic-properties-of-ols">1.7.1</a>).</li>
 </ul>
 <p><strong>Property 2:</strong></p>
 <p><span class="math display">
@@ -459,7 +465,7 @@ MLR.3 No Perfect Multicollinearity
 \end{split}
 </span></p>
 <p><br></p>
-<p>Now, we want to find <span class="math inline">E(\hat\beta_1)</span>. Note that the second part of the equation is a function of <span class="math inline">\widetilde{r_{1i}}</span>, of which itself is a function of all explanatory variables <span class="math inline">x_{1i}, \dots, x_{ki}</span>. Thus, we know:</p>
+<p>Now, we want to find <span class="math inline">E(\hat\beta_1)</span>. Note that the second part of the equation is a function of <span class="math inline">u_i</span>, of which itself is a function of all explanatory variables <span class="math inline">x_{1i}, \dots, x_{ki}</span>. Thus, we know:</p>
 <p><span class="math display">
 \begin{split}
 E(\hat\beta_1 | x_{1i}, \dots x_{ki}) &amp; = \beta_1 + E\left( \frac{\sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \biggr|x_{1i},\dots, x_{ki} \right) \\
@@ -490,8 +496,7 @@ MLR.2 Random Sampling
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Random sampling allows us to put subscripts <span class="math inline">i</span> on our equations.</p>
-<p>Similarly, it allows us to say that <span class="math inline">E(u|x_1, \dots, x_k)</span> is the same as <span class="math inline">E(u_i|x_{1i}, \dots, x_{ki})</span>, where both equal 0.</p>
+<p>Random sampling allows us to say that <span class="math inline">E(u|x_1, \dots, x_k)</span> is the same as <span class="math inline">E(u_i|x_{1i}, \dots, x_{ki})</span>, where both equal 0.</p>
 </div>
 </div>
 <p>Thus, with these two assumptions, we know that:</p>
@@ -530,7 +535,7 @@ E(\hat\beta_1) &amp; = E[E(\hat\beta_1|x_{1i}, \dots, x_{ki})] \\
 </ul>
 <p>However, this assumption is frequently violated. The most common reason for this is because of <strong>omitted variable bias</strong>.</p>
 <p><br></p>
-<p>Consider two regressions, one with only our variable of interest <span class="math inline">D</span>, and, and one with an extra control variable <span class="math inline">x</span> that is omitted from the first regression:</p>
+<p>Consider two regressions, one with only our exlanatory variable of interest <span class="math inline">D</span>, and, and one with an extra control variable <span class="math inline">x</span> that is omitted from the first regression:</p>
 <p><span class="math display">
 \begin{split}y_i &amp; = \beta_0^S + \beta_1^SD_i + u_i^S \quad \text{short} \\y_i &amp; = \beta_0 + \beta_1D_i + \beta_2x_i + u_i \quad \text{long}\end{split}
 </span></p>
@@ -696,9 +701,9 @@ Var(\hat\beta_1|x_1, \dots, x_k) &amp; = \sigma^2 \sum\limits_{i=1}^n w_i^2 \\
 Var(\hat\beta_1) = \frac{\sigma^2}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
 </span></p>
 <p><br></p>
-<p>Notice how the denominator is <span class="math inline">\sum\widetilde{r_{1i}}^2</span>. That means, the smaller <span class="math inline">\widetilde{r_{1i}}^2</span> is, the larger the variance is.</p>
+<p>Notice how the denominator is <span class="math inline">\sum\widetilde{r_{1i}}^2</span>. That means, the smaller <span class="math inline">\sum\widetilde{r_{1i}}^2</span> is, the larger the variance is.</p>
 <ul>
-<li><span class="math inline">\widetilde{r_{1i}}^2</span> is smaller when our explanatory variable of interest <span class="math inline">x_1</span> is highly correlated with another explanatory variable, since <span class="math inline">\widetilde{r_{1i}}^2</span> represents the part of <span class="math inline">x_1</span> that is uncorrelated with other explanatory variables.</li>
+<li><span class="math inline">\sum\widetilde{r_{1i}}^2</span> is smaller when our explanatory variable of interest <span class="math inline">x_1</span> is highly correlated with another explanatory variable, since <span class="math inline">\widetilde{r_{1i}}^2</span> represents the part of <span class="math inline">x_1</span> that is uncorrelated with other explanatory variables.</li>
 <li>This means that if we have highly correlated explanatory variables, our variance will in our OLS estimates will be high.</li>
 </ul>
 <p>This is something important to think about when choosing explanatory variables. We want to include all confounding variables, but highly correlated confounders will make our variance very high for our estimates.</p>
@@ -838,6 +843,7 @@ Interpretation Warning!
 </div>
 </div>
 <p><br></p>
+<p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
@@ -848,6 +854,82 @@ Interpretation Warning!
 <ul>
 <li>This will be especially obvious why after lesson 1.9.</li>
 </ul>
+<p>For example, let us say we want to test the statistical significance of <span class="math inline">\hat\beta_2</span> and <span class="math inline">\hat\beta_3</span> at the same time in the following regression model:</p>
+<p><span class="math display">
+\hat y = \hat\beta_0 + \hat\beta_1x_1 + \hat\beta_2x_2 + \hat\beta_3x_3
+</span></p>
+<p>What we can do is create two models - the alternate model <span class="math inline">M_a</span>, and the null model <span class="math inline">M_0</span>. The alternate model <span class="math inline">M_a</span> is the model we have above, and the null modle <span class="math inline">M_0</span> is the model without the two coefficients that we want to test (<span class="math inline">\hat\beta_2</span> and <span class="math inline">\hat\beta_3</span>).</p>
+<p><span class="math display">
+\begin{split}
+&amp; M_0: y = \beta_0 + \beta_1x_1 \\
+&amp; M_a: y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3x_3
+\end{split}
+</span></p>
+<p>Our statistical test will be to test if the alternative model <span class="math inline">M_a</span> is significantly “better” than our null model <span class="math inline">M_0</span>. If <span class="math inline">M_a</span> is indeed significantly better, than we know that the coefficients <span class="math inline">\hat\beta_2</span> and <span class="math inline">\hat\beta_3</span> together are statistically significant.</p>
+<p>Let us generalise this framework.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: F-Test of Nested Models
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The F-test of Nested Models allows us to test multiple coefficients at once. It compares two models: <span class="math inline">M_0</span> and <span class="math inline">M_a</span>.</p>
+<p><span class="math display">
+\begin{split}
+&amp; M_0: y = \beta_0 + \beta_1x_1 + \dots + \beta_g x_g \\
+&amp; M_a: y = \beta_0 + \beta_1 x_1 + \dots + \beta_g x_g + \beta_{g+1} x_{g+1} + \dots + \beta_kx_k
+\end{split}
+</span></p>
+<ul>
+<li>The model <span class="math inline">M_a</span> contains all of the explanatory variables, including the ones we want to test.</li>
+<li>The model <span class="math inline">M_0</span> contains the other explanatory variables that are not a part of our test. Model <span class="math inline">M_0</span> must be “nested” in model <span class="math inline">M_a</span>: i.e.&nbsp;all explanatory variables present in <span class="math inline">M_0</span> must also be in <span class="math inline">M_a</span>.</li>
+</ul>
+<p>The model tests if <span class="math inline">M_a</span> is significantly better than <span class="math inline">M_0</span>. If this is the case, the extra coefficients in <span class="math inline">M_a</span> that we are testing are statistically significant.</p>
+</div>
+</div>
+<p><br></p>
+<p>How do we run a F-test of nested models?</p>
+<p>Recall the concept of <span class="math inline">R^2</span> discussed in <a href="https://statsnotes.github.io/theory/6.html#r-squared-and-goodness-of-fit">1.6.7</a>. <span class="math inline">R^2</span> describes how much of the variation in <span class="math inline">y</span> our explanatory variables explain.</p>
+<p>The F-test uses the <span class="math inline">R^2</span> of the two models, and compares them.</p>
+<ul>
+<li>If the <span class="math inline">M_a</span> model has a statistically significantly higher <span class="math inline">R^2</span> value than the <span class="math inline">M_0</span> model, then <span class="math inline">M_a</span> is considered statistically significant, and we can conclude that the additional explanatory variables in <span class="math inline">M_a</span> are statistically significant.</li>
+</ul>
+<p><br></p>
+<p>As we know from hypothesis testing (see <a href="https://statsnotes.github.io/theory/2.html#intuition-of-hypothesis-testing">1.2.5</a> and <a href="https://statsnotes.github.io/theory/2.html#implementing-a-hypothesis-test">1.2.6</a> for intuition), we need a test statistic and distribution to run a hypothesis test.</p>
+<p>The statistic for a F-test is the F-statistic.</p>
+<ul>
+<li>Let us define <span class="math inline">R^2_a</span> and <span class="math inline">SSR_a</span> as the <span class="math inline">R^2</span> and sum of squared residuals for model <span class="math inline">M_a</span>.</li>
+<li>Let us define <span class="math inline">R^2_0</span> and <span class="math inline">SSR_0</span> as the <span class="math inline">R^2</span> and sum of squared residuals for model <span class="math inline">M_0</span>.</li>
+<li>The total number of coefficients in model <span class="math inline">M_a</span> is <span class="math inline">k_a</span>, and for model <span class="math inline">M_0</span>, is <span class="math inline">k_0</span>.</li>
+<li>Let us define <span class="math inline">n</span> as the number of observations (should be the same for both models).</li>
+</ul>
+<p>Our F-statistic is mathematically calculated as:</p>
+<p><span class="math display">
+F = \frac{(SSR_0 - SSE_a)/(k_a - k_0)}{SSR_a / (n - k_a - 1)}
+</span></p>
+<p>After calculating our F-statistic, we consult an F-distribution with <span class="math inline">k_a - k_0</span> and <span class="math inline">n-k_a - 1</span> degrees of freedom.</p>
+<p>With this distribution, we can obtain our p-value.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpretation of p-Values for F-tests
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The p-value is the probability of getting a test statistic equally or more extreme than the one we got with our alternate model <span class="math inline">M_a</span>, given the null hypothesis is true.</p>
+<ul>
+<li><p>If <span class="math inline">p&lt;0.05</span>, we believe the probability of the null hypothesis is low enough, such that we reject the null hypothesis (that <span class="math inline">M_0</span> is a better model), and conclude our alternate hypothesis (that <span class="math inline">M_a</span> is a better model). This also means that the extra coefficients in <span class="math inline">M_a</span> are jointly statistically significant.</p></li>
+<li><p>If <span class="math inline">p&gt;0.05</span>, we cannot reject the null hypothesis, and cannot reject that <span class="math inline">M_0</span> is the better model. Thus, the extra coefficients in <span class="math inline">M_a</span> are jointly not statistically significant.</p></li>
+</ul>
+</div>
+</div>
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>

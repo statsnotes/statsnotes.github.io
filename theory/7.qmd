@@ -51,7 +51,7 @@ $$
 \end{split}
 $$
 
--   If you do not know what residuals $\hat u_i$ are, and why they are different from $u_i$ error term, see [1.5.1](https://statsnotes.github.io/theory/5.html#algebraic-properties-of-ols).
+-   If you do not know what residuals $\hat u_i$ are, and why they are different from $u_i$ error term, see [1.5.1](https://statsnotes.github.io/theory/5.html#residuals-and-algebraic-properties-of-ols).
 
 We can also derive our residuals $\hat u$ from the linear algebra solution of OLS.
 
@@ -116,7 +116,7 @@ $$
 
 -   and so on for $x_{3i}, ..., x_{ki}$.
 
-Using the same proof from [1.5.1](https://statsnotes.github.io/theory/5.html#algebraic-properties-of-ols), we know the following are true:
+Using the same proof from [1.5.1](https://statsnotes.github.io/theory/5.html#residuals-and-algebraic-properties-of-ols), we know the following are true:
 
 $$
 \begin{split}
@@ -133,7 +133,7 @@ Thus, the covariances (and thus correlations) between all explanatory variables 
 
 ### Property 3: Regression Line Passes Through Means
 
-For a similar proof in [1.5.1](https://statsnotes.github.io/theory/5.html#algebraic-properties-of-ols), we know that the point $(\bar y, \bar x_1, \dots, \bar x_k)$ is on the regression plane.
+For a similar proof in [1.5.1](https://statsnotes.github.io/theory/5.html#residuals-and-algebraic-properties-of-ols), we know that the point $(\bar y, \bar x_1, \dots, \bar x_k)$ is on the regression plane.
 
 <br />
 
@@ -194,24 +194,25 @@ $$
 
 ### Assumption MLR.2: Random Sampling
 
-All observations in our sample are randomly sampled from the population.
+This assumption says that all observations in our sample are randomly sampled from the same population.
 
-To meet this condition, two criteria must be met:
-
--   Observations $i$ must be independent of each other - i.e. if you get $y_1$, that does not affect your chances of getting $y_2$.
--   All observations $i$ must come from the same population.
-
-This assumption allows us to go from:
+Why is this useful? Take the standard linear model:
 
 $$
-y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u
+y = \beta_0 + \beta_1x_1 + \dots + \beta_kx_k + u
 $$
 
-To the equation with indexes $i$:
+The error term $u$ is some random variable (with its own probability distribution), that can be defined by its expectation $E(u)$.
 
-$$
-y_i = \beta_0 + \beta_1 x_{1i} + \beta_2x_{2i} + u_i
-$$
+-   If we randomly select one observation $i$ from the data, each observation $i$ has an equal chance of being selected.
+-   The error term for that observation, $u_i$ should also have the same expectation as the random variable $u$, since each observation $i$ within $u$ has the same chance of being selected.
+
+Thus, random sampling allows us to say $E(u) = E(u_i)$.
+
+Why is this not the case when random sampling is not present?
+
+-   Imagine you are not random sampling. Perhaps, some observations $i$ with lower $u_i$ values are more likely to be sampled.
+-   If there is no random sampling, then $E(u_i)$ may not equal $E(u)$.
 
 <br />
 
@@ -225,10 +226,10 @@ $$
 
 Where $\widetilde{r_{ij}}$ is the part of $x_j$ that is uncorrelated with any other explanatory variables.
 
-Obviously, as we know from mathematics, the denominator cannot be zero, or else, $\hat\beta_j$ will not exists. This implies that we cannot derive $\hat\beta_j$ if $\widetilde{r_{ij}} = 0$.
+Obviously, as we know from mathematics, the denominator cannot be zero, or else, $\hat\beta_j$ will not exists. This implies that we cannot derive $\hat\beta_j$ if $\sum \widetilde{r_{ij}}^2 = 0$.
 
--   What causes $\widetilde{r_{ij}} = 0$?
--   If $\widetilde{r_{ij}} = 0$, that means there is no part of $x_j$ that is completely uncorrelated with any other explanatory variable.
+-   What causes $\sum\widetilde{r_{ij}}^2 = 0$?
+-   If $\sum\widetilde{r_{ij}}^2 = 0$, that means there is no part of $x_j$ that is completely uncorrelated with any other explanatory variable.
 -   In other words, that means $x_j$ is **perfectly correlated** to at least one other explanatory variable.
 
 Thus, if $x_j$ is perfectly correlated with any other explanatory variable, coefficient $\hat\beta_j$ is not calculable.
@@ -258,6 +259,12 @@ In the population, the error term $u$ must have an expecation of 0, given all va
 
 $$
 E(u|x_1, \dots x_k) = 0 \text{ for all } (x_1, \dots , x_k)
+$$
+
+And using condition MLR.2 Random Sampling (from above), we also know that:
+
+$$
+E(u|x_1, \dots ,x_k) = E(u_i|x_{1i}, \dots, x_{ki}) = 0
 $$
 
 This also implies that the error term $u$ and any $x_1, \dots , x_k$ are uncorrelated with each other.
@@ -314,7 +321,7 @@ $$
 \sum\limits_{i=1}^n \widetilde{r_{1i}} = 0
 $$
 
--   This is because $\widetilde{r_{1i}}$ is a residual term of a OLS regression of outcome $x_1$ and explanatory variables $x_2, \dots, x_k$, and we know OLS residuals sum to 0 (algebraic properties discussed in 1.7.1).
+-   This is because $\widetilde{r_{1i}}$ is a residual term of a OLS regression of outcome $x_1$ and explanatory variables $x_2, \dots, x_k$, and we know OLS residuals sum to 0 (algebraic properties discussed in [1.7.1](https://statsnotes.github.io/theory/7.html#residuals-and-algebraic-properties-of-ols)).
 
 **Property 2:**
 
@@ -386,7 +393,7 @@ $$
 
 <br />
 
-Now, we want to find $E(\hat\beta_1)$. Note that the second part of the equation is a function of $\widetilde{r_{1i}}$, of which itself is a function of all explanatory variables $x_{1i}, \dots, x_{ki}$. Thus, we know:
+Now, we want to find $E(\hat\beta_1)$. Note that the second part of the equation is a function of $u_i$, of which itself is a function of all explanatory variables $x_{1i}, \dots, x_{ki}$. Thus, we know:
 
 $$
 \begin{split}
@@ -406,9 +413,7 @@ The Zero-Conditional Mean assumption says $E(u|x_1, \dots, x_k) = 0$.
 ::: callout-note
 ## MLR.2 Random Sampling
 
-Random sampling allows us to put subscripts $i$ on our equations.
-
-Similarly, it allows us to say that $E(u|x_1, \dots, x_k)$ is the same as $E(u_i|x_{1i}, \dots, x_{ki})$, where both equal 0.
+Random sampling allows us to say that $E(u|x_1, \dots, x_k)$ is the same as $E(u_i|x_{1i}, \dots, x_{ki})$, where both equal 0.
 :::
 
 Thus, with these two assumptions, we know that:
@@ -459,7 +464,7 @@ However, this assumption is frequently violated. The most common reason for this
 
 <br />
 
-Consider two regressions, one with only our variable of interest $D$, and, and one with an extra control variable $x$ that is omitted from the first regression:
+Consider two regressions, one with only our exlanatory variable of interest $D$, and, and one with an extra control variable $x$ that is omitted from the first regression:
 
 $$
 \begin{split}y_i & = \beta_0^S + \beta_1^SD_i + u_i^S \quad \text{short} \\y_i & = \beta_0 + \beta_1D_i + \beta_2x_i + u_i \quad \text{long}\end{split}
@@ -646,9 +651,9 @@ $$
 
 <br />
 
-Notice how the denominator is $\sum\widetilde{r_{1i}}^2$. That means, the smaller $\widetilde{r_{1i}}^2$ is, the larger the variance is.
+Notice how the denominator is $\sum\widetilde{r_{1i}}^2$. That means, the smaller $\sum\widetilde{r_{1i}}^2$ is, the larger the variance is.
 
--   $\widetilde{r_{1i}}^2$ is smaller when our explanatory variable of interest $x_1$ is highly correlated with another explanatory variable, since $\widetilde{r_{1i}}^2$ represents the part of $x_1$ that is uncorrelated with other explanatory variables.
+-   $\sum\widetilde{r_{1i}}^2$ is smaller when our explanatory variable of interest $x_1$ is highly correlated with another explanatory variable, since $\widetilde{r_{1i}}^2$ represents the part of $x_1$ that is uncorrelated with other explanatory variables.
 -   This means that if we have highly correlated explanatory variables, our variance will in our OLS estimates will be high.
 
 This is something important to think about when choosing explanatory variables. We want to include all confounding variables, but highly correlated confounders will make our variance very high for our estimates.
@@ -774,6 +779,8 @@ The correct interpretation is that over many samples from the same population, w
 
 <br />
 
+<br />
+
 ------------------------------------------------------------------------
 
 [Homepage](https://statsnotes.github.io)
@@ -783,6 +790,84 @@ The correct interpretation is that over many samples from the same population, w
 Sometimes, we want to test more than one coefficient at a time in a hypothesis test.
 
 -   This will be especially obvious why after lesson 1.9.
+
+For example, let us say we want to test the statistical significance of $\hat\beta_2$ and $\hat\beta_3$ at the same time in the following regression model:
+
+$$
+\hat y = \hat\beta_0 + \hat\beta_1x_1 + \hat\beta_2x_2 + \hat\beta_3x_3
+$$
+
+What we can do is create two models - the alternate model $M_a$, and the null model $M_0$. The alternate model $M_a$ is the model we have above, and the null modle $M_0$ is the model without the two coefficients that we want to test ($\hat\beta_2$ and $\hat\beta_3$).
+
+$$
+\begin{split}
+& M_0: y = \beta_0 + \beta_1x_1 \\
+& M_a: y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3x_3
+\end{split}
+$$
+
+Our statistical test will be to test if the alternative model $M_a$ is significantly "better" than our null model $M_0$. If $M_a$ is indeed significantly better, than we know that the coefficients $\hat\beta_2$ and $\hat\beta_3$ together are statistically significant.
+
+Let us generalise this framework.
+
+::: callout-tip
+## Definition: F-Test of Nested Models
+
+The F-test of Nested Models allows us to test multiple coefficients at once. It compares two models: $M_0$ and $M_a$.
+
+$$
+\begin{split}
+& M_0: y = \beta_0 + \beta_1x_1 + \dots + \beta_g x_g \\
+& M_a: y = \beta_0 + \beta_1 x_1 + \dots + \beta_g x_g + \beta_{g+1} x_{g+1} + \dots + \beta_kx_k
+\end{split}
+$$
+
+-   The model $M_a$ contains all of the explanatory variables, including the ones we want to test.
+-   The model $M_0$ contains the other explanatory variables that are not a part of our test. Model $M_0$ must be "nested" in model $M_a$: i.e. all explanatory variables present in $M_0$ must also be in $M_a$.
+
+The model tests if $M_a$ is significantly better than $M_0$. If this is the case, the extra coefficients in $M_a$ that we are testing are statistically significant.
+:::
+
+<br />
+
+How do we run a F-test of nested models?
+
+Recall the concept of $R^2$ discussed in [1.6.7](https://statsnotes.github.io/theory/6.html#r-squared-and-goodness-of-fit). $R^2$ describes how much of the variation in $y$ our explanatory variables explain.
+
+The F-test uses the $R^2$ of the two models, and compares them.
+
+-   If the $M_a$ model has a statistically significantly higher $R^2$ value than the $M_0$ model, then $M_a$ is considered statistically significant, and we can conclude that the additional explanatory variables in $M_a$ are statistically significant.
+
+<br />
+
+As we know from hypothesis testing (see [1.2.5](https://statsnotes.github.io/theory/2.html#intuition-of-hypothesis-testing) and [1.2.6](https://statsnotes.github.io/theory/2.html#implementing-a-hypothesis-test) for intuition), we need a test statistic and distribution to run a hypothesis test.
+
+The statistic for a F-test is the F-statistic.
+
+-   Let us define $R^2_a$ and $SSR_a$ as the $R^2$ and sum of squared residuals for model $M_a$.
+-   Let us define $R^2_0$ and $SSR_0$ as the $R^2$ and sum of squared residuals for model $M_0$.
+-   The total number of coefficients in model $M_a$ is $k_a$, and for model $M_0$, is $k_0$.
+-   Let us define $n$ as the number of observations (should be the same for both models).
+
+Our F-statistic is mathematically calculated as:
+
+$$
+F = \frac{(SSR_0 - SSE_a)/(k_a - k_0)}{SSR_a / (n - k_a - 1)}
+$$
+
+After calculating our F-statistic, we consult an F-distribution with $k_a - k_0$ and $n-k_a - 1$ degrees of freedom.
+
+With this distribution, we can obtain our p-value.
+
+::: callout-tip
+## Interpretation of p-Values for F-tests
+
+The p-value is the probability of getting a test statistic equally or more extreme than the one we got with our alternate model $M_a$, given the null hypothesis is true.
+
+-   If $p<0.05$, we believe the probability of the null hypothesis is low enough, such that we reject the null hypothesis (that $M_0$ is a better model), and conclude our alternate hypothesis (that $M_a$ is a better model). This also means that the extra coefficients in $M_a$ are jointly statistically significant.
+
+-   If $p>0.05$, we cannot reject the null hypothesis, and cannot reject that $M_0$ is the better model. Thus, the extra coefficients in $M_a$ are jointly not statistically significant.
+:::
 
 <br />
 

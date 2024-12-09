@@ -274,20 +274,22 @@ y = \beta_0 + \beta_1 x^2 + u
 </section>
 <section id="assumption-slr.2-random-sampling" class="level3">
 <h3 class="anchored" data-anchor-id="assumption-slr.2-random-sampling">Assumption SLR.2: Random Sampling</h3>
-<p>All observations in our sample are randomly sampled from the population.</p>
-<p>To meet this condition, two criteria must be met:</p>
+<p>This assumption says that all observations in our sample are randomly sampled from the same population.</p>
+<p>Why is this useful? Take the standard linear model:</p>
+<p><span class="math display">
+y = \beta_0 + \beta_1x + u
+</span></p>
+<p>The error term <span class="math inline">u</span> is some random variable (with its own probability distribution), that can be defined by its expectation <span class="math inline">E(u)</span>.</p>
 <ul>
-<li>Observations <span class="math inline">i</span> must be independent of each other - i.e.&nbsp;if you get <span class="math inline">y_1</span>, that does not affect your chances of getting <span class="math inline">y_2</span>.</li>
-<li>All observations <span class="math inline">i</span> must come from the same population.</li>
+<li>If we randomly select one observation <span class="math inline">i</span> from the data, each observation <span class="math inline">i</span> has an equal chance of being selected.</li>
+<li>The error term for that observation, <span class="math inline">u_i</span> should also have the same expectation as the random variable <span class="math inline">u</span>, since each observation <span class="math inline">i</span> within <span class="math inline">u</span> has the same chance of being selected.</li>
 </ul>
-<p>This assumption allows us to go from:</p>
-<p><span class="math display">
-y = \beta_0 + \beta_1 x + u
-</span></p>
-<p>To the equation with indexes <span class="math inline">i</span>:</p>
-<p><span class="math display">
-y_i = \beta_0 + \beta_1 x_i + u_i
-</span></p>
+<p>Thus, random sampling allows us to say <span class="math inline">E(u) = E(u_i)</span>.</p>
+<p>Why is this not the case when random sampling is not present?</p>
+<ul>
+<li>Imagine you are not random sampling. Perhaps, some observations <span class="math inline">i</span> with lower <span class="math inline">u_i</span> values are more likely to be sampled.</li>
+<li>If there is no random sampling, then <span class="math inline">E(u_i)</span> may not equal <span class="math inline">E(u)</span>.</li>
+</ul>
 <p><br></p>
 </section>
 <section id="assumption-slr.3-sample-variation-in-x" class="level3">
@@ -308,6 +310,10 @@ y_i = \beta_0 + \beta_1 x_i + u_i
 <p>In the population, the error term <span class="math inline">u</span> must have an expecation of 0, given all values of <span class="math inline">x</span>. Mathematically:</p>
 <p><span class="math display">
 E(u|x) = 0 \text{ for all } x
+</span></p>
+<p>And using condition MLR.2 Random Sampling (from above), we also know that:</p>
+<p><span class="math display">
+E(u|x) = E(u_i|x_i) = 0
 </span></p>
 <p>This also implies that the error term <span class="math inline">u</span> and <span class="math inline">x</span> are uncorrelated with each other.</p>
 <ul>
@@ -474,8 +480,7 @@ SLR.2 Random Sampling
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Random Sampling allows us to put subscripts <span class="math inline">i</span> on all our equations. In our example, we said that random sampling allows us to go from <span class="math inline">y = \beta_0 + \beta_1 x + u</span> to <span class="math inline">y_i = \beta_0 + \beta_1 x_i + u_i</span>.</p>
-<p>Similarly, it allows us to take the Zero Conditional Mean <span class="math inline">E(u|x)</span> to <span class="math inline">E(u_i | x_i)</span> and <span class="math inline">E(u_i | x)</span>.</p>
+<p>Random sampling allows us to say that <span class="math inline">E(u|x)</span> is the same as <span class="math inline">E(u_i|x_i)</span>, where both equal 0.</p>
 </div>
 </div>
 <p>Thus, with these two assumptions, we know that:</p>
@@ -525,7 +530,7 @@ E(\hat\beta_1) &amp; = E[E(\hat\beta_1|x)] \\
 </ol>
 <p>What can we do to remedy this assumption so OLS is not biased?</p>
 <ol type="1">
-<li>Add control variables with multiple linear regression (discussed in <a href="https://statsnotes.github.io/theory/6.html">lesson 1.6</a> and 1.7)</li>
+<li>Add control variables with multiple linear regression (discussed in <a href="https://statsnotes.github.io/theory/6.html">lesson 1.6</a> and <a href="https://statsnotes.github.io/theory/7.html">1.7</a>)</li>
 <li>Use instrumental variables estimation to address the entire problem (discussed in lesson 1.11).</li>
 </ol>
 <p><br></p>

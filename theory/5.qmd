@@ -206,24 +206,25 @@ $$
 
 ### Assumption SLR.2: Random Sampling
 
-All observations in our sample are randomly sampled from the population.
+This assumption says that all observations in our sample are randomly sampled from the same population.
 
-To meet this condition, two criteria must be met:
-
--   Observations $i$ must be independent of each other - i.e. if you get $y_1$, that does not affect your chances of getting $y_2$.
--   All observations $i$ must come from the same population.
-
-This assumption allows us to go from:
+Why is this useful? Take the standard linear model:
 
 $$
-y = \beta_0 + \beta_1 x + u
+y = \beta_0 + \beta_1x + u
 $$
 
-To the equation with indexes $i$:
+The error term $u$ is some random variable (with its own probability distribution), that can be defined by its expectation $E(u)$.
 
-$$
-y_i = \beta_0 + \beta_1 x_i + u_i
-$$
+-   If we randomly select one observation $i$ from the data, each observation $i$ has an equal chance of being selected.
+-   The error term for that observation, $u_i$ should also have the same expectation as the random variable $u$, since each observation $i$ within $u$ has the same chance of being selected.
+
+Thus, random sampling allows us to say $E(u) = E(u_i)$.
+
+Why is this not the case when random sampling is not present?
+
+-   Imagine you are not random sampling. Perhaps, some observations $i$ with lower $u_i$ values are more likely to be sampled.
+-   If there is no random sampling, then $E(u_i)$ may not equal $E(u)$.
 
 <br />
 
@@ -249,6 +250,12 @@ In the population, the error term $u$ must have an expecation of 0, given all va
 
 $$
 E(u|x) = 0 \text{ for all } x
+$$
+
+And using condition MLR.2 Random Sampling (from above), we also know that:
+
+$$
+E(u|x) = E(u_i|x_i) = 0
 $$
 
 This also implies that the error term $u$ and $x$ are uncorrelated with each other.
@@ -416,9 +423,7 @@ The Zero-Conditional Mean assumption says $E(u|x) = 0$.
 ::: callout-note
 ## SLR.2 Random Sampling
 
-Random Sampling allows us to put subscripts $i$ on all our equations. In our example, we said that random sampling allows us to go from $y = \beta_0 + \beta_1 x + u$ to $y_i = \beta_0 + \beta_1 x_i + u_i$.
-
-Similarly, it allows us to take the Zero Conditional Mean $E(u|x)$ to $E(u_i | x_i)$ and $E(u_i | x)$.
+Random sampling allows us to say that $E(u|x)$ is the same as $E(u_i|x_i)$, where both equal 0.
 :::
 
 Thus, with these two assumptions, we know that:
@@ -480,7 +485,7 @@ The key assumption is Zero conditional mean (SLR.4). What causes this final assu
 
 What can we do to remedy this assumption so OLS is not biased?
 
-1.  Add control variables with multiple linear regression (discussed in [lesson 1.6](https://statsnotes.github.io/theory/6.html) and 1.7)
+1.  Add control variables with multiple linear regression (discussed in [lesson 1.6](https://statsnotes.github.io/theory/6.html) and [1.7](https://statsnotes.github.io/theory/7.html))
 2.  Use instrumental variables estimation to address the entire problem (discussed in lesson 1.11).
 
 <br />
