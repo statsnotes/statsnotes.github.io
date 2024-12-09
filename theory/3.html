@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -111,6 +145,12 @@ window.Quarto = {
   <li><a href="#quantifying-relationships-with-covariance" id="toc-quantifying-relationships-with-covariance" class="nav-link" data-scroll-target="#quantifying-relationships-with-covariance">1.3.4: Quantifying Relationships with Covariance</a></li>
   <li><a href="#correlation-coefficients-and-strength-of-correlations" id="toc-correlation-coefficients-and-strength-of-correlations" class="nav-link" data-scroll-target="#correlation-coefficients-and-strength-of-correlations">1.3.5: Correlation Coefficients and Strength of Correlations</a></li>
   <li><a href="#magnitude-of-relationships-with-best-fit-lines" id="toc-magnitude-of-relationships-with-best-fit-lines" class="nav-link" data-scroll-target="#magnitude-of-relationships-with-best-fit-lines">1.3.6: Magnitude of Relationships with Best-Fit Lines</a></li>
+  <li><a href="#implementation-in-r" id="toc-implementation-in-r" class="nav-link" data-scroll-target="#implementation-in-r">Implementation in R</a>
+  <ul class="collapse">
+  <li><a href="#plotting-relationships-with-scatterplots" id="toc-plotting-relationships-with-scatterplots" class="nav-link" data-scroll-target="#plotting-relationships-with-scatterplots">Plotting Relationships with Scatterplots</a></li>
+  <li><a href="#calculating-covariance" id="toc-calculating-covariance" class="nav-link" data-scroll-target="#calculating-covariance">Calculating Covariance</a></li>
+  <li><a href="#calculating-correlation-coefficients" id="toc-calculating-correlation-coefficients" class="nav-link" data-scroll-target="#calculating-correlation-coefficients">Calculating Correlation Coefficients</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -462,6 +502,102 @@ Warning!
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="implementation-in-r" class="level1">
+<h1>Implementation in R</h1>
+<section id="plotting-relationships-with-scatterplots" class="level2">
+<h2 class="anchored" data-anchor-id="plotting-relationships-with-scatterplots">Plotting Relationships with Scatterplots</h2>
+<p>We can plot relationships between two variables using a scatterplot. For this, we will need the <em>tidyverse package</em>. Make sure to install it if you have not previously (google how to install R-packages if needed).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p><strong>Syntax:</strong></p>
+<p>We can create scatterplots with the <em>ggplot()</em> function as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="at">x =</span> x_variable, <span class="at">y =</span> y_variable)) <span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Replace <em>mydata</em> with the name of your dataframe that contains your variables.</li>
+<li>Replace <em>x_variable</em> with the name of the variable you want displayed on the <span class="math inline">x</span> axis.</li>
+<li>Replace <em>y_variable</em> with the name of the variable you want displayed on the <span class="math inline">y</span> axis.</li>
+</ul>
+<p>Note: the <em>geom_point()</em> part plots the points on the scatterplot, and the <em>geom_smooth()</em> part plots the best-fit line.</p>
+<p><br></p>
+<p><strong>Example:</strong></p>
+<p>Let us do a scatterplot on the variable <em>age</em> and the variable <em>immatt</em> (immigration attitude), both variables being contained in the dataframe named <em>dta</em>:</p>
+<ul>
+<li>I added <em>theme_bw()</em>, which is a theme in ggplot (see appendix B).</li>
+<li>I added the argument <em>size=0</em>, as this allows us to control for the size of the dots.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dta, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> immatt)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="3_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Obviously, there are way too many observations in this scatterplot, but this will look nicer for a plot with less observations.</p>
+<p><br></p>
+</section>
+<section id="calculating-covariance" class="level2">
+<h2 class="anchored" data-anchor-id="calculating-covariance">Calculating Covariance</h2>
+<p><strong>Syntax:</strong></p>
+<p>We can use the function <em>cov()</em> to calculate the covariance between two variables:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Replace <em>x</em> and <em>y</em> with your variable names. Note: if your variable is in a data frame, use <em>data_frame_name<strong>$</strong>variable_name</em> as the syntax.</li>
+</ul>
+<p><br></p>
+<p><strong>Example:</strong></p>
+<p>Below, let us find the covariance between variable <em>age</em> and <em>immatt</em> (immigration attitude), both in the data frame <em>dta</em>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(dta<span class="sc">$</span>age, dta<span class="sc">$</span>immatt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -2.726779</code></pre>
+</div>
+</div>
+<p>We can see R outputs the covariance.</p>
+<p><br></p>
+</section>
+<section id="calculating-correlation-coefficients" class="level2">
+<h2 class="anchored" data-anchor-id="calculating-correlation-coefficients">Calculating Correlation Coefficients</h2>
+<p><strong>Syntax:</strong></p>
+<p>We can use the function <em>corr()</em> to calculate the correlation coefficient between two variables:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Replace <em>x</em> and <em>y</em> with your variable names. Note: if your variable is in a data frame, use <em>data_frame_name<strong>$</strong>variable_name</em> as the syntax.</li>
+</ul>
+<p><br></p>
+<p><strong>Example:</strong></p>
+<p>Below, let us find the correlation coefficient between variable <em>age</em> and <em>immatt</em> (immigration attitude), both in the data frame <em>dta</em>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(dta<span class="sc">$</span>age, dta<span class="sc">$</span>immatt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.1554291</code></pre>
+</div>
+</div>
+<p>We can see R outputs the correlation coefficient.</p>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
 </section>
 
 </main>

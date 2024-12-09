@@ -356,3 +356,113 @@ We will spend most of the rest of this course discussing how to estimate these b
 ------------------------------------------------------------------------
 
 [Homepage](https://statsnotes.github.io)
+
+# Implementation in R
+
+```{r, message = FALSE, echo = FALSE}
+dta <- readRDS('data/data1.rds')
+```
+
+## Plotting Relationships with Scatterplots
+
+We can plot relationships between two variables using a scatterplot. For this, we will need the *tidyverse package*. Make sure to install it if you have not previously (google how to install R-packages if needed).
+
+```{r, message = FALSE}
+library(tidyverse)
+```
+
+<br />
+
+**Syntax:**
+
+We can create scatterplots with the *ggplot()* function as follows:
+
+```{r, eval = FALSE}
+ggplot(mydata, aes(x = x_variable, y = y_variable)) +
+  geom_point() +
+  geom_smooth(method = lm)
+```
+
+-   Replace *mydata* with the name of your dataframe that contains your variables.
+-   Replace *x_variable* with the name of the variable you want displayed on the $x$ axis.
+-   Replace *y_variable* with the name of the variable you want displayed on the $y$ axis.
+
+Note: the *geom_point()* part plots the points on the scatterplot, and the *geom_smooth()* part plots the best-fit line.
+
+<br />
+
+**Example:**
+
+Let us do a scatterplot on the variable *age* and the variable *immatt* (immigration attitude), both variables being contained in the dataframe named *dta*:
+
+-   I added *theme_bw()*, which is a theme in ggplot (see appendix B).
+-   I added the argument *size=0*, as this allows us to control for the size of the dots.
+
+```{r}
+ggplot(dta, aes(x = age, y = immatt)) +
+  geom_point(size = 0) +
+  geom_smooth(method = lm) +
+  theme_bw()
+```
+
+Obviously, there are way too many observations in this scatterplot, but this will look nicer for a plot with less observations.
+
+<br />
+
+## Calculating Covariance
+
+**Syntax:**
+
+We can use the function *cov()* to calculate the covariance between two variables:
+
+```{r, eval = FALSE}
+cov(x, y)
+```
+
+-   Replace *x* and *y* with your variable names. Note: if your variable is in a data frame, use *data_frame_name**\$**variable_name* as the syntax.
+
+<br />
+
+**Example:**
+
+Below, let us find the covariance between variable *age* and *immatt* (immigration attitude), both in the data frame *dta*:
+
+```{r}
+cov(dta$age, dta$immatt)
+```
+
+We can see R outputs the covariance.
+
+<br />
+
+## Calculating Correlation Coefficients
+
+**Syntax:**
+
+We can use the function *corr()* to calculate the correlation coefficient between two variables:
+
+```{r, eval = FALSE}
+cor(x, y)
+```
+
+-   Replace *x* and *y* with your variable names. Note: if your variable is in a data frame, use *data_frame_name**\$**variable_name* as the syntax.
+
+<br />
+
+**Example:**
+
+Below, let us find the correlation coefficient between variable *age* and *immatt* (immigration attitude), both in the data frame *dta*:
+
+```{r}
+cor(dta$age, dta$immatt)
+```
+
+We can see R outputs the correlation coefficient.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)

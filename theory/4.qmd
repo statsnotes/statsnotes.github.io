@@ -755,3 +755,120 @@ Which as we can see, are the exact same minimisation conditions as the condition
 ------------------------------------------------------------------------
 
 [Homepage](https://statsnotes.github.io)
+
+# Implementation in R
+
+```{r, message = FALSE, echo = FALSE}
+dta <- readRDS('data/data1.rds')
+```
+
+## Regression Estimation
+
+To estimate a regression, we can use the *feols()* function from the package *fixest*, or we can use the base-R function *lm()*.
+
+-   The syntax is the same for both (at least for simple linear regression).
+-   The *feols()* function does have a few advantages for techniques that will be discussed later, especially when it comes to causal inference and econometrics.
+
+For the *feols()* function, we will need the *fixest* package. Make sure to install it if you have not previously (google how to install R-packages if needed).
+
+```{r, message = FALSE}
+library(fixest)
+```
+
+<br />
+
+**Syntax:**
+
+For the *feols()* function, the syntax is as follows:
+
+```{r, eval = FALSE}
+model <- feols(y ~ x, data = mydata)
+summary(model)
+```
+
+-   Replace *model* with any name you want to store your regression model in.
+-   Replace *y* with your outcome variable name, and *x* with your explanatory variable name.
+-   Replace *mydata* with the name of your dataframe.
+
+The *lm()* function has the exact same syntax for simple linear regression, except that we replace *feols()* with *lm()*:
+
+```{r, eval = FALSE}
+model <- lm(y ~ x, data = mydata)
+summary(model)
+```
+
+<br />
+
+**Example:**
+
+Let us run a regression with outcome variable *immatt* (attitude towards immigrants), explanatory variable *age*, from the dataframe called *dta*:
+
+```{r, message = FALSE}
+my_model <- feols(immatt ~ age, data = dta)
+summary(my_model)
+```
+
+We can see in the estimate column, we get our intercept estimate $\hat\beta_0$, and our explanatory variable coefficient estimate $\hat\beta_1$.
+
+The result is similar with *lm()*:
+
+```{r, message = FALSE}
+my_model <- lm(immatt ~ age, data = dta)
+summary(my_model)
+```
+
+<br />
+
+## Plotting Relationships Graphically
+
+We can plot relationships between two variables using a scatterplot. For this, we will need the *tidyverse package*. Make sure to install it if you have not previously (google how to install R-packages if needed).
+
+```{r, message = FALSE}
+library(tidyverse)
+```
+
+<br />
+
+**Syntax:**
+
+We can create scatterplots with the *ggplot()* function as follows:
+
+```{r, eval = FALSE}
+ggplot(mydata, aes(x = x_variable, y = y_variable)) +
+  geom_point() +
+  geom_smooth(method = lm)
+```
+
+-   Replace *mydata* with the name of your dataframe that contains your variables.
+-   Replace *x_variable* with the name of the variable you want displayed on the $x$ axis.
+-   Replace *y_variable* with the name of the variable you want displayed on the $y$ axis.
+
+Note: the *geom_point()* part plots the points on the scatterplot, and the *geom_smooth()* part plots the best-fit line (OLS estimation).
+
+-   The *method = lm* within the *geom_smooth()* tells us to use OLS estimation in the best-fit line.
+
+<br />
+
+**Example:**
+
+Let us do a scatterplot on the variable *age* and the variable *immatt* (immigration attitude), both variables being contained in the dataframe named *dta*:
+
+-   I added *theme_bw()*, which is a theme in ggplot (see appendix B).
+-   I added the argument *size=0*, as this allows us to control for the size of the dots.
+
+```{r}
+ggplot(dta, aes(x = age, y = immatt)) +
+  geom_point(size = 0) +
+  geom_smooth(method = lm) +
+  theme_bw()
+```
+
+Obviously, there are way too many observations in this scatterplot, but this will look nicer for a plot with less observations.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)

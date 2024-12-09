@@ -1,6 +1,6 @@
 ---
 title: "Statistics for Social Scientists"
-subtitle: "Lesson 1.6: Multiple Regression - Estimation and Interpretation"
+subtitle: "Lesson 1.6: Multiple Regression and OLS Estimation"
 format:
     html:
         page-layout: article
@@ -15,7 +15,7 @@ format:
         toc-depth: 2
         toc-location: left
         toc-expand: true
-        toc-title: "Lesson 1.6: Multiple Linear Regression - Estimation and Interpretation"
+        toc-title: "Lesson 1.6: Multiple Regression and OLS Estimation"
         mainfont: "Computer Modern"
         title-block-banner: true
         classoption: fleqn
@@ -27,6 +27,7 @@ This lesson covers the following topics:
 -   The motivation/goal of Multiple Linear Regression, and the basic layout of Multiple Linear Regression.
 -   The estimation process of the OLS estimator for Multiple Linear Regression.
 -   What it means to control for a variable (using the regression anatomy theory).
+-   How we can use the regression anatomy theory to create an analogous estimate for OLS.
 
 <br />
 
@@ -655,6 +656,76 @@ This shows the downside of R-squared as a metric - if we just include random var
 -   Thus, focusing on R-squared can result in models with silly or nonsensical explanatory variables.
 
 We will discuss the importance of careful model selection in Part II of the course, where we discuss causal inference.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# Implementation in R
+
+```{r, message = FALSE, echo = FALSE}
+dta <- readRDS('data/data1.rds')
+```
+
+## Regression Estimation
+
+To estimate a regression, we can use the *feols()* function from the package *fixest*, or we can use the base-R function *lm()*.
+
+-   The syntax is the same for both (at least for now).
+-   The *feols()* function does have a few advantages for techniques that will be discussed later, especially when it comes to causal inference and econometrics.
+
+For the *feols()* function, we will need the *fixest* package. Make sure to install it if you have not previously (google how to install R-packages if needed).
+
+```{r, message = FALSE}
+library(fixest)
+```
+
+<br />
+
+**Syntax:**
+
+For the *feols()* function, the syntax is as follows:
+
+```{r, eval = FALSE}
+model <- feols(y ~ x1 + x2 + x3, data = mydata)
+summary(model)
+```
+
+-   Replace *model* with any name you want to store your regression model in.
+-   Replace *y* with your outcome variable name, and *x1, x2, x3* with your explanatory variable name.
+-   You can add more explanatory variables by adding + signs and *x4 + x5 ...* and so on. You can also remove explanatory variables down to only 1.
+-   Replace *mydata* with the name of your dataframe.
+
+The *lm()* function has the exact same syntax for simple linear regression, except that we replace *feols()* with *lm()*:
+
+```{r, eval = FALSE}
+model <- lm(y ~ x1 + x2 + x3, data = mydata)
+summary(model)
+```
+
+<br />
+
+**Example:**
+
+Let us run a regression with outcome variable *immatt* (attitude towards immigrants), explanatory variables *age* and *educ* (years of education), from the dataframe called *dta*:
+
+```{r, message = FALSE}
+my_model <- feols(immatt ~ age + educ, data = dta)
+summary(my_model)
+```
+
+We can see in the estimate column, we get our intercept estimate $\hat\beta_0$, and our explanatory variables coefficient estimates $\hat\beta_1$ and $\hat\beta_2$.
+
+The result is similar with *lm()*:
+
+```{r, message = FALSE}
+my_model <- lm(immatt ~ age + educ, data = dta)
+summary(my_model)
+```
 
 <br />
 

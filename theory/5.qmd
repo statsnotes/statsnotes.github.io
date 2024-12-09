@@ -837,3 +837,105 @@ The correct interpretation is that over many samples from the same population, w
 ------------------------------------------------------------------------
 
 [Homepage](https://statsnotes.github.io)
+
+# Implementation in R
+
+```{r, message = FALSE, echo = FALSE}
+dta <- readRDS('data/data1.rds')
+```
+
+## Hypothesis Testing
+
+To conduct hypothesis testing in a regression, we can use the *feols()* function from the package *fixest*, or we can use the base-R function *lm()*.
+
+-   The syntax is the same for both (at least for simple linear regression).
+-   The *feols()* function does have a few advantages for techniques that will be discussed later, especially when it comes to causal inference and econometrics.
+
+For the *feols()* function, we will need the *fixest* package. Make sure to install it if you have not previously (google how to install R-packages if needed).
+
+```{r, message = FALSE}
+library(fixest)
+```
+
+<br />
+
+**Syntax:**
+
+For the *feols()* function, the syntax is as follows:
+
+```{r, eval = FALSE}
+model <- feols(y ~ x, data = mydata)
+summary(model)
+```
+
+-   Replace *model* with any name you want to store your regression model in.
+-   Replace *y* with your outcome variable name, and *x* with your explanatory variable name.
+-   Replace *mydata* with the name of your dataframe.
+
+The *lm()* function has the exact same syntax for simple linear regression, except that we replace *feols()* with *lm()*:
+
+```{r, eval = FALSE}
+model <- lm(y ~ x, data = mydata)
+summary(model)
+```
+
+<br />
+
+**Example:**
+
+Let us run a regression with outcome variable *immatt* (attitude towards immigrants), explanatory variable *age*, from the dataframe called *dta*:
+
+```{r, message = FALSE}
+my_model <- feols(immatt ~ age, data = dta)
+summary(my_model)
+```
+
+We can see the following output:
+
+-   In the estimate column, we get our intercept estimate $\hat\beta_0$, and our explanatory variable coefficient estimate $\hat\beta_1$.
+-   In the standard error column, we get our standard error of our sample estimates.
+-   In the t-value column, we get our t-values for our sample estimates.
+-   In the p-value column, we get our p-values for our sample estimates. Any asterisks \* indicate statistical significance.
+
+The result is similar with *lm()*:
+
+```{r, message = FALSE}
+my_model <- lm(immatt ~ age, data = dta)
+summary(my_model)
+```
+
+<br />
+
+## Confidence Intervals
+
+**Syntax:**
+
+To estimate confidence intervals for our estimates, we will first need to run a regression and hypothesis tests (like above).
+
+Then, we can either manually calculate our confidence intervals (as the standard errors are given in the regression output), or we can use the *confint* function:
+
+```{r, eval = FALSE}
+confint(model_name)
+```
+
+-   Replace *model_name* with whatever variable name you stored your regression in.
+
+<br />
+
+**Example:**
+
+Let us find the confidence intervals for our estimates in the previous example regression above:
+
+```{r}
+confint(my_model)
+```
+
+We can see that R outputs the 95% confidence interval lower and upper bounds, for both our estimates $\hat\beta_0$ and $\hat\beta_1$.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)

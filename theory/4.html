@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -112,6 +146,11 @@ window.Quarto = {
   <li><a href="#interpretation-and-standardisation" id="toc-interpretation-and-standardisation" class="nav-link" data-scroll-target="#interpretation-and-standardisation">1.4.5: Interpretation and Standardisation</a></li>
   <li><a href="#r-squared-and-goodness-of-fit" id="toc-r-squared-and-goodness-of-fit" class="nav-link" data-scroll-target="#r-squared-and-goodness-of-fit">1.4.6: R-Squared and Goodness of Fit</a></li>
   <li><a href="#ols-regression-as-a-conditional-expectation-function" id="toc-ols-regression-as-a-conditional-expectation-function" class="nav-link" data-scroll-target="#ols-regression-as-a-conditional-expectation-function">1.4.7: OLS Regression as a Conditional Expectation Function</a></li>
+  <li><a href="#implementation-in-r" id="toc-implementation-in-r" class="nav-link" data-scroll-target="#implementation-in-r">Implementation in R</a>
+  <ul class="collapse">
+  <li><a href="#regression-estimation" id="toc-regression-estimation" class="nav-link" data-scroll-target="#regression-estimation">Regression Estimation</a></li>
+  <li><a href="#plotting-relationships-graphically" id="toc-plotting-relationships-graphically" class="nav-link" data-scroll-target="#plotting-relationships-graphically">Plotting Relationships Graphically</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -823,6 +862,135 @@ MSE &amp; = \min\limits_{b_0, b_1} E(y_i - E(y_i|x_i))^2 \\
 <ul>
 <li>This property will be very useful for causal inference, as we will show in Part II of the course.</li>
 </ul>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+</section>
+<section id="implementation-in-r" class="level1">
+<h1>Implementation in R</h1>
+<section id="regression-estimation" class="level2">
+<h2 class="anchored" data-anchor-id="regression-estimation">Regression Estimation</h2>
+<p>To estimate a regression, we can use the <em>feols()</em> function from the package <em>fixest</em>, or we can use the base-R function <em>lm()</em>.</p>
+<ul>
+<li>The syntax is the same for both (at least for simple linear regression).</li>
+<li>The <em>feols()</em> function does have a few advantages for techniques that will be discussed later, especially when it comes to causal inference and econometrics.</li>
+</ul>
+<p>For the <em>feols()</em> function, we will need the <em>fixest</em> package. Make sure to install it if you have not previously (google how to install R-packages if needed).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fixest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p><strong>Syntax:</strong></p>
+<p>For the <em>feols()</em> function, the syntax is as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">feols</span>(y <span class="sc">~</span> x, <span class="at">data =</span> mydata)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Replace <em>model</em> with any name you want to store your regression model in.</li>
+<li>Replace <em>y</em> with your outcome variable name, and <em>x</em> with your explanatory variable name.</li>
+<li>Replace <em>mydata</em> with the name of your dataframe.</li>
+</ul>
+<p>The <em>lm()</em> function has the exact same syntax for simple linear regression, except that we replace <em>feols()</em> with <em>lm()</em>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> mydata)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p><strong>Example:</strong></p>
+<p>Let us run a regression with outcome variable <em>immatt</em> (attitude towards immigrants), explanatory variable <em>age</em>, from the dataframe called <em>dta</em>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_model <span class="ot">&lt;-</span> <span class="fu">feols</span>(immatt <span class="sc">~</span> age, <span class="at">data =</span> dta)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>OLS estimation, Dep. Var.: immatt
+Observations: 33,706
+Standard-errors: IID 
+             Estimate Std. Error  t value  Pr(&gt;|t|)    
+(Intercept)  0.477238   0.015811  30.1830 &lt; 2.2e-16 ***
+age         -0.008401   0.000291 -28.8857 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.961932   Adj. R2: 0.024129</code></pre>
+</div>
+</div>
+<p>We can see in the estimate column, we get our intercept estimate <span class="math inline">\hat\beta_0</span>, and our explanatory variable coefficient estimate <span class="math inline">\hat\beta_1</span>.</p>
+<p>The result is similar with <em>lm()</em>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>my_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(immatt <span class="sc">~</span> age, <span class="at">data =</span> dta)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = immatt ~ age, data = dta)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.75282 -0.61715  0.07398  0.66244  2.30046 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.4772381  0.0158115   30.18   &lt;2e-16 ***
+age         -0.0084011  0.0002908  -28.89   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.962 on 33704 degrees of freedom
+Multiple R-squared:  0.02416,   Adjusted R-squared:  0.02413 
+F-statistic: 834.4 on 1 and 33704 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="plotting-relationships-graphically" class="level2">
+<h2 class="anchored" data-anchor-id="plotting-relationships-graphically">Plotting Relationships Graphically</h2>
+<p>We can plot relationships between two variables using a scatterplot. For this, we will need the <em>tidyverse package</em>. Make sure to install it if you have not previously (google how to install R-packages if needed).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p><strong>Syntax:</strong></p>
+<p>We can create scatterplots with the <em>ggplot()</em> function as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="at">x =</span> x_variable, <span class="at">y =</span> y_variable)) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Replace <em>mydata</em> with the name of your dataframe that contains your variables.</li>
+<li>Replace <em>x_variable</em> with the name of the variable you want displayed on the <span class="math inline">x</span> axis.</li>
+<li>Replace <em>y_variable</em> with the name of the variable you want displayed on the <span class="math inline">y</span> axis.</li>
+</ul>
+<p>Note: the <em>geom_point()</em> part plots the points on the scatterplot, and the <em>geom_smooth()</em> part plots the best-fit line (OLS estimation).</p>
+<ul>
+<li>The <em>method = lm</em> within the <em>geom_smooth()</em> tells us to use OLS estimation in the best-fit line.</li>
+</ul>
+<p><br></p>
+<p><strong>Example:</strong></p>
+<p>Let us do a scatterplot on the variable <em>age</em> and the variable <em>immatt</em> (immigration attitude), both variables being contained in the dataframe named <em>dta</em>:</p>
+<ul>
+<li>I added <em>theme_bw()</em>, which is a theme in ggplot (see appendix B).</li>
+<li>I added the argument <em>size=0</em>, as this allows us to control for the size of the dots.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dta, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> immatt)) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="4_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Obviously, there are way too many observations in this scatterplot, but this will look nicer for a plot with less observations.</p>
 <p><br></p>
 <p><br></p>
 <hr>

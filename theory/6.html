@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -86,7 +120,7 @@ window.Quarto = {
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Statistics for Social Scientists</h1>
-            <p class="subtitle lead">Lesson 1.6: Multiple Regression - Estimation and Interpretation</p>
+            <p class="subtitle lead">Lesson 1.6: Multiple Regression and OLS Estimation</p>
                       </div>
   </div>
     
@@ -102,7 +136,7 @@ window.Quarto = {
   </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
 <div id="quarto-sidebar-toc-left" class="sidebar toc-left">
   <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
-    <h2 id="toc-title">Lesson 1.6: Multiple Linear Regression - Estimation and Interpretation</h2>
+    <h2 id="toc-title">Lesson 1.6: Multiple Regression and OLS Estimation</h2>
    
   <ul class="collapse">
   <li><a href="#motivation-behind-multiple-linear-regression" id="toc-motivation-behind-multiple-linear-regression" class="nav-link active" data-scroll-target="#motivation-behind-multiple-linear-regression">1.6.1: Motivation Behind Multiple Linear Regression</a></li>
@@ -112,6 +146,10 @@ window.Quarto = {
   <li><a href="#regression-anatomy-and-controlling-for-confounders" id="toc-regression-anatomy-and-controlling-for-confounders" class="nav-link" data-scroll-target="#regression-anatomy-and-controlling-for-confounders">1.6.5: Regression Anatomy and Controlling for Confounders</a></li>
   <li><a href="#regression-anatomy-formula-for-ols-estimation" id="toc-regression-anatomy-formula-for-ols-estimation" class="nav-link" data-scroll-target="#regression-anatomy-formula-for-ols-estimation">1.6.6: Regression Anatomy Formula for OLS Estimation</a></li>
   <li><a href="#r-squared-and-goodness-of-fit" id="toc-r-squared-and-goodness-of-fit" class="nav-link" data-scroll-target="#r-squared-and-goodness-of-fit">1.6.7: R-Squared and Goodness of Fit</a></li>
+  <li><a href="#implementation-in-r" id="toc-implementation-in-r" class="nav-link" data-scroll-target="#implementation-in-r">Implementation in R</a>
+  <ul class="collapse">
+  <li><a href="#regression-estimation" id="toc-regression-estimation" class="nav-link" data-scroll-target="#regression-estimation">Regression Estimation</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -128,6 +166,7 @@ window.Quarto = {
 <li>The motivation/goal of Multiple Linear Regression, and the basic layout of Multiple Linear Regression.</li>
 <li>The estimation process of the OLS estimator for Multiple Linear Regression.</li>
 <li>What it means to control for a variable (using the regression anatomy theory).</li>
+<li>How we can use the regression anatomy theory to create an analogous estimate for OLS.</li>
 </ul>
 <p><br></p>
 <hr>
@@ -716,6 +755,89 @@ R^2 = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="implementation-in-r" class="level1">
+<h1>Implementation in R</h1>
+<section id="regression-estimation" class="level2">
+<h2 class="anchored" data-anchor-id="regression-estimation">Regression Estimation</h2>
+<p>To estimate a regression, we can use the <em>feols()</em> function from the package <em>fixest</em>, or we can use the base-R function <em>lm()</em>.</p>
+<ul>
+<li>The syntax is the same for both (at least for now).</li>
+<li>The <em>feols()</em> function does have a few advantages for techniques that will be discussed later, especially when it comes to causal inference and econometrics.</li>
+</ul>
+<p>For the <em>feols()</em> function, we will need the <em>fixest</em> package. Make sure to install it if you have not previously (google how to install R-packages if needed).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fixest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p><strong>Syntax:</strong></p>
+<p>For the <em>feols()</em> function, the syntax is as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">feols</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3, <span class="at">data =</span> mydata)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Replace <em>model</em> with any name you want to store your regression model in.</li>
+<li>Replace <em>y</em> with your outcome variable name, and <em>x1, x2, x3</em> with your explanatory variable name.</li>
+<li>You can add more explanatory variables by adding + signs and <em>x4 + x5 …</em> and so on. You can also remove explanatory variables down to only 1.</li>
+<li>Replace <em>mydata</em> with the name of your dataframe.</li>
+</ul>
+<p>The <em>lm()</em> function has the exact same syntax for simple linear regression, except that we replace <em>feols()</em> with <em>lm()</em>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3, <span class="at">data =</span> mydata)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p><strong>Example:</strong></p>
+<p>Let us run a regression with outcome variable <em>immatt</em> (attitude towards immigrants), explanatory variables <em>age</em> and <em>educ</em> (years of education), from the dataframe called <em>dta</em>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_model <span class="ot">&lt;-</span> <span class="fu">feols</span>(immatt <span class="sc">~</span> age <span class="sc">+</span> educ, <span class="at">data =</span> dta)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>OLS estimation, Dep. Var.: immatt
+Observations: 33,706
+Standard-errors: IID 
+             Estimate Std. Error  t value  Pr(&gt;|t|)    
+(Intercept) -0.529355   0.026638 -19.8720 &lt; 2.2e-16 ***
+age         -0.005175   0.000291 -17.8117 &lt; 2.2e-16 ***
+educ         0.063833   0.001381  46.2108 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.932834   Adj. R2: 0.08225</code></pre>
+</div>
+</div>
+<p>We can see in the estimate column, we get our intercept estimate <span class="math inline">\hat\beta_0</span>, and our explanatory variables coefficient estimates <span class="math inline">\hat\beta_1</span> and <span class="math inline">\hat\beta_2</span>.</p>
+<p>The result is similar with <em>lm()</em>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>my_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(immatt <span class="sc">~</span> age <span class="sc">+</span> educ, <span class="at">data =</span> dta)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = immatt ~ age + educ, data = dta)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.97099 -0.58912  0.06513  0.63948  2.77153 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -0.5293545  0.0266382  -19.87   &lt;2e-16 ***
+age         -0.0051753  0.0002906  -17.81   &lt;2e-16 ***
+educ         0.0638327  0.0013813   46.21   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.9329 on 33703 degrees of freedom
+Multiple R-squared:  0.0823,    Adjusted R-squared:  0.08225 
+F-statistic:  1511 on 2 and 33703 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
 </section>
 
 </main>

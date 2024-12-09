@@ -490,3 +490,166 @@ For now, don't worry about this. We will get back to this when we discuss hypoth
 ------------------------------------------------------------------------
 
 [Homepage](https://statsnotes.github.io)
+
+# Implementation in R
+
+```{r, message = FALSE, echo = FALSE}
+dta <- readRDS('data/data1.rds')
+```
+
+## Calculating Mean
+
+**Syntax:**
+
+To calculate the mean of a variable in R, use the *mean()* function with the following syntax:
+
+```{r, eval = FALSE}
+mean(variable_name, na.rm = TRUE)
+```
+
+-   Replace *variable_name* with your variable name. Note: if your variable is in a data frame, use *data_frame_name**\$**variable_name* as the syntax.
+-   The second argument *na.rm* indicates if you want to remove missing values. Typically, when calculating means, we will remove missing values, so keep it set to *TRUE*.
+
+<br />
+
+**Example:**
+
+Below, I am calculating the mean of the variable *age*, in the dataframe called *dta*.
+
+```{r}
+mean(dta$age, na.rm = TRUE)
+```
+
+As you can see, R outputs the mean.
+
+<br />
+
+## Calculating Mean in Groups
+
+Sometimes, you might want to calculate the mean in different groups.
+
+-   For example, lets say you have two variables: *income* and *gender*.
+-   You might be interested in seeing the mean income of males, and mean income of females.
+
+This will become quite common later as we enter causal inference - where we often compare treatment and control groups.
+
+You can do this in R with the *tidyverse* package. Make sure to install it if you have not previously (google how to install R-packages if needed).
+
+```{r, message = FALSE}
+library(tidyverse)
+```
+
+<br />
+
+**Syntax:**
+
+To calculate means by groups, we use the following syntax:
+
+```{r, eval = FALSE}
+means <- mydata %>%
+  group_by(group_variable_name) %>%
+  summarise(mean = mean(variable_name, na.rm = TRUE, .groups = 'drop'))
+
+means #print the result
+```
+
+-   Replace *means* with anything you want to name your variable as.
+-   Replace *mydata* with the name of your dataframe that contains your variables.
+-   Replace *group_variable_name* with the variable you want to group by.
+-   Replace *variable_name* with the variable you want to find the mean of.
+
+<br />
+
+**Example:**
+
+Below, I am calculating the average of the variable *age*, grouped by variable *female*:
+
+```{r}
+means <- dta %>%
+  group_by(female) %>%
+  summarise(mean = mean(age, na.rm = TRUE, .groups = 'drop'))
+
+means #print the result
+```
+
+We can see the output produces a table with the means per each group of the variable *female*.
+
+<br />
+
+## Calculating Variance
+
+**Syntax:**
+
+To calculate the standard deviation of a variable in R, use the *sd()* function with the following syntax:
+
+```{r, eval = FALSE}
+sd(variable_name)
+```
+
+-   Replace *variable_name* with your variable name. Note: if your variable is in a data frame, use *data_frame_name**\$**variable_name* as the syntax.
+
+<br />
+
+**Example:**
+
+Below, I am calculating the standard deviation of the variable *age*, in the dataframe called *dta*.
+
+```{r}
+sd(dta$age)
+```
+
+As you can see, R outputs the standard deviation.
+
+<br />
+
+## Visualising Distributions
+
+**Syntax:**
+
+Sometimes, you might want to visualise distributions of our variables in R, through a histogram/density plot. There are two main ways to do this in R.
+
+First, we can use the *plot()* function.
+
+```{r, eval = FALSE}
+plot(density(variable_name))
+```
+
+-   Replace *variable_name* with your variable name. Note: if your variable is in a data frame, use *data_frame_name**\$**variable_name* as the syntax.
+
+Or, we can use the *ggplot()* function (which requires the *tidyverse* package):
+
+-   Check out appendix B of the main page for ggplot tips.
+
+```{r, eval = FALSE}
+ggplot(mydata, aes(x = variable_name)) +
+  geom_density()
+```
+
+-   Replace *mydata* with the name of your dataframe that contains your variables.
+-   Replace *variable_name* with the variable you want to plot the distribution of.
+
+<br />
+
+**Example:**
+
+Let us plot the distribution of the variable *age*:
+
+```{r}
+plot(density(dta$age))
+```
+
+We can also use *ggplot* (I added a theme *bw* to make it look better. You can learn more about ggplot in Appendix B).
+
+```{r}
+ggplot(dta, aes(x = age)) +
+  geom_density() +
+  theme_bw()
+```
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
