@@ -65,7 +65,7 @@ The Gauss-Markov Theorem states that under 5 conditions, the OLS estimator is th
 
 Assuming homoscedasticity is met, we know $Var(u|x_1, \dots, x_k) = \sigma^2$.
 
--   When homoscedasticity is not met, nothing in this section applies. See 1.8.4 for more information on how to do estimates when this is violated.
+-   When homoscedasticity is not met, nothing in this section applies. See [1.8.6](https://statsnotes.github.io/theory/8.html#robust-standard-errors-for-multiple-regression) for more information on how to do estimates when this is violated.
 
 Let us find the variance of OLS estimates (we will use $\hat\beta_1$ for simplicity, but this applies to any other coefficient $\hat\beta_1 , \dots, \hat\beta_k$. In proving unbiasedness of OLS in [1.7.3](https://statsnotes.github.io/theory/7.html#proof-of-unbiasedness-of-ols-under-gauss-markov), we got to this stage:
 
@@ -117,6 +117,8 @@ $$
 Var(\hat\beta_1) = \frac{\sigma^2}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
 $$
 
+-   When homoscedasticity is not met, this is not valid. See [1.8.6](https://statsnotes.github.io/theory/8.html#robust-standard-errors-for-multiple-regression) for more information on how to do estimates when this is violated.
+
 <br />
 
 <br />
@@ -159,6 +161,8 @@ $$
 \hat\sigma = \sqrt{\frac{SSR}{n-k-1}} = \sqrt{\frac{\sum_{i=1}^n \hat u_i^2}{n-k-1}}
 $$
 :::
+
+When homoscedasticity is not met, this is not valid. See [1.8.6](https://statsnotes.github.io/theory/8.html#robust-standard-errors-for-multiple-regression) for more information on how to do estimates when this is violated.
 
 <br />
 
@@ -434,6 +438,8 @@ $$
 -   Where SST is the total sum of squares $SST = \sum(y_i - \bar y)^2$.
 :::
 
+We can use these robust standard errors to conduct hypothesis testing and confidence intervals as normal.
+
 Nowadays, it is typical to use heteroscedasticity-robust standard errors as default, and only using normal standard errors if we can prove homoscedasticity is met.
 
 <br />
@@ -515,6 +521,8 @@ $$
 \widehat{se}(\hat\beta_j) = \sqrt{\frac{\sum_{i=1}^n \widetilde{r_{ji}}^2 \hat u^2_i}{\sum_{i=1}^n\widetilde{r_{ji}}^2}}
 $$
 :::
+
+We can use these robust standard errors to conduct hypothesis testing and confidence intervals as normal.
 
 Nowadays, it is typical to use heteroscedasticity-robust standard errors as default, and only using normal standard errors if we can prove homoscedasticity is met.
 

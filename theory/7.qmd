@@ -673,7 +673,7 @@ These result in the same estimates as the OLS estimator.
 
 <br />
 
-The moment conditions that define OLS as a method of moments are $E(u) = 0$ and $E(xu) = 0$. These two together imply that $Cov(x,u) = 0$ (a very similar proof provided in [1.5.1](https://statsnotes.github.io/theory/5.html#residuals-and-algebraic-properties-of-ols).
+The moment conditions that define OLS as a method of moments are $E(u) = 0$ and $E(xu) = 0$. These two together imply that $Cov(x,u) = 0$ (a very similar proof provided in [1.5.1](https://statsnotes.github.io/theory/5.html#residuals-and-algebraic-properties-of-ols)).
 
 -   An explanatory variable $x$ is an **exogenous** regressor if $Cov(x,u) = 0$.
 

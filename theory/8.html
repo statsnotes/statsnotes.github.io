@@ -218,7 +218,7 @@ Definition: Gauss-Markov Theorem
 <p><br></p>
 <p>Assuming homoscedasticity is met, we know <span class="math inline">Var(u|x_1, \dots, x_k) = \sigma^2</span>.</p>
 <ul>
-<li>When homoscedasticity is not met, nothing in this section applies. See 1.8.4 for more information on how to do estimates when this is violated.</li>
+<li>When homoscedasticity is not met, nothing in this section applies. See <a href="https://statsnotes.github.io/theory/8.html#robust-standard-errors-for-multiple-regression">1.8.6</a> for more information on how to do estimates when this is violated.</li>
 </ul>
 <p>Let us find the variance of OLS estimates (we will use <span class="math inline">\hat\beta_1</span> for simplicity, but this applies to any other coefficient <span class="math inline">\hat\beta_1 , \dots, \hat\beta_k</span>. In proving unbiasedness of OLS in <a href="https://statsnotes.github.io/theory/7.html#proof-of-unbiasedness-of-ols-under-gauss-markov">1.7.3</a>, we got to this stage:</p>
 <p><span class="math display">
@@ -256,6 +256,9 @@ Var(\hat\beta_1|x_1, \dots, x_k) &amp; = \sigma^2 \sum\limits_{i=1}^n w_i^2 \\
 <p><span class="math display">
 Var(\hat\beta_1) = \frac{\sigma^2}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
 </span></p>
+<ul>
+<li>When homoscedasticity is not met, this is not valid. See <a href="https://statsnotes.github.io/theory/8.html#robust-standard-errors-for-multiple-regression">1.8.6</a> for more information on how to do estimates when this is violated.</li>
+</ul>
 <p><br></p>
 <p><br></p>
 <hr>
@@ -297,6 +300,7 @@ Definition: Standard Errors for Multiple Linear Regression
 </span></p>
 </div>
 </div>
+<p>When homoscedasticity is not met, this is not valid. See <a href="https://statsnotes.github.io/theory/8.html#robust-standard-errors-for-multiple-regression">1.8.6</a> for more information on how to do estimates when this is violated.</p>
 <p><br></p>
 <section id="multicollinearity" class="level3">
 <h3 class="anchored" data-anchor-id="multicollinearity">Multicollinearity</h3>
@@ -571,6 +575,7 @@ Definition: Robust Standard Error for Bivariate Regression
 </ul>
 </div>
 </div>
+<p>We can use these robust standard errors to conduct hypothesis testing and confidence intervals as normal.</p>
 <p>Nowadays, it is typical to use heteroscedasticity-robust standard errors as default, and only using normal standard errors if we can prove homoscedasticity is met.</p>
 <p><br></p>
 <p><br></p>
@@ -638,6 +643,7 @@ Definition: Robust Standard Error for Multiple Regression
 </span></p>
 </div>
 </div>
+<p>We can use these robust standard errors to conduct hypothesis testing and confidence intervals as normal.</p>
 <p>Nowadays, it is typical to use heteroscedasticity-robust standard errors as default, and only using normal standard errors if we can prove homoscedasticity is met.</p>
 <p><br></p>
 <p><br></p>

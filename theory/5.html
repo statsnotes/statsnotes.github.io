@@ -641,7 +641,7 @@ Var(u|x) = \sigma^2 \text{ for all } x
 <h1>1.5.5: Deriving Variance of OLS Estimates</h1>
 <p>Assuming Homoscedasticity is met, we know <span class="math inline">Var(u|x) = \sigma^2</span>.</p>
 <ul>
-<li>When homoscedasticity is not met, nothing in this section applies. See lesson 1.8 for more information on how to do estimates when this is violated.</li>
+<li>When homoscedasticity is not met, nothing in this section applies. See <a href="https://statsnotes.github.io/theory/8.html#robust-standard-errors-for-bivariate-regression">1.8.5</a> for more information on how to do estimates when this is violated.</li>
 </ul>
 <p>What is variance? From <a href="https://statsnotes.github.io/theory/1.html#variance-and-standard-deviation">1.1.5</a>, we know that the formula for variance is:</p>
 <p><span class="math display">
@@ -708,7 +708,7 @@ Var(\hat\beta|x) &amp; = \sigma^2 \sum\limits_{i=1}^n w_i^2 \\
 </span></p>
 <p>Thus, that is the variance of our OLS estimator <span class="math inline">\hat\beta_1</span>, and also the variance of the sampling distribution of <span class="math inline">\hat\beta_1</span>.</p>
 <ul>
-<li>This is only the case if SLR.5 homoscedasticity assumption holds. It is not valid if the assumption is not met.</li>
+<li>This is only the case if SLR.5 homoscedasticity assumption holds. It is not valid if the assumption is not met. See <a href="https://statsnotes.github.io/theory/8.html#robust-standard-errors-for-bivariate-regression">1.8.5</a> for more information on how to do estimates when this is violated.</li>
 <li>One might notice we calculated <span class="math inline">Var(\hat\beta_1|x)</span>, not <span class="math inline">Var(\hat\beta_1)</span>. However, this does not matter, since our final formula does not depend on the value of <span class="math inline">x</span> (from homoscedasticity, we know <span class="math inline">\sigma^2</span> is independent of <span class="math inline">x</span>, and also <span class="math inline">SST_x</span> is constant no matter the specific value of <span class="math inline">x</span> as it includes all values of <span class="math inline">x</span>).</li>
 </ul>
 <p>There is one issue: we know that <span class="math inline">\sigma^2 = E(u^2)</span> (see earlier in the section). However, we do not actually know the value of <span class="math inline">E(u^2)</span>! Remember, that is the error term <span class="math inline">u</span> - while we only know the residual term <span class="math inline">\hat u</span>.</p>
@@ -789,6 +789,7 @@ SST_x = \sum_{i=1}^n(x_i - \bar x)^2
 </span></p>
 </div>
 </div>
+<p>When homoscedasticity is not met, this standard error is invalid. See <a href="https://statsnotes.github.io/theory/8.html#robust-standard-errors-for-bivariate-regression">1.8.5</a> for more information on how to do estimates when this is violated.</p>
 <p><br></p>
 <p><br></p>
 <hr>

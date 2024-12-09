@@ -558,7 +558,7 @@ In the figure above, we can see on the left chart, the variance of the residuals
 
 Assuming Homoscedasticity is met, we know $Var(u|x) = \sigma^2$.
 
--   When homoscedasticity is not met, nothing in this section applies. See lesson 1.8 for more information on how to do estimates when this is violated.
+-   When homoscedasticity is not met, nothing in this section applies. See [1.8.5](https://statsnotes.github.io/theory/8.html#robust-standard-errors-for-bivariate-regression) for more information on how to do estimates when this is violated.
 
 What is variance? From [1.1.5](https://statsnotes.github.io/theory/1.html#variance-and-standard-deviation), we know that the formula for variance is:
 
@@ -643,7 +643,7 @@ $$
 
 Thus, that is the variance of our OLS estimator $\hat\beta_1$, and also the variance of the sampling distribution of $\hat\beta_1$.
 
--   This is only the case if SLR.5 homoscedasticity assumption holds. It is not valid if the assumption is not met.
+-   This is only the case if SLR.5 homoscedasticity assumption holds. It is not valid if the assumption is not met. See [1.8.5](https://statsnotes.github.io/theory/8.html#robust-standard-errors-for-bivariate-regression) for more information on how to do estimates when this is violated.
 -   One might notice we calculated $Var(\hat\beta_1|x)$, not $Var(\hat\beta_1)$. However, this does not matter, since our final formula does not depend on the value of $x$ (from homoscedasticity, we know $\sigma^2$ is independent of $x$, and also $SST_x$ is constant no matter the specific value of $x$ as it includes all values of $x$).
 
 There is one issue: we know that $\sigma^2 = E(u^2)$ (see earlier in the section). However, we do not actually know the value of $E(u^2)$! Remember, that is the error term $u$ - while we only know the residual term $\hat u$.
@@ -736,6 +736,8 @@ $$
 SST_x = \sum_{i=1}^n(x_i - \bar x)^2
 $$
 :::
+
+When homoscedasticity is not met, this standard error is invalid. See [1.8.5](https://statsnotes.github.io/theory/8.html#robust-standard-errors-for-bivariate-regression) for more information on how to do estimates when this is violated.
 
 <br />
 
