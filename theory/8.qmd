@@ -361,7 +361,7 @@ MLR.5 Homoscedasticity states that $Var(u|x_1, \dots x_k) = \sigma^2$.
 
 When this is violated (so when the values of the explanatory variables effect the variance of the error term), we have **heteroscedasticity**.
 
--   We provided graphical examples of homoscedasticity in [1.5.4](https://statsnotes.github.io/theory/5.html#variance-of-the-ols-estimator-and-homoscedasticity).
+-   We provided graphical examples of homoscedasticity in [1.5.4](https://statsnotes.github.io/theory/5.html#variance-of-the-ols-estimator-and-homoscedasticity). This is useful to know how to identify heteroscedasticity.
 
 When MLR.5 Homoscedasticity is violated, the OLS estimator is still unbiased, however, it is no longer the unbiased linear estimator with the least variance.
 
@@ -434,6 +434,8 @@ $$
 -   Where SST is the total sum of squares $SST = \sum(y_i - \bar y)^2$.
 :::
 
+Nowadays, it is typical to use heteroscedasticity-robust standard errors as default, and only using normal standard errors if we can prove homoscedasticity is met.
+
 <br />
 
 <br />
@@ -497,7 +499,7 @@ $$
 Of course, just like before, we do not know $\sigma_i^2$, and have to estimate it with $\hat u$. Thus, our estimate of variance is:
 
 $$
-\widehat{Var}(\hat\beta_1) = \frac{\sum_{i=1}^n \widetilde{r_{1i}}^2 \sigma^2_i}{\sum_{i=1}^n\widetilde{r_{1i}}^2}
+\widehat{Var}(\hat\beta_1) = \frac{\sum_{i=1}^n \widetilde{r_{1i}}^2 \hat u_i^2}{\sum_{i=1}^n\widetilde{r_{1i}}^2}
 $$
 
 And thus, the standard error (square root of variance) of our estimate $\hat\beta_1$ under homoscedasticity is the square root of our estimate of variance.
@@ -510,9 +512,13 @@ And thus, the standard error (square root of variance) of our estimate $\hat\bet
 The heteroscedasticity-robust standard error for $\hat\beta_1$ in multiple regression is:
 
 $$
-\widehat{se}(\hat\beta_j) = \sqrt{\frac{\sum_{i=1}^n \widetilde{r_{ji}}^2 \sigma^2_i}{\sum_{i=1}^n\widetilde{r_{ji}}^2}}
+\widehat{se}(\hat\beta_j) = \sqrt{\frac{\sum_{i=1}^n \widetilde{r_{ji}}^2 \hat u^2_i}{\sum_{i=1}^n\widetilde{r_{ji}}^2}}
 $$
 :::
+
+Nowadays, it is typical to use heteroscedasticity-robust standard errors as default, and only using normal standard errors if we can prove homoscedasticity is met.
+
+<br />
 
 <br />
 
@@ -581,11 +587,44 @@ Thus, the sample mean estimator is consistent, as the variance goes to zero as s
 
 Not only is sample mean a consistent estimator for moment $E(z_i)$, the law of large number also says this is true for other sample moment estimators, such as sample variance.
 
--   If you do not know what a moment is, see 1.7.7.
+-   If you do not know what a moment is, see [1.7.6](https://statsnotes.github.io/theory/7.html#ols-as-a-method-of-moments-estimator).
 
 <br />
 
-OLS is also a consistent estimator.
+OLS is also a consistent estimator. Recall the OLS estimator moment conditions introduced in [1.7.6](https://statsnotes.github.io/theory/7.html#ols-as-a-method-of-moments-estimator) (we will use simple linear regression for simplicity)
+
+$$
+\begin{split}
+& E(u) = 0 \\
+& E(xu) = 0
+\end{split}
+$$
+
+We know that by the law of large numbers, the following two are true (since they are sample mean estimators):
+
+$$
+\begin{split}
+& \text{plim}(\bar x) = E(x) \\
+& \text{plim}(\bar u) = E(u) = 0
+\end{split}
+$$
+
+To prove the final condition $E(xu) = 0$ is also consistently estimated, we have to use a property of probability limits:
+
+$$
+\text{plim}(a_n b_n) = ab
+$$
+
+-   Assuming $\text{plim}(a_n) = a$, and $\text{plim}(b_n) = b$.
+
+Since the moment conditions of OLS are asymptotically consistent, so is $\hat\beta_1$.
+
+<br />
+
+What is the implication of this?
+
+-   This means that we can increase the precision of our estimates by increasing our sample sizes.
+-   If you do any regressions on your own - you will realise this. As sample size becomes quite large, you almost always reject the null hypothesis in statistical tests. This is because the variance decreases significantly as $n$ increases.
 
 <br />
 
@@ -601,12 +640,12 @@ OLS is also a consistent estimator.
 dta <- readRDS('data/data1.rds')
 ```
 
-## Hypothesis Testing
+## Hypothesis Testing with Homoscedasticity
 
 To conduct hypothesis testing in a regression, we can use the *feols()* function from the package *fixest*, or we can use the base-R function *lm()*.
 
 -   The syntax is the same for both (at least for now).
--   The *feols()* function does have a few advantages for techniques that will be discussed later, especially when it comes to causal inference and econometrics.
+-   The *feols()* function is often used because it can incorporate heteroscedasticity-robust standard errors (see the next section), as well as other techniques in econometrics.
 
 For the *feols()* function, we will need the *fixest* package. Make sure to install it if you have not previously (google how to install R-packages if needed).
 
@@ -661,6 +700,54 @@ The result is similar with *lm()*:
 my_model <- lm(immatt ~ age + educ, data = dta)
 summary(my_model)
 ```
+
+<br />
+
+## Hypothesis Testing with Heteroscedasticity
+
+To conduct hypothesis testing with robust standard errors, we must use the *feols()* function from the package *fixest* (no *lm()* function).
+
+For the *feols()* function, we will need the *fixest* package. Make sure to install it if you have not previously (google how to install R-packages if needed).
+
+```{r, message = FALSE}
+library(fixest)
+```
+
+<br />
+
+**Syntax:**
+
+For the *feols()* function, the syntax is as follows:
+
+```{r, eval = FALSE}
+model <- feols(y ~ x1 + x2 + x3, data = mydata, se = "hetero")
+summary(model)
+```
+
+-   Replace *model* with any name you want to store your regression model in.
+-   Replace *y* with your outcome variable name, and *x1, x2, x3* with your explanatory variable name.
+-   You can add more explanatory variables by adding + signs and *x4 + x5 ...* and so on. You can also remove explanatory variables down to only 1.
+-   Replace *mydata* with the name of your dataframe.
+
+Note: the extra argument *se="hetero"* tells R to use heteroscedasticity-robust standard errors.
+
+<br />
+
+**Example:**
+
+Let us run a regression with outcome variable *immatt* (attitude towards immigrants), explanatory variables *age* and *educ* (years of education), from the dataframe called *dta*:
+
+```{r, message = FALSE}
+my_model <- feols(immatt ~ age + educ, data = dta, se = "hetero")
+summary(my_model)
+```
+
+We can see the following output:
+
+-   In the estimate column, we get our intercept estimate $\hat\beta_0$, and our explanatory variables coefficient estimates $\hat\beta_1$ and $\hat\beta_2$.
+-   In the standard error column, we get our standard error of our sample estimates.
+-   In the t-value column, we get our t-values for our sample estimates.
+-   In the p-value column, we get our p-values for our sample estimates. Any asterisks \* indicate statistical significance.
 
 <br />
 
