@@ -22,11 +22,17 @@ format:
         html-math-method: katex
 ---
 
+::: callout-note
+## Lesson Overview
+
+Up until now, we have covered topics relating to one variable at a time. However, statisticians and social scientists are often interested in the relationship between variables. This lesson will delve into the basics of these relationships.
+
 This lesson covers the following topics:
 
 -   How variables can be related/correlated with each other.
 -   How we can quantify correlations with covariance and correlation coefficients
 -   How we might care about the magnitude of correlations, rather than the strength of correlations
+:::
 
 <br />
 

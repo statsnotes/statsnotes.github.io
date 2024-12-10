@@ -22,14 +22,20 @@ format:
         html-math-method: katex
 ---
 
+::: callout-note
+## Lesson Overview
+
+In the last lesson, we discussed the properties of the OLS estimator. In this lesson, we use these OLS estimates to conduct statistical inference tests, and discuss some other properties of OLS from an inference perspective.
+
 This lesson covers the following topics:
 
 -   How standard errors are calculated under the assumption of homoscedasticity.
 -   How hypothesis tests (including multiple coefficients at once) and confidence intervals are conducted.
 -   How the presence of heteroscedasticity affects our standard errors, and how we can adjust for this with robust standard errors.
 -   How OLS estimates behave as our sample size increases (asymptotic properties).
+:::
 
-::: callout-note
+::: callout-warning
 This first part of this lesson will mirror the second half of [lesson 1.5](https://statsnotes.github.io/theory/5.html), but will adjust the inference of bivariate regression to multiple regression, and introduce new topics. I recommend a strong understanding of those topics before starting this chapter.
 :::
 

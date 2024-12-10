@@ -22,11 +22,17 @@ format:
         html-math-method: katex
 ---
 
+::: callout-note
+## Lesson Overview
+
+In the last lesson, we discussed the OLS estimation processes. Today, we discuss the properties of our estimates, and how can we use them for statistical inference.
+
 This lesson covers the following topics:
 
 -   Some simple properties of our best-fit line through OLS estimation.
 -   The conditions on which OLS estimation is an unbiased estimator (Gauss-Markov conditions), and how violations of these conditions will lead to biased estimates.
 -   How we can conduct hypothesis testing on OLS estimates, and the different assumptions needed for that.
+:::
 
 <br />
 

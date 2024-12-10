@@ -22,15 +22,22 @@ format:
         html-math-method: katex
 ---
 
+::: callout-note
+## Lesson Overview
+
+In the last lesson, we discussed the estimation process of OLS for multiple linear regression. But we have to ask ourselves - is OLS a good estimator? Why should we use OLS? In this lesson, we focus on the properties of OLS, and the conditions under which OLS is a good estimator.
+
 This lesson covers the following topics:
 
 -   Some simple algebraic properties of our best-fit plane through OLS estimation.
 -   The conditions on which OLS estimation is an unbiased estimator for multiple regression (Gauss-Markov conditions), and how violations of these conditions will lead to biased estimates.
 -   Omitted Variable Bias, and how it causes violations of the Gauss-Markov conditions.
 -   The method of moments estimator, how OLS is a method of moments estimator, and how this shows another reason endogeneity is a concern.
+-   How OLS is also the best approximation of the conditional expectation function.
+:::
 
-::: callout-note
-This entire lesson will mirror the first half of [lesson 1.5](https://statsnotes.github.io/theory/5.html), but will adjust the properties of bivariate regression to multiple regression. I recommend a strong understanding of those topics before starting this chapter.
+::: callout-warning
+This lesson (especially the first half) will mirror the first half of [lesson 1.5](https://statsnotes.github.io/theory/5.html), but will adjust the properties of bivariate regression to multiple regression. I recommend a strong understanding of those topics before starting this chapter.
 :::
 
 <br />

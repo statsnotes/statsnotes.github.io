@@ -22,12 +22,18 @@ format:
         html-math-method: katex
 ---
 
+::: callout-note
+## Lesson Overview
+
+We start our journey in statistics with the very basics: random variables. These serve as the basis of all statistics, and are essential for any further statistical methods.
+
 This lesson covers the following topics:
 
 -   A brief introduction to statistics and econometrics, and why we care about them as social scientists.
 -   An introduction to random variables and distributions.
 -   Key concepts of expected value and variance.
 -   The normal distribution and t-distribution.
+:::
 
 <br />
 

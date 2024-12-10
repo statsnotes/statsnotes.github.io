@@ -22,6 +22,11 @@ format:
         html-math-method: katex
 ---
 
+::: callout-note
+## Lesson Overview
+
+In this lesson, we introduce the dominant way of measuring relationships between variables in statistics and the social sciences: the regression model. We discuss the simple linear regression model, and how we estimate relationships between variables with the Ordinary Least Squares estimator.
+
 This lesson covers the following topics:
 
 -   The basic form of the simple linear regression model (bivariate regression).
@@ -29,6 +34,7 @@ This lesson covers the following topics:
 -   How we can interpret the OLS estimates as the relationships between two variables.
 -   How we can describe the *goodness of fit* with the R-squared metric.
 -   Why OLS is also the best approximation of the conditional expectation function.
+:::
 
 <br />
 

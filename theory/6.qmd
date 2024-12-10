@@ -22,12 +22,18 @@ format:
         html-math-method: katex
 ---
 
+::: callout-note
+## Lesson Overview
+
+In the past 2 lessons, we have focused on the simple linear regression model. Now, we will expand the number of explanatory variables to get the multiple linear regression model, and we will discuss how our OLS estimation process changes as a result.
+
 This lesson covers the following topics:
 
 -   The motivation/goal of Multiple Linear Regression, and the basic layout of Multiple Linear Regression.
 -   The estimation process of the OLS estimator for Multiple Linear Regression.
 -   What it means to control for a variable (using the regression anatomy theory).
 -   How we can use the regression anatomy theory to create an analogous estimate for OLS.
+:::
 
 <br />
 

@@ -22,11 +22,17 @@ format:
         html-math-method: katex
 ---
 
+::: callout-note
+## Lesson Overview
+
+Last lesson, we covered random variables. Now, we will apply the idea of random variables to discuss how statisticians estimate true population values using samples.
+
 This lesson covers the following topics:
 
 -   The idea of using samples to learn about the population.
 -   The idea of uncertainty in estimates and the basics of hypothesis testing.
 -   Properties of estimators: unbiasedness and variance.
+:::
 
 <br />
 
