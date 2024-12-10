@@ -145,7 +145,6 @@ window.Quarto = {
   <li><a href="#mathematics-of-the-ordinary-least-squares-estimator" id="toc-mathematics-of-the-ordinary-least-squares-estimator" class="nav-link" data-scroll-target="#mathematics-of-the-ordinary-least-squares-estimator">1.4.4: Mathematics of the Ordinary Least Squares Estimator</a></li>
   <li><a href="#interpretation-and-standardisation" id="toc-interpretation-and-standardisation" class="nav-link" data-scroll-target="#interpretation-and-standardisation">1.4.5: Interpretation and Standardisation</a></li>
   <li><a href="#r-squared-and-goodness-of-fit" id="toc-r-squared-and-goodness-of-fit" class="nav-link" data-scroll-target="#r-squared-and-goodness-of-fit">1.4.6: R-Squared and Goodness of Fit</a></li>
-  <li><a href="#ols-regression-as-a-conditional-expectation-function" id="toc-ols-regression-as-a-conditional-expectation-function" class="nav-link" data-scroll-target="#ols-regression-as-a-conditional-expectation-function">1.4.7: OLS Regression as a Conditional Expectation Function</a></li>
   <li><a href="#implementation-in-r" id="toc-implementation-in-r" class="nav-link" data-scroll-target="#implementation-in-r">Implementation in R</a>
   <ul class="collapse">
   <li><a href="#regression-estimation" id="toc-regression-estimation" class="nav-link" data-scroll-target="#regression-estimation">Regression Estimation</a></li>
@@ -582,7 +581,7 @@ Warning!
 <p>Causality is not established through estimators, it is established through a strong experimental design (which we will cover in part II of the course).</p>
 </div>
 </div>
-<p>Note that this interpretation of <span class="math inline">\hat\beta_1</span> only applies to continuous <span class="math inline">x</span> variables and continuous/ordinal <span class="math inline">y</span> variables. We will discuss more about this in <a href="https://statsnotes.github.io/theory/9.html">Lesson 9</a>.</p>
+<p>Note that this interpretation of <span class="math inline">\hat\beta_1</span> only applies to continuous <span class="math inline">x</span> variables and continuous/ordinal <span class="math inline">y</span> variables. We will discuss interpretation with categorical/binary variables in lesson 1.9.</p>
 <p><br></p>
 </section>
 <section id="interpretation-of-hatbeta_0" class="level3">
@@ -740,133 +739,6 @@ R^2 = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
-</section>
-<section id="ols-regression-as-a-conditional-expectation-function" class="level1">
-<h1>1.4.7: OLS Regression as a Conditional Expectation Function</h1>
-<p>We previously discussed random variables and distributions in <a href="https://statsnotes.github.io/theory/1.html">lesson 1</a>. There, we learned that random variables can be characterised by distributions, which can be summarised with the expectation and variance.</p>
-<p><span class="math inline">y</span> in a regression is also a random variable.</p>
-<ul>
-<li>For example, imagine income was <span class="math inline">y</span>.</li>
-<li>There is a distribution of income in a population - such that if we randomly selected someone from the population, there would be a probability associated with selecting someone with an income between $60,000-$70,000.</li>
-</ul>
-<p>We can characterise the distribution of <span class="math inline">y</span> with its expected value: <span class="math inline">E(y)</span>.</p>
-<p>A <strong>conditional expectation function</strong> says that the value of <span class="math inline">E(y)</span> depends on the value of <span class="math inline">x</span>. We notate a conditional expectation function as <span class="math inline">E(y|x)</span>.</p>
-<ul>
-<li>For example, imagine <span class="math inline">y</span> is income and <span class="math inline">x</span> is age.</li>
-<li>A conditional expectation function <span class="math inline">E(y|x)</span> says that as <span class="math inline">x</span> (age) changes, the expected value of <span class="math inline">y</span> (income) also changes.</li>
-<li>For example, you would probably expect the expected value of a 20 year old’s income to be different than a 50 year old’s.</li>
-</ul>
-<p><br></p>
-<p>The Ordinary Least Squares Regression line also is the best approximation of the conditional expectation function <span class="math inline">E(y|x)</span>. That means, we can view a regression as also a conditional expectation function.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Definition: Linear Conditional Expectation Function
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>A linear conditional expectation function, can take the following form:</p>
-<p><span class="math display">
-E(y_i|x_i) = b_0 + b_1x_i
-</span></p>
-<ul>
-<li>Where <span class="math inline">b_0</span> and <span class="math inline">b_1</span> are the parameters/coefficients of the model.</li>
-<li>Where <span class="math inline">E(y_i|x_i)</span> is the expectation of the conditional distribution <span class="math inline">y|x</span>.</li>
-<li>Where the conditional distribution <span class="math inline">y|x</span> has variance <span class="math inline">\sigma^2</span> (this assumption we will explore in more detail in the next few lessons).</li>
-</ul>
-<p>A conditional expectation function is defined as the parameters that minimise the mean squared errors (MSE).</p>
-<p><span class="math display">
-\begin{split}
-MSE &amp; = E(y_i - E(y_i|x_i))^2 \\
-&amp; = \frac{1}{n}\sum\limits_{i=1}^n( y_i - E(y_i|x_i))^2
-\end{split}
-</span></p>
-</div>
-</div>
-<p><br></p>
-<section id="proof-that-ols-is-a-conditional-expectation-function" class="level3">
-<h3 class="anchored" data-anchor-id="proof-that-ols-is-a-conditional-expectation-function">Proof that OLS is a Conditional Expectation Function</h3>
-<p>What we want to prove is that the OLS estimates <span class="math inline">\hat\beta_0</span> and <span class="math inline">\hat\beta_1</span> estimate the parameters <span class="math inline">b_0</span> and <span class="math inline">b_1</span> of the Conditional Expectation Function, which means that if true, OLS is the best approximation of the conditional expectation function.</p>
-<p>Suppose we have the conditional expectation function:</p>
-<p><span class="math display">
-E(y_i|x_i) = b_0 + b_1x_i
-</span></p>
-<p>We also know that our typical regression equation is:</p>
-<p><span class="math display">
-y_i = \beta_0 + \beta_1 x_i + u_i
-</span></p>
-<p>We know that <span class="math inline">E(u_i|x_i) = 0</span> (expected value of error term is always 0, we will discuss this the next time). Let us define <span class="math inline">u_i</span> as the following.</p>
-<p><span class="math display">
-u_i = y_i - E(y_i|x_i)
-</span></p>
-<p>If the above defined <span class="math inline">u_i</span> is true, <span class="math inline">E(u_i|x_i)</span> should also be equal to 0. So, let us plug in the above <span class="math inline">u_i</span> into <span class="math inline">E(u_i | x_i)</span>.</p>
-<p><span class="math display">
-\begin{split}
-E(u_i|x_i) &amp; = E(y_i - E(y_i|x_i) \ | \ x_i) \\
-&amp; = E(y_i|x_i) - E(y_i|x_i) \\
-&amp; = 0
-\end{split}
-</span></p>
-<p>Thus, we know <span class="math inline">u_i = y_i - E(y_i|x_i)</span> to be true. Thus, rearranging, we know:</p>
-<p><span class="math display">
-y_i = E(y_i|x_i) + u_i
-</span></p>
-<p>We also know that <span class="math inline">y_i = \beta_0 + \beta_1 x_i + u_i</span>. Thus, the following is true:</p>
-<p><span class="math display">
-\begin{split}
-E(y_i|x_i) + u_i &amp; = \beta_0 + \beta_1 + u_i \\
-b_0 + b_1 + u_i &amp; = \beta_0 + \beta_1 + u_i \\
-b_0 + b_1 &amp; = \beta_0 + \beta_1
-\end{split}
-</span></p>
-<p>Well, you might point out, it is still possible that <span class="math inline">b_1 ≠ \beta_1</span> in this scenario. We can go further. We know that the conditional expectation function minimises the mean of squared errors.</p>
-<p><span class="math display">
-\begin{split}
-MSE &amp; = \min\limits_{b_0, b_1} E(y_i - E(y_i|x_i))^2 \\
-&amp; = \min\limits_{b_0, b_1} E(y_i - \beta_0 - \beta_1x_i)^2
-\end{split}
-</span></p>
-<p>The first order conditions are (using chain rule and partial derivatives, just like in the OLS derivation):</p>
-<p><span class="math display">
-\begin{split}
-&amp; E(y_i - b_0 - b_1x_i) = 0 \\
-&amp; E(x_i(y_i - b_0 - b_1x_i) = 0
-\end{split}
-</span></p>
-<p><br></p>
-<p>Remember our OLS minimisation conditions (from <a href="https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator">1.4.4</a>)</p>
-<p><span class="math display">
-\begin{split}
-&amp; \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0 \\
-&amp; \sum\limits_{i=1}^n x_i (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0
-\end{split}
-</span></p>
-<p>We can rewrite these functions as (since an average value is just a sum divided by <span class="math inline">n</span>):</p>
-<p><span class="math display">
-\begin{split}
-&amp; n \times E(y_i - \hat\beta_0 - \hat\beta_1x_i) = 0 \\
-&amp; n \times E(x_i(y_i - \hat\beta_0 - \hat\beta_1x_i)) = 0
-\end{split}
-</span></p>
-<p>And since anything multiplied to a zero turns into zero, we can ignore the <span class="math inline">n</span> in the first order condition, and only focus on the expected value part. Thus, our conditions are:</p>
-<p><span class="math display">
-\begin{split}
-&amp; E(y_i - \hat\beta_0 - \hat\beta_1x_i) = 0 \\
-&amp; E(x_i(y_i - \hat\beta_0 - \hat\beta_1x_i)) = 0
-\end{split}
-</span></p>
-<p>Which as we can see, are the exact same minimisation conditions as the conditional expectation function. This shows that the OLS estimation produces the same parameters as the conditional expectation function.</p>
-<ul>
-<li>This property will be very useful for causal inference, as we will show in Part II of the course.</li>
-</ul>
-<p><br></p>
-<p><br></p>
-<hr>
-<p><a href="https://statsnotes.github.io">Homepage</a></p>
-</section>
 </section>
 <section id="implementation-in-r" class="level1">
 <h1>Implementation in R</h1>

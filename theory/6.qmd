@@ -124,12 +124,6 @@ $$
 
 -   Where the coefficients (that need to be estimated) are vector$\overrightarrow{\beta} = \beta_0, \beta_1, ..., \beta_k$. That means we have $k$ number of variables and $k+1$ number of coefficients (with the one not attached to a variable being the intercept).
 -   Where $u_i$ is the error term function - that determines the error for each unit $i$. Error $u_i$ has a variance of $\sigma^2$, and expectation $E(u_i) = 0$.
-
-In [1.4.7](https://statsnotes.github.io/theory/4.html#ols-regression-as-a-conditional-expectation-function), we also established that the linear regression model is equivalent to the conditional expectation function. This is also true with multiple linear regression. Thus, we can also write multiple linear regression as:
-
-$$
-E(y_i|x_i) = \beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki}
-$$
 :::
 
 <br />

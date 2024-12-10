@@ -625,10 +625,12 @@ $$
 
 <br />
 
+### OLS As a Method of Moments Estimator
+
 [OLS can also be considered a Method of Moments estimator]{.underline}. We will have moments for each parameter we are trying to estimate.
 
 -   So for bivariate regression, we will have 2 moments for $\beta_0$ and $\beta_1$.
--   For multiple regression, we will have $k$ moments for $\beta_0, \beta_1, \dots, \beta_k$.
+-   For multiple regression, we will have $k+1$ moments for $\beta_0, \beta_1, \dots, \beta_k$
 
 For example, let us take bivariate regression as an example.
 
@@ -667,9 +669,38 @@ $$
 & E(x(y - \hat\beta_0 - \hat\beta_1 x)) = 0
 \end{split}
 $$
-
-These result in the same estimates as the OLS estimator.
 :::
+
+<br />
+
+Remember our OLS minimisation conditions (from [1.4.4](https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator))
+
+$$
+\begin{split}
+& \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0 \\
+& \sum\limits_{i=1}^n x_i (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0
+\end{split}
+$$
+
+Since by definition, average/expectation is $E(x) = \frac{1}{n} \sum x_i$, we can rewrite the OLS minimisation conditions as:
+
+$$
+\begin{split}
+& n \times E(y_i - \hat\beta_0 - \hat\beta_1x_i) = 0 \\
+& n \times E(x_i(y_i - \hat\beta_0 - \hat\beta_1x_i)) = 0
+\end{split}
+$$
+
+And since anything multiplied to a zero turns into zero, we can ignore the $n$ in the first order condition, and only focus on the expected value part. Thus, our conditions are:
+
+$$
+\begin{split}
+& E(y_i - \hat\beta_0 - \hat\beta_1x_i) = 0 \\
+& E(x_i(y_i - \hat\beta_0 - \hat\beta_1x_i)) = 0
+\end{split}
+$$
+
+Which as we can see, are the exact same minimisation conditions as the method of moments estimator. Thus, the OLS estimator is a special case of the Method of Moments estimator.
 
 <br />
 
@@ -686,6 +717,150 @@ Thus, when an endogenous regressor is present, our moment conditions are invalid
 -   This is another way to show why endogeneity is an issue for regression, as we covered previously in [1.7.5](https://statsnotes.github.io/theory/7.html#endogeneity-and-violation-of-gauss-markov).
 
 We will come back to the Method of Moments estimator in lesson 1.10, when we discuss the Instrumental Variables Estimator, and how that estimator solves the issue of the invalid moment due to endogeneity.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.7.7: OLS and the Conditional Expectation Function
+
+We previously discussed random variables and distributions in [lesson 1.1](https://statsnotes.github.io/theory/1.html). There, we learned that random variables can be characterised by distributions, which can be summarised with the expectation and variance.
+
+$y$ in a regression is also a random variable.
+
+-   For example, imagine income was $y$.
+-   There is a distribution of income in a population - such that if we randomly selected someone from the population, there would be a probability associated with selecting someone with an income between \$60,000-\$70,000.
+
+We can characterise the distribution of $y$ with its expected value: $E(y)$.
+
+A **conditional expectation function** says that the value of $E(y)$ depends on the value of $x$. We notate a conditional expectation function as $E(y|x)$.
+
+-   For example, imagine $y$ is income and $x$ is age.
+-   A conditional expectation function $E(y|x)$ says that as $x$ (age) changes, the expected value of $y$ (income) also changes.
+-   For example, you would probably expect the expected value of a 20 year old's income to be different than a 50 year old's.
+
+<br />
+
+The Ordinary Least Squares Regression line also is the best approximation of the conditional expectation function $E(y|x)$, [assuming the conditional expectation function is linear]{.underline}. That means, we can view a regression as also a conditional expectation function.
+
+::: callout-tip
+## Definition: Linear Conditional Expectation Function
+
+A linear conditional expectation function, can take the following form:
+
+$$
+E(y_i|x_i) = b_0 + b_1x_i
+$$
+
+-   Where $b_0$ and $b_1$ are the parameters/coefficients of the model.
+-   Where $E(y_i|x_i)$ is the expectation of the conditional distribution $y|x$.
+-   Where the conditional distribution $y|x$ has variance $\sigma^2$ (this assumption we will explore in more detail in the next few lessons).
+
+A conditional expectation function is defined as the parameters that minimise the mean squared errors (MSE).
+
+$$
+\begin{split}
+MSE & = E(y_i - E(y_i|x_i))^2 \\
+& = \frac{1}{n}\sum\limits_{i=1}^n( y_i - E(y_i|x_i))^2
+\end{split}
+$$
+:::
+
+<br />
+
+What we want to prove is that the OLS estimates $\hat\beta_0$ and $\hat\beta_1$ best estimate the parameters $b_0$ and $b_1$ of the Conditional Expectation Function, which means that if true, OLS is the best approximation of the conditional expectation function.
+
+Suppose we have the conditional expectation function:
+
+$$
+E(y_i|x_i) = b_0 + b_1x_i
+$$
+
+We also know that our typical regression equation is:
+
+$$
+y_i = \beta_0 + \beta_1 x_i + u_i
+$$
+
+We know that $E(u_i|x_i) = 0$. Let us define $u_i$ as the following:
+
+$$
+u_i = y_i - E(y_i|x_i)
+$$
+
+If the above defined $u_i$ is true, $E(u_i|x_i)$ should also be equal to 0. So, let us plug in the above $u_i$ into $E(u_i | x_i)$.
+
+$$
+\begin{split}
+E(u_i|x_i) & = E(y_i - E(y_i|x_i) \ | \ x_i) \\
+& = E(y_i|x_i) - E(y_i|x_i) \\
+& = 0
+\end{split}
+$$
+
+Thus, we know $u_i = y_i - E(y_i|x_i)$ to be true. Thus, rearranging, we know:
+
+$$
+y_i = E(y_i|x_i) + u_i
+$$
+
+We also know that $y_i = \beta_0 + \beta_1 x_i + u_i$. Thus, the following is true:
+
+$$
+\begin{split}
+E(y_i|x_i) + u_i & = \beta_0 + \beta_1 + u_i \\
+b_0 + b_1 + u_i & = \beta_0 + \beta_1 + u_i \\
+b_0 + b_1 & = \beta_0 + \beta_1
+\end{split}
+$$
+
+Well, you might point out, it is still possible that $b_1 ≠ \beta_1$ in this scenario. We can go further. We know that the conditional expectation function minimises the mean of squared errors.
+
+$$
+\begin{split}
+MSE & = \min\limits_{b_0, b_1} E(y_i - E(y_i|x_i))^2 \\
+& = \min\limits_{b_0, b_1} E(y_i - \beta_0 - \beta_1x_i)^2
+\end{split}
+$$
+
+The first order conditions are (using chain rule and partial derivatives, just like in the OLS derivation):
+
+$$
+\begin{split}
+& E(y_i - b_0 - b_1x_i) = 0 \\
+& E(x_i(y_i - b_0 - b_1x_i) = 0
+\end{split}
+$$
+
+These are equivalent to the OLS Method of Moments estimator conditions, so the same estimates will be produced.
+
+$$
+\begin{split}
+& E(y-\beta_0 -\beta_1x) = 0 \\
+& E(x(y - \beta_0 - \beta_1 x)) = 0
+\end{split}
+$$
+
+Thus, OLS best approximates the conditional expectation function.
+
+-   Of course, assuming the Gauss-Markov conditions of OLS unbiasedness are met.
+-   Or from the method of moments persepctive, the moment conditions $E(u) = E(xu) = 0$ are valid (which they are assuming exogeneity $Cov(x,u) = 0$).
+
+<br />
+
+The fact that OLS best approximates the conditional expectation function is an immensely useful property of OLS.
+
+-   We know that the expecation of a random variable is the best guess of the random variable's value (as explained in [1.1.4](https://statsnotes.github.io/theory/1.html#expected-value-and-mean)).
+-   We also now know that OLS best approximates the conditional expectation function $E(y|x)$.
+-   Thus, OLS estimates $\hat y$ are the best guess of the value of $y$, given any values of $x$. This is immensely useful in both prediction purposes and causal estimation purposes (which we will focus on in later parts of the guide).
+
+This is also why when discussing interpretation of OLS coefficients in both simple and multiple linear regression, we have been describing the change in the [expected]{.underline} value of $y$.
+
+<br />
 
 <br />
 

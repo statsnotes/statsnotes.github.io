@@ -111,6 +111,7 @@ window.Quarto = {
   <li><a href="#omitted-variable-bias" id="toc-omitted-variable-bias" class="nav-link" data-scroll-target="#omitted-variable-bias">1.7.4: Omitted Variable Bias</a></li>
   <li><a href="#endogeneity-and-violation-of-gauss-markov" id="toc-endogeneity-and-violation-of-gauss-markov" class="nav-link" data-scroll-target="#endogeneity-and-violation-of-gauss-markov">1.7.5: Endogeneity and Violation of Gauss-Markov</a></li>
   <li><a href="#ols-as-a-method-of-moments-estimator" id="toc-ols-as-a-method-of-moments-estimator" class="nav-link" data-scroll-target="#ols-as-a-method-of-moments-estimator">1.7.6: OLS as a Method of Moments Estimator</a></li>
+  <li><a href="#ols-and-the-conditional-expectation-function" id="toc-ols-and-the-conditional-expectation-function" class="nav-link" data-scroll-target="#ols-and-the-conditional-expectation-function">1.7.7: OLS and the Conditional Expectation Function</a></li>
   </ul>
 </nav>
 </div>
@@ -675,10 +676,12 @@ Definition: Method of Moments Estimator
 <li>Where <span class="math inline">S.Var(y)</span> is the variance of the sample <span class="math inline">y</span>.</li>
 </ul>
 <p><br></p>
+<section id="ols-as-a-method-of-moments-estimator-1" class="level3">
+<h3 class="anchored" data-anchor-id="ols-as-a-method-of-moments-estimator-1">OLS As a Method of Moments Estimator</h3>
 <p><u>OLS can also be considered a Method of Moments estimator</u>. We will have moments for each parameter we are trying to estimate.</p>
 <ul>
 <li>So for bivariate regression, we will have 2 moments for <span class="math inline">\beta_0</span> and <span class="math inline">\beta_1</span>.</li>
-<li>For multiple regression, we will have <span class="math inline">k</span> moments for <span class="math inline">\beta_0, \beta_1, \dots, \beta_k</span>.</li>
+<li>For multiple regression, we will have <span class="math inline">k+1</span> moments for <span class="math inline">\beta_0, \beta_1, \dots, \beta_k</span></li>
 </ul>
 <p>For example, let us take bivariate regression as an example.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -716,9 +719,31 @@ y = \beta_0 + \beta_1x + u
 &amp; E(x(y - \hat\beta_0 - \hat\beta_1 x)) = 0
 \end{split}
 </span></p>
-<p>These result in the same estimates as the OLS estimator.</p>
 </div>
 </div>
+<p><br></p>
+<p>Remember our OLS minimisation conditions (from <a href="https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator">1.4.4</a>)</p>
+<p><span class="math display">
+\begin{split}
+&amp; \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0 \\
+&amp; \sum\limits_{i=1}^n x_i (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0
+\end{split}
+</span></p>
+<p>Since by definition, average/expectation is <span class="math inline">E(x) = \frac{1}{n} \sum x_i</span>, we can rewrite the OLS minimisation conditions as:</p>
+<p><span class="math display">
+\begin{split}
+&amp; n \times E(y_i - \hat\beta_0 - \hat\beta_1x_i) = 0 \\
+&amp; n \times E(x_i(y_i - \hat\beta_0 - \hat\beta_1x_i)) = 0
+\end{split}
+</span></p>
+<p>And since anything multiplied to a zero turns into zero, we can ignore the <span class="math inline">n</span> in the first order condition, and only focus on the expected value part. Thus, our conditions are:</p>
+<p><span class="math display">
+\begin{split}
+&amp; E(y_i - \hat\beta_0 - \hat\beta_1x_i) = 0 \\
+&amp; E(x_i(y_i - \hat\beta_0 - \hat\beta_1x_i)) = 0
+\end{split}
+</span></p>
+<p>Which as we can see, are the exact same minimisation conditions as the method of moments estimator. Thus, the OLS estimator is a special case of the Method of Moments estimator.</p>
 <p><br></p>
 <p>The moment conditions that define OLS as a method of moments are <span class="math inline">E(u) = 0</span> and <span class="math inline">E(xu) = 0</span>. These two together imply that <span class="math inline">Cov(x,u) = 0</span> (a very similar proof provided in <a href="https://statsnotes.github.io/theory/5.html#residuals-and-algebraic-properties-of-ols">1.5.1</a>).</p>
 <ul>
@@ -733,6 +758,126 @@ y = \beta_0 + \beta_1x + u
 <li>This is another way to show why endogeneity is an issue for regression, as we covered previously in <a href="https://statsnotes.github.io/theory/7.html#endogeneity-and-violation-of-gauss-markov">1.7.5</a>.</li>
 </ul>
 <p>We will come back to the Method of Moments estimator in lesson 1.10, when we discuss the Instrumental Variables Estimator, and how that estimator solves the issue of the invalid moment due to endogeneity.</p>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+</section>
+<section id="ols-and-the-conditional-expectation-function" class="level1">
+<h1>1.7.7: OLS and the Conditional Expectation Function</h1>
+<p>We previously discussed random variables and distributions in <a href="https://statsnotes.github.io/theory/1.html">lesson 1.1</a>. There, we learned that random variables can be characterised by distributions, which can be summarised with the expectation and variance.</p>
+<p><span class="math inline">y</span> in a regression is also a random variable.</p>
+<ul>
+<li>For example, imagine income was <span class="math inline">y</span>.</li>
+<li>There is a distribution of income in a population - such that if we randomly selected someone from the population, there would be a probability associated with selecting someone with an income between $60,000-$70,000.</li>
+</ul>
+<p>We can characterise the distribution of <span class="math inline">y</span> with its expected value: <span class="math inline">E(y)</span>.</p>
+<p>A <strong>conditional expectation function</strong> says that the value of <span class="math inline">E(y)</span> depends on the value of <span class="math inline">x</span>. We notate a conditional expectation function as <span class="math inline">E(y|x)</span>.</p>
+<ul>
+<li>For example, imagine <span class="math inline">y</span> is income and <span class="math inline">x</span> is age.</li>
+<li>A conditional expectation function <span class="math inline">E(y|x)</span> says that as <span class="math inline">x</span> (age) changes, the expected value of <span class="math inline">y</span> (income) also changes.</li>
+<li>For example, you would probably expect the expected value of a 20 year old’s income to be different than a 50 year old’s.</li>
+</ul>
+<p><br></p>
+<p>The Ordinary Least Squares Regression line also is the best approximation of the conditional expectation function <span class="math inline">E(y|x)</span>, <u>assuming the conditional expectation function is linear</u>. That means, we can view a regression as also a conditional expectation function.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Linear Conditional Expectation Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A linear conditional expectation function, can take the following form:</p>
+<p><span class="math display">
+E(y_i|x_i) = b_0 + b_1x_i
+</span></p>
+<ul>
+<li>Where <span class="math inline">b_0</span> and <span class="math inline">b_1</span> are the parameters/coefficients of the model.</li>
+<li>Where <span class="math inline">E(y_i|x_i)</span> is the expectation of the conditional distribution <span class="math inline">y|x</span>.</li>
+<li>Where the conditional distribution <span class="math inline">y|x</span> has variance <span class="math inline">\sigma^2</span> (this assumption we will explore in more detail in the next few lessons).</li>
+</ul>
+<p>A conditional expectation function is defined as the parameters that minimise the mean squared errors (MSE).</p>
+<p><span class="math display">
+\begin{split}
+MSE &amp; = E(y_i - E(y_i|x_i))^2 \\
+&amp; = \frac{1}{n}\sum\limits_{i=1}^n( y_i - E(y_i|x_i))^2
+\end{split}
+</span></p>
+</div>
+</div>
+<p><br></p>
+<p>What we want to prove is that the OLS estimates <span class="math inline">\hat\beta_0</span> and <span class="math inline">\hat\beta_1</span> best estimate the parameters <span class="math inline">b_0</span> and <span class="math inline">b_1</span> of the Conditional Expectation Function, which means that if true, OLS is the best approximation of the conditional expectation function.</p>
+<p>Suppose we have the conditional expectation function:</p>
+<p><span class="math display">
+E(y_i|x_i) = b_0 + b_1x_i
+</span></p>
+<p>We also know that our typical regression equation is:</p>
+<p><span class="math display">
+y_i = \beta_0 + \beta_1 x_i + u_i
+</span></p>
+<p>We know that <span class="math inline">E(u_i|x_i) = 0</span>. Let us define <span class="math inline">u_i</span> as the following:</p>
+<p><span class="math display">
+u_i = y_i - E(y_i|x_i)
+</span></p>
+<p>If the above defined <span class="math inline">u_i</span> is true, <span class="math inline">E(u_i|x_i)</span> should also be equal to 0. So, let us plug in the above <span class="math inline">u_i</span> into <span class="math inline">E(u_i | x_i)</span>.</p>
+<p><span class="math display">
+\begin{split}
+E(u_i|x_i) &amp; = E(y_i - E(y_i|x_i) \ | \ x_i) \\
+&amp; = E(y_i|x_i) - E(y_i|x_i) \\
+&amp; = 0
+\end{split}
+</span></p>
+<p>Thus, we know <span class="math inline">u_i = y_i - E(y_i|x_i)</span> to be true. Thus, rearranging, we know:</p>
+<p><span class="math display">
+y_i = E(y_i|x_i) + u_i
+</span></p>
+<p>We also know that <span class="math inline">y_i = \beta_0 + \beta_1 x_i + u_i</span>. Thus, the following is true:</p>
+<p><span class="math display">
+\begin{split}
+E(y_i|x_i) + u_i &amp; = \beta_0 + \beta_1 + u_i \\
+b_0 + b_1 + u_i &amp; = \beta_0 + \beta_1 + u_i \\
+b_0 + b_1 &amp; = \beta_0 + \beta_1
+\end{split}
+</span></p>
+<p>Well, you might point out, it is still possible that <span class="math inline">b_1 ≠ \beta_1</span> in this scenario. We can go further. We know that the conditional expectation function minimises the mean of squared errors.</p>
+<p><span class="math display">
+\begin{split}
+MSE &amp; = \min\limits_{b_0, b_1} E(y_i - E(y_i|x_i))^2 \\
+&amp; = \min\limits_{b_0, b_1} E(y_i - \beta_0 - \beta_1x_i)^2
+\end{split}
+</span></p>
+<p>The first order conditions are (using chain rule and partial derivatives, just like in the OLS derivation):</p>
+<p><span class="math display">
+\begin{split}
+&amp; E(y_i - b_0 - b_1x_i) = 0 \\
+&amp; E(x_i(y_i - b_0 - b_1x_i) = 0
+\end{split}
+</span></p>
+<p>These are equivalent to the OLS Method of Moments estimator conditions, so the same estimates will be produced.</p>
+<p><span class="math display">
+\begin{split}
+&amp; E(y-\beta_0 -\beta_1x) = 0 \\
+&amp; E(x(y - \beta_0 - \beta_1 x)) = 0
+\end{split}
+</span></p>
+<p>Thus, OLS best approximates the conditional expectation function.</p>
+<ul>
+<li>Of course, assuming the Gauss-Markov conditions of OLS unbiasedness are met.</li>
+<li>Or from the method of moments persepctive, the moment conditions <span class="math inline">E(u) = E(xu) = 0</span> are valid (which they are assuming exogeneity <span class="math inline">Cov(x,u) = 0</span>).</li>
+</ul>
+<p><br></p>
+<p>The fact that OLS best approximates the conditional expectation function is an immensely useful property of OLS.</p>
+<ul>
+<li>We know that the expecation of a random variable is the best guess of the random variable’s value (as explained in <a href="https://statsnotes.github.io/theory/1.html#expected-value-and-mean">1.1.4</a>).</li>
+<li>We also now know that OLS best approximates the conditional expectation function <span class="math inline">E(y|x)</span>.</li>
+<li>Thus, OLS estimates <span class="math inline">\hat y</span> are the best guess of the value of <span class="math inline">y</span>, given any values of <span class="math inline">x</span>. This is immensely useful in both prediction purposes and causal estimation purposes (which we will focus on in later parts of the guide).</li>
+</ul>
+<p>This is also why when discussing interpretation of OLS coefficients in both simple and multiple linear regression, we have been describing the change in the <u>expected</u> value of <span class="math inline">y</span>.</p>
+<p><br></p>
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
