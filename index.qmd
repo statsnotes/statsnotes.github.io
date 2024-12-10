@@ -51,10 +51,10 @@ Pre-requisites: Single Variable Calculus (see Appendix A, lessons A.1 through A.
 -   [1.6: Multiple Regression and OLS Estimation](https://statsnotes.github.io/theory/6.html)
 -   [1.7: Properties of the OLS Estimator](https://statsnotes.github.io/theory/7.html)
 -   [1.8: Inference with the OLS Estimator](https://statsnotes.github.io/theory/8.html)
--   1.9: Extensions of Linear Regression
--   1.10: Instrumental Variables Estimator
--   1.11: Logistic Regression Model
--   1.12: Maximum Likelihood Estimator
+-   [1.9: Categorical Variables in Regression](https://statsnotes.github.io/theory/9.html)
+-   1.10: Interactions and Transformations
+-   1.11: Instrumental Variables Estimator
+-   1.12: Logistic Regression Model
 -   1.13: Ordinal and Multinomial Logistic Regression
 -   1.14: Regression for Count and Rate Outcomes
 
