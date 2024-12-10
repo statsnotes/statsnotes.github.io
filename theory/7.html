@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -86,7 +120,7 @@ window.Quarto = {
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Statistics for Social Scientists</h1>
-            <p class="subtitle lead">Lesson 1.7: Properties of the OLS Estimator</p>
+            <p class="subtitle lead">Lesson 1.7: Statistical Inference with the OLS Estimator</p>
                       </div>
   </div>
     
@@ -102,16 +136,24 @@ window.Quarto = {
   </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
 <div id="quarto-sidebar-toc-left" class="sidebar toc-left">
   <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
-    <h2 id="toc-title">Lesson 1.7: Properties of the OLS Estimator</h2>
+    <h2 id="toc-title">Lesson 1.7: Statistical Inference with the OLS Estimator</h2>
    
   <ul class="collapse">
-  <li><a href="#residuals-and-algebraic-properties-of-ols" id="toc-residuals-and-algebraic-properties-of-ols" class="nav-link active" data-scroll-target="#residuals-and-algebraic-properties-of-ols">1.7.1: Residuals and Algebraic Properties of OLS</a></li>
-  <li><a href="#unbiasedness-of-ols-under-the-gauss-markov-theorem" id="toc-unbiasedness-of-ols-under-the-gauss-markov-theorem" class="nav-link" data-scroll-target="#unbiasedness-of-ols-under-the-gauss-markov-theorem">1.7.2: Unbiasedness of OLS Under the Gauss-Markov Theorem</a></li>
-  <li><a href="#proof-of-unbiasedness-of-ols-under-gauss-markov" id="toc-proof-of-unbiasedness-of-ols-under-gauss-markov" class="nav-link" data-scroll-target="#proof-of-unbiasedness-of-ols-under-gauss-markov">1.7.3: Proof of Unbiasedness of OLS under Gauss-Markov</a></li>
-  <li><a href="#omitted-variable-bias" id="toc-omitted-variable-bias" class="nav-link" data-scroll-target="#omitted-variable-bias">1.7.4: Omitted Variable Bias</a></li>
-  <li><a href="#endogeneity-and-violation-of-gauss-markov" id="toc-endogeneity-and-violation-of-gauss-markov" class="nav-link" data-scroll-target="#endogeneity-and-violation-of-gauss-markov">1.7.5: Endogeneity and Violation of Gauss-Markov</a></li>
-  <li><a href="#ols-as-a-method-of-moments-estimator" id="toc-ols-as-a-method-of-moments-estimator" class="nav-link" data-scroll-target="#ols-as-a-method-of-moments-estimator">1.7.6: OLS as a Method of Moments Estimator</a></li>
-  <li><a href="#ols-and-the-conditional-expectation-function" id="toc-ols-and-the-conditional-expectation-function" class="nav-link" data-scroll-target="#ols-and-the-conditional-expectation-function">1.7.7: OLS and the Conditional Expectation Function</a></li>
+  <li><a href="#variance-of-estimators-and-homoscedasticity" id="toc-variance-of-estimators-and-homoscedasticity" class="nav-link active" data-scroll-target="#variance-of-estimators-and-homoscedasticity">1.7.1: Variance of Estimators and Homoscedasticity</a></li>
+  <li><a href="#variance-of-ols-estimates-in-simple-linear-regression" id="toc-variance-of-ols-estimates-in-simple-linear-regression" class="nav-link" data-scroll-target="#variance-of-ols-estimates-in-simple-linear-regression">1.7.2: Variance of OLS Estimates in Simple Linear Regression</a></li>
+  <li><a href="#standard-errors-in-simple-linear-regression" id="toc-standard-errors-in-simple-linear-regression" class="nav-link" data-scroll-target="#standard-errors-in-simple-linear-regression">1.7.3: Standard Errors in Simple Linear Regression</a></li>
+  <li><a href="#standard-errors-in-multiple-linear-regression" id="toc-standard-errors-in-multiple-linear-regression" class="nav-link" data-scroll-target="#standard-errors-in-multiple-linear-regression">1.7.4: Standard Errors in Multiple Linear Regression</a></li>
+  <li><a href="#statistical-inference-in-simple-linear-regression" id="toc-statistical-inference-in-simple-linear-regression" class="nav-link" data-scroll-target="#statistical-inference-in-simple-linear-regression">1.7.5: Statistical Inference in Simple Linear Regression</a></li>
+  <li><a href="#hypothesis-testing-with-more-than-one-coefficient" id="toc-hypothesis-testing-with-more-than-one-coefficient" class="nav-link" data-scroll-target="#hypothesis-testing-with-more-than-one-coefficient">1.7.6: Hypothesis Testing with More than One Coefficient</a></li>
+  <li><a href="#robust-standard-errors-for-bivariate-regression" id="toc-robust-standard-errors-for-bivariate-regression" class="nav-link" data-scroll-target="#robust-standard-errors-for-bivariate-regression">1.7.7: Robust Standard Errors for Bivariate Regression</a></li>
+  <li><a href="#robust-standard-errors-for-multiple-regression" id="toc-robust-standard-errors-for-multiple-regression" class="nav-link" data-scroll-target="#robust-standard-errors-for-multiple-regression">1.7.8: Robust Standard Errors for Multiple Regression</a></li>
+  <li><a href="#implementation-in-r" id="toc-implementation-in-r" class="nav-link" data-scroll-target="#implementation-in-r">Implementation in R</a>
+  <ul class="collapse">
+  <li><a href="#hypothesis-testing-with-homoscedasticity" id="toc-hypothesis-testing-with-homoscedasticity" class="nav-link" data-scroll-target="#hypothesis-testing-with-homoscedasticity">Hypothesis Testing with Homoscedasticity</a></li>
+  <li><a href="#hypothesis-testing-with-heteroscedasticity" id="toc-hypothesis-testing-with-heteroscedasticity" class="nav-link" data-scroll-target="#hypothesis-testing-with-heteroscedasticity">Hypothesis Testing with Heteroscedasticity</a></li>
+  <li><a href="#confidence-intervals-1" id="toc-confidence-intervals-1" class="nav-link" data-scroll-target="#confidence-intervals-1">Confidence Intervals</a></li>
+  <li><a href="#f-tests-of-nested-models" id="toc-f-tests-of-nested-models" class="nav-link" data-scroll-target="#f-tests-of-nested-models">F-Tests of Nested Models</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -133,121 +175,29 @@ Lesson Overview
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In the last lesson, we discussed the estimation process of OLS for multiple linear regression. But we have to ask ourselves - is OLS a good estimator? Why should we use OLS? In this lesson, we focus on the properties of OLS, and the conditions under which OLS is a good estimator.</p>
+<p>In the last lesson, we discussed the properties of the OLS estimator. In this lesson, we use these OLS estimates to conduct statistical inference tests, and discuss some other properties of OLS from an inference perspective.</p>
 <p>This lesson covers the following topics:</p>
 <ul>
-<li>Some simple algebraic properties of our best-fit plane through OLS estimation.</li>
-<li>The conditions on which OLS estimation is an unbiased estimator for multiple regression (Gauss-Markov conditions), and how violations of these conditions will lead to biased estimates.</li>
-<li>Omitted Variable Bias, and how it causes violations of the Gauss-Markov conditions.</li>
-<li>The method of moments estimator, how OLS is a method of moments estimator, and how this shows another reason endogeneity is a concern.</li>
-<li>How OLS is also the best approximation of the conditional expectation function.</li>
+<li>How standard errors are calculated under the assumption of homoscedasticity.</li>
+<li>How hypothesis tests (including multiple coefficients at once) and confidence intervals are conducted.</li>
+<li>How the presence of heteroscedasticity affects our standard errors, and how we can adjust for this with robust standard errors.</li>
 </ul>
-</div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This lesson (especially the first half) will mirror the first half of <a href="https://statsnotes.github.io/theory/5.html">lesson 1.5</a>, but will adjust the properties of bivariate regression to multiple regression. I recommend a strong understanding of those topics before starting this chapter.</p>
 </div>
 </div>
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
-<section id="residuals-and-algebraic-properties-of-ols" class="level1">
-<h1>1.7.1: Residuals and Algebraic Properties of OLS</h1>
-<p>Once we have our OLS estimates of parameters <span class="math inline">\hat\beta_0 , \dots \hat\beta_k</span> (estimated in <a href="https://statsnotes.github.io/theory/6.html#mathematics-of-the-ordinary-least-squares-estimator">1.6.4</a>), we can obtain the OLS residuals <span class="math inline">\hat u_i</span>:</p>
-<p><span class="math display">
-\begin{split}
-\hat u_i &amp; = y_i - \hat y_i \\
-&amp; = y_i - (\hat \beta_0 + \hat\beta_1x_{1i} + \dots + \hat\beta_k x_{ki}) \\
-&amp; = y_i - \hat \beta_0 - \hat\beta_1x_{1i} - \dots - \hat\beta_k x_{ki}
-\end{split}
-</span></p>
-<ul>
-<li>If you do not know what residuals <span class="math inline">\hat u_i</span> are, and why they are different from <span class="math inline">u_i</span> error term, see <a href="https://statsnotes.github.io/theory/5.html#residuals-and-algebraic-properties-of-ols">1.5.1</a>.</li>
-</ul>
-<p><br></p>
-<p>Recall that the OLS estimates of <span class="math inline">\hat\beta_0 , \dots \hat\beta_k</span> are chosen to satisfy the following first order conditions (see <a href="https://statsnotes.github.io/theory/6.html#mathematics-of-the-ordinary-least-squares-estimator">1.6.4</a>):</p>
-<p><span class="math display">
-\begin{split}&amp; \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\&amp; \sum\limits_{i=1}^n x_{1i}(y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\
-&amp; \sum\limits_{i=1}^n x_{2i} (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0
-\end{split}
-</span></p>
-<ul>
-<li>and so on for <span class="math inline">x_{3i}, ..., x_{ki}</span>.</li>
-</ul>
-<p>Using these properties, we can plug in <span class="math inline">\hat u_i = y_i - \hat \beta_0 - \hat\beta_1x_{1i} - \dots - \hat\beta_k x_{ki}</span> to get the above conditions:</p>
-<p><span class="math display">
-\begin{split}
-&amp; \sum\limits_{i=1}^n \hat u_i = 0 \\
-&amp; \sum\limits_{i=1}^n x_{1i} \hat u_i = 0 \\
-&amp; \sum\limits_{i=1}^n x_{2i} \hat u_i = 0
-\end{split}
-</span></p>
-<ul>
-<li>and so on for <span class="math inline">x_{3i}, ..., x_{ki}</span>.</li>
-</ul>
-<p>These conditions can be used to find a few properties of OLS in multiple linear regression.</p>
-<p><br></p>
-<section id="property-1-sum-of-residuals-is-0" class="level3">
-<h3 class="anchored" data-anchor-id="property-1-sum-of-residuals-is-0">Property 1: Sum of Residuals is 0</h3>
-<p>OLS residuals always add up to zero, since:</p>
-<p><span class="math display">
-\sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = \sum\limits_{i=1}^n \hat u_i = 0
-</span></p>
-<ul>
-<li>This property ensures that the average value of <span class="math inline">y_i</span> in our data is the same as the average value of our predictions <span class="math inline">\hat y_i</span>.</li>
-</ul>
-<p><br></p>
-</section>
-<section id="property-2-no-covariance-between-any-x-and-residual." class="level3">
-<h3 class="anchored" data-anchor-id="property-2-no-covariance-between-any-x-and-residual.">Property 2: No Covariance Between Any <span class="math inline">x</span> and Residual.</h3>
-<p>Using the first order conditions of OLS, and the definition of <span class="math inline">\hat u_i</span> from above, we know the following to be true:</p>
-<p><span class="math display">
-\begin{split}
-&amp; \sum\limits_{i=1}^n x_{1i} \hat u_i = 0 \\
-&amp; \sum\limits_{i=1}^n x_{2i} \hat u_i = 0
-\end{split}
-</span></p>
-<ul>
-<li>and so on for <span class="math inline">x_{3i}, ..., x_{ki}</span>.</li>
-</ul>
-<p>Using the same proof from <a href="https://statsnotes.github.io/theory/5.html#residuals-and-algebraic-properties-of-ols">1.5.1</a>, we know the following are true:</p>
-<p><span class="math display">
-\begin{split}
-&amp; Cov(x_1, \hat u) = 0 \\
-&amp; Cov(x_2, \hat u) = 0
-\end{split}
-</span></p>
-<ul>
-<li>and so on for <span class="math inline">x_{3i}, ..., x_{ki}</span>.</li>
-</ul>
-<p>Thus, the covariances (and thus correlations) between all explanatory variables <span class="math inline">x_1, \dots, x_k</span> and <span class="math inline">\hat u</span> must be zero.</p>
-<p><br></p>
-</section>
-<section id="property-3-regression-line-passes-through-means" class="level3">
-<h3 class="anchored" data-anchor-id="property-3-regression-line-passes-through-means">Property 3: Regression Line Passes Through Means</h3>
-<p>For a similar proof in <a href="https://statsnotes.github.io/theory/5.html#residuals-and-algebraic-properties-of-ols">1.5.1</a>, we know that the point <span class="math inline">(\bar y, \bar x_1, \dots, \bar x_k)</span> is on the regression plane.</p>
-<p><br></p>
-<p><br></p>
-<hr>
-<p><a href="https://statsnotes.github.io">Homepage</a></p>
-</section>
-</section>
-<section id="unbiasedness-of-ols-under-the-gauss-markov-theorem" class="level1">
-<h1>1.7.2: Unbiasedness of OLS Under the Gauss-Markov Theorem</h1>
-<p>Unbiasedness, as we have discussed in both <a href="https://statsnotes.github.io/theory/2.html#properties-of-estimators">1.2.8</a> and <a href="https://statsnotes.github.io/theory/5.html#unbiasedness-of-ols-under-the-gauss-markov-theorem">1.5.2</a>, is a desirable property of estimators.</p>
-<p>Just like for simple linear regression, the Gauss-Markov Theorem proves that OLS is unbiased under 4 conditions.</p>
-<ul>
-<li>Notation note: <span class="math inline">\beta_j</span> refers to any one of <span class="math inline">\beta_1, \dots, \beta_k</span>. It can be generalised to any of the coefficients besides the intercept.</li>
-</ul>
+<section id="variance-of-estimators-and-homoscedasticity" class="level1">
+<h1>1.7.1: Variance of Estimators and Homoscedasticity</h1>
+<p>We have proved that OLS is unbiased under 4 conditions in the last lesson.</p>
+<p>However, if we recall from <a href="https://statsnotes.github.io/theory/2.html#properties-of-estimators">1.2.8</a>, unbiasedness is not the only thing we care about in an estimator. We also care about the estimator’s variance.</p>
+<p>For example, in the figure below, we have two unbiased estimators centred on the same real parameter value. However, the second estimator <span class="math inline">w_2</span> is far more varied than the first estimator <span class="math inline">w_1</span>. That means while both are unbiased, the estimator <span class="math inline">w_2</span> often produces specific sample estimates that are farther from the true parameter value.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-4236264762.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+<p>Luckily, the Gauss-Markov Theorem does not stop at unbiasedness. With an additional condition (homoscedasticity), we can determine that OLS is not only unbiased, but the linear estimator with the least variance:</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -258,643 +208,845 @@ Definition: Gauss-Markov Theorem
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The Gauss-Markov Theorem states that under 4 conditions, the OLS estimator is an unbiased estimator for <span class="math inline">\beta_j</span>.</p>
+<p>The Gauss-Markov Theorem states that under 5 conditions, the OLS estimator is the Best Linear Unbiased Estimator (BLUE) for <span class="math inline">\beta_1</span>, being the unbiased linear estimator with the least variance.</p>
 <ul>
-<li><strong>MLR.1 (Linearity in Parameters)</strong>: The parameters of the model are linear.</li>
-<li><strong>MLR.2 (Random Sampling)</strong>: All observations in our sample are randomly sampled from the population.</li>
-<li><strong>MLR.3 (No Perfect Mutlicollinearity)</strong>: There are no exact linear relationships among variables (where correlation coefficient equals 1).</li>
-<li><strong>MLR.4 (Zero Conditional Mean)</strong>. The error term <span class="math inline">u</span> has an expectation of 0, given any value of <span class="math inline">x_j</span> for any explanatory variable.</li>
+<li><strong>SLR.1/MLR.1 (Linearity in Parameters)</strong>: The parameters of the model are linear.</li>
+<li><strong>SLR.2/MLR.2 (Random Sampling)</strong>: All observations in our sample are randomly sampled from the population.</li>
+<li><strong>SLR.3/MLR.3 (Sample Variation in</strong> <span class="math inline">x</span><strong>/ No Perfect Multicollinearity)</strong>: <span class="math inline">Var(x) ≠ 0</span>, and no perfect correlation between explanatory variables.</li>
+<li><strong>SLR.4/MLR.4 (Zero Conditional Mean)</strong>. The error term <span class="math inline">u</span> has an expectation of 0, given any value of the explanatory variables.</li>
+<li><strong>SLR.5/MLR.5 (Homoscedasticity)</strong>: The error term has the same variance given any value of <span class="math inline">x</span>.</li>
 </ul>
-<p><u>Note specifically that MLR.3 is different than the equivalent condition for simple linear regression</u>. We will explore each condition in detail.</p>
 </div>
 </div>
 <p><br></p>
-<section id="assumption-mlr.1-linearity" class="level3">
-<h3 class="anchored" data-anchor-id="assumption-mlr.1-linearity">Assumption MLR.1: Linearity</h3>
-<p>Assumption MLR.1 states that a model must be <strong>linear in parameters</strong>.</p>
-<p>This means that the parameters of the model <span class="math inline">\beta_0</span> and <span class="math inline">\beta_1</span> must not be multiplied together - they must be added together.</p>
-<p>For example, the following is linear:</p>
+<p>But what does this new condition of homoscedasticity mean?</p>
+<p>Mathematically, homoscedasticity is defined as:</p>
 <p><span class="math display">
-y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u
+Var(u|x_1, \dots, x_k) = \sigma^2 \text{ for all } x
 </span></p>
-<p>While the following is not linear (since parameters <span class="math inline">\beta_1</span> and <span class="math inline">\beta_2</span> are multiplied):</p>
-<p><span class="math display">
-y = \beta_0 + \beta_1\beta_2x_1 + \beta_3 x_2 + u
-</span></p>
-<p>Note: This does not mean that the actual regression line must be linear - only the parameters/coefficients must not be multiplied, the variables can be. For example, the following model is still linear in parameters:</p>
-<p><span class="math display">
-y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + u
-</span></p>
-<p><br></p>
-</section>
-<section id="assumption-mlr.2-random-sampling" class="level3">
-<h3 class="anchored" data-anchor-id="assumption-mlr.2-random-sampling">Assumption MLR.2: Random Sampling</h3>
-<p>This assumption says that all observations in our sample are randomly sampled from the same population.</p>
-<p>Why is this useful? Take the standard linear model:</p>
-<p><span class="math display">
-y = \beta_0 + \beta_1x_1 + \dots + \beta_kx_k + u
-</span></p>
-<p>The error term <span class="math inline">u</span> is some random variable (with its own probability distribution), that can be defined by its expectation <span class="math inline">E(u)</span>.</p>
 <ul>
-<li>If we randomly select one observation <span class="math inline">i</span> from the data, each observation <span class="math inline">i</span> has an equal chance of being selected.</li>
-<li>The error term for that observation, <span class="math inline">u_i</span> should also have the same expectation as the random variable <span class="math inline">u</span>, since each observation <span class="math inline">i</span> within <span class="math inline">u</span> has the same chance of being selected.</li>
+<li>Of course, for simple linear regression, there is only one <span class="math inline">x</span>, so the condition is <span class="math inline">Var(u|x) = \sigma^2</span>.</li>
 </ul>
-<p>Thus, random sampling allows us to say <span class="math inline">E(u) = E(u_i)</span>.</p>
-<p>Why is this not the case when random sampling is not present?</p>
+<p>First of all, what even is the variance <span class="math inline">Var(u)</span> representing? It is the variance of the “errors” of our error term <span class="math inline">u_i</span>, which is also a random variable. The figure below displays this, with the green lines representing the distribution of <span class="math inline">u_i</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-3513031173.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
+</figure>
+</div>
+<p>In the figure above, you can see the variance (spread) of the error term <span class="math inline">u_i</span>’s distribution is consistent, no matter the value of <span class="math inline">x</span>. This means that homoscedasticity is met.</p>
+<p>When <span class="math inline">Var(u)</span> is not constant (and changes with the value of <span class="math inline">x</span>, we have <strong>heteroscedasticity</strong>.</p>
+<p>The best way to identify if this assumption is met is to look at a plot of the residuals (errors). If the variance in the residuals is constnant, we have homoscedasticity. If not, we have heteroscedasticity.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-1713529842.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+<p>In the figure above, we can see on the left chart, the variance of the residuals is clearly smaller when <span class="math inline">x</span> is lower, and the variance of the residuals is larger when <span class="math inline">x</span> is higher. That is a clear violation of the homoscedasticity assumption.</p>
 <ul>
-<li>Imagine you are not random sampling. Perhaps, some observations <span class="math inline">i</span> with lower <span class="math inline">u_i</span> values are more likely to be sampled.</li>
-<li>If there is no random sampling, then <span class="math inline">E(u_i)</span> may not equal <span class="math inline">E(u)</span>.</li>
-</ul>
-<p><br></p>
-</section>
-<section id="assumption-mlr.3-no-perfect-multicollinearity" class="level3">
-<h3 class="anchored" data-anchor-id="assumption-mlr.3-no-perfect-multicollinearity">Assumption MLR.3: No Perfect Multicollinearity</h3>
-<p>Recall that in <a href="https://statsnotes.github.io/theory/6.html#regression-anatomy-formula-for-ols-estimation">1.6.6</a>, we derived the OLS estimator in terms of regression anatomy as:</p>
-<p><span class="math display">
-\hat\beta_j = \frac{\sum_{i=1}^n \widetilde{r_{ji}} \ y_i}{\sum_{i=1}^n \widetilde{r_{ji}}^2}
-</span></p>
-<p>Where <span class="math inline">\widetilde{r_{ij}}</span> is the part of <span class="math inline">x_j</span> that is uncorrelated with any other explanatory variables.</p>
-<p>Obviously, as we know from mathematics, the denominator cannot be zero, or else, <span class="math inline">\hat\beta_j</span> will not exists. This implies that we cannot derive <span class="math inline">\hat\beta_j</span> if <span class="math inline">\sum \widetilde{r_{ij}}^2 = 0</span>.</p>
-<ul>
-<li>What causes <span class="math inline">\sum\widetilde{r_{ij}}^2 = 0</span>?</li>
-<li>If <span class="math inline">\sum\widetilde{r_{ij}}^2 = 0</span>, that means there is no part of <span class="math inline">x_j</span> that is completely uncorrelated with any other explanatory variable.</li>
-<li>In other words, that means <span class="math inline">x_j</span> is <strong>perfectly correlated</strong> to at least one other explanatory variable.</li>
-</ul>
-<p>Thus, if <span class="math inline">x_j</span> is perfectly correlated with any other explanatory variable, coefficient <span class="math inline">\hat\beta_j</span> is not calculable.</p>
-<p><br></p>
-<p>But what does perfectly correlated mean? Mathematically, it means the correlation coefficient between <span class="math inline">x_j</span> and any other explanatory variable <span class="math inline">x_m</span> is equal to 1 or -1.</p>
-<p><span class="math display">
-|Corr(x_j, x_m)| = 1
-</span></p>
-<p>But practically, what does that mean when choosing our explanatory variables?</p>
-<ul>
-<li>It means that we cannot choose measurements of the same concept in different units.</li>
-<li>For example, you cannot include the two variables <em>height in inches</em> and <em>height in cm</em> in the same regression. This is because both variables are perfectly correlated, just differing only by a common factor.</li>
-</ul>
-<p>This only applies if variables are <strong>perfectly</strong> correlated.</p>
-<ul>
-<li>However, even if there is no perfect correlation, but a high correlation, this can cause some issues (not related to unbiasedness). We will discuss this later in lesson 1.8.</li>
-</ul>
-<p><br></p>
-</section>
-<section id="assumption-mlr.4-zero-conditional-mean" class="level3">
-<h3 class="anchored" data-anchor-id="assumption-mlr.4-zero-conditional-mean">Assumption MLR.4: Zero-Conditional Mean</h3>
-<p>In the population, the error term <span class="math inline">u</span> must have an expecation of 0, given all values of <span class="math inline">x</span>. Mathematically:</p>
-<p><span class="math display">
-E(u|x_1, \dots x_k) = 0 \text{ for all } (x_1, \dots , x_k)
-</span></p>
-<p>And using condition MLR.2 Random Sampling (from above), we also know that:</p>
-<p><span class="math display">
-E(u|x_1, \dots ,x_k) = E(u_i|x_{1i}, \dots, x_{ki}) = 0
-</span></p>
-<p>This also implies that the error term <span class="math inline">u</span> and any <span class="math inline">x_1, \dots , x_k</span> are uncorrelated with each other.</p>
-<ul>
-<li>This is because if <span class="math inline">u</span> was correlated with <span class="math inline">x_j</span>, it would not always be equal to 0 no matter the value of <span class="math inline">x</span>.</li>
-</ul>
-<p>Since the correlation is 0, the covariance between <span class="math inline">u</span> and any <span class="math inline">x_1, \dots, x_k</span> must also be 0:</p>
-<p><span class="math display">
-\begin{split}
-&amp; Cov(x_1,u) = 0 \\
-&amp; Cov(x_2, u) = 0
-\end{split}
-</span></p>
-<ul>
-<li>and so on for <span class="math inline">x_{3i}, ..., x_{ki}</span>.</li>
-</ul>
-<p><br></p>
-<p>This alternative statement relating to correlation/covariance is called <strong>exogeneity</strong>.</p>
-<ul>
-<li>If this assumption is violated (where <span class="math inline">x_j</span> is correlated with error <span class="math inline">u</span>), then we have <strong>endogeneity</strong>, and <span class="math inline">x_j</span> is considered an <strong>endogeneous regressor</strong>.</li>
-<li>We will discuss endogeneity in more detail in lesson 1.7.</li>
-</ul>
-<p>This is the most frequently violated of assumptions, yet arguable the most important of assumptions to ensure OLS is unbiased.</p>
-<ul>
-<li>We will mathematically show this in the next lesson.</li>
-<li>Because it is so frequently violated, we will need to introduce further methods beyond simple linear regression for accurate estimation.</li>
+<li>NOTE: heteroscedasticity (failure to meet SLR.5 homoscedasticity) does not bias OLS estimates. It only determines if OLS has the lowest variance of unbiased linear estimators.</li>
 </ul>
 <p><br></p>
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
-</section>
-<section id="proof-of-unbiasedness-of-ols-under-gauss-markov" class="level1">
-<h1>1.7.3: Proof of Unbiasedness of OLS under Gauss-Markov</h1>
-<p>In the last section, we covered the Gauss-Markov assumptions, and how when they are met, OLS is unbiased. In this section, we will use those assumptions to prove the unbiasedness of OLS.</p>
+<section id="variance-of-ols-estimates-in-simple-linear-regression" class="level1">
+<h1>1.7.2: Variance of OLS Estimates in Simple Linear Regression</h1>
+<p>Assuming Homoscedasticity is met, we know <span class="math inline">Var(u|x) = \sigma^2</span>.</p>
 <ul>
-<li>Or in other words, we want to show <span class="math inline">E(\hat\beta_j) = \beta_j</span>.</li>
+<li>When homoscedasticity is not met, nothing in this section applies. See <a href="https://statsnotes.github.io/theory/8.html#robust-standard-errors-for-bivariate-regression">1.8.5</a> for more information on how to do estimates when this is violated.</li>
 </ul>
-<p>For simplicity, let us focus on <span class="math inline">\hat\beta_1</span>. However, this can be generalised to any <span class="math inline">\hat\beta_2, \dots, \hat\beta_k</span>.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Useful Properties of Summations
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Before we start, here are a few key properties of summation</p>
-<p><strong>Property 1:</strong></p>
+<p>What is variance? From <a href="https://statsnotes.github.io/theory/1.html#variance-and-standard-deviation">1.1.5</a>, we know that the formula for variance is:</p>
 <p><span class="math display">
-\sum\limits_{i=1}^n \widetilde{r_{1i}} = 0
+E(x - \mu)^2
 </span></p>
-<ul>
-<li>This is because <span class="math inline">\widetilde{r_{1i}}</span> is a residual term of a OLS regression of outcome <span class="math inline">x_1</span> and explanatory variables <span class="math inline">x_2, \dots, x_k</span>, and we know OLS residuals sum to 0 (algebraic properties discussed in <a href="https://statsnotes.github.io/theory/7.html#residuals-and-algebraic-properties-of-ols">1.7.1</a>).</li>
-</ul>
-<p><strong>Property 2:</strong></p>
-<p><span class="math display">
-\sum\limits_{i=1}^n \widetilde{r_{1i}} x_{ji} = 0, \text{ given } j=2, \dots, k
-</span></p>
-<ul>
-<li>Because for OLS, <span class="math inline">\sum x_i \hat u_i = 0</span> (<a href="https://statsnotes.github.io/theory/7.html#residuals-and-algebraic-properties-of-ols">1.7.1</a>), and we know <span class="math inline">\widetilde{r_{1i}}</span> is the residual <span class="math inline">\hat u_i</span> in a regression with explanatory variables <span class="math inline">x_2, \dots, x_k</span> and outcome variable <span class="math inline">x_1</span>.</li>
-</ul>
-<p><strong>Property 3:</strong></p>
-<p><span class="math display">
-\sum\limits_{i=1}^n \widetilde{r_{1i}} x_{1i} = \sum\limits_{i=1}^n \widetilde{r_{1i}}(\hat x_{1i} + \sum\limits_{i=1}^n \widetilde{r_{1i}}) = \sum\limits_{i=1}^n \widetilde{r_{1i}}^2
-</span></p>
-<ul>
-<li>Because we have the regression fitted values <span class="math inline">\hat x_{1i} = \hat \gamma_0 + \hat\gamma_1 x_2 + \dots + \hat\gamma_{k-1} x_{k} + \widetilde{r_{1i}}</span> from <a href="https://statsnotes.github.io/theory/6.html#regression-anatomy-formula-for-ols-estimation">1.6.6</a>.</li>
-<li>And we know with regression, actual values are the predicted plus residual: <span class="math inline">y_i = \hat y_i + \hat u_i</span>. Thus, <span class="math inline">x_i = \hat x_i + \widetilde{r_{1i}}</span>.</li>
-</ul>
-</div>
-</div>
-<p><br></p>
-<p>Recall the regression anatomy solution of OLS for <span class="math inline">\hat\beta_1</span> (derived in <a href="https://statsnotes.github.io/theory/6.html#regression-anatomy-formula-for-ols-estimation">1.6.6</a>):</p>
-<p><span class="math display">
-\hat\beta_1 = \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ y_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
-</span></p>
-<ul>
-<li>Where <span class="math inline">\widetilde{r_{1i}}</span> is the part of <span class="math inline">x_1</span> uncorrelated with <span class="math inline">x_2, \dots, x_k</span>.</li>
-</ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-MLR.3 No Perfect Multicollinearity
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The existence of <span class="math inline">\hat\beta_1</span> is guaranteed by condition 3 from above, since the denominator <span class="math inline">\sum\widetilde{r_{1i}}^2</span> must not be 0.</p>
-</div>
-</div>
-<p>Now, let us plug in <span class="math inline">y_i = \beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki} + u_i</span> into our regression anatomy formula:</p>
+<p>We know from SLR.4 Zero-Conditional Mean assumption that <span class="math inline">E(u|x) = 0</span>. Thus, we can use that to calculate the variance <span class="math inline">Var(u|x)</span> using the variance formula:</p>
 <p><span class="math display">
 \begin{split}
-\hat\beta_1 &amp; = \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ y_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
-&amp; = \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ (\beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki} + u_i)}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
+Var(u|x) = \sigma^2 &amp; = E[ \ ((u|x) - E(u|x))^2 \ ] \\
+&amp; = E((u|x) - 0)^2 \\
+&amp; = E[(u|x)^2] \\
+&amp; = E(u^2 |x)
 \end{split}
 </span></p>
-<p>Now, focusing on the numerator, and using the summation properties above, let us simplify:</p>
+<p>And since by homoscedasticity, we know variance does not depend on <span class="math inline">x</span> such that <span class="math inline">Var(u|x) = Var(u)</span>, we also know that:</p>
 <p><span class="math display">
-\begin{split}
-&amp; \sum\limits_{i=1}^n \widetilde{r_{1i}} \ (\beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki} + u_i) \\
-&amp; = \sum\limits_{i=1}^n (\widetilde{r_{1i}}\beta_0 + \widetilde{r_{1i}}\beta_1x_{1i} + \dots + \widetilde{r_{1i}}\beta_k x_{ki} + \widetilde{r_{1i}} u_i) \\
-&amp; = \sum\limits_{i=1}^n \widetilde{r_{1i}}\beta_0 + \sum\limits_{i=1}^n \widetilde{r_{1i}}\beta_1 x_{1i} + \dots + \sum\limits_{i=1}^n \widetilde{r_{1i}}\beta_k x_{ki} + \sum\limits_{i=1}^n \widetilde{r_{1i}} u_i \\
-&amp; = \beta_0 \sum\limits_{i=1}^n \widetilde{r_{1i}} + \beta_1 \sum\limits_{i=1}^n \widetilde{r_{1i}} x_{1i} + \dots + \beta_k \sum\limits_{i=1}^n \widetilde{r_{1i}} x_{ki} + \sum\limits_{i=1}^n \widetilde{r_{1i}} u_i \\
-&amp; = \beta_0 (0) + \beta_1 \sum\limits_{i=1}^n \widetilde{r_{1i}}^2 + \beta_2 (0) + \dots + \beta_k (0) + \sum\limits_{i=1}^n \widetilde{r_{1i}} u_i \\
-&amp; = \beta_1 \sum\limits_{i=1}^n \widetilde{r_{1i}}^2 + \sum\limits_{i=1}^n \widetilde{r_{1i}} u_i
-\end{split}
-</span></p>
-<p>Now, putting the numerator back in, we can simplify:</p>
-<p><span class="math display">
-\begin{split}
-\hat\beta_1 &amp; = \frac{\beta_1 \sum_{i=1}^n \widetilde{r_{1i}}^2 + \sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
-&amp; \\
-&amp; = \frac{\beta_1 \sum_{i=1}^n \widetilde{r_{1i}}^2}{\sum_{i=1}^n \widetilde{r_{1i}}^2} + \frac{\sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
-&amp; \\
-&amp; = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
-\end{split}
+E(u^2|x) = E(u^2) = \sigma^2
 </span></p>
 <p><br></p>
-<p>Now, we want to find <span class="math inline">E(\hat\beta_1)</span>. Note that the second part of the equation is a function of <span class="math inline">u_i</span>, of which itself is a function of all explanatory variables <span class="math inline">x_{1i}, \dots, x_{ki}</span>. Thus, we know:</p>
+<p>Remember when we were proving unbiasedness of OLS in <a href="https://statsnotes.github.io/theory/5.html#proof-of-unbiasedness-of-ols-under-gauss-markov">1.5.3</a>, we got to this stage:</p>
+<p><span class="math display">
+\hat\beta_1 = \beta_1 + \sum\limits_{i=1}^n w_i u_i
+</span></p>
+<ul>
+<li>Where <span class="math inline">w_i = \frac{x_i - \bar{x}}{\sum (x_i - \bar{x})^2}</span>, which is a function of random variable <span class="math inline">x</span>.</li>
+<li>We could also write <span class="math inline">w_i</span> as <span class="math inline">\frac{x_i - \bar{x}}{SST_x}</span> (where <span class="math inline">SST_x</span> is total sum of squares for <span class="math inline">x</span>).</li>
+</ul>
+<p>We know that <span class="math inline">\beta_1</span> is a constant (the true value in the population), so that never changes. Thus, it cannot be the variance in <span class="math inline">\hat\beta_1</span>. Thus, <span class="math inline">\sum w_i u_i</span> is the variance in <span class="math inline">\hat\beta_1</span>.</p>
 <p><span class="math display">
 \begin{split}
-E(\hat\beta_1 | x_{1i}, \dots x_{ki}) &amp; = \beta_1 + E\left( \frac{\sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \biggr|x_{1i},\dots, x_{ki} \right) \\
-&amp; = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ E(u_i|x_{1i}, \dots,x_{ki})}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+Var(\hat\beta_1|x) &amp; = Var\left( \sum\limits_{i=1}^n w_i u_i \bigg| x\right) \\
+&amp; = \sum\limits_{i=1}^n Var(w_i u_i | x) \\
+&amp; = \sum\limits_{i=1}^n w_i^2 Var(u_i | x)
 \end{split}
 </span></p>
-<p>But what is <span class="math inline">E(u_i|x_{1i}, \dots , x_{ki})</span>? We can use two Gauss-Markov conditions to evaluate this:</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-MLR.4 Zero Conditional Mean
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The Zero-Conditional Mean assumption says <span class="math inline">E(u|x_1, \dots, x_k) = 0</span>.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-MLR.2 Random Sampling
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Random sampling allows us to say that <span class="math inline">E(u|x_1, \dots, x_k)</span> is the same as <span class="math inline">E(u_i|x_{1i}, \dots, x_{ki})</span>, where both equal 0.</p>
-</div>
-</div>
-<p>Thus, with these two assumptions, we know that:</p>
+<p>And given SLR.2 Random Sampling (Gauss-Markov assumption), we know <span class="math inline">Var(u_i | x)</span> is also equal to <span class="math inline">Var(u_i|x_i)</span>. Thus:</p>
 <p><span class="math display">
-E(u_i|x_{1i}, \dots, x_{ki}) = 0
+Var(\hat\beta_1|x) = \sum\limits_{i=1}^n w_i^2 Var(u_i | x_i)
 </span></p>
-<p>Which means that:</p>
+<p>And using SLR.5 homoscedasticity, we know <span class="math inline">Var(u|x) = \sigma^2</span> and is constant, thus:</p>
 <p><span class="math display">
 \begin{split}
-E(\hat\beta_1 | x_{1i}, \dots x_{ki})
-&amp; = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ E(u_i|x_{1i}, \dots,x_{ki})}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
-&amp; = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ (0)}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
-&amp; = \beta_1 + 0 \\
-&amp; = \beta_1
+Var(\hat\beta_1 | x) &amp; = \sum\limits_{i=1}^n w_i^2 Var(u_i | x_i) \\
+&amp; = \sum\limits_{i=1}^n w_i^2 \sigma^2 \\
+&amp; = \sigma^2 \sum\limits_{i=1}^n w_i^2
 \end{split}
 </span></p>
-<p>Now, just like in simple linear regression (see <a href="https://statsnotes.github.io/theory/5.html#proof-of-unbiasedness-of-ols-under-gauss-markov">1.5.3</a>), we use the <strong>law of iterated expectations</strong> to conclude this proof:</p>
+<p>Remember, <span class="math inline">w_i</span> is its own function of <span class="math inline">x</span>, where <span class="math inline">w_i = \frac{x_i - \bar{x}}{\sum (x_i - \bar{x})^2}</span>, or can be written as <span class="math inline">\frac{x_i - \bar{x}}{SST_x}</span> (see <a href="https://statsnotes.github.io/theory/5.html#proof-of-unbiasedness-of-ols-under-gauss-markov">1.5.3</a> for derivation).</p>
+<p>We have <span class="math inline">\sum w_i^2</span> in our final equation, and we can do some quick algebra to rearrange it (note, if you are not familiar with SST, see <a href="https://statsnotes.github.io/theory/4.html#r-squared-and-goodness-of-fit">1.4.6</a>):</p>
 <p><span class="math display">
 \begin{split}
-E(\hat\beta_1) &amp; = E[E(\hat\beta_1|x_{1i}, \dots, x_{ki})] \\
-&amp; = E(\beta_1) \\
-&amp; = \beta_1
+\sum\limits_{i=1}^n w_i^2 &amp; = \sum\limits_{i=1}^n \frac{(x_i - \bar{x})^2}{(SST_x)^2} \\
+&amp; = \frac{\sum_{i=1}^n(x_i - \bar x)^2}{(SST_x)^2} \\
+&amp; = \frac{SST_x}{(SST_x)^2} \\
+&amp; = \frac{1}{SST_x}
+\end{split}
+</span>Thus, we can plug that in to get our final variance of <span class="math inline">\hat\beta_1</span> formula:</p>
+<p><span class="math display">
+\begin{split}
+Var(\hat\beta|x) &amp; = \sigma^2 \sum\limits_{i=1}^n w_i^2 \\
+&amp; = \sigma^2 \frac{1}{SST_x} \\
+&amp; = \frac{\sigma^2}{SST_x}
 \end{split}
 </span></p>
-<p>Thus, OLS is unbiased under the Gauss-Markov conditions.</p>
+<p>Thus, that is the variance of our OLS estimator <span class="math inline">\hat\beta_1</span>, and also the variance of the sampling distribution of <span class="math inline">\hat\beta_1</span>.</p>
+<ul>
+<li>This is only the case if SLR.5 homoscedasticity assumption holds. It is not valid if the assumption is not met. See <a href="https://statsnotes.github.io/theory/8.html#robust-standard-errors-for-bivariate-regression">1.8.5</a> for more information on how to do estimates when this is violated.</li>
+<li>One might notice we calculated <span class="math inline">Var(\hat\beta_1|x)</span>, not <span class="math inline">Var(\hat\beta_1)</span>. However, this does not matter, since our final formula does not depend on the value of <span class="math inline">x</span> (from homoscedasticity, we know <span class="math inline">\sigma^2</span> is independent of <span class="math inline">x</span>, and also <span class="math inline">SST_x</span> is constant no matter the specific value of <span class="math inline">x</span> as it includes all values of <span class="math inline">x</span>).</li>
+</ul>
+<p>There is one issue: we know that <span class="math inline">\sigma^2 = E(u^2)</span> (see earlier in the section). However, we do not actually know the value of <span class="math inline">E(u^2)</span>! Remember, that is the error term <span class="math inline">u</span> - while we only know the residual term <span class="math inline">\hat u</span>.</p>
 <p><br></p>
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
-<section id="omitted-variable-bias" class="level1">
-<h1>1.7.4: Omitted Variable Bias</h1>
-<p>In the previous section (and in simple linear regression section <a href="https://statsnotes.github.io/theory/5.html#unbiasedness-of-ols-under-the-gauss-markov-theorem">1.5.2</a>), we discussed how the assumption of <strong>zero-conditional mean</strong> <span class="math inline">E(u | x_1, \dots, x_k) = 0</span> is critical to the unbiasdness of OLS.</p>
+<section id="standard-errors-in-simple-linear-regression" class="level1">
+<h1>1.7.3: Standard Errors in Simple Linear Regression</h1>
+<p>We know, as shown in the last section, that the variance of the sampling distribution is:</p>
+<p><span class="math display">
+Var(\hat\beta) = \frac{\sigma^2}{SST_x}
+</span></p>
+<p>If we want the standard deviation of the sampling distribution, we simply take the square root:</p>
+<p><span class="math display">
+sd(\hat\beta_1) = \frac{\sigma}{\sqrt{SST_x}}
+</span></p>
+<p>There is one issue: we know that <span class="math inline">\sigma^2 = E(u^2)</span> (see previous section for proof). However, we do not actually know the value of <span class="math inline">E(u^2)</span>! Remember, that is the error term <span class="math inline">u</span> - while we only know the residual term <span class="math inline">\hat u</span>.</p>
+<p>So, what we can do is well, simply replace <span class="math inline">u</span> with its estimate, <span class="math inline">\hat u</span>.</p>
 <ul>
-<li>This assumption is also called <strong>exogeneity</strong>.</li>
+<li>Recall that <span class="math inline">u_i = y_i - \beta_0 - \beta_1 x_i</span></li>
+<li>And <span class="math inline">\hat u_i = y_i - \hat\beta_0 - \hat\beta_1 x_i</span>.</li>
 </ul>
-<p>However, this assumption is frequently violated. The most common reason for this is because of <strong>omitted variable bias</strong>.</p>
-<p><br></p>
-<p>Consider two regressions, one with only our exlanatory variable of interest <span class="math inline">D</span>, and, and one with an extra control variable <span class="math inline">x</span> that is omitted from the first regression:</p>
-<p><span class="math display">
-\begin{split}y_i &amp; = \beta_0^S + \beta_1^SD_i + u_i^S \quad \text{short} \\y_i &amp; = \beta_0 + \beta_1D_i + \beta_2x_i + u_i \quad \text{long}\end{split}
-</span></p>
-<p>Now consider an auxiliary regression, where the omitted variable <span class="math inline">x</span> is the outcome variable, and <span class="math inline">D_i</span> is the explanatory variable:</p>
-<p><span class="math display">
-x_i = \delta_0 + \delta_1 D_i + v_i
-</span></p>
-<ul>
-<li>where <span class="math inline">\delta_0, \delta_1</span> are coefficients and <span class="math inline">v_i</span> is the error term</li>
-</ul>
-<p><br></p>
-<p>Now we have <span class="math inline">x_i</span> in terms of <span class="math inline">D_i</span>, let us plug <span class="math inline">x_i</span> into our long regression to “recreate” the short regression:</p>
-<p><span class="math display">
-\begin{split}y_i &amp; = \beta_0 + \beta_1D_i + \beta_2x_i + u_i \\y_i &amp; = \beta_0 + \beta_1 D_i + \beta_2(\delta_0 + \delta_1D_i + v_i) + u_i \\y_i &amp; = \beta_0 + \beta_1 D_i + \beta_2 \delta_0 + \beta_2 \delta_1 D_i + \beta_2v_i + u_i \\y_i &amp; = \beta_0 + \beta_2 \delta_0 + (\beta_1 + \beta_2 \delta_1)D_i + \beta_2v_i + u_i\end{split}
-</span></p>
-<p>We have “recreated” the short regression with one variable <span class="math inline">D</span>. Let us see our recreation next to the original short regression:</p>
+<p>So naturally, instead of <span class="math inline">\sigma^2 = E(u^2)</span>, we could estimate it with <span class="math inline">E(\hat u^2)</span>. Mathematically:</p>
 <p><span class="math display">
 \begin{split}
-y_i &amp; = \beta_0^S + \beta_1^SD_i + u_i^S \\
-y_i &amp; = \beta_0 + \beta_2 \delta_0 + (\beta_1 + \beta_2 \delta_1)D_i + \beta_2v_i + u_i
+\hat\sigma^2 = E(\hat u^2) &amp; = \frac{1}{n} \sum\limits_{i=1}^n \hat u_i^2 \\
+&amp; = SSR/n
 \end{split}
 </span></p>
 <ul>
-<li>The short regression <span class="math inline">\beta_0^S</span> is analogous to the <span class="math inline">\beta_0 + \beta_2 \delta_0</span> in the recreation (both are the intercepts)</li>
-<li>The short regression <span class="math inline">\beta_1^S D_i</span> is analogous to the <span class="math inline">(\beta_1 + \beta_2 \delta_1)D_i</span> in the recreation (both are the slope and variable of interest)</li>
-<li>The short regression <span class="math inline">u_i^S</span> is analogous to the <span class="math inline">\beta_2 v_i + u_i</span> in the recreation (both are the error terms).</li>
+<li>Where <span class="math inline">SSR</span> is the square sum of residuals (see <a href="https://statsnotes.github.io/theory/4.html#r-squared-and-goodness-of-fit">1.4.6</a> for more details).</li>
 </ul>
-<p>Since the short regression <span class="math inline">\beta_1^S D_i</span> is analogous to the <span class="math inline">(\beta_1 + \beta_2 \delta_1)D_i</span> in the recreation, that means coefficient <span class="math inline">\beta_1^S = \beta_1 + \beta_2 \delta_1</span>.</p>
-<p><br></p>
-<p>The difference between the short regression coefficient <span class="math inline">\beta_1^S</span>, and the original long regression coefficient <span class="math inline">\beta_1</span>, is <span class="math inline">\beta_2 \delta_1</span>.</p>
+<p>However, there is an issue with this estimate of <span class="math inline">\sigma^2</span>. It is biased - the expected value is actually slightly less than <span class="math inline">\sigma^2</span>.</p>
+<p>We will not prove this mathematically, but this bias is because OLS imposes two conditions on its estimation process (that we discussed in <a href="https://statsnotes.github.io/theory/5.html#algebraic-properties-of-ols">1.5.1</a>):</p>
+<p><span class="math display">
+\begin{split}
+&amp; \sum\limits_{i=1}^n \hat u_i = 0 \\
+&amp; \sum\limits_{i=1}^n x_i \hat u_i = 0
+\end{split}
+</span></p>
 <ul>
-<li>Or in other words, <span class="math inline">\beta_2 \delta_1</span>, which is actually some of the effect of omitted <span class="math inline">x</span> on <span class="math inline">y</span>, is being “tangled up” into the coefficient of the short regression <span class="math inline">\beta_1^S</span> (which is only supposed to describe the relationship between <span class="math inline">D</span> and <span class="math inline">y</span>).</li>
+<li>The actual error term <span class="math inline">u_i</span> (not the OLS residuals <span class="math inline">\hat u_i</span>) do not have these restrictions.</li>
 </ul>
-<p>If <span class="math inline">\beta_2 = 0</span> (meaning no relationship between omitted <span class="math inline">x_i</span> and <span class="math inline">y</span>), or <span class="math inline">\delta_1 = 0</span> (meaning no relationship between omitted <span class="math inline">x_i</span> and <span class="math inline">D_i</span>), then difference <span class="math inline">\beta_2 \delta_1 = 0</span>, thus there is no issue.</p>
+<p>We can adjust the estimator to be more accurate by including a degrees of freedom adjustment. So, instead of <span class="math inline">SSR/n</span>, we can do <span class="math inline">SSR/(n-2)</span>. Thus, our estimator for <span class="math inline">\sigma^2</span> is:</p>
+<p><span class="math display">
+\hat\sigma^2 = \frac{SSR}{n-2} = \frac{\sum_{i=1}^n \hat u_i^2}{n-2}
+</span></p>
+<p>With that estimate of <span class="math inline">\sigma^2</span>, we can plug it back into our formula for the standard deviation of <span class="math inline">\hat\beta_1</span>.</p>
 <ul>
-<li>But if either of those facts are not true, then <span class="math inline">\beta_2 \delta_1 ≠ 0</span>, and omitted variable bias is non-zero.</li>
+<li>We call this standard deviation the standard error (as discussed in <a href="https://statsnotes.github.io/theory/2.html#uncertainty-in-estimates-and-sampling-distributions">1.2.3</a>)</li>
 </ul>
-<p>In the next section, we will talk about the implications of this.</p>
-<p><br></p>
-<p><br></p>
-<hr>
-<p><a href="https://statsnotes.github.io">Homepage</a></p>
-</section>
-<section id="endogeneity-and-violation-of-gauss-markov" class="level1">
-<h1>1.7.5: Endogeneity and Violation of Gauss-Markov</h1>
-<p>In the last section, we discussed omitted variable bias. But why is omitted variable bias (if non-zero) an issue?</p>
-<ul>
-<li>The omitted variable <span class="math inline">x</span>’s effect is mostly subsumed into the error term <span class="math inline">u_i^S</span> of the short regression.</li>
-<li>But some bit of <span class="math inline">x</span> (that is correlated with <span class="math inline">D</span>) is included in our coefficient (specifically, <span class="math inline">\beta_2 \delta_1</span>).</li>
-<li>That means our treatment variable <span class="math inline">D</span> will be correlated with the error term, <u>violating the Gauss-Markov assumption of zero-conditional mean, and producing biased OLS results</u>.</li>
-</ul>
+<p><span class="math display">
+\widehat{se}(\hat\beta_1) = \frac{\hat\sigma}{\sqrt{SST_x}}
+</span></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Definition: Endogeneity
+Definition: Standard Errors for Simple Linear Regression
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Endogeneity is when a regressor/explanatory variable <span class="math inline">x_j</span> is correlated with the error term <span class="math inline">u_i</span>.</p>
-<ul>
-<li>This frequently occurs due to <strong>omitted variable bias</strong>.</li>
-<li>The explanatory variable that is correlated with the error term is called an <strong>endogenous variable</strong>.</li>
-</ul>
-<p>Mathematically, endogeneity is defined as when:</p>
+<p>The standard error for the coefficient <span class="math inline">\hat\beta_1</span> from an OLS estimator in a simple linear regression is:</p>
 <p><span class="math display">
-Cov(x_j, u) ≠ 0
+\widehat{se}(\hat\beta_1) = \frac{\hat\sigma}{\sqrt{SST_x}}
 </span></p>
-<p>When endogeneity exists, the assumption of zero-conditional mean/exogeneity <span class="math inline">E(u|x_1, \dots, x_k) = 0</span> is violated (this assumption was introduced in <a href="https://statsnotes.github.io/theory/7.html#unbiasedness-of-ols-under-the-gauss-markov-theorem">1.7.2</a>).</p>
-<ul>
-<li>This means that OLS estimates are no longer unbiased if endogeneity/an endogenous variable are present.</li>
-</ul>
+<p>Where <span class="math inline">\hat\sigma</span> is defined as:</p>
+<p><span class="math display">
+\hat\sigma = \sqrt{\frac{SSR}{n-2}} = \sqrt{\frac{\sum_{i=1}^n \hat u_i^2}{n-2}}
+</span></p>
+<p>And where <span class="math inline">SST_x</span> is defined as:</p>
+<p><span class="math display">
+SST_x = \sum_{i=1}^n(x_i - \bar x)^2
+</span></p>
 </div>
 </div>
+<p>When homoscedasticity is not met, this standard error is invalid. See <a href="https://statsnotes.github.io/theory/8.html#robust-standard-errors-for-bivariate-regression">1.8.5</a> for more information on how to do estimates when this is violated.</p>
 <p><br></p>
-<p><u>Thus, the violation of the MLR.4 Zero-Conditional Mean Assumption frequently results from omitting confounding variables that are correlated with both our explanatory variable of interest and the outcome variable.</u></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="standard-errors-in-multiple-linear-regression" class="level1">
+<h1>1.7.4: Standard Errors in Multiple Linear Regression</h1>
+<p>Now, we will do the same exercise, but for multiple linear regression.</p>
+<p>Assuming homoscedasticity is met, we know <span class="math inline">Var(u|x_1, \dots, x_k) = \sigma^2</span>.</p>
 <ul>
-<li>Endogeneity can also be caused by other factors, such as measurement error, or simultaneity (when both the explanatory variable and outcome variable explain each other). However, the primary concern that we worry about in econometrics is omitted variable bias.</li>
+<li>When homoscedasticity is not met, nothing in this section applies. See <a href="https://statsnotes.github.io/theory/8.html#robust-standard-errors-for-multiple-regression">1.8.6</a> for more information on how to do estimates when this is violated.</li>
 </ul>
-<p>How can we solve this problem?</p>
+<p>Let us find the variance of OLS estimates (we will use <span class="math inline">\hat\beta_1</span> for simplicity, but this applies to any other coefficient <span class="math inline">\hat\beta_1 , \dots, \hat\beta_k</span>. In proving unbiasedness of OLS in <a href="https://statsnotes.github.io/theory/7.html#proof-of-unbiasedness-of-ols-under-gauss-markov">1.7.3</a>, we got to this stage:</p>
+<p><span class="math display">
+\hat\beta_1 = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+</span></p>
+<p>We know that <span class="math inline">\beta_1</span> is a constant (the true value in the population), so that never changes. Thus, it cannot be the variance in <span class="math inline">\hat\beta_1</span>. Thus, the second part is the variance in <span class="math inline">\hat\beta_1</span>.</p>
+<p>Let us define <span class="math inline">w_i</span> as following, as a function of <span class="math inline">x_1, \dots, x_k</span>:</p>
+<p><span class="math display">
+w_i = \frac{\widetilde{r_{1i}}}{\sum_{i=1}^n\widetilde{r_{1i}}^2}
+</span></p>
+<p>This allows us to write <span class="math inline">\hat\beta_1</span> as:</p>
+<p><span class="math display">
+\hat\beta_1 = \beta_1 + \sum\limits_{i=1}^nw_i u_i
+</span></p>
+<p><br></p>
+<p>Thus, we can proceed in the same way as the simple linear regression case (see <a href="https://statsnotes.github.io/theory/5.html#variance-of-the-ols-estimator-and-homoscedasticity">1.5.4</a> for more details):</p>
+<p><span class="math display">
+\begin{split}
+Var(\hat\beta_1|x_1, \dots, x_k) &amp; = Var\left( \sum\limits_{i=1}^nw_i u_i \biggr|x_1, \dots ,x_k \right) \\ &amp; = \sum\limits_{i=1}^n Var(w_i u_i | x_1, \dots, x_k) \\
+&amp; = \sum\limits_{i=1}^n w_i^2 \ Var(u_i | x_1, \dots, x_k) \\
+&amp; = \sum\limits_{i=1}^n w_i^2 \sigma^2 \\
+&amp; = \sigma^2 \sum\limits_{i=1}^n w_i^2
+\end{split}
+</span></p>
+<p>Now, plugging back in <span class="math inline">w_i</span>, we get:</p>
+<p><span class="math display">
+\begin{split}
+Var(\hat\beta_1|x_1, \dots, x_k) &amp; = \sigma^2 \sum\limits_{i=1}^n w_i^2 \\
+&amp; = \sigma^2 \sum_{i=1}^n \left( \frac{\widetilde{r_{1i}}}{\sum_{i=1}^n\widetilde{r_{1i}}^2} \right) \\
+&amp; = \sigma^2 \frac{\sum_{i=1}^n \widetilde{r_{1i}}}{\sum_{i=1}^n\widetilde{r_{1i}}^2} \\
+&amp; = \frac{\sigma^2}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+\end{split}
+</span></p>
+<p>And assuming homoscedasticity (where <span class="math inline">Var(\hat\beta_1)</span> does not depend on <span class="math inline">x_1, \dots, x_k</span>, we thus know:</p>
+<p><span class="math display">
+Var(\hat\beta_1) = \frac{\sigma^2}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+</span></p>
 <ul>
-<li>The easiest way is to add more control variables.</li>
-<li>If we include every single possible confounder that is correlated both with our explanatory variable of interest, and the outcome variable, then, there will be no more omitted variable bias, and no more endogeneity.</li>
+<li>When homoscedasticity is not met, this is not valid. See <a href="https://statsnotes.github.io/theory/8.html#robust-standard-errors-for-multiple-regression">1.8.6</a> for more information on how to do estimates when this is violated.</li>
 </ul>
-<p>However, as we will discuss a lot more in Part II on causal inference, including all confounding variables is often impossible, as many social science situations will have thousands of them, many of them <strong>unobservable</strong> or impossible to measure.</p>
+<p><br></p>
+<p>However, just like we mentioned in <a href="https://statsnotes.github.io/theory/5.html#standard-errors-of-the-ols-estimator">1.5.6</a>, the real value of <span class="math inline">\sigma^2</span> of a regression not calculable. This is an issue because our variance formula has <span class="math inline">\sigma^2</span> in the numerator.</p>
+<p>Just like in simple linear regression (see <a href="https://statsnotes.github.io/theory/5.html#standard-errors-of-the-ols-estimator">1.5.6</a>), we can estimate <span class="math inline">\sigma^2</span> by using the residual term <span class="math inline">\hat u_i</span> with a degrees of freedom adjustment.</p>
+<p><span class="math display">
+\hat\sigma^2 = \frac{SSR}{n-k-1} = \frac{\sum_{i=1}^n \hat u_i^2}{n-k-1}
+</span></p>
 <ul>
-<li>Thus, there are also other techniques to “unbias” OLS without including all possible confounders. We will discuss an example of this in lesson 1.11 on instrumental variables.</li>
+<li>Where <span class="math inline">n</span> is the number of observations in our sample data.</li>
+<li>Where <span class="math inline">k</span> is the number of explanatory variables in our model.</li>
+</ul>
+<p>Thus, with this estimate, we can calculate the <strong>standard errors</strong> (square root of variance) of our estimates of coefficients <span class="math inline">\hat\beta_j</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Standard Errors for Multiple Linear Regression
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The standard error for the coefficient <span class="math inline">\hat\beta_j</span> from an OLS estimator in multiple linear regression is:</p>
+<p><span class="math display">
+\widehat{se}(\hat\beta_j) = \frac{\hat\sigma}{\sqrt{\sum_{i=1}^n \widetilde{r_{1i}}^2}}
+</span></p>
+<ul>
+<li>We will never calculate this by hand, we will use a statistical software to do this.</li>
+</ul>
+<p>Where <span class="math inline">\hat\sigma</span> is defined as:</p>
+<p><span class="math display">
+\hat\sigma = \sqrt{\frac{SSR}{n-k-1}} = \sqrt{\frac{\sum_{i=1}^n \hat u_i^2}{n-k-1}}
+</span></p>
+</div>
+</div>
+<p>When homoscedasticity is not met, this is not valid. See <a href="https://statsnotes.github.io/theory/8.html#robust-standard-errors-for-multiple-regression">1.8.6</a> for more information on how to do estimates when this is violated.</p>
+<p><br></p>
+<p>Notice how the denominator contains <span class="math inline">\sum\widetilde{r_{1i}}^2</span>. That means, the smaller <span class="math inline">\sum\widetilde{r_{1i}}^2</span> is, the larger the variance is.</p>
+<ul>
+<li><span class="math inline">\sum\widetilde{r_{1i}}^2</span> is smaller when our explanatory variable of interest <span class="math inline">x_1</span> is highly correlated with another explanatory variable, since <span class="math inline">\widetilde{r_{1i}}^2</span> represents the part of <span class="math inline">x_1</span> that is uncorrelated with other explanatory variables.</li>
+<li>This means that if we have highly correlated explanatory variables, our variance will in our OLS estimates will be high.</li>
+</ul>
+<p>This is something important to think about when choosing explanatory variables. We want to include all confounding variables, but highly correlated confounders will make our variance very high for our estimates.</p>
+<ul>
+<li>One way of dealing with this is dimensional reduction techniques, which we will discuss in Part III of the guide dealing with multivariate anlaysis.</li>
 </ul>
 <p><br></p>
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
-<section id="ols-as-a-method-of-moments-estimator" class="level1">
-<h1>1.7.6: OLS as a Method of Moments Estimator</h1>
-<p>So far, we have discussed why endogeneity is an issue through omitted variable bias. However, there is another way to show the issue with endogeneity and why it causes bias - by describing the OLS estimator as a method of moments estimator.</p>
+<section id="statistical-inference-in-simple-linear-regression" class="level1">
+<h1>1.7.5: Statistical Inference in Simple Linear Regression</h1>
+<p>In the last few sections, we calculated the standard error of OLS estimates of <span class="math inline">\hat\beta_j</span>.</p>
+<p>If we remember from <a href="https://statsnotes.github.io/theory/2.html">Lesson 1.2</a>, the standard error is a measurement of uncertainty, and allows us to conduct statistical inference tests, such as hypothesis testing and confidence intervals.</p>
+<ul>
+<li>Note: the statistical tests are only really useful if we are comfortable with the assertion that OLS is unbiased - or in other words, they are only really useful if the first 4 Gauss-Markov conditions are met.</li>
+</ul>
+<p><br></p>
+<section id="hypothesis-testing" class="level3">
+<h3 class="anchored" data-anchor-id="hypothesis-testing">Hypothesis Testing</h3>
+<p>Hypothesis testing follows the same procedure as outlined in <a href="https://statsnotes.github.io/theory/2.html#intuition-of-hypothesis-testing">1.2.5</a> and <a href="https://statsnotes.github.io/theory/2.html#implementing-a-hypothesis-test">1.2.6</a>. Reread these sections to understand the intuition.</p>
+<p>In regression, our typical null hypotheses is that there is no relationship between <span class="math inline">x_j</span> and <span class="math inline">y</span>, and our alternate hypothesis is that there is a relationship between <span class="math inline">x_j</span> and <span class="math inline">y</span>. Thus, our hypotheses are:</p>
+<p><span class="math display">
+\begin{split}
+&amp; H_0 : \beta_j = 0 \\
+&amp; H_1: \beta_j ≠ 0
+\end{split}
+</span></p>
+<p>Now, we calculate a t-test statistic:</p>
+<p><span class="math display">
+t = \frac{\hat\beta_j - 0}{\widehat{se}(\hat\beta_j)}
+</span></p>
+<ul>
+<li>Where the 0 represents the null hypothesis value. If you have any other null hypothesis value, change the 0 to your hypothesis value.</li>
+</ul>
+<p>Now, we will consult a t-distribution (not a normal distribution) to calculate the p-values.</p>
+<ul>
+<li><p>We use a t-distribution, not a normal distribution, even if we have met the central limit theorem (see <a href="https://statsnotes.github.io/theory/2.html#central-limit-theorem">1.2.4</a> if you do not know what the central limit theorem is).</p></li>
+<li><p>The reason we do this is because our estimate of variance <span class="math inline">\hat\sigma^2</span> is not exactly the same as the true variance <span class="math inline">\sigma^2</span>, and the t-distribution better accounts for this issue.</p></li>
+</ul>
+<p>Once we have obtained our p-values from the t-distribution, we can interpret the p-values as follows:</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Definition: Method of Moments Estimator
+Interpretation of p-Values for Regression
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The Method of Moments Estimator is another estimator of the true value of populations in the parameter.</p>
-<p>The estimator defines key population <strong>moments</strong> of interest - which are the population parameters written in terms of expected values.</p>
-<p>Then, the Method of Moments uses the sample equivalents of the population moments to estimate the population parameter.</p>
+<p>The p-value is the probability of getting a test statistic equally or more extreme than the one we got with our sample estimate <span class="math inline">\hat\beta_j</span>, given the null hypothesis is true.</p>
 <ul>
-<li>For example, to estimate the population mean, the Method of Moments uses the sample mean.</li>
+<li><p>If <span class="math inline">p&lt;0.05</span>, we believe the probability of the null hypothesis is low enough, such that we reject the null hypothesis (that there is no relationship between <span class="math inline">x_j</span> and <span class="math inline">y</span>), and conclude our alternate hypothesis (that there is a relationship between <span class="math inline">x_j</span> and <span class="math inline">y</span>).</p></li>
+<li><p>If <span class="math inline">p&gt;0.05</span>, we cannot reject the null hypothesis, and cannot reject that there is no relationship between <span class="math inline">x_j</span> and <span class="math inline">y</span>.</p></li>
 </ul>
-<p>We should have <strong>at least</strong> as many population moments, as we have estimands.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note how I have been using the word <strong>relationship</strong>, not causal effect.</p>
+<p>Causality is not established through estimators, it is established through a strong experimental design (which we will cover in part II of the course).</p>
 </div>
 </div>
 <p><br></p>
-<p>This is a little hard to grasp. However, a simple example of the Method of Moments estimator can help us understand this.</p>
-<p>Let us say that we have some random variable <span class="math inline">y</span>, with a true population mean <span class="math inline">\mu</span>. We want to estimate <span class="math inline">\mu</span>, but we only have a sample of the population</p>
-<p>First, let us define the moment of interest <span class="math inline">\mu</span> in terms of expectation:</p>
+</section>
+<section id="confidence-intervals" class="level3">
+<h3 class="anchored" data-anchor-id="confidence-intervals">Confidence Intervals</h3>
+<p>We can also create confidence intervals of plausible true <span class="math inline">\beta_j</span> values from the population, given our estimate <span class="math inline">\hat\beta_1</span>. The intuition is the same as discussed in <a href="https://statsnotes.github.io/theory/2.html#confidence-intervals">1.2.7</a>.</p>
+<p>Just like previously discussed in <a href="https://statsnotes.github.io/theory/2.html#confidence-intervals">1.2.7</a>, the 95% confidence interval has the bounds:</p>
 <p><span class="math display">
-\mu = E(y)
+\hat\beta_j - 1.96 \widehat{se}(\hat\beta_1), \ \hat\beta_j + 1.96 \widehat{se}(\hat\beta_1)
 </span></p>
-<p>The method of moments says we should use the sample equivalent of the population parameter. The sample equivalent of <span class="math inline">\mu</span> (the true mean of the population), is of course, the sample mean <span class="math inline">\bar y</span>.</p>
-<p>With the method of moments estimator, our “moment” estimate of the true mean <span class="math inline">\mu</span> of <span class="math inline">y</span> would be:</p>
-<p><span class="math display">
-\hat\mu = \bar y = \frac{1}{n}\sum\limits_{i=1}^ny_i
-</span></p>
-<p><br></p>
-<p>Another example of a Method of Moments estimator is if we have some random variable <span class="math inline">y</span>, and we want to estimate the population mean <span class="math inline">\mu</span> and variance <span class="math inline">\sigma^2</span>.</p>
-<p>Here, we have two population moments <span class="math inline">\mu</span> and <span class="math inline">\sigma^2</span>, that can be expressed in expected value:</p>
-<p><span class="math display">
-\begin{split}
-&amp; \mu = E(y) \\
-&amp; \sigma^2 = E((y - \mu)^2)
-\end{split}
-</span></p>
-<p>The method of moments estimator uses the sample equivalents of the population parameters to estimate it. Thus, our “moment” estimates are:</p>
-<p><span class="math display">
-\begin{split}
-&amp; \hat\mu = \bar y \\
-&amp; \hat\sigma^2 = S.Var(y)
-\end{split}
-</span></p>
-<ul>
-<li>Where <span class="math inline">S.Var(y)</span> is the variance of the sample <span class="math inline">y</span>.</li>
-</ul>
-<p><br></p>
-<section id="ols-as-a-method-of-moments-estimator-1" class="level3">
-<h3 class="anchored" data-anchor-id="ols-as-a-method-of-moments-estimator-1">OLS As a Method of Moments Estimator</h3>
-<p><u>OLS can also be considered a Method of Moments estimator</u>. We will have moments for each parameter we are trying to estimate.</p>
-<ul>
-<li>So for bivariate regression, we will have 2 moments for <span class="math inline">\beta_0</span> and <span class="math inline">\beta_1</span>.</li>
-<li>For multiple regression, we will have <span class="math inline">k+1</span> moments for <span class="math inline">\beta_0, \beta_1, \dots, \beta_k</span></li>
-</ul>
-<p>For example, let us take bivariate regression as an example.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Definition: Bivariate Regression as a Method of Moments Estimator
+Interpretation of Confidence Intervals
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Consider the bivariate regression model:</p>
-<p><span class="math display">
-y = \beta_0 + \beta_1x + u
-</span></p>
-<p>The OLS estimator can be derived as a method of moments estimator, with 2 moments, one for each parameter (<span class="math inline">\beta_0, \beta_1</span>):</p>
-<p><span class="math display">
-\begin{split}
-&amp; E(y-\beta_0 -\beta_1x) = 0 \\
-&amp; E(x(y - \beta_0 - \beta_1 x)) = 0
-\end{split}
-</span></p>
-<p>Since we know <span class="math inline">u = y - \beta_0 - \beta_1 x</span>, we can rewrite the two moments as:</p>
-<p><span class="math display">
-\begin{split}
-&amp; E(u) = 0 \\
-&amp; E(xu) = 0
-\end{split}
-</span></p>
-<p>The estimates of these moments would use the sample equivalents: <span class="math inline">\hat\beta_0</span> and <span class="math inline">\hat\beta_1</span>.</p>
-<p><span class="math display">
-\begin{split}
-&amp; E(y-\hat\beta_0 -\hat\beta_1x) = 0 \\
-&amp; E(x(y - \hat\beta_0 - \hat\beta_1 x)) = 0
-\end{split}
-</span></p>
+<p>The confidence interval means that under repeated sampling and estimating <span class="math inline">\hat\beta_j</span>, 95% of the confidence intervals we construct will include the true <span class="math inline">\beta_j</span> value in the population.</p>
 </div>
 </div>
-<p><br></p>
-<p>Remember our OLS minimisation conditions (from <a href="https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator">1.4.4</a>)</p>
-<p><span class="math display">
-\begin{split}
-&amp; \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0 \\
-&amp; \sum\limits_{i=1}^n x_i (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0
-\end{split}
-</span></p>
-<p>Since by definition, average/expectation is <span class="math inline">E(x) = \frac{1}{n} \sum x_i</span>, we can rewrite the OLS minimisation conditions as:</p>
-<p><span class="math display">
-\begin{split}
-&amp; n \times E(y_i - \hat\beta_0 - \hat\beta_1x_i) = 0 \\
-&amp; n \times E(x_i(y_i - \hat\beta_0 - \hat\beta_1x_i)) = 0
-\end{split}
-</span></p>
-<p>And since anything multiplied to a zero turns into zero, we can ignore the <span class="math inline">n</span> in the first order condition, and only focus on the expected value part. Thus, our conditions are:</p>
-<p><span class="math display">
-\begin{split}
-&amp; E(y_i - \hat\beta_0 - \hat\beta_1x_i) = 0 \\
-&amp; E(x_i(y_i - \hat\beta_0 - \hat\beta_1x_i)) = 0
-\end{split}
-</span></p>
-<p>Which as we can see, are the exact same minimisation conditions as the method of moments estimator. Thus, the OLS estimator is a special case of the Method of Moments estimator.</p>
-<p><br></p>
-<p>The moment conditions that define OLS as a method of moments are <span class="math inline">E(u) = 0</span> and <span class="math inline">E(xu) = 0</span>. These two together imply that <span class="math inline">Cov(x,u) = 0</span> (a very similar proof provided in <a href="https://statsnotes.github.io/theory/5.html#residuals-and-algebraic-properties-of-ols">1.5.1</a>).</p>
-<ul>
-<li>An explanatory variable <span class="math inline">x</span> is an <strong>exogenous</strong> regressor if <span class="math inline">Cov(x,u) = 0</span>.</li>
-</ul>
-<p>However, if <span class="math inline">Cov(x,u) ≠ 0</span>, that means our moment conditions are invalid.</p>
-<ul>
-<li>An explanatory variable <span class="math inline">x</span> is an <strong>endogenous</strong> regressor if <span class="math inline">Cov(x,u)≠0</span>.</li>
-</ul>
-<p>Thus, when an endogenous regressor is present, our moment conditions are invalid, and thus, our estimates are biased.</p>
-<ul>
-<li>This is another way to show why endogeneity is an issue for regression, as we covered previously in <a href="https://statsnotes.github.io/theory/7.html#endogeneity-and-violation-of-gauss-markov">1.7.5</a>.</li>
-</ul>
-<p>We will come back to the Method of Moments estimator in lesson 1.10, when we discuss the Instrumental Variables Estimator, and how that estimator solves the issue of the invalid moment due to endogeneity.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpretation Warning!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is very important to note that confidence intervals do not mean a 95% probability that the true <span class="math inline">\beta_j</span> is within any specific confidence interval we calculated.</p>
+<p>We cannot know based on one confidence interval, whether it covers or does not cover the true <span class="math inline">\beta_j</span>.</p>
+<p>The correct interpretation is that over many samples from the same population, we would expect 95% of our confidence intervals to contain the true <span class="math inline">\beta_j</span> value.</p>
+</div>
+</div>
 <p><br></p>
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
 </section>
-<section id="ols-and-the-conditional-expectation-function" class="level1">
-<h1>1.7.7: OLS and the Conditional Expectation Function</h1>
-<p>We previously discussed random variables and distributions in <a href="https://statsnotes.github.io/theory/1.html">lesson 1.1</a>. There, we learned that random variables can be characterised by distributions, which can be summarised with the expectation and variance.</p>
-<p><span class="math inline">y</span> in a regression is also a random variable.</p>
+<section id="hypothesis-testing-with-more-than-one-coefficient" class="level1">
+<h1>1.7.6: Hypothesis Testing with More than One Coefficient</h1>
+<p>Sometimes, we want to test more than one coefficient at a time in a hypothesis test.</p>
 <ul>
-<li>For example, imagine income was <span class="math inline">y</span>.</li>
-<li>There is a distribution of income in a population - such that if we randomly selected someone from the population, there would be a probability associated with selecting someone with an income between $60,000-$70,000.</li>
+<li>This will be especially obvious why after lesson 1.9.</li>
 </ul>
-<p>We can characterise the distribution of <span class="math inline">y</span> with its expected value: <span class="math inline">E(y)</span>.</p>
-<p>A <strong>conditional expectation function</strong> says that the value of <span class="math inline">E(y)</span> depends on the value of <span class="math inline">x</span>. We notate a conditional expectation function as <span class="math inline">E(y|x)</span>.</p>
-<ul>
-<li>For example, imagine <span class="math inline">y</span> is income and <span class="math inline">x</span> is age.</li>
-<li>A conditional expectation function <span class="math inline">E(y|x)</span> says that as <span class="math inline">x</span> (age) changes, the expected value of <span class="math inline">y</span> (income) also changes.</li>
-<li>For example, you would probably expect the expected value of a 20 year old’s income to be different than a 50 year old’s.</li>
-</ul>
-<p><br></p>
-<p>The Ordinary Least Squares Regression line also is the best approximation of the conditional expectation function <span class="math inline">E(y|x)</span>, <u>assuming the conditional expectation function is linear</u>. That means, we can view a regression as also a conditional expectation function.</p>
+<p>For example, let us say we want to test the statistical significance of <span class="math inline">\hat\beta_2</span> and <span class="math inline">\hat\beta_3</span> at the same time in the following regression model:</p>
+<p><span class="math display">
+\hat y = \hat\beta_0 + \hat\beta_1x_1 + \hat\beta_2x_2 + \hat\beta_3x_3
+</span></p>
+<p>What we can do is create two models - the alternate model <span class="math inline">M_a</span>, and the null model <span class="math inline">M_0</span>. The alternate model <span class="math inline">M_a</span> is the model we have above, and the null modle <span class="math inline">M_0</span> is the model without the two coefficients that we want to test (<span class="math inline">\hat\beta_2</span> and <span class="math inline">\hat\beta_3</span>).</p>
+<p><span class="math display">
+\begin{split}
+&amp; M_0: y = \beta_0 + \beta_1x_1 \\
+&amp; M_a: y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3x_3
+\end{split}
+</span></p>
+<p>Our statistical test will be to test if the alternative model <span class="math inline">M_a</span> is significantly “better” than our null model <span class="math inline">M_0</span>. If <span class="math inline">M_a</span> is indeed significantly better, than we know that the coefficients <span class="math inline">\hat\beta_2</span> and <span class="math inline">\hat\beta_3</span> together are statistically significant.</p>
+<p>Let us generalise this framework.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Definition: Linear Conditional Expectation Function
+Definition: F-Test of Nested Models
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A linear conditional expectation function, can take the following form:</p>
-<p><span class="math display">
-E(y_i|x_i) = b_0 + b_1x_i
-</span></p>
-<ul>
-<li>Where <span class="math inline">b_0</span> and <span class="math inline">b_1</span> are the parameters/coefficients of the model.</li>
-<li>Where <span class="math inline">E(y_i|x_i)</span> is the expectation of the conditional distribution <span class="math inline">y|x</span>.</li>
-<li>Where the conditional distribution <span class="math inline">y|x</span> has variance <span class="math inline">\sigma^2</span> (this assumption we will explore in more detail in the next few lessons).</li>
-</ul>
-<p>A conditional expectation function is defined as the parameters that minimise the mean squared errors (MSE).</p>
+<p>The F-test of Nested Models allows us to test multiple coefficients at once. It compares two models: <span class="math inline">M_0</span> and <span class="math inline">M_a</span>.</p>
 <p><span class="math display">
 \begin{split}
-MSE &amp; = E(y_i - E(y_i|x_i))^2 \\
-&amp; = \frac{1}{n}\sum\limits_{i=1}^n( y_i - E(y_i|x_i))^2
+&amp; M_0: y = \beta_0 + \beta_1x_1 + \dots + \beta_g x_g \\
+&amp; M_a: y = \beta_0 + \beta_1 x_1 + \dots + \beta_g x_g + \beta_{g+1} x_{g+1} + \dots + \beta_kx_k
 \end{split}
 </span></p>
+<ul>
+<li>The model <span class="math inline">M_a</span> contains all of the explanatory variables, including the ones we want to test.</li>
+<li>The model <span class="math inline">M_0</span> contains the other explanatory variables that are not a part of our test. Model <span class="math inline">M_0</span> must be “nested” in model <span class="math inline">M_a</span>: i.e.&nbsp;all explanatory variables present in <span class="math inline">M_0</span> must also be in <span class="math inline">M_a</span>.</li>
+</ul>
+<p>The model tests if <span class="math inline">M_a</span> is significantly better than <span class="math inline">M_0</span>. If this is the case, the extra coefficients in <span class="math inline">M_a</span> that we are testing are statistically significant.</p>
 </div>
 </div>
 <p><br></p>
-<p>What we want to prove is that the OLS estimates <span class="math inline">\hat\beta_0</span> and <span class="math inline">\hat\beta_1</span> best estimate the parameters <span class="math inline">b_0</span> and <span class="math inline">b_1</span> of the Conditional Expectation Function, which means that if true, OLS is the best approximation of the conditional expectation function.</p>
-<p>Suppose we have the conditional expectation function:</p>
+<p>How do we run a F-test of nested models?</p>
+<p>Recall the concept of <span class="math inline">R^2</span> discussed in <a href="https://statsnotes.github.io/theory/6.html#r-squared-and-goodness-of-fit">1.6.7</a>. <span class="math inline">R^2</span> describes how much of the variation in <span class="math inline">y</span> our explanatory variables explain.</p>
+<p>The F-test uses the <span class="math inline">R^2</span> of the two models, and compares them.</p>
+<ul>
+<li>If the <span class="math inline">M_a</span> model has a statistically significantly higher <span class="math inline">R^2</span> value than the <span class="math inline">M_0</span> model, then <span class="math inline">M_a</span> is considered statistically significant, and we can conclude that the additional explanatory variables in <span class="math inline">M_a</span> are statistically significant.</li>
+</ul>
+<p><br></p>
+<p>As we know from hypothesis testing (see <a href="https://statsnotes.github.io/theory/2.html#intuition-of-hypothesis-testing">1.2.5</a> and <a href="https://statsnotes.github.io/theory/2.html#implementing-a-hypothesis-test">1.2.6</a> for intuition), we need a test statistic and distribution to run a hypothesis test.</p>
+<p>The statistic for a F-test is the F-statistic.</p>
+<ul>
+<li>Let us define <span class="math inline">R^2_a</span> and <span class="math inline">SSR_a</span> as the <span class="math inline">R^2</span> and sum of squared residuals for model <span class="math inline">M_a</span>.</li>
+<li>Let us define <span class="math inline">R^2_0</span> and <span class="math inline">SSR_0</span> as the <span class="math inline">R^2</span> and sum of squared residuals for model <span class="math inline">M_0</span>.</li>
+<li>The total number of coefficients in model <span class="math inline">M_a</span> is <span class="math inline">k_a</span>, and for model <span class="math inline">M_0</span>, is <span class="math inline">k_0</span>.</li>
+<li>Let us define <span class="math inline">n</span> as the number of observations (should be the same for both models).</li>
+</ul>
+<p>Our F-statistic is mathematically calculated as:</p>
 <p><span class="math display">
-E(y_i|x_i) = b_0 + b_1x_i
+F = \frac{(SSR_0 - SSE_a)/(k_a - k_0)}{SSR_a / (n - k_a - 1)}
 </span></p>
-<p>We also know that our typical regression equation is:</p>
+<p>After calculating our F-statistic, we consult an F-distribution with <span class="math inline">k_a - k_0</span> and <span class="math inline">n-k_a - 1</span> degrees of freedom.</p>
+<p>With this distribution, we can obtain our p-value.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpretation of p-Values for F-tests
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The p-value is the probability of getting a test statistic equally or more extreme than the one we got with our alternate model <span class="math inline">M_a</span>, given the null hypothesis is true.</p>
+<ul>
+<li><p>If <span class="math inline">p&lt;0.05</span>, we believe the probability of the null hypothesis is low enough, such that we reject the null hypothesis (that <span class="math inline">M_0</span> is a better model), and conclude our alternate hypothesis (that <span class="math inline">M_a</span> is a better model). This also means that the extra coefficients in <span class="math inline">M_a</span> are jointly statistically significant.</p></li>
+<li><p>If <span class="math inline">p&gt;0.05</span>, we cannot reject the null hypothesis, and cannot reject that <span class="math inline">M_0</span> is the better model. Thus, the extra coefficients in <span class="math inline">M_a</span> are jointly not statistically significant.</p></li>
+</ul>
+</div>
+</div>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="robust-standard-errors-for-bivariate-regression" class="level1">
+<h1>1.7.7: Robust Standard Errors for Bivariate Regression</h1>
+<p>MLR.5 Homoscedasticity states that <span class="math inline">Var(u|x_1, \dots x_k) = \sigma^2</span>.</p>
+<ul>
+<li>Or in other words, no matter the value of <span class="math inline">x_1, \dots, x_k</span>, the variance of the error term is constant at <span class="math inline">\sigma^2</span>.</li>
+</ul>
+<p>When this is violated (so when the values of the explanatory variables effect the variance of the error term), we have <strong>heteroscedasticity</strong>.</p>
+<ul>
+<li>We provided graphical examples of homoscedasticity in <a href="https://statsnotes.github.io/theory/5.html#variance-of-the-ols-estimator-and-homoscedasticity">1.5.4</a>. This is useful to know how to identify heteroscedasticity.</li>
+</ul>
+<p>When MLR.5 Homoscedasticity is violated, the OLS estimator is still unbiased, however, it is no longer the unbiased linear estimator with the least variance.</p>
+<p>More importantly for us however, is that heteroscedasticity invalidates the variance and standard error formulas we have calculated earlier in <a href="https://statsnotes.github.io/theory/8.html#variance-of-the-ols-estimator">1.8.1</a> and <a href="https://statsnotes.github.io/theory/8.html#standard-errors-and-multicollinearity">1.8.2</a> (as well as for simple linear regression in <a href="https://statsnotes.github.io/theory/5.html#deriving-variance-of-ols-estimates">1.5.5</a>).</p>
+<p><br></p>
+<p>Let us calculate these standard errors under heteroscedasticity. For simplicity, consider the bivariate regression:</p>
 <p><span class="math display">
 y_i = \beta_0 + \beta_1 x_i + u_i
 </span></p>
-<p>We know that <span class="math inline">E(u_i|x_i) = 0</span>. Let us define <span class="math inline">u_i</span> as the following:</p>
+<p>However, without MLR.5 Homoscedasticity, variance <span class="math inline">Var(u|x)</span> is no longer constant at <span class="math inline">\sigma^2</span>. Instead, <span class="math inline">Var(u|x)</span> varies depending on the value of <span class="math inline">x</span>. Let us define the variance as:</p>
 <p><span class="math display">
-u_i = y_i - E(y_i|x_i)
+Var(u_i|x_i) = \sigma_i^2
 </span></p>
-<p>If the above defined <span class="math inline">u_i</span> is true, <span class="math inline">E(u_i|x_i)</span> should also be equal to 0. So, let us plug in the above <span class="math inline">u_i</span> into <span class="math inline">E(u_i | x_i)</span>.</p>
-<p><span class="math display">
-\begin{split}
-E(u_i|x_i) &amp; = E(y_i - E(y_i|x_i) \ | \ x_i) \\
-&amp; = E(y_i|x_i) - E(y_i|x_i) \\
-&amp; = 0
-\end{split}
-</span></p>
-<p>Thus, we know <span class="math inline">u_i = y_i - E(y_i|x_i)</span> to be true. Thus, rearranging, we know:</p>
-<p><span class="math display">
-y_i = E(y_i|x_i) + u_i
-</span></p>
-<p>We also know that <span class="math inline">y_i = \beta_0 + \beta_1 x_i + u_i</span>. Thus, the following is true:</p>
-<p><span class="math display">
-\begin{split}
-E(y_i|x_i) + u_i &amp; = \beta_0 + \beta_1 + u_i \\
-b_0 + b_1 + u_i &amp; = \beta_0 + \beta_1 + u_i \\
-b_0 + b_1 &amp; = \beta_0 + \beta_1
-\end{split}
-</span></p>
-<p>Well, you might point out, it is still possible that <span class="math inline">b_1 ≠ \beta_1</span> in this scenario. We can go further. We know that the conditional expectation function minimises the mean of squared errors.</p>
-<p><span class="math display">
-\begin{split}
-MSE &amp; = \min\limits_{b_0, b_1} E(y_i - E(y_i|x_i))^2 \\
-&amp; = \min\limits_{b_0, b_1} E(y_i - \beta_0 - \beta_1x_i)^2
-\end{split}
-</span></p>
-<p>The first order conditions are (using chain rule and partial derivatives, just like in the OLS derivation):</p>
-<p><span class="math display">
-\begin{split}
-&amp; E(y_i - b_0 - b_1x_i) = 0 \\
-&amp; E(x_i(y_i - b_0 - b_1x_i) = 0
-\end{split}
-</span></p>
-<p>These are equivalent to the OLS Method of Moments estimator conditions, so the same estimates will be produced.</p>
-<p><span class="math display">
-\begin{split}
-&amp; E(y-\beta_0 -\beta_1x) = 0 \\
-&amp; E(x(y - \beta_0 - \beta_1 x)) = 0
-\end{split}
-</span></p>
-<p>Thus, OLS best approximates the conditional expectation function.</p>
 <ul>
-<li>Of course, assuming the Gauss-Markov conditions of OLS unbiasedness are met.</li>
-<li>Or from the method of moments persepctive, the moment conditions <span class="math inline">E(u) = E(xu) = 0</span> are valid (which they are assuming exogeneity <span class="math inline">Cov(x,u) = 0</span>).</li>
+<li>Where <span class="math inline">\sigma^2_1</span> is the error term variance for <span class="math inline">x_1</span>, and <span class="math inline">\sigma_2^2</span> is the error term variance for <span class="math inline">x_2</span>, and so on <span class="math inline">\sigma_3^2, \dots, \sigma_n^2</span>.</li>
 </ul>
-<p><br></p>
-<p>The fact that OLS best approximates the conditional expectation function is an immensely useful property of OLS.</p>
+<p>Then, recalling from the start of <a href="https://statsnotes.github.io/theory/5.html#deriving-variance-of-ols-estimates">1.5.5</a>, we have the following formula for the simple linear regression <span class="math inline">\hat\beta_1</span> estimate:</p>
+<p><span class="math display">
+\hat\beta_1 = \beta_1 + \sum_{i=1}^nw_i u_i
+</span></p>
 <ul>
-<li>We know that the expecation of a random variable is the best guess of the random variable’s value (as explained in <a href="https://statsnotes.github.io/theory/1.html#expected-value-and-mean">1.1.4</a>).</li>
-<li>We also now know that OLS best approximates the conditional expectation function <span class="math inline">E(y|x)</span>.</li>
-<li>Thus, OLS estimates <span class="math inline">\hat y</span> are the best guess of the value of <span class="math inline">y</span>, given any values of <span class="math inline">x</span>. This is immensely useful in both prediction purposes and causal estimation purposes (which we will focus on in later parts of the guide).</li>
+<li>Where <span class="math inline">w_i = \frac{x_i - \bar x}{\sum(x_i - \bar x)^2}</span>, which is a function of random variable <span class="math inline">x</span>.</li>
+<li>We could also write <span class="math inline">w_i</span> as <span class="math inline">\frac{x_i - \bar x}{SST_x}</span>.</li>
 </ul>
-<p>This is also why when discussing interpretation of OLS coefficients in both simple and multiple linear regression, we have been describing the change in the <u>expected</u> value of <span class="math inline">y</span>.</p>
+<p>We know that <span class="math inline">\beta_1</span> is a constant (the true value in the population), so that never changes. Thus, it cannot be the variance in <span class="math inline">\hat\beta_1</span>. Thus, the second part is the variance in <span class="math inline">\hat\beta_1</span>. Thus:</p>
+<p><span class="math display">
+\begin{split}
+Var(\hat\beta_1|x) &amp; = Var \left( \sum\limits_{i=1}^n w_i u_i \biggr| x \right) \\
+&amp; = \sum\limits_{i=1}^n Var(w_i u_i |x) \\
+&amp; = \sum\limits_{i=1}^n w_i^2 \ Var (u_i | x) \\
+&amp; = \sum\limits_{i=1}^nw_i^2 \ Var(u_i|x_i) \\
+&amp; = \sum\limits_{i=1}^n w_i^2 \sigma_i^2
+\end{split}
+</span></p>
+<p>Now, plugging back <span class="math inline">w_i</span> in, we get:</p>
+<p><span class="math display">
+\begin{split}
+Var(\hat\beta_1|x) &amp; = \sum\limits_{i=1}^n w_i^2 \sigma_i^2 \\
+&amp; = \sum\limits_{i=1}^n \left(\frac{x_i - \bar x}{SST_x} \right)^2 \sigma^2_i \\
+&amp; = \frac{\sum_{i=1}^n (x_i - \bar x)^2 \sigma^2_i}{SST_x^2}
+\end{split}
+</span></p>
+<p>Of course, just like with homoscedasticity, we do not know <span class="math inline">\sigma_i^2</span>, and have to estimate it with <span class="math inline">\hat u</span>. We do not need a degrees of freedom adjustment in this case. Thus, our estimate of variance is:</p>
+<p><span class="math display">
+\widehat{Var}(\hat\beta_1|x) = \frac{\sum_{i=1}^n (x_i - \bar x)^2 \hat u^2_i}{SST_x^2}
+</span></p>
+<p>And thus, the standard error (square root of variance) of our estimate <span class="math inline">\hat\beta_1</span> under homoscedasticity is the square root of our estimate of variance.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Robust Standard Error for Bivariate Regression
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The heteroscedasticity-robust standard error for <span class="math inline">\hat\beta_1</span> in bivariate regression is:</p>
+<p><span class="math display">
+\widehat{se}(\hat\beta_1|x) = \sqrt{\frac{\sum_{i=1}^n (x_i - \bar x)^2 \hat u^2_i}{SST_x^2}}
+</span></p>
+<ul>
+<li>Where SST is the total sum of squares <span class="math inline">SST = \sum(y_i - \bar y)^2</span>.</li>
+</ul>
+</div>
+</div>
+<p>We can use these robust standard errors to conduct hypothesis testing and confidence intervals as normal.</p>
+<p>Nowadays, it is typical to use heteroscedasticity-robust standard errors as default, and only using normal standard errors if we can prove homoscedasticity is met.</p>
 <p><br></p>
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="robust-standard-errors-for-multiple-regression" class="level1">
+<h1>1.7.8: Robust Standard Errors for Multiple Regression</h1>
+<p>Let us do the same as the last section, but for multiple regression.</p>
+<p>Without MLR.5 Homoscedasticity, variance <span class="math inline">Var(u|x)</span> is no longer constant at <span class="math inline">\sigma^2</span>. Instead, <span class="math inline">Var(u|x)</span> varies depending on the value of <span class="math inline">x</span>. Let us define the variance as:</p>
+<p><span class="math display">
+Var(u_i|x_{1i}, \dots, x_{ki}) = \sigma_i^2
+</span></p>
+<p>Let us find the variance of OLS estimates (we will use <span class="math inline">\hat\beta_1</span> for simplicity, but this applies to any other coefficient <span class="math inline">\hat\beta_1 , \dots, \hat\beta_k</span>. In proving unbiasedness of OLS in <a href="https://statsnotes.github.io/theory/7.html#proof-of-unbiasedness-of-ols-under-gauss-markov">1.7.3</a>, we got to this stage:</p>
+<p><span class="math display">
+\hat\beta_1 = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+</span></p>
+<p>We know that <span class="math inline">\beta_1</span> is a constant (the true value in the population), so that never changes. Thus, it cannot be the variance in <span class="math inline">\hat\beta_1</span>. Thus, the second part is the variance in <span class="math inline">\hat\beta_1</span>.</p>
+<p>Let us define <span class="math inline">w_i</span> as following, as a function of <span class="math inline">x_1, \dots, x_k</span>:</p>
+<p><span class="math display">
+w_i = \frac{\widetilde{r_{1i}}}{\sum_{i=1}^n\widetilde{r_{1i}}^2}
+</span></p>
+<p>This allows us to write <span class="math inline">\hat\beta_1</span> as:</p>
+<p><span class="math display">
+\hat\beta_1 = \beta_1 + \sum\limits_{i=1}^nw_i u_i
+</span></p>
+<p><br></p>
+<p>Thus, we can proceed in the same way as the simple linear regression case in the last section.</p>
+<p><span class="math display">
+\begin{split}
+Var(\hat\beta_1|x_1, \dots, x_k) &amp; = Var\left( \sum\limits_{i=1}^nw_i u_i \biggr|x_1, \dots ,x_k \right) \\ &amp; = \sum\limits_{i=1}^n Var(w_i u_i | x_1, \dots, x_k) \\
+&amp; = \sum\limits_{i=1}^n w_i^2 \ Var(u_i | x_1, \dots, x_k) \\
+&amp; = \sum\limits_{i=1}^n w_i^2 \sigma^2_i
+\end{split}
+</span></p>
+<p>Now, plugging back in <span class="math inline">w_i</span>, we get:</p>
+<p><span class="math display">
+\begin{split}
+Var(\hat\beta_1|x) &amp; = \sum\limits_{i=1}^n w_i^2 \sigma_i^2 \\
+&amp; = \sum\limits_{i=1}^n \left(\frac{\widetilde{r_{1i}}}{\sum_{i=1}^n\widetilde{r_{1i}}^2} \right)^2 \sigma^2_i \\
+&amp; = \frac{\sum_{i=1}^n \widetilde{r_{1i}}^2 \sigma^2_i}{\sum_{i=1}^n\widetilde{r_{1i}}^2}
+\end{split}
+</span></p>
+<p>Of course, just like before, we do not know <span class="math inline">\sigma_i^2</span>, and have to estimate it with <span class="math inline">\hat u</span>. Thus, our estimate of variance is:</p>
+<p><span class="math display">
+\widehat{Var}(\hat\beta_1) = \frac{\sum_{i=1}^n \widetilde{r_{1i}}^2 \hat u_i^2}{\sum_{i=1}^n\widetilde{r_{1i}}^2}
+</span></p>
+<p>And thus, the standard error (square root of variance) of our estimate <span class="math inline">\hat\beta_1</span> under homoscedasticity is the square root of our estimate of variance.</p>
+<ul>
+<li>This can be generalised to any other coefficient <span class="math inline">\hat\beta_1, \dots, \hat\beta_k</span>.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Robust Standard Error for Multiple Regression
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The heteroscedasticity-robust standard error for <span class="math inline">\hat\beta_1</span> in multiple regression is:</p>
+<p><span class="math display">
+\widehat{se}(\hat\beta_j) = \sqrt{\frac{\sum_{i=1}^n \widetilde{r_{ji}}^2 \hat u^2_i}{\sum_{i=1}^n\widetilde{r_{ji}}^2}}
+</span></p>
+</div>
+</div>
+<p>We can use these robust standard errors to conduct hypothesis testing and confidence intervals as normal.</p>
+<p>Nowadays, it is typical to use heteroscedasticity-robust standard errors as default, and only using normal standard errors if we can prove homoscedasticity is met.</p>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="implementation-in-r" class="level1">
+<h1>Implementation in R</h1>
+<section id="hypothesis-testing-with-homoscedasticity" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesis-testing-with-homoscedasticity">Hypothesis Testing with Homoscedasticity</h2>
+<p>To conduct hypothesis testing in a regression, we can use the <em>feols()</em> function from the package <em>fixest</em>, or we can use the base-R function <em>lm()</em>.</p>
+<ul>
+<li>The syntax is the same for both (at least for now).</li>
+<li>The <em>feols()</em> function is often used because it can incorporate heteroscedasticity-robust standard errors (see the next section), as well as other techniques in econometrics.</li>
+</ul>
+<p>For the <em>feols()</em> function, we will need the <em>fixest</em> package. Make sure to install it if you have not previously (google how to install R-packages if needed).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fixest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p><strong>Syntax:</strong></p>
+<p>For the <em>feols()</em> function, the syntax is as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">feols</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3, <span class="at">data =</span> mydata)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Replace <em>model</em> with any name you want to store your regression model in.</li>
+<li>Replace <em>y</em> with your outcome variable name, and <em>x1, x2, x3</em> with your explanatory variable name.</li>
+<li>You can add more explanatory variables by adding + signs and <em>x4 + x5 …</em> and so on. You can also remove explanatory variables down to only 1.</li>
+<li>Replace <em>mydata</em> with the name of your dataframe.</li>
+</ul>
+<p>The <em>lm()</em> function has the exact same syntax for simple linear regression, except that we replace <em>feols()</em> with <em>lm()</em>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3, <span class="at">data =</span> mydata)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p><strong>Example:</strong></p>
+<p>Let us run a regression with outcome variable <em>immatt</em> (attitude towards immigrants), explanatory variables <em>age</em> and <em>educ</em> (years of education), from the dataframe called <em>dta</em>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_model <span class="ot">&lt;-</span> <span class="fu">feols</span>(immatt <span class="sc">~</span> age <span class="sc">+</span> educ, <span class="at">data =</span> dta)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>OLS estimation, Dep. Var.: immatt
+Observations: 33,706
+Standard-errors: IID 
+             Estimate Std. Error  t value  Pr(&gt;|t|)    
+(Intercept) -0.529355   0.026638 -19.8720 &lt; 2.2e-16 ***
+age         -0.005175   0.000291 -17.8117 &lt; 2.2e-16 ***
+educ         0.063833   0.001381  46.2108 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.932834   Adj. R2: 0.08225</code></pre>
+</div>
+</div>
+<p>We can see the following output:</p>
+<ul>
+<li>In the estimate column, we get our intercept estimate <span class="math inline">\hat\beta_0</span>, and our explanatory variables coefficient estimates <span class="math inline">\hat\beta_1</span> and <span class="math inline">\hat\beta_2</span>.</li>
+<li>In the standard error column, we get our standard error of our sample estimates.</li>
+<li>In the t-value column, we get our t-values for our sample estimates.</li>
+<li>In the p-value column, we get our p-values for our sample estimates. Any asterisks * indicate statistical significance.</li>
+</ul>
+<p>The result is similar with <em>lm()</em>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>my_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(immatt <span class="sc">~</span> age <span class="sc">+</span> educ, <span class="at">data =</span> dta)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = immatt ~ age + educ, data = dta)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.97099 -0.58912  0.06513  0.63948  2.77153 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -0.5293545  0.0266382  -19.87   &lt;2e-16 ***
+age         -0.0051753  0.0002906  -17.81   &lt;2e-16 ***
+educ         0.0638327  0.0013813   46.21   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.9329 on 33703 degrees of freedom
+Multiple R-squared:  0.0823,    Adjusted R-squared:  0.08225 
+F-statistic:  1511 on 2 and 33703 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="hypothesis-testing-with-heteroscedasticity" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesis-testing-with-heteroscedasticity">Hypothesis Testing with Heteroscedasticity</h2>
+<p>To conduct hypothesis testing with robust standard errors, we must use the <em>feols()</em> function from the package <em>fixest</em> (no <em>lm()</em> function).</p>
+<p>For the <em>feols()</em> function, we will need the <em>fixest</em> package. Make sure to install it if you have not previously (google how to install R-packages if needed).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fixest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p><strong>Syntax:</strong></p>
+<p>For the <em>feols()</em> function, the syntax is as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">feols</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3, <span class="at">data =</span> mydata, <span class="at">se =</span> <span class="st">"hetero"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Replace <em>model</em> with any name you want to store your regression model in.</li>
+<li>Replace <em>y</em> with your outcome variable name, and <em>x1, x2, x3</em> with your explanatory variable name.</li>
+<li>You can add more explanatory variables by adding + signs and <em>x4 + x5 …</em> and so on. You can also remove explanatory variables down to only 1.</li>
+<li>Replace <em>mydata</em> with the name of your dataframe.</li>
+</ul>
+<p>Note: the extra argument <em>se=“hetero”</em> tells R to use heteroscedasticity-robust standard errors.</p>
+<p><br></p>
+<p><strong>Example:</strong></p>
+<p>Let us run a regression with outcome variable <em>immatt</em> (attitude towards immigrants), explanatory variables <em>age</em> and <em>educ</em> (years of education), from the dataframe called <em>dta</em>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>my_model <span class="ot">&lt;-</span> <span class="fu">feols</span>(immatt <span class="sc">~</span> age <span class="sc">+</span> educ, <span class="at">data =</span> dta, <span class="at">se =</span> <span class="st">"hetero"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>OLS estimation, Dep. Var.: immatt
+Observations: 33,706
+Standard-errors: Heteroskedasticity-robust 
+             Estimate Std. Error  t value  Pr(&gt;|t|)    
+(Intercept) -0.529355   0.027382 -19.3321 &lt; 2.2e-16 ***
+age         -0.005175   0.000289 -17.8985 &lt; 2.2e-16 ***
+educ         0.063833   0.001404  45.4594 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.932834   Adj. R2: 0.08225</code></pre>
+</div>
+</div>
+<p>We can see the following output:</p>
+<ul>
+<li>In the estimate column, we get our intercept estimate <span class="math inline">\hat\beta_0</span>, and our explanatory variables coefficient estimates <span class="math inline">\hat\beta_1</span> and <span class="math inline">\hat\beta_2</span>.</li>
+<li>In the standard error column, we get our standard error of our sample estimates.</li>
+<li>In the t-value column, we get our t-values for our sample estimates.</li>
+<li>In the p-value column, we get our p-values for our sample estimates. Any asterisks * indicate statistical significance.</li>
+</ul>
+<p><br></p>
+</section>
+<section id="confidence-intervals-1" class="level2">
+<h2 class="anchored" data-anchor-id="confidence-intervals-1">Confidence Intervals</h2>
+<p><strong>Syntax:</strong></p>
+<p>To estimate confidence intervals for our estimates, we will first need to run a regression and hypothesis tests (like above).</p>
+<p>Then, we can either manually calculate our confidence intervals (as the standard errors are given in the regression output), or we can use the <em>confint</em> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(model_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Replace <em>model_name</em> with whatever variable name you stored your regression in.</li>
+</ul>
+<p><br></p>
+<p><strong>Example:</strong></p>
+<p>Let us find the confidence intervals for our estimates in the previous example regression above:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(my_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   2.5 %      97.5 %
+(Intercept) -0.583024426 -0.47568466
+age         -0.005742049 -0.00460857
+educ         0.061080444  0.06658488</code></pre>
+</div>
+</div>
+<p>We can see that R outputs the 95% confidence interval lower and upper bounds, for all our estimates <span class="math inline">\hat\beta_0</span> and <span class="math inline">\hat\beta_1</span> and <span class="math inline">\hat\beta_2</span></p>
+<p><br></p>
+</section>
+<section id="f-tests-of-nested-models" class="level2">
+<h2 class="anchored" data-anchor-id="f-tests-of-nested-models">F-Tests of Nested Models</h2>
+<p><strong>Syntax</strong></p>
+<p>For f-tests, we will need two models. Let us save those two regression models as <em>m0</em> (null) and <em>m1</em> (alternate). Then, we can use the <em>anova()</em> function.</p>
+<ul>
+<li>Note: our models must be created with the <em>lm()</em> function, not the <em>feols()</em> function, to perform an f-test. The reason for this will be explained in the next chapter.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m1, m2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p><strong>Example:</strong></p>
+<p>Let us create two different models:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>m0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(immatt <span class="sc">~</span> age, <span class="at">data =</span> dta)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(immatt <span class="sc">~</span> age <span class="sc">+</span> educ <span class="sc">+</span> female, <span class="at">data =</span> dta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>So essentially, this F-test will be testing the coefficients of <em>educ</em> and <em>female</em> together.</p>
+<p>Now, let us run the F-test:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m0, m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: immatt ~ age
+Model 2: immatt ~ age + educ + female
+  Res.Df   RSS Df Sum of Sq      F    Pr(&gt;F)    
+1  33704 31189                                  
+2  33702 29330  2    1858.4 1067.7 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>We can see model <em>m1</em> is statistically significant. Thus, the two coefficients of <em>educ</em> and <em>female</em> together are statistically significant.</p>
+<ul>
+<li>Once again, we will explore in lesson 1.9 why the F-test can be very useful.</li>
+</ul>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
 </section>
 
 </main>

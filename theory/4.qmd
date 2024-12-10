@@ -1,6 +1,6 @@
 ---
 title: "Statistics for Social Scientists"
-subtitle: "Lesson 1.4: Bivariate Regression - Estimation and Interpretation"
+subtitle: "Lesson 1.4: Simple Linear Regression"
 format:
     html:
         page-layout: article
@@ -15,7 +15,7 @@ format:
         toc-depth: 2
         toc-location: left
         toc-expand: true
-        toc-title: "Lesson 1.4: Simple Linear Regression - Estimation and Interpretation"
+        toc-title: "Lesson 1.4: Simple Linear Regression"
         mainfont: "Computer Modern"
         title-block-banner: true
         classoption: fleqn
