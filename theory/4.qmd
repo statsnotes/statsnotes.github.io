@@ -94,7 +94,7 @@ The error term, in social science terms, is the effect of anything else on $y$ e
 -   However, this is not a perfect linear relationship - not all points will be on the best fit line. This is because there are other factors that affect $y$ (income), including education, bargaining ability, location of work, and so on. It could also just be random variation - after all, some people's incomes $y$ are a result of just pure luck.
 -   Every other factor that affects $y$, but is not $x$, is encompassed in this error term $u_i$.
 
-For the simple linear regression model, the average error $u_i$ across all observations $i$, is 0. Mathematically, $E(u_i) = 0$. We will discuss this in the [next lesson](https://statsnotes.github.io/theory/5.html).
+For the simple linear regression model, the average error $u_i$ across all observations $i$, is 0. Mathematically, $E(u_i) = 0$. We will discuss this property (and others) in [lesson 1.6](https://statsnotes.github.io/theory/6.html).
 
 <br />
 
@@ -108,7 +108,7 @@ For the simple linear regression model, the average error $u_i$ across all obser
 
 We have discussed the form a simple linear regression takes: $y_i = \beta_0 + \beta_1 x_i + u_i$.
 
-However, that is not the best-fit line: we still need to estimate the coefficients $\beta_0$ (intercept) and $\beta_1$ (slope) in order to create a best-fit line.
+However, that is not the best-fit line: we still need to estimate the coefficients $\beta_0$ (intercept) and $\beta_1$ (slope) as numbers in order to create a best-fit line.
 
 -   The estimates of $\beta_0$ and $\beta_1$ that we obtain will be denoted with a hat \^: $\hat\beta_0$ and $\hat\beta_1$.
 -   The estimates of $\beta_0$ and $\beta_1$ will vary depending on the data we have.
@@ -141,8 +141,6 @@ The estimate $\hat\beta_1$ is the estimate of the slope of the linear equation.
 
 $\hat y$ is the predicted values of $y$, which means we can also use the fitted values to make predictions. Just plug in values of $x$, and the fitted values equation will output a prediction $\hat y$.
 
--   While this course does not focus on prediction, the subsequent course on Applied Machine Learning will dive much more into this topic.
-
 For example, let us say $x$ is age, and $y$ is income. Given any $x$ (age) value, we can predict the income value by plugging in $x$. If we are interested in the income of a 30 year old, we would plug in 30 for $x$:
 
 $$
@@ -171,7 +169,7 @@ To fit a best-fit line, we obviously want the line to fit the data well - i.e. h
 
 -   What is an error? Recall that our original values of $y$ from the data for any observation $i$ are $y_i$.
 -   We also have predictions for the value of any observation from our best-fit line, labelled $\hat y_i$
--   Thus naturally, the error is how far away our prediction $\hat y_i$ is from the true observed value $y_i$.
+-   Thus naturally, the error is how far away our prediction $\hat y_i$ is from the true observed value $y_i$. Thus, the error is $y_i - \hat y_i$.
 
 One way we can fit an accurate line is to find the best-fit line that minimises the sum of squared errors (SSE).
 
@@ -183,6 +181,7 @@ The sum of squared errors (SSE) is as follows:
 $$
 \begin{split}
 SSE & = \sum\limits_{i=1}^n (y_i - \hat y_i)^2 \\
+& = \sum\limits_{i=1}^n (y_i - (\hat \beta_0+ \hat\beta_1 x_i)) \\
 & = \sum\limits_{i=1}^n (y_i - \hat\beta_0 - \hat\beta_1 x_i)^2
 \end{split}
 $$
@@ -198,13 +197,13 @@ More inuitively, the errors of a best-fit line are highlighted in red. We will s
 Why do we want to square the errors?
 
 -   This is because we do not care about the direction of errors - only the size of the errors.
--   For example, the error in the above figure *d1* is positive, while *d2* is negative. If we sum them together, those almost cancel out, giving us an error of near zero. However, we do not want them to be cancelled out - we ace about the sizes of the errors.
+-   For example, in the figure above, the error *d1* is positive, while *d2* is negative. If we sum them together, those almost cancel out, giving us an error of near zero. However, we do not want them to be cancelled out - we ace about the sizes of the errors.
 -   Thus, by squaring the errors, we make all errors positive, thus only focusing on the size of the errors, not their positive/negative direction.
 
 A common question is why we square the errors, and don't use absolute values of the errors. There are a few reasons this is the case.
 
 1.  As we will see in the next section, minimising functions relies on finding the derivative of the function. An absolute value function is not differentiable at its vertex, making it difficult to minimise (as we are trying to minimise the errors).
-2.  The least-squares method has several desirable properties for inference that we will cover mostly in the next lesson.
+2.  The least-squares method has several desirable properties for inference that we will cover mostly in [lesson 1.6](https://statsnotes.github.io/theory/6.html).
 
 <br />
 
@@ -235,13 +234,9 @@ $$
 Where function $S$ is the sum of squared errors.
 :::
 
-<br />
+How do we minimise $S$ (the function of the sum of squared errors)? From calculus, we know that a minimum/maximum of a function is where the derivative of the function is equal to 0.
 
-How do we minimise $S$ (the function of the sum of squared errors)?
-
--   From calculus, we know that a minimum/maximum of a function is where the derivative of the function is equal to 0.
-
-Thus, let us find the partial derivative of the function $S$ in respect to both $\hat\beta_0$ and $\hat\beta_1$, and set them equal to 0. This is also called the **first-order conditions**.
+Thus, let us find the partial derivative of the function $S$ in respect to both $\hat\beta_0$ and $\hat\beta_1$, and set them equal to 0. These will be called the **first-order conditions**.
 
 <br />
 
@@ -259,7 +254,7 @@ $$
 \frac{\partial}{\partial \hat{\beta}_0} \left[ (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i)^2 \right] = -2(y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i)
 $$
 
-But how do we deal with the summation? We know that there is the sum rule of derivatives $[f(x) + g(x)]' = f'(x) + g'(x)$. Thus, we know we just sum up the derivatives to get the derivative:
+But how do we deal with the summation? We know that there is the sum rule of derivatives $[f(x) + g(x)]' = f'(x) + g'(x)$. Thus, we know we just sum up the individual derivatives to get the derivative of the sum:
 
 $$
 \begin{split}
@@ -291,8 +286,6 @@ $$
 \sum\limits_{i=1}^n x_i(y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0
 $$
 
-<br />
-
 ::: callout-tip
 ## Definition: First Order Conditions of OLS
 
@@ -310,7 +303,7 @@ $$
 
 ### Solving the System of Equations
 
-We now have our two first-order conditions. Now, we basically have a 2-equation system of equations, with 2 variables.
+We now have our two first-order conditions. Now, we have a 2-equation system of equations, with 2 variables.
 
 -   We can solve this through substitution - in the first equation, solve for $\hat\beta_0$ in terms of $\hat\beta_1$.
 -   Then, plug in $\hat\beta_0$ in terms of $\hat\beta_1$ into the second equation, thus making that a one-variable equation. We can solve that equation for $\hat\beta_1$, then find $\hat\beta_0$.
@@ -320,11 +313,13 @@ We now have our two first-order conditions. Now, we basically have a 2-equation 
 First, let us solve the first equation for $\hat\beta_0$ in terms of $\hat\beta_1$:
 
 $$
-\begin{split}\sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) & =  0 \\
+\begin{split}
+\sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) & =  0 \\
 \sum\limits_{i=1}^n y_i - n \hat{\beta}_0 - \hat{\beta}_1 \sum\limits_{i=1}^n x_i & = 0 \\
 -n\hat{\beta}_0 &= -\sum\limits_{i=1}^n y_i + \hat{\beta}_1\sum\limits_{i=1}^nx_i \\
+\hat\beta_0 & = \frac{1}{-n} \left( -\sum\limits_{i=1}^n y_i + \hat{\beta}_1\sum\limits_{i=1}^n x_i \right) \\
 \hat{\beta}_0 & = \frac{1}{n} \sum\limits_{i=1}^n y_i - \frac{1}{n}\hat{\beta}_1 \sum\limits_{i=1}^n x_i \\
-& = \bar{y} - \hat{\beta}_1 \bar{x}
+\hat\beta_0& = \bar{y} - \hat{\beta}_1 \bar{x}
 \end{split}
 $$
 
@@ -339,8 +334,6 @@ $$
 & = \sum\limits_{i=1}^n x_i (y_i - \bar{y}) - \hat{\beta}_1 \sum\limits_{i=1}^nx_i (x_i - \bar{x})
 \end{split}
 $$
-
-<br />
 
 ::: callout-note
 ## Useful Properties of Summation
@@ -377,8 +370,6 @@ $$
 -   By the first property, we know $\sum x_i - \bar x = 0$, so we are only left with $\sum x_i (x_i - \bar x)$
 :::
 
-<br />
-
 Knowing these properties of summation, we can transform what we had before:
 
 $$
@@ -412,7 +403,7 @@ Of course, we still need to find $\hat\beta_0$ (the slope). We found that $\hat\
 
 And now, we have our estimates $\hat\beta_0$ and $\hat\beta_1$, and thus we now have a best-fit line and an estimate of the relationship between $x$ and $y$.
 
-Note: in the [next lesson](https://statsnotes.github.io/theory/5.html), we will discuss if the OLS estimator is a good estimator or not. For now, we just care about the mechanics of the estimator.
+Note: in [lesson 1.6](https://statsnotes.github.io/theory/6.html), we will discuss if the OLS estimator is a good estimator or not. For now, we just care about the mechanics of the estimator.
 
 <br />
 
@@ -426,15 +417,13 @@ Note: in the [next lesson](https://statsnotes.github.io/theory/5.html), we will 
 
 We now have estimated $\hat\beta_0$ and $\hat\beta_1$. But what do these actually mean in the context of the relationship between $x$ and $y$?
 
--   Let us start with $\hat\beta_1$, which is the slope, the more important of the two coefficients.
-
 <br />
 
 ### Interpretation of $\hat\beta_1$
 
 We know that in a linear fitted-values model, $\hat y_i = \hat\beta_0 + \hat\beta_1 x_i$, the coefficient $\beta_1$ is the slope.
 
--   And the slope is the change in $y$ given a one unit increase in $x$.
+We know by the definition of slope, the slope is the change in $y$ given a one unit increase in $x$.
 
 Using this knowledge, we can interpret estimate $\hat\beta_1$.
 
@@ -452,15 +441,13 @@ Note how I have been using the word **relationship**, not causal effect.
 Causality is not established through estimators, it is established through a strong experimental design (which we will cover in part II of the course).
 :::
 
-Note that this interpretation of $\hat\beta_1$ only applies to continuous $x$ variables and continuous/ordinal $y$ variables. We will discuss interpretation with categorical/binary variables in lesson 1.9.
+Note that this interpretation of $\hat\beta_1$ only applies to continuous $x$ variables and continuous/ordinal $y$ variables. We will discuss interpretation with categorical/binary variables in [lesson 1.8](https://statsnotes.github.io/theory/8.html).
 
 <br />
 
 ### Interpretation of $\hat\beta_0$
 
-We know that in a linear fitted-values model, $\hat y_i = \hat\beta_0 + \hat\beta_1 x_i$, the coefficient $\beta_0$ is the y-intercept.
-
--   And the y-intercept is the change value of $y$ given $x=0$.
+We know that in a linear fitted-values model, $\hat y_i = \hat\beta_0 + \hat\beta_1 x_i$, the coefficient $\beta_0$ is the y-intercept. The y-intercept, by definition, is the value of $y$ given $x=0$.
 
 We can prove this mathematically:
 
@@ -556,7 +543,7 @@ SST & = \sum\limits_{i=1}^n (y_i - \bar y)^2 \\
 \end{split}
 $$
 
-And since we know $\sum \hat y_i \hat u_i = 0$, we can further simplify to:
+By a property of linear regression, $\sum \hat y_i \hat u_i = 0$. Knowing this, we can further simplify to:
 
 $$
 \begin{split}

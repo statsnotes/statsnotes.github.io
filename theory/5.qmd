@@ -25,11 +25,11 @@ format:
 ::: callout-note
 ## Lesson Overview
 
-In the last lessons, we focused on the simple linear regression model. Now, we will expand the number of explanatory variables to get the multiple linear regression model, and we will discuss how our OLS estimation process changes as a result.
+In the last lesson, we focused on the simple linear regression model. Now, we will expand the number of explanatory variables to get the multiple linear regression model, and we will discuss how our OLS estimation process changes as a result.
 
 This lesson covers the following topics:
 
--   The motivation/goal of Multiple Linear Regression, and the basic layout of Multiple Linear Regression.
+-   Omitted variable bias as a motivation for the need for multiple linear regression.
 -   The estimation process of the OLS estimator for Multiple Linear Regression.
 -   What it means to control for a variable (using the regression anatomy theory).
 -   How we can use the regression anatomy theory to create an analogous estimate for OLS.
@@ -43,9 +43,9 @@ This lesson covers the following topics:
 
 # 1.5.1: Motivation: Omitted Variable Bias
 
-In the last lesson, we covered the simple linear regression model. However, there is a major issue with the simple linear regression model: omitted variable bias.
+In the [last lesson](https://statsnotes.github.io/theory/4.html), we covered the simple linear regression model. However, there is a major issue with the simple linear regression model: omitted variable bias.
 
-Consider two regressions. The first regression, the "short" regression, is a simple linear regression. The second regression, the "long" regression, contains an extra variable $z$ that is omitted from the first regression:
+Consider two regressions. The first regression, the "short" regression, is a simple linear regression, like the one we covered in the [last lesson](https://statsnotes.github.io/theory/4.html). The second regression, the "long" regression, contains an extra variable $z$ that is omitted from the first regression:
 
 $$
 \begin{split}y_i & = \beta_0^S + \beta_1^Sx_i + u_i^S \quad \text{short} \\y_i & = \beta_0 + \beta_1x_i + \beta_2z_i + u_i \quad \text{long}\end{split}
@@ -78,22 +78,23 @@ y_i & = \beta_0 + \beta_2 \delta_0 + (\beta_1 + \beta_2 \delta_1)x_i + \beta_2v_
 \end{split}
 $$
 
--   The short regression $\beta_0^S$ is analogous to the $\beta_0 + \beta_2 \delta_0$ in the recreation (both are the intercepts)
--   The short regression $\beta_1^S x_i$ is analogous to the $(\beta_1 + \beta_2 \delta_1)x_i$ in the recreation (both are the slope and variable of interest)
+-   The short regression coefficient $\beta_0^S$ is analogous to the $\beta_0 + \beta_2 \delta_0$ in the recreation (both are the intercepts)
+-   The short regression coefficient $\beta_1^S x_i$ is analogous to the $(\beta_1 + \beta_2 \delta_1)x_i$ in the recreation (both are the slope and variable of interest)
 -   The short regression $u_i^S$ is analogous to the $\beta_2 v_i + u_i$ in the recreation (both are the error terms).
 
 Since the short regression $\beta_1^S x_i$ is analogous to the $(\beta_1 + \beta_2 \delta_1)x_i$ in the recreation, that means coefficient $\beta_1^S = \beta_1 + \beta_2 \delta_1$.
 
 <br />
 
-The difference between the short regression (simple linear regression) coefficient $\beta_1^S$, and the original long regression coefficient $\beta_1$, is $\beta_2 \delta_1$.
+Thus, the difference between the short regression (simple linear regression) coefficient $\beta_1^S$, and the original long regression coefficient $\beta_1$, is $\beta_2 \delta_1$.
 
--   If $\beta_2 = 0$ (meaning no relationship between omitted $x_i$ and $y$), or $\delta_1 = 0$ (meaning no relationship between omitted $x_i$ and $D_i$), then difference $\beta_2 \delta_1 = 0$, thus there is no issue.
+-   If $\beta_2 = 0$ (meaning no relationship between omitted $x$ and $y$), or $\delta_1 = 0$ (meaning no relationship between omitted $x$ and $x$), then difference $\beta_2 \delta_1 = 0$, thus there is no difference.
 -   But if either of those facts are not true, then $\beta_2 \delta_1 ≠ 0$, and omitted variable bias is non-zero.
 
-More intuitively, if the omitted variable $z$ is both correlated with $x$ and $y$, then omitted variable bias is non-zero.
+More intuitively, if the omitted variable $z$ is both correlated with $x$ and $y$, then the two coefficients are different by $\beta_2 \delta_1$.
 
 -   Any variable $z$ correlated both with $x$ and $y$ is called a **confounding variable**.
+-   This $\beta_2 \delta_1$ amount is called the **omitted variable bias**.
 
 <br />
 
@@ -161,11 +162,14 @@ $$
 
 Note how I have been saying best-fit **plane**, not best-fit line. This is because with multiple explanatory variables, we are now no longer in a 2-dimensional space, but a $k$-dimensional space (based on the number of variables).
 
--   Essentially, each variable has its own "axis"/"dimension".
+-   Essentially, each variable has its own axis/dimension.
+-   Mathematically, we are now in a $\mathbb{R}^k$ space.
 
 Thus, our best-fit line now is a best-fit plane. For example, take this model with 2 explanatory variables $x_1$ (years of education), $x_2$ (seniority), and $y$ (income):
 
 ![](images/clipboard-365376575.png){fig-align="center" width="80%"}
+
+Any point on this plane is a part of our best-fit plane.
 
 <br />
 
@@ -294,14 +298,14 @@ Similar to our simple linear regression (but with additional variables), our min
 
 $$
 \begin{split}
-(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2, ...) & = \arg \min\limits_{(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2, ...)} (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i} ...)^2 \\
-& = \arg \min\limits_{(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2, ...)} S(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2, ...)
+(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2, ...) & = \min\limits_{(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2, ...)} (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i} ...)^2 \\
+& = \min\limits_{(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2, ...)} S(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2, ...)
 \end{split}
 $$
 
 <br />
 
-Taking the partial derivatives of each parameter like in simple linear regression, we get first order conditions:
+Taking the partial derivatives of each parameter like in simple linear regression (see [1.4.4](https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator)), we get first order conditions:
 
 $$
 \begin{split}& \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\& \sum\limits_{i=1}^n x_{1i}(y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\
@@ -318,8 +322,10 @@ This system of equations includes $k+1$ variables and $k+1$ equations, which is 
 Instead, we can use linear algebra. Let us define our estimation vector $\hat{\beta}$ as the value of $\hat\beta$ that minimises the sum of squared errors:
 
 $$
-\hat{\beta} = \arg \min\limits_{b} (y - Xb)' (y - Xb) = \arg \min\limits_b S(b)
+\hat{\beta} = \min\limits_{b} (y - Xb)' (y - Xb) = \min\limits_b S(b)
 $$
+
+-   $(y - Xb)$ is our error, since $\hat y = Xb$,
 
 We can expand $S(b)$ as follows:
 
@@ -377,6 +383,8 @@ $$
 & = X(X'X)^{-1} X'y
 \end{split}
 $$
+
+Note: in [lesson 1.6](https://statsnotes.github.io/theory/6.html), we will discuss if the OLS estimator is a good estimator or not. For now, we just care about the mechanics of the estimator.
 
 <br />
 
@@ -510,21 +518,48 @@ We have already discussed the mathematical solution of OLS in relation to linear
 
 <br />
 
-Let us start off with the OLS estimator for simple linear regression, which calculates the $\hat\beta_1$, the relationship between $x$ and $y$ (which we derived in [1.4.4](https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator)):
-
-$$
-\hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n(x_i - \bar{x})^2}
-$$
-
 ::: callout-note
 ## Useful Properties of Summation
 
 Before we start, here are a few key properties of summation
 
+**Property 1:**
+
 $$
-\begin{split}& \sum\limits_{i=1}^n (x_i - \bar{x}) = 0 \\& \sum\limits_{i=1}^n x_i(y_i - \bar{y}) = \sum\limits_{i=1}^n(x_i - \bar{x}) (y_i - \bar{y}) \\& \sum\limits_{i=1}^n x_i(x_i - \bar{x}) = \sum\limits_{i=1}^n(x_i - \bar{x})^2\end{split}
+\sum\limits_{i=1}^n (x_i - \bar{x}) = 0
 $$
+
+-   This is because we can expand the left to $\sum x_i - \sum \bar x$.
+-   Then, we know $\sum x_i = \sum \bar x$ (by the formula for mean), so $\sum x_i - \sum \bar x = 0$.
+
+**Property 2:**
+
+$$
+\sum\limits_{i=1}^n x_i(y_i - \bar{y}) = \sum\limits_{i=1}^n(x_i - \bar{x}) (y_i - \bar{y}) 
+$$
+
+-   This is because on the right side can expand to $\sum [x_i(y_i - \bar y) - \bar x (y_i - \bar y)]$.
+-   Then, split into $\sum x_i (y_i - \bar y) - \bar x \sum (y_i - \bar y)$.
+-   We know that by property 1 (which applies to any variable), $\sum (y_i - \bar y) = 0$. Thus, the right side disappears, and we are left with $\sum x_i (y_i - \bar y)$.
+
+**Property 3:**
+
+$$
+\sum\limits_{i=1}^n x_i(x_i - \bar{x}) = \sum\limits_{i=1}^n(x_i - \bar{x})^2
+$$
+
+-   Start by expanding right side to $\sum [ x_i ( x_i - \bar x) - \bar x (x_i - \bar x)]$
+-   Which splits into $\sum x_i (x_i - \bar x) - \bar x \sum (x_i - \bar x)$
+-   By the first property, we know $\sum x_i - \bar x = 0$, so we are only left with $\sum x_i (x_i - \bar x)$
+
+Knowing these properties of summation, w
 :::
+
+Let us start off with the OLS estimator for simple linear regression, which calculates the $\hat\beta_1$, the relationship between $x$ and $y$ (which we derived in [1.4.4](https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator)):
+
+$$
+\hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n(x_i - \bar{x})^2}
+$$
 
 Let us look at the numerator. Let us expand the numerator:
 
@@ -537,7 +572,7 @@ $$
 \end{split}
 $$
 
-We know that $\sum (x_i - \bar x) = 0$. Thus, we can further simplify to:
+We know that $\sum (x_i - \bar x) = 0$ from the above properties. Thus, we can further simplify to:
 
 $$
 \begin{split}
@@ -577,7 +612,7 @@ $$
 \hat{\beta}_j = \frac{\sum_{i=1}^n (\widetilde{r_{ji}} - E(\widetilde{r_{ji}}))y_i}{\sum_{i=1}^n(\widetilde{r_{ji}} - E(\widetilde{r_{ji}}))^2}
 $$
 
-We can actually simplify this more with a property of simple linear regression - remember, that the error term of a regression $u$, should be such that $E(u)=0$.
+We can actually simplify this more with a property of regression - remember, that the error term of a regression $u$, should be such that $E(u)=0$.
 
 We know that $\widetilde{r_{ji}}$ is also the error term of a regression, so, $E(\widetilde{r_{ji}}) = 0$ as well. Plugging that into our equation, we can get the regression anatomy formula for OLS.
 
@@ -601,7 +636,7 @@ $$
 $$
 :::
 
-This formula will be very useful in analysing the properties of the OLS estimator (in lesson 7).
+Note: in [lesson 1.6](https://statsnotes.github.io/theory/6.html), we will discuss if the OLS estimator is a good estimator or not. For now, we just care about the mechanics of the estimator.
 
 <br />
 
@@ -651,7 +686,7 @@ This shows the downside of R-squared as a metric - if we just include random var
 
 -   Thus, focusing on R-squared can result in models with silly or nonsensical explanatory variables.
 
-We will discuss the importance of careful model selection in Part II of the course, where we discuss causal inference.
+We will discuss the importance of careful model selection in the later parts of the course, when we move to more applied statistics for social science purposes.
 
 <br />
 
