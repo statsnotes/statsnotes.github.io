@@ -70,11 +70,14 @@ Pre-requisites: Part I (specifically 1.1 through 1.12).
 -   2.2: Randomised Controlled Trials
 -   2.3: Selection on Observables - Regression
 -   2.4: Selection on Observables - Matching and Weighting
--   2.5: Differences-in-Differences Designs
--   2.6: Generalised Differences-in-Differences
--   2.7: Instrumental Variables - Non-Compliance Designs
--   2.8: Instrumental Variables - Further Designs
--   2.9: Regression Discontinuity Designs
+-   2.5: Selection on Observables - Extensions
+-   2.6: Differences-in-Differences Design
+-   2.7: Fixed Effects Estimator and Generalised DiD
+-   2.8: Modern Differences-in-Differences Estimators
+-   2.9: Instrumental Variables and 2-Stage Least Squares
+-   2.10: Instrumental Variables - Extensions
+-   2.11: Sharp Regression Discontinuity Designs
+-   2.12 Fuzzy Regression Discontinuity and Kink Designs
 
 <br />
 
@@ -87,9 +90,9 @@ Pre-requisites: Part I
 -   3.1: Principle Components Analysis
 -   3.2: Exploratory Factor Analysis
 -   3.3: Confirmatory Factor Analysis
--   3.4: Latent Trait Models
+-   3.4: Latent Traits and Item Response Theory
 -   3.5: Latent Class Models
--   3.6: Cluster Anlaysis
+-   3.6: Cluster Analysis
 -   3.7: Structural Equation Modelling
 -   3.8: Extensions to Structural Equation Modelling
 
@@ -110,7 +113,7 @@ Pre-requisites: Part I
 Pre-requisites: Part I
 
 -   5.1: Introduction to Spatial Data
--   5.2: Descriptive Statistics with Spatial Data
+-   5.2: Descriptive Indicators of Spatial Clusters
 -   5.3: Spatial Weights, Aggregation, and Smoothing
 -   5.4: Spatial Regression and Neighbourhood Effects
 -   5.5: Causal Inference with Spatial Econometrics
@@ -129,9 +132,13 @@ Pre-requisites: Part I (Part III and IV are helpful, but not necessary).
 -   6.2: Regression Trees, Bagging, and Random Forests
 -   6.3: Model Selection and Resampling Methods
 -   6.4: Classification with Naive Bayes and Random Forest
--   6.5: Basics of Text Analysis and Dictionary Methods
--   6.6: Similarity Metrics and Supervised Learning for Text
--   6.7: Structural Topic Models
+-   6.5: Descriptive Statistics for Text Analysis
+-   6.6: Automated Dictionary Methods
+-   6.7: Machine Learning for Texts
+-   6.8: Supervised Scaling Models for Texts
+-   6.9: Unsupervised Models for Scaling Texts
+-   6.10: Similarity and Clustering Methods
+-   6.11: Structural Topic Models
 
 <br />
 

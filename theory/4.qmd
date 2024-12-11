@@ -197,7 +197,7 @@ More inuitively, the errors of a best-fit line are highlighted in red. We will s
 Why do we want to square the errors?
 
 -   This is because we do not care about the direction of errors - only the size of the errors.
--   For example, in the figure above, the error *d1* is positive, while *d2* is negative. If we sum them together, those almost cancel out, giving us an error of near zero. However, we do not want them to be cancelled out - we ace about the sizes of the errors.
+-   For example, in the figure above, the error *d1* is positive, while *d2* is negative. If we sum them together, those almost cancel out, giving us an error of near zero. However, we do not want them to be cancelled out - we care about the sizes of the errors.
 -   Thus, by squaring the errors, we make all errors positive, thus only focusing on the size of the errors, not their positive/negative direction.
 
 A common question is why we square the errors, and don't use absolute values of the errors. There are a few reasons this is the case.
