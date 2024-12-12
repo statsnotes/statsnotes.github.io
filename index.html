@@ -64,10 +64,10 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#part-i-statistical-and-econometric-theory" id="toc-part-i-statistical-and-econometric-theory" class="nav-link" data-scroll-target="#part-i-statistical-and-econometric-theory">Part I: Statistical and Econometric Theory</a></li>
-  <li><a href="#part-ii-econometrics-for-causal-inference" id="toc-part-ii-econometrics-for-causal-inference" class="nav-link" data-scroll-target="#part-ii-econometrics-for-causal-inference">Part II: Econometrics for Causal Inference</a></li>
+  <li><a href="#part-ii-applied-econometric-methods" id="toc-part-ii-applied-econometric-methods" class="nav-link" data-scroll-target="#part-ii-applied-econometric-methods">Part II: Applied Econometric Methods</a></li>
   <li><a href="#part-iii-multivariate-statistical-methods" id="toc-part-iii-multivariate-statistical-methods" class="nav-link" data-scroll-target="#part-iii-multivariate-statistical-methods">Part III: Multivariate Statistical Methods</a></li>
-  <li><a href="#part-iv-time-series-and-forecasting" id="toc-part-iv-time-series-and-forecasting" class="nav-link" data-scroll-target="#part-iv-time-series-and-forecasting">Part IV: Time Series and Forecasting</a></li>
-  <li><a href="#part-v-spatial-econometrics-and-statistics" id="toc-part-v-spatial-econometrics-and-statistics" class="nav-link" data-scroll-target="#part-v-spatial-econometrics-and-statistics">Part V: Spatial Econometrics and Statistics</a></li>
+  <li><a href="#part-iv-time-series-methods" id="toc-part-iv-time-series-methods" class="nav-link" data-scroll-target="#part-iv-time-series-methods">Part IV: Time Series Methods</a></li>
+  <li><a href="#part-v-spatial-econometric-methods" id="toc-part-v-spatial-econometric-methods" class="nav-link" data-scroll-target="#part-v-spatial-econometric-methods">Part V: Spatial Econometric Methods</a></li>
   <li><a href="#part-vi-statistical-learning-and-text-analysis" id="toc-part-vi-statistical-learning-and-text-analysis" class="nav-link" data-scroll-target="#part-vi-statistical-learning-and-text-analysis">Part VI: Statistical Learning and Text Analysis</a></li>
   <li><a href="#appendix-a-mathematical-methods" id="toc-appendix-a-mathematical-methods" class="nav-link" data-scroll-target="#appendix-a-mathematical-methods">Appendix A: Mathematical Methods</a></li>
   <li><a href="#appendix-b-programming-in-r" id="toc-appendix-b-programming-in-r" class="nav-link" data-scroll-target="#appendix-b-programming-in-r">Appendix B: Programming in R</a></li>
@@ -97,7 +97,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="part-i-statistical-and-econometric-theory" class="level2">
 <h2 class="anchored" data-anchor-id="part-i-statistical-and-econometric-theory">Part I: Statistical and Econometric Theory</h2>
-<p><em>This part introduces the key topics, regression models, and estimators used in statistics and econometrics, that form the basics of applied statistical methods.</em></p>
+<p><em>This part introduces basic statistical theory, the generalised linear model (GLM), and the common estimators used in econometrics. This part serves as the basis of all following material.</em></p>
 <p>Pre-requisites: Single Variable Calculus (see Appendix A, lessons A.1 through A.6). Linear Algebra and Multivariate Calculus is helpful.</p>
 <ul>
 <li><a href="https://statsnotes.github.io/theory/1.html">1.1: Random Variables and Distributions</a></li>
@@ -107,33 +107,34 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="https://statsnotes.github.io/theory/5.html">1.5: Multiple Linear Regression</a></li>
 <li><a href="https://statsnotes.github.io/theory/6.html">1.6: Properties of the OLS Estimator</a></li>
 <li><a href="https://statsnotes.github.io/theory/7.html">1.7: Statistical Inference with OLS Estimator</a></li>
-<li><a href="https://statsnotes.github.io/theory/8.html">1.8: Categorical Variables in Regression</a></li>
+<li><a href="https://statsnotes.github.io/theory/8.html">1.8: Categorical Explanatory Variables</a></li>
 <li><a href="https://statsnotes.github.io/theory/9.html">1.9: Interactions and Functional Form</a></li>
 <li>1.10: Instrumental Variables Estimator</li>
 <li>1.11: Logistic Regression Model</li>
-<li>1.12: Maximum Likelihood Estimator</li>
-<li>1.13: Ordinal and Multinomial Logistic Regression</li>
-<li>1.14: Regression for Count and Rate Outcomes</li>
+<li>1.12: Ordinal and Multinomial Logistic Models</li>
+<li>1.13: Poisson and Negative Binomial Models</li>
+<li>1.14: Maximum Likelihood Estimator</li>
 </ul>
 <p><br></p>
 </section>
-<section id="part-ii-econometrics-for-causal-inference" class="level2">
-<h2 class="anchored" data-anchor-id="part-ii-econometrics-for-causal-inference">Part II: Econometrics for Causal Inference</h2>
-<p><em>This part introduces the most popular statistics and econometrics research designs for proving causal relationships in the social sciences.</em></p>
+<section id="part-ii-applied-econometric-methods" class="level2">
+<h2 class="anchored" data-anchor-id="part-ii-applied-econometric-methods">Part II: Applied Econometric Methods</h2>
+<p><em>This part takes the theory introduced in Part I, and applies it to research designs and methods to identify and estimate causal effects.</em></p>
 <p>Pre-requisites: Part I (specifically 1.1 through 1.12).</p>
 <ul>
 <li>2.1: Causal Inference and Causal Frameworks</li>
 <li>2.2: Randomised Controlled Trials</li>
-<li>2.3: Selection on Observables - Regression</li>
-<li>2.4: Selection on Observables - Matching and Weighting</li>
+<li>2.3: Regression and Selection on Observables</li>
+<li>2.4: Matching and Weighting Estimators</li>
 <li>2.5: Selection on Observables - Extensions</li>
-<li>2.6: Differences-in-Differences Design</li>
-<li>2.7: Fixed Effects Estimator and Generalised DiD</li>
+<li>2.6: Differences-in-Differences</li>
+<li>2.7: Fixed Effects Estimator</li>
 <li>2.8: Modern Differences-in-Differences Estimators</li>
-<li>2.9: Instrumental Variables and 2-Stage Least Squares</li>
-<li>2.10: Instrumental Variables - Extensions</li>
+<li>2.9: Instrumental Variable Designs</li>
+<li>2.10: Examiner, Shift-Share, and Recentered Instruments</li>
 <li>2.11: Sharp Regression Discontinuity Designs</li>
 <li>2.12 Fuzzy Regression Discontinuity and Kink Designs</li>
+<li>2.13: Survey Experimental Designs</li>
 </ul>
 <p><br></p>
 </section>
@@ -153,14 +154,14 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p><br></p>
 </section>
-<section id="part-iv-time-series-and-forecasting" class="level2">
-<h2 class="anchored" data-anchor-id="part-iv-time-series-and-forecasting">Part IV: Time Series and Forecasting</h2>
+<section id="part-iv-time-series-methods" class="level2">
+<h2 class="anchored" data-anchor-id="part-iv-time-series-methods">Part IV: Time Series Methods</h2>
 <p><em>This section introduces the statistical methods used for the analysis of time-series data, and how this can be used to make forecasts.</em></p>
 <p>Pre-requisites: Part I</p>
 <p><br></p>
 </section>
-<section id="part-v-spatial-econometrics-and-statistics" class="level2">
-<h2 class="anchored" data-anchor-id="part-v-spatial-econometrics-and-statistics">Part V: Spatial Econometrics and Statistics</h2>
+<section id="part-v-spatial-econometric-methods" class="level2">
+<h2 class="anchored" data-anchor-id="part-v-spatial-econometric-methods">Part V: Spatial Econometric Methods</h2>
 <p><em>This section introduces the concepts and methods behind spatial econometrics and the analysis of spatial data</em>.</p>
 <p>Pre-requisites: Part I</p>
 <ul>

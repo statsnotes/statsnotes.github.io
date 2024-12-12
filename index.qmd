@@ -39,7 +39,7 @@ Also, if you are interested in political science, I recommend checking out my [P
 
 ## Part I: Statistical and Econometric Theory
 
-*This part introduces the key topics, regression models, and estimators used in statistics and econometrics, that form the basics of applied statistical methods.*
+*This part introduces basic statistical theory, the generalised linear model (GLM), and the common estimators used in econometrics. This part serves as the basis of all following material.*
 
 Pre-requisites: Single Variable Calculus (see Appendix A, lessons A.1 through A.6). Linear Algebra and Multivariate Calculus is helpful.
 
@@ -50,34 +50,35 @@ Pre-requisites: Single Variable Calculus (see Appendix A, lessons A.1 through A.
 -   [1.5: Multiple Linear Regression](https://statsnotes.github.io/theory/5.html)
 -   [1.6: Properties of the OLS Estimator](https://statsnotes.github.io/theory/6.html)
 -   [1.7: Statistical Inference with OLS Estimator](https://statsnotes.github.io/theory/7.html)
--   [1.8: Categorical Variables in Regression](https://statsnotes.github.io/theory/8.html)
+-   [1.8: Categorical Explanatory Variables](https://statsnotes.github.io/theory/8.html)
 -   [1.9: Interactions and Functional Form](https://statsnotes.github.io/theory/9.html)
 -   1.10: Instrumental Variables Estimator
 -   1.11: Logistic Regression Model
--   1.12: Maximum Likelihood Estimator
--   1.13: Ordinal and Multinomial Logistic Regression
--   1.14: Regression for Count and Rate Outcomes
+-   1.12: Ordinal and Multinomial Logistic Models
+-   1.13: Poisson and Negative Binomial Models
+-   1.14: Maximum Likelihood Estimator
 
 <br />
 
-## Part II: Econometrics for Causal Inference
+## Part II: Applied Econometric Methods
 
-*This part introduces the most popular statistics and econometrics research designs for proving causal relationships in the social sciences.*
+*This part takes the theory introduced in Part I, and applies it to research designs and methods to identify and estimate causal effects.*
 
 Pre-requisites: Part I (specifically 1.1 through 1.12).
 
 -   2.1: Causal Inference and Causal Frameworks
 -   2.2: Randomised Controlled Trials
--   2.3: Selection on Observables - Regression
--   2.4: Selection on Observables - Matching and Weighting
+-   2.3: Regression and Selection on Observables
+-   2.4: Matching and Weighting Estimators
 -   2.5: Selection on Observables - Extensions
--   2.6: Differences-in-Differences Design
--   2.7: Fixed Effects Estimator and Generalised DiD
+-   2.6: Differences-in-Differences
+-   2.7: Fixed Effects Estimator
 -   2.8: Modern Differences-in-Differences Estimators
--   2.9: Instrumental Variables and 2-Stage Least Squares
--   2.10: Instrumental Variables - Extensions
+-   2.9: Instrumental Variable Designs
+-   2.10: Examiner, Shift-Share, and Recentered Instruments
 -   2.11: Sharp Regression Discontinuity Designs
 -   2.12 Fuzzy Regression Discontinuity and Kink Designs
+-   2.13: Survey Experimental Designs
 
 <br />
 
@@ -98,7 +99,7 @@ Pre-requisites: Part I
 
 <br />
 
-## Part IV: Time Series and Forecasting
+## Part IV: Time Series Methods
 
 *This section introduces the statistical methods used for the analysis of time-series data, and how this can be used to make forecasts.*
 
@@ -106,7 +107,7 @@ Pre-requisites: Part I
 
 <br />
 
-## Part V: Spatial Econometrics and Statistics
+## Part V: Spatial Econometric Methods
 
 *This section introduces the concepts and methods behind spatial econometrics and the analysis of spatial data*.
 

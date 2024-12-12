@@ -1,6 +1,6 @@
 ---
 title: "Statistics for Social Scientists"
-subtitle: "Lesson 1.8: Categorical Variables in Regression"
+subtitle: "Lesson 1.8: Categorical Explanatory Variables"
 format:
     html:
         page-layout: article
@@ -25,13 +25,13 @@ format:
 ::: callout-note
 ## Lesson Overview
 
-In the last few lessons, we have discussed the linear regression model, focusing on continuous $x$ and $y$ variables. In this lesson, we explore how binary and categorical variables, which are very frequent in the social sciences, can be used in regression with OLS.
+In the last few lessons, we have discussed the linear regression model, focusing on continuous $x$ variables. In this lesson, we explore how binary and categorical variables, which are very frequent in the social sciences, can be used in regression with OLS.
 
 This lesson covers the following topics:
 
 -   What categorical variables are (including binary and ordinal variables).
 -   How binary and categorical explanatory variables work in regression.
--   How binary outcome variables work in linear regression, and the limitations of linear regression for binary and categorical outcome variables.
+-   Extensions of categorical variables used in regression.
 :::
 
 <br />
@@ -339,7 +339,7 @@ $$
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.9.6: Binary Outcome Variables and the Linear Probability Model
+# 1.9.6: Introduction to Fixed Effects
 
 <br />
 
@@ -347,4 +347,4 @@ $$
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.9.7: Limitations on Categorical Outcome Variables in Linear Regression
+# 1.9.7: Clustered Standard Errors
