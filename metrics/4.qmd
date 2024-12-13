@@ -1,6 +1,6 @@
 ---
 title: "Statistics for Social Scientists"
-subtitle: "Lesson 1.7: Statistical Inference with the OLS Estimator"
+subtitle: "Lesson 2.4: Variance of the OLS Estimator"
 format:
     html:
         page-layout: article
@@ -15,7 +15,7 @@ format:
         toc-depth: 2
         toc-location: left
         toc-expand: true
-        toc-title: "Lesson 1.7: Statistical Inference with the OLS Estimator"
+        toc-title: "Lesson 2.4: Variance of the OLS Estimator"
         mainfont: "Computer Modern"
         title-block-banner: true
         classoption: fleqn
@@ -25,12 +25,11 @@ format:
 ::: callout-note
 ## Lesson Overview
 
-In the last lesson, we discussed the properties of the OLS estimator. In this lesson, we use these OLS estimates to conduct statistical inference tests, and discuss some other properties of OLS from an inference perspective.
+In the last lesson, we discussed the properties of the OLS estimator. In this lesson, we discuss the variance and standard error of the OLS estimator in order to conduct hypothesis testing.
 
 This lesson covers the following topics:
 
 -   How standard errors are calculated under the assumption of homoscedasticity.
--   How hypothesis tests (including multiple coefficients at once) and confidence intervals are conducted.
 -   How the presence of heteroscedasticity affects our standard errors, and how we can adjust for this with robust standard errors.
 :::
 
@@ -40,22 +39,18 @@ This lesson covers the following topics:
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.7.1: Gauss-Markov Conditions and Homoscedasticity
+# 2.4.1: Gauss-Markov and Homoscedasticity
 
-We have proved that OLS is unbiased under 4 conditions in the last lesson.
+We have proved that OLS is unbiased under 4 conditions in the last lesson, and asymptotically consistent under one weakened condition.
 
-However, if we recall from [1.2.8](https://statsnotes.github.io/theory/2.html#properties-of-estimators), unbiasedness is not the only thing we care about in an estimator. We also care about the estimator's variance.
+However, if we recall from [2.1.3](https://statsnotes.github.io/metrics/1.html#variance-and-efficiency-of-estimators), unbiasedness is not the only thing we care about in an estimator. We also care about the estimator's variance.
 
-For example, in the figure below, we have two unbiased estimators centred on the same real parameter value. However, the second estimator $w_2$ is far more varied than the first estimator $w_1$. That means while both are unbiased, the estimator $w_2$ often produces specific sample estimates that are farther from the true parameter value.
-
-![](images/clipboard-4236264762.png){fig-align="center" width="80%"}
-
-Luckily, the Gauss-Markov Theorem does not stop at unbiasedness. With an additional condition (homoscedasticity), we can determine that OLS is not only unbiased, but the linear estimator with the least variance:
+Luckily, the Gauss-Markov Theorem does not stop at unbiasedness. With an additional condition (homoscedasticity), we can determine that OLS is not only unbiased, but the linear estimator with the least variance (and thus, the most efficient linear unbiased estimator).
 
 ::: callout-tip
 ## Definition: Gauss-Markov Theorem
 
-The Gauss-Markov Theorem states that under 5 conditions, the OLS estimator is the Best Linear Unbiased Estimator (BLUE) for $\beta_1$, being the unbiased linear estimator with the least variance.
+The Gauss-Markov Theorem states that under 5 conditions, the OLS estimator is the Best Linear Unbiased Estimator (BLUE) for $\beta_1$, being the unbiased linear estimator with the best efficiency.
 
 -   **SLR.1/MLR.1 (Linearity in Parameters)**: The parameters of the model are linear.
 -   **SLR.2/MLR.2 (Random Sampling)**: All observations in our sample are randomly sampled from the population.
@@ -100,7 +95,7 @@ In the figure above, we can see on the left chart, the variance of the residuals
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.7.2: Variance of OLS Estimates in Simple Linear Regression
+# 2.4.2: Variance of OLS Estimates in Simple Linear Regression
 
 Assuming Homoscedasticity is met, we know $Var(u|x) = \sigma^2$.
 
@@ -202,7 +197,7 @@ There is one issue: we know that $\sigma^2 = E(u^2)$ (see earlier in the section
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.7.3: Standard Errors in Simple Linear Regression
+# 2.4.3: Standard Errors in Simple Linear Regression
 
 We know, as shown in the last section, that the variance of the sampling distribution is:
 
@@ -293,7 +288,7 @@ When homoscedasticity is not met, this standard error is invalid. See [1.7.7](ht
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.7.4: Standard Errors in Multiple Linear Regression
+# 2.4.4: Variance in Multiple Linear Regression
 
 Now, we will do the same exercise, but for multiple linear regression.
 
@@ -355,6 +350,14 @@ $$
 
 <br />
 
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 2.4.5: Standard Errors and Multicollinearity in Multiple Regression
+
 However, just like we mentioned in [1.7.3](https://statsnotes.github.io/theory/7.html#standard-errors-in-simple-linear-regression), the real value of $\sigma^2$ of a regression not calculable. This is an issue because our variance formula has $\sigma^2$ in the numerator.
 
 Just like in simple linear regression (see [1.7.3](https://statsnotes.github.io/theory/7.html#standard-errors-in-simple-linear-regression)), we can estimate $\sigma^2$ by using the residual term $\hat u_i$ with a degrees of freedom adjustment.
@@ -390,6 +393,8 @@ When homoscedasticity is not met, this is not valid. See [1.7.8](https://statsno
 
 <br />
 
+### Multicollinearity
+
 Notice how the denominator contains $\sum\widetilde{r_{1i}}^2$. That means, the smaller $\sum\widetilde{r_{1i}}^2$ is, the larger the variance is.
 
 -   $\sum\widetilde{r_{1i}}^2$ is smaller when our explanatory variable of interest $x_1$ is highly correlated with another explanatory variable, since $\widetilde{r_{1i}}^2$ represents the part of $x_1$ that is uncorrelated with other explanatory variables.
@@ -397,7 +402,7 @@ Notice how the denominator contains $\sum\widetilde{r_{1i}}^2$. That means, the 
 
 This is something important to think about when choosing explanatory variables. We want to include all confounding variables, but highly correlated confounders will make our variance very high for our estimates.
 
--   One way of dealing with this is dimensional reduction techniques, which we will discuss in Part III of the guide dealing with multivariate analysis.
+-   One way of dealing with this is dimensional reduction techniques, which we will discuss in Part IV of the guide dealing with multivariate analysis.
 
 <br />
 
@@ -407,108 +412,9 @@ This is something important to think about when choosing explanatory variables. 
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.7.5: Statistical Inference in Simple Linear Regression
+# 2.4.6: Robust Standard Errors for Bivariate Regression
 
-In the last few sections, we calculated the standard error of OLS estimates of $\hat\beta_j$.
-
-If we remember from [Lesson 1.2](https://statsnotes.github.io/theory/2.html), the standard error is a measurement of uncertainty, and allows us to conduct statistical inference tests, such as hypothesis testing and confidence intervals.
-
--   Note: the statistical tests are only really useful if we are comfortable with the assertion that OLS is unbiased - or in other words, they are only really useful if the first 4 Gauss-Markov conditions are met.
-
-<br />
-
-### Hypothesis Testing
-
-Hypothesis testing follows the same procedure as outlined in [1.2.5](https://statsnotes.github.io/theory/2.html#intuition-of-hypothesis-testing) and [1.2.6](https://statsnotes.github.io/theory/2.html#implementing-a-hypothesis-test). Reread these sections to understand the intuition.
-
-In regression, our typical null hypotheses is that there is no relationship between $x_j$ and $y$, and our alternate hypothesis is that there is a relationship between $x_j$ and $y$. Thus, our hypotheses are:
-
-$$
-\begin{split}
-& H_0 : \beta_j = 0 \\
-& H_1: \beta_j ≠ 0
-\end{split}
-$$
-
-Now, we calculate a t-test statistic:
-
-$$
-t = \frac{\hat\beta_j - 0}{\widehat{se}(\hat\beta_j)}
-$$
-
--   Where the 0 represents the null hypothesis value. If you have any other null hypothesis value, change the 0 to your hypothesis value.
-
-Now, we will consult a t-distribution (not a normal distribution) to calculate the p-values.
-
--   We use a t-distribution, not a normal distribution, even if we have met the central limit theorem (see [1.2.4](https://statsnotes.github.io/theory/2.html#central-limit-theorem) if you do not know what the central limit theorem is).
-
--   The reason we do this is because our estimate of variance $\hat\sigma^2$ is not exactly the same as the true variance $\sigma^2$, and the t-distribution better accounts for this issue.
-
-Once we have obtained our p-values from the t-distribution, we can interpret the p-values as follows:
-
-::: callout-tip
-## Interpretation of p-Values for Regression
-
-The p-value is the probability of getting a test statistic equally or more extreme than the one we got with our sample estimate $\hat\beta_j$, given the null hypothesis is true.
-
--   If $p<0.05$, we believe the probability of the null hypothesis is low enough, such that we reject the null hypothesis (that there is no relationship between $x_j$ and $y$), and conclude our alternate hypothesis (that there is a relationship between $x_j$ and $y$).
-
--   If $p>0.05$, we cannot reject the null hypothesis, and cannot reject that there is no relationship between $x_j$ and $y$.
-:::
-
-::: callout-warning
-## Warning!
-
-Note how I have been using the word **relationship**, not causal effect.
-
-Causality is not established through estimators, it is established through a strong experimental design (which we will cover in part II of the course).
-:::
-
-<br />
-
-### Confidence Intervals
-
-We can also create confidence intervals of plausible true $\beta_j$ values from the population, given our estimate $\hat\beta_1$. The intuition is the same as discussed in [1.2.7](https://statsnotes.github.io/theory/2.html#confidence-intervals).
-
-Just like previously discussed in [1.2.7](https://statsnotes.github.io/theory/2.html#confidence-intervals), the 95% confidence interval has the bounds:
-
-$$
-\hat\beta_j - 1.96 \widehat{se}(\hat\beta_1), \ \hat\beta_j + 1.96 \widehat{se}(\hat\beta_1)
-$$
-
-::: callout-tip
-## Interpretation of Confidence Intervals
-
-The confidence interval means that under repeated sampling and estimating $\hat\beta_j$, 95% of the confidence intervals we construct will include the true $\beta_j$ value in the population.
-:::
-
-::: callout-warning
-## Interpretation Warning!
-
-It is very important to note that confidence intervals do not mean a 95% probability that the true $\beta_j$ is within any specific confidence interval we calculated.
-
-We cannot know based on one confidence interval, whether it covers or does not cover the true $\beta_j$.
-
-The correct interpretation is that over many samples from the same population, we would expect 95% of our confidence intervals to contain the true $\beta_j$ value.
-:::
-
-<br />
-
-<br />
-
-------------------------------------------------------------------------
-
-[Homepage](https://statsnotes.github.io)
-
-# 1.7.7: Robust Standard Errors for Bivariate Regression
-
-MLR.5 Homoscedasticity states that $Var(u|x_1, \dots x_k) = \sigma^2$.
-
--   Or in other words, no matter the value of $x_1, \dots, x_k$, the variance of the error term is constant at $\sigma^2$.
-
-When this is violated (so when the values of the explanatory variables effect the variance of the error term), we have **heteroscedasticity**.
-
--   We provided graphical examples of homoscedasticity in [1.7.1](https://statsnotes.github.io/theory/7.html#gauss-markov-conditions-and-homoscedasticity). This is useful to know how to identify heteroscedasticity.
+MLR.5 Homoscedasticity states that $Var(u|x_1, \dots x_k) = \sigma^2$. Or in other words, no matter the value of $x_1, \dots, x_k$, the variance of the error term is constant at $\sigma^2$.
 
 When MLR.5 Homoscedasticity is violated, the OLS estimator is still unbiased, however, it is no longer the unbiased linear estimator with the least variance.
 
@@ -593,7 +499,7 @@ Nowadays, it is typical to use heteroscedasticity-robust standard errors as defa
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.7.8: Robust Standard Errors for Multiple Regression
+# 2.4.7: Robust Standard Errors for Multiple Regression
 
 Let us do the same as the last section, but for multiple regression.
 
@@ -668,194 +574,6 @@ $$
 We can use these robust standard errors to conduct hypothesis testing and confidence intervals as normal.
 
 Nowadays, it is typical to use heteroscedasticity-robust standard errors as default, and only using normal standard errors if we can prove homoscedasticity is met.
-
-<br />
-
-<br />
-
-------------------------------------------------------------------------
-
-[Homepage](https://statsnotes.github.io)
-
-# Implementation in R
-
-```{r, message = FALSE, echo = FALSE}
-dta <- readRDS('data/data1.rds')
-```
-
-## Hypothesis Testing with Homoscedasticity
-
-To conduct hypothesis testing in a regression, we can use the *feols()* function from the package *fixest*, or we can use the base-R function *lm()*.
-
--   The syntax is the same for both (at least for now).
--   The *feols()* function is often used because it can incorporate heteroscedasticity-robust standard errors (see the next section), as well as other techniques in econometrics.
-
-For the *feols()* function, we will need the *fixest* package. Make sure to install it if you have not previously (google how to install R-packages if needed).
-
-```{r, message = FALSE}
-library(fixest)
-```
-
-<br />
-
-**Syntax:**
-
-For the *feols()* function, the syntax is as follows:
-
-```{r, eval = FALSE}
-model <- feols(y ~ x1 + x2 + x3, data = mydata)
-summary(model)
-```
-
--   Replace *model* with any name you want to store your regression model in.
--   Replace *y* with your outcome variable name, and *x1, x2, x3* with your explanatory variable name.
--   You can add more explanatory variables by adding + signs and *x4 + x5 ...* and so on. You can also remove explanatory variables down to only 1.
--   Replace *mydata* with the name of your dataframe.
-
-The *lm()* function has the exact same syntax for simple linear regression, except that we replace *feols()* with *lm()*:
-
-```{r, eval = FALSE}
-model <- lm(y ~ x1 + x2 + x3, data = mydata)
-summary(model)
-```
-
-<br />
-
-**Example:**
-
-Let us run a regression with outcome variable *immatt* (attitude towards immigrants), explanatory variables *age* and *educ* (years of education), from the dataframe called *dta*:
-
-```{r, message = FALSE}
-my_model <- feols(immatt ~ age + educ, data = dta)
-summary(my_model)
-```
-
-We can see the following output:
-
--   In the estimate column, we get our intercept estimate $\hat\beta_0$, and our explanatory variables coefficient estimates $\hat\beta_1$ and $\hat\beta_2$.
--   In the standard error column, we get our standard error of our sample estimates.
--   In the t-value column, we get our t-values for our sample estimates.
--   In the p-value column, we get our p-values for our sample estimates. Any asterisks \* indicate statistical significance.
-
-The result is similar with *lm()*:
-
-```{r, message = FALSE}
-my_model <- lm(immatt ~ age + educ, data = dta)
-summary(my_model)
-```
-
-<br />
-
-## Hypothesis Testing with Heteroscedasticity
-
-To conduct hypothesis testing with robust standard errors, we must use the *feols()* function from the package *fixest* (no *lm()* function).
-
-For the *feols()* function, we will need the *fixest* package. Make sure to install it if you have not previously (google how to install R-packages if needed).
-
-```{r, message = FALSE}
-library(fixest)
-```
-
-<br />
-
-**Syntax:**
-
-For the *feols()* function, the syntax is as follows:
-
-```{r, eval = FALSE}
-model <- feols(y ~ x1 + x2 + x3, data = mydata, se = "hetero")
-summary(model)
-```
-
--   Replace *model* with any name you want to store your regression model in.
--   Replace *y* with your outcome variable name, and *x1, x2, x3* with your explanatory variable name.
--   You can add more explanatory variables by adding + signs and *x4 + x5 ...* and so on. You can also remove explanatory variables down to only 1.
--   Replace *mydata* with the name of your dataframe.
-
-Note: the extra argument *se="hetero"* tells R to use heteroscedasticity-robust standard errors.
-
-<br />
-
-**Example:**
-
-Let us run a regression with outcome variable *immatt* (attitude towards immigrants), explanatory variables *age* and *educ* (years of education), from the dataframe called *dta*:
-
-```{r, message = FALSE}
-my_model <- feols(immatt ~ age + educ, data = dta, se = "hetero")
-summary(my_model)
-```
-
-We can see the following output:
-
--   In the estimate column, we get our intercept estimate $\hat\beta_0$, and our explanatory variables coefficient estimates $\hat\beta_1$ and $\hat\beta_2$.
--   In the standard error column, we get our standard error of our sample estimates.
--   In the t-value column, we get our t-values for our sample estimates.
--   In the p-value column, we get our p-values for our sample estimates. Any asterisks \* indicate statistical significance.
-
-<br />
-
-## Confidence Intervals
-
-**Syntax:**
-
-To estimate confidence intervals for our estimates, we will first need to run a regression and hypothesis tests (like above).
-
-Then, we can either manually calculate our confidence intervals (as the standard errors are given in the regression output), or we can use the *confint* function:
-
-```{r, eval = FALSE}
-confint(model_name)
-```
-
--   Replace *model_name* with whatever variable name you stored your regression in.
-
-<br />
-
-**Example:**
-
-Let us find the confidence intervals for our estimates in the previous example regression above:
-
-```{r}
-confint(my_model)
-```
-
-We can see that R outputs the 95% confidence interval lower and upper bounds, for all our estimates $\hat\beta_0$ and $\hat\beta_1$ and $\hat\beta_2$
-
-<br />
-
-## F-Tests of Nested Models
-
-**Syntax**
-
-For f-tests, we will need two models. Let us save those two regression models as *m0* (null) and *m1* (alternate). Then, we can use the *anova()* function.
-
--   Note: our models must be created with the *lm()* function, not the *feols()* function, to perform an f-test. The reason for this will be explained in the next chapter.
-
-```{r, eval = FALSE}
-anova(m1, m2)
-```
-
-<br />
-
-**Example:**
-
-Let us create two different models:
-
-```{r}
-m0 <- lm(immatt ~ age, data = dta)
-m1 <- lm(immatt ~ age + educ + female, data = dta)
-```
-
-So essentially, this F-test will be testing the coefficients of *educ* and *female* together.
-
-Now, let us run the F-test:
-
-```{r}
-anova(m0, m1)
-```
-
-We can see model *m1* is statistically significant. Thus, the two coefficients of *educ* and *female* together are statistically significant.
-
--   Once again, we will explore in lesson 1.9 why the F-test can be very useful.
 
 <br />
 
