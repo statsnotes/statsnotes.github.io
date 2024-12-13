@@ -174,14 +174,14 @@ Lesson Overview
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In this lesson, we introduce the dominant way of measuring relationships between variables in statistics and the social sciences: the regression model. We discuss the simple linear regression model, and how we estimate relationships between variables with the Ordinary Least Squares estimator.</p>
+<p>In this lesson, we introduce the dominant way of measuring relationships between variables in statistics and the social sciences: the regression model. We discuss how the model works, and how we can interpret and use the model for statistical inference.</p>
 <p>This lesson covers the following topics:</p>
 <ul>
 <li>The basic form of the simple linear regression model (bivariate regression).</li>
-<li>What fitted values are, and what they can help us learn.</li>
 <li>How we can interpret the fitted value coefficients as the relationships between two variables.</li>
-<li>How we can use simple linear regression to make predictions.</li>
+<li>How to conduct statistical inference with simple linear regression.</li>
 <li>How we can describe the <em>goodness of fit</em> with the R-squared metric.</li>
+<li>How we can use simple linear regression to make predictions.</li>
 </ul>
 </div>
 </div>
@@ -559,13 +559,13 @@ Interpretation Warning!
 <p>In regression, our typical null hypotheses is that there is no relationship between <span class="math inline">x</span> and <span class="math inline">y</span>, and our alternate hypothesis is that there is a relationship between <span class="math inline">x</span> and <span class="math inline">y</span>. Thus, our hypotheses are:</p>
 <p><span class="math display">
 \begin{split}
-&amp; H_0 : \beta_j = 0 \\
-&amp; H_1: \beta_j ≠ 0
+&amp; H_0 : \beta_1 = 0 \\
+&amp; H_1: \beta_1 ≠ 0
 \end{split}
 </span></p>
 <p>Now, we calculate a t-test statistic:</p>
 <p><span class="math display">
-t = \frac{\hat\beta_j - 0}{\widehat{se}(\hat\beta_j)}
+t = \frac{\hat\beta_1 - 0}{\widehat{se}(\hat\beta_1)}
 </span></p>
 <ul>
 <li>Where the 0 represents the null hypothesis value. If you have any other null hypothesis value, change the 0 to your hypothesis value.</li>
@@ -592,10 +592,10 @@ Interpretation of p-Values for Regression
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The p-value is the probability of getting a test statistic equally or more extreme than the one we got with our sample estimate <span class="math inline">\hat\beta_j</span>, given the null hypothesis is true.</p>
+<p>The p-value is the probability of getting a test statistic equally or more extreme than the one we got with our sample estimate <span class="math inline">\hat\beta_1</span>, given the null hypothesis is true.</p>
 <ul>
-<li><p>If <span class="math inline">p&lt;0.05</span>, we believe the probability of the null hypothesis is low enough, such that we reject the null hypothesis (that there is no relationship between <span class="math inline">x_j</span> and <span class="math inline">y</span>), and conclude our alternate hypothesis (that there is a relationship between <span class="math inline">x_j</span> and <span class="math inline">y</span>).</p></li>
-<li><p>If <span class="math inline">p&gt;0.05</span>, we cannot reject the null hypothesis, and cannot reject that there is no relationship between <span class="math inline">x_j</span> and <span class="math inline">y</span>.</p></li>
+<li><p>If <span class="math inline">p&lt;0.05</span>, we believe the probability of the null hypothesis is low enough, such that we reject the null hypothesis (that there is no relationship between <span class="math inline">x</span> and <span class="math inline">y</span>), and conclude our alternate hypothesis (that there is a relationship between <span class="math inline">x</span> and <span class="math inline">y</span>).</p></li>
+<li><p>If <span class="math inline">p&gt;0.05</span>, we cannot reject the null hypothesis, and cannot reject that there is no relationship between <span class="math inline">x</span> and <span class="math inline">y</span>.</p></li>
 </ul>
 </div>
 </div>

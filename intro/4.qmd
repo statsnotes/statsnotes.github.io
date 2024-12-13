@@ -25,15 +25,15 @@ format:
 ::: callout-note
 ## Lesson Overview
 
-In this lesson, we introduce the dominant way of measuring relationships between variables in statistics and the social sciences: the regression model. We discuss the simple linear regression model, and how we estimate relationships between variables with the Ordinary Least Squares estimator.
+In this lesson, we introduce the dominant way of measuring relationships between variables in statistics and the social sciences: the regression model. We discuss how the model works, and how we can interpret and use the model for statistical inference.
 
 This lesson covers the following topics:
 
 -   The basic form of the simple linear regression model (bivariate regression).
--   What fitted values are, and what they can help us learn.
 -   How we can interpret the fitted value coefficients as the relationships between two variables.
--   How we can use simple linear regression to make predictions.
+-   How to conduct statistical inference with simple linear regression.
 -   How we can describe the *goodness of fit* with the R-squared metric.
+-   How we can use simple linear regression to make predictions.
 :::
 
 <br />
@@ -100,9 +100,8 @@ However, this is not a perfect linear relationship - not all points will be on t
 
 -   This is because there are other factors that affect $y$ (income), including education, bargaining ability, location of work, and so on. It could also just be random variation - after all, some people's incomes $y$ are a result of just pure luck.
 
-```{=html}
 <!-- -->
-```
+
 -   Every other factor that affects $y$, but is not $x$, is encompassed in this error term $u_i$.
 
 For the simple linear regression model, the average error $u_i$ across all observations $i$, is 0. Mathematically, $E(u_i) = 0$. We will discuss this property (and others) in [lesson 2.3](https://statsnotes.github.io/metrics/3.html).
@@ -376,15 +375,15 @@ In regression, our typical null hypotheses is that there is no relationship betw
 
 $$
 \begin{split}
-& H_0 : \beta_j = 0 \\
-& H_1: \beta_j ≠ 0
+& H_0 : \beta_1 = 0 \\
+& H_1: \beta_1 ≠ 0
 \end{split}
 $$
 
 Now, we calculate a t-test statistic:
 
 $$
-t = \frac{\hat\beta_j - 0}{\widehat{se}(\hat\beta_j)}
+t = \frac{\hat\beta_1 - 0}{\widehat{se}(\hat\beta_1)}
 $$
 
 -   Where the 0 represents the null hypothesis value. If you have any other null hypothesis value, change the 0 to your hypothesis value.
@@ -404,11 +403,11 @@ The area highlighted is the p-value. Once we have obtained our p-values from the
 ::: callout-tip
 ## Interpretation of p-Values for Regression
 
-The p-value is the probability of getting a test statistic equally or more extreme than the one we got with our sample estimate $\hat\beta_j$, given the null hypothesis is true.
+The p-value is the probability of getting a test statistic equally or more extreme than the one we got with our sample estimate $\hat\beta_1$, given the null hypothesis is true.
 
--   If $p<0.05$, we believe the probability of the null hypothesis is low enough, such that we reject the null hypothesis (that there is no relationship between $x_j$ and $y$), and conclude our alternate hypothesis (that there is a relationship between $x_j$ and $y$).
+-   If $p<0.05$, we believe the probability of the null hypothesis is low enough, such that we reject the null hypothesis (that there is no relationship between $x$ and $y$), and conclude our alternate hypothesis (that there is a relationship between $x$ and $y$).
 
--   If $p>0.05$, we cannot reject the null hypothesis, and cannot reject that there is no relationship between $x_j$ and $y$.
+-   If $p>0.05$, we cannot reject the null hypothesis, and cannot reject that there is no relationship between $x$ and $y$.
 :::
 
 ::: callout-warning

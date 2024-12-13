@@ -139,16 +139,18 @@ window.Quarto = {
     <h2 id="toc-title">Lesson 1.5: Multiple Linear Regression</h2>
    
   <ul class="collapse">
-  <li><a href="#motivation-omitted-variable-bias" id="toc-motivation-omitted-variable-bias" class="nav-link active" data-scroll-target="#motivation-omitted-variable-bias">1.5.1: Motivation: Omitted Variable Bias</a></li>
-  <li><a href="#the-multiple-linear-regression-model" id="toc-the-multiple-linear-regression-model" class="nav-link" data-scroll-target="#the-multiple-linear-regression-model">1.5.2: The Multiple Linear Regression Model</a></li>
-  <li><a href="#multiple-linear-regression-with-linear-algebra" id="toc-multiple-linear-regression-with-linear-algebra" class="nav-link" data-scroll-target="#multiple-linear-regression-with-linear-algebra">1.5.3: Multiple Linear Regression with Linear Algebra</a></li>
-  <li><a href="#mathematics-of-the-ordinary-least-squares-estimator" id="toc-mathematics-of-the-ordinary-least-squares-estimator" class="nav-link" data-scroll-target="#mathematics-of-the-ordinary-least-squares-estimator">1.5.4: Mathematics of the Ordinary Least Squares Estimator</a></li>
-  <li><a href="#regression-anatomy-and-controlling-for-confounders" id="toc-regression-anatomy-and-controlling-for-confounders" class="nav-link" data-scroll-target="#regression-anatomy-and-controlling-for-confounders">1.5.5: Regression Anatomy and Controlling for Confounders</a></li>
-  <li><a href="#regression-anatomy-formula-for-ols-estimation" id="toc-regression-anatomy-formula-for-ols-estimation" class="nav-link" data-scroll-target="#regression-anatomy-formula-for-ols-estimation">1.5.6: Regression Anatomy Formula for OLS Estimation</a></li>
-  <li><a href="#r-squared-and-goodness-of-fit" id="toc-r-squared-and-goodness-of-fit" class="nav-link" data-scroll-target="#r-squared-and-goodness-of-fit">1.5.7: R-Squared and Goodness of Fit</a></li>
+  <li><a href="#the-multiple-linear-regression-model" id="toc-the-multiple-linear-regression-model" class="nav-link active" data-scroll-target="#the-multiple-linear-regression-model">1.5.1: The Multiple Linear Regression Model</a></li>
+  <li><a href="#interpretation-of-coefficients" id="toc-interpretation-of-coefficients" class="nav-link" data-scroll-target="#interpretation-of-coefficients">1.5.2: Interpretation of Coefficients</a></li>
+  <li><a href="#omitted-variable-bias-and-confounding-variables" id="toc-omitted-variable-bias-and-confounding-variables" class="nav-link" data-scroll-target="#omitted-variable-bias-and-confounding-variables">1.5.3: Omitted Variable Bias and Confounding Variables</a></li>
+  <li><a href="#regression-goodness-of-fit-statistics" id="toc-regression-goodness-of-fit-statistics" class="nav-link" data-scroll-target="#regression-goodness-of-fit-statistics">1.5.4: Regression Goodness-of-Fit Statistics</a></li>
+  <li><a href="#inference-and-hypothesis-testing" id="toc-inference-and-hypothesis-testing" class="nav-link" data-scroll-target="#inference-and-hypothesis-testing">1.5.5: Inference and Hypothesis Testing</a></li>
+  <li><a href="#hypothesis-testing-with-more-than-one-coefficient" id="toc-hypothesis-testing-with-more-than-one-coefficient" class="nav-link" data-scroll-target="#hypothesis-testing-with-more-than-one-coefficient">1.5.6: Hypothesis Testing with More than One Coefficient</a></li>
+  <li><a href="#prediction-with-regression" id="toc-prediction-with-regression" class="nav-link" data-scroll-target="#prediction-with-regression">1.5.7: Prediction with Regression</a></li>
   <li><a href="#implementation-in-r" id="toc-implementation-in-r" class="nav-link" data-scroll-target="#implementation-in-r">Implementation in R</a>
   <ul class="collapse">
   <li><a href="#regression-estimation" id="toc-regression-estimation" class="nav-link" data-scroll-target="#regression-estimation">Regression Estimation</a></li>
+  <li><a href="#confidence-intervals-1" id="toc-confidence-intervals-1" class="nav-link" data-scroll-target="#confidence-intervals-1">Confidence Intervals</a></li>
+  <li><a href="#prediction" id="toc-prediction" class="nav-link" data-scroll-target="#prediction">Prediction</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -171,87 +173,24 @@ Lesson Overview
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In the last lesson, we focused on the simple linear regression model. Now, we will expand the number of explanatory variables to get the multiple linear regression model, and we will discuss how our OLS estimation process changes as a result.</p>
+<p>In the last lesson, we focused on the simple linear regression model. Now, we will expand the number of explanatory variables to get the multiple linear regression model, and we will discuss the advantages of this method over simple linear regression.</p>
 <p>This lesson covers the following topics:</p>
 <ul>
-<li>Omitted variable bias as a motivation for the need for multiple linear regression.</li>
-<li>The estimation process of the OLS estimator for Multiple Linear Regression.</li>
-<li>What it means to control for a variable (using the regression anatomy theory).</li>
-<li>How we can use the regression anatomy theory to create an analogous estimate for OLS.</li>
+<li>The basics of multiple linear regression, and how to interpret coefficients.</li>
+<li>The motivation behind multiple linear regression - omitted variable bias.</li>
+<li>How to conduct statistical inference with multiple linear regression.</li>
+<li>Prediction with multiple linear regression.</li>
 </ul>
 </div>
 </div>
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
-<section id="motivation-omitted-variable-bias" class="level1">
-<h1>1.5.1: Motivation: Omitted Variable Bias</h1>
-<p>In the <a href="https://statsnotes.github.io/theory/4.html">last lesson</a>, we covered the simple linear regression model. However, there is a major issue with the simple linear regression model: omitted variable bias.</p>
-<p>Consider two regressions. The first regression, the “short” regression, is a simple linear regression, like the one we covered in the <a href="https://statsnotes.github.io/theory/4.html">last lesson</a>. The second regression, the “long” regression, contains an extra variable <span class="math inline">z</span> that is omitted from the first regression:</p>
-<p><span class="math display">
-\begin{split}y_i &amp; = \beta_0^S + \beta_1^Sx_i + u_i^S \quad \text{short} \\y_i &amp; = \beta_0 + \beta_1x_i + \beta_2z_i + u_i \quad \text{long}\end{split}
-</span></p>
-<ul>
-<li>Note: the <span class="math inline">S</span> in <span class="math inline">\beta_0^S</span> is a subscript representing short. It is not an exponent.</li>
-</ul>
-<p>Now consider an auxiliary regression, where the omitted variable <span class="math inline">z</span> is the outcome variable, and <span class="math inline">x</span> is the explanatory variable:</p>
-<p><span class="math display">
-z_i = \delta_0 + \delta_1 x_i + v_i
-</span></p>
-<ul>
-<li>where <span class="math inline">\delta_0, \delta_1</span> are coefficients and <span class="math inline">v_i</span> is the error term</li>
-</ul>
-<p><br></p>
-<p>Now we have <span class="math inline">z</span> in terms of <span class="math inline">x</span>, let us plug <span class="math inline">z</span> into our long regression to “recreate” the short regression:</p>
-<p><span class="math display">
-\begin{split}y_i &amp; = \beta_0 + \beta_1x_i + \beta_2z_i + u_i \\y_i &amp; = \beta_0 + \beta_1 x_i + \beta_2(\delta_0 + \delta_1x_i + v_i) + u_i \\y_i &amp; = \beta_0 + \beta_1 x_i + \beta_2 \delta_0 + \beta_2 \delta_1 x_i + \beta_2v_i + u_i \\y_i &amp; = \beta_0 + \beta_2 \delta_0 + (\beta_1 + \beta_2 \delta_1)x_i + \beta_2v_i + u_i\end{split}
-</span></p>
-<p>We have “recreated” the short regression with one variable <span class="math inline">x</span>. Let us see our recreation next to the original short regression:</p>
-<p><span class="math display">
-\begin{split}
-y_i &amp; = \beta_0^S + \beta_1^Sx_i + u_i^S \\
-y_i &amp; = \beta_0 + \beta_2 \delta_0 + (\beta_1 + \beta_2 \delta_1)x_i + \beta_2v_i + u_i
-\end{split}
-</span></p>
-<ul>
-<li>The short regression coefficient <span class="math inline">\beta_0^S</span> is analogous to the <span class="math inline">\beta_0 + \beta_2 \delta_0</span> in the recreation (both are the intercepts)</li>
-<li>The short regression coefficient <span class="math inline">\beta_1^S x_i</span> is analogous to the <span class="math inline">(\beta_1 + \beta_2 \delta_1)x_i</span> in the recreation (both are the slope and variable of interest)</li>
-<li>The short regression <span class="math inline">u_i^S</span> is analogous to the <span class="math inline">\beta_2 v_i + u_i</span> in the recreation (both are the error terms).</li>
-</ul>
-<p>Since the short regression <span class="math inline">\beta_1^S x_i</span> is analogous to the <span class="math inline">(\beta_1 + \beta_2 \delta_1)x_i</span> in the recreation, that means coefficient <span class="math inline">\beta_1^S = \beta_1 + \beta_2 \delta_1</span>.</p>
-<p><br></p>
-<p>Thus, the difference between the short regression (simple linear regression) coefficient <span class="math inline">\beta_1^S</span>, and the original long regression coefficient <span class="math inline">\beta_1</span>, is <span class="math inline">\beta_2 \delta_1</span>.</p>
-<ul>
-<li>If <span class="math inline">\beta_2 = 0</span> (meaning no relationship between omitted <span class="math inline">x</span> and <span class="math inline">y</span>), or <span class="math inline">\delta_1 = 0</span> (meaning no relationship between omitted <span class="math inline">x</span> and <span class="math inline">x</span>), then difference <span class="math inline">\beta_2 \delta_1 = 0</span>, thus there is no difference.</li>
-<li>But if either of those facts are not true, then <span class="math inline">\beta_2 \delta_1 ≠ 0</span>, and omitted variable bias is non-zero.</li>
-</ul>
-<p>More intuitively, if the omitted variable <span class="math inline">z</span> is both correlated with <span class="math inline">x</span> and <span class="math inline">y</span>, then the two coefficients are different by <span class="math inline">\beta_2 \delta_1</span>.</p>
-<ul>
-<li>Any variable <span class="math inline">z</span> correlated both with <span class="math inline">x</span> and <span class="math inline">y</span> is called a <strong>confounding variable</strong>.</li>
-<li>This <span class="math inline">\beta_2 \delta_1</span> amount is called the <strong>omitted variable bias</strong>.</li>
-</ul>
-<p><br></p>
-<p>What are the implications of non-zero omitted variable bias?</p>
-<ul>
-<li>We can see, that when we add a extra variable <span class="math inline">z</span>, our estimate for parameter <span class="math inline">\beta_1</span> changes by <span class="math inline">\beta_2 \delta_1</span>.</li>
-<li>What that means is that <u>our original short simple linear regression is incorrectly estimating the parameter <span class="math inline">\beta_1</span> by <span class="math inline">\beta_2 \delta_1</span>.</u></li>
-</ul>
-<p>Thus, <u>to prevent the incorrect estimation of the simple linear regression model, we must add confounding variables <span class="math inline">z</span> to our regression</u>.</p>
-<p>This is where multiple linear regression comes in:</p>
-<ul>
-<li>Multiple linear regression will allow us to add additional variables to our regressions.</li>
-<li>By adding additional variables, we will be able to “control” for the effect of these confounding variables, and more accurately estimate the relationship between <span class="math inline">x</span> and <span class="math inline">y</span>. We will discuss this idea of “controlling” in <a href="https://statsnotes.github.io/theory/5.html#regression-anatomy-and-controlling-for-confounders">1.5.5</a>.</li>
-</ul>
-<p><br></p>
-<p><br></p>
-<hr>
-<p><a href="https://statsnotes.github.io">Homepage</a></p>
-</section>
 <section id="the-multiple-linear-regression-model" class="level1">
-<h1>1.5.2: The Multiple Linear Regression Model</h1>
-<p>Multiple linear regression is an extension of simple linear regression, that can help us deal with confounding variables.</p>
+<h1>1.5.1: The Multiple Linear Regression Model</h1>
+<p>Multiple linear regression is an extension of simple linear regression, which allows us to include more than one explanatory variable.</p>
 <ul>
-<li>Multiple linear regression allows us to “control for the effect” of confounders. We will discuss this idea of “controlling” in <a href="https://statsnotes.github.io/theory/5.html#regression-anatomy-and-controlling-for-confounders">1.5.5</a>.</li>
+<li>We will discuss why we would want to include extra explanatory variables later in section 1.5.3. For now, let us first introduce the basics of the model.</li>
 </ul>
 <p>The <strong>response variable</strong> (outcome variable) is notated <span class="math inline">y</span>, just like in single linear regression.</p>
 <p>The <strong>explanatory variable</strong>s are <span class="math inline">x_1, x_2, ..., x_k</span>. We sometimes also denote all explanatory variables as the vector <span class="math inline">\overrightarrow{x}</span>.</p>
@@ -308,439 +247,230 @@ y_i = \beta_0 + \beta_1x_{1i} + \dots + \beta_k x_{ki} + u_i
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
-<section id="multiple-linear-regression-with-linear-algebra" class="level1">
-<h1>1.5.3: Multiple Linear Regression with Linear Algebra</h1>
+<section id="interpretation-of-coefficients" class="level1">
+<h1>1.5.2: Interpretation of Coefficients</h1>
+<p>We now have a fitted-values model. But what do these actually mean in the context of the relationship between <span class="math inline">x</span> and <span class="math inline">y</span>? We will see that the coefficients mean slightly different things than in simple linear regression.</p>
+<ul>
+<li>Note: <span class="math inline">\hat\beta_j</span> refers to any coefficient <span class="math inline">\hat\beta_1, \dots, \hat\beta_k</span> (for generalisation purposes).</li>
+</ul>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning
+Warning!
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This section contains Linear Algebra. It is not essential that you understand this section, however, it can be helpful to develop intuition.</p>
+<p>Note that the following interpretations only applies to continuous <span class="math inline">x</span> variables and continuous/ordinal <span class="math inline">y</span> variables. We will discuss interpretation with other variables in <a href="https://statsnotes.github.io/metrics/6.html">lesson 1.6</a>.</p>
 </div>
 </div>
-<p>In the previous section, we introduced the multiple linear regression model as the following:</p>
-<p><span class="math display">
-y_i = \beta_0 + \beta_1x_{1i} + \dots + \beta_k x_{ki} + u_i
-</span></p>
-<p>However, it can be very useful to also see the multiple linear regression model in terms of linear algebra (vectors and matrices).</p>
-<ul>
-<li>The main reason for this is because this will make the estimation process far easier.</li>
-</ul>
 <p><br></p>
-<p>The <span class="math inline">i</span>’th observation can be re-written in vector form as following:</p>
-<p><span class="math display">
-y_i = x_i'\beta + u_i, \text{ where }\beta = \begin{bmatrix}\beta_0 \\ \beta_1 \\ \vdots \\ \beta_k\end{bmatrix} \text{ and }x_i = \begin{bmatrix}1 \\x_{1i} \\\vdots \\x_{ki}\end{bmatrix}
-</span></p>
-<ul>
-<li>The <span class="math inline">x_i'</span> in the equation is the transpose of <span class="math inline">x_i</span>, to make matrix multiplication possible.</li>
-<li>The first element of the <span class="math inline">x_i</span> matrix is 1, since <span class="math inline">1 \times \beta_0</span> gives us the first parameter (intercept) in the linear model.</li>
-<li>Thus, when multiplying out, we get the same equation as the original multiple linear regression.</li>
-</ul>
-<p><br></p>
-<p>Note how we have the subscript <span class="math inline">i</span> representing each individual observation. With a vector, we can expand out these subscripts.</p>
-<ul>
-<li>For example, instead of <span class="math inline">y_i</span>, we could have a vector with <span class="math inline">y_1, y_2, \dots, y_n</span> (assuming we have <span class="math inline">n</span> observations).</li>
-<li>Same for <span class="math inline">x'_i</span>, which can be expanded into a vector of <span class="math inline">x_1', x_2', \dots x_n'</span>, and for the error term <span class="math inline">u_i</span>, which can be expanded into a vector of <span class="math inline">u_1, u_2, \dots, u_n</span>.</li>
-</ul>
-<p>Using this logic, we can obtain the following, with the <span class="math inline">x_i'</span> and <span class="math inline">\beta</span> being vectors within a vector:</p>
+<section id="interpretation-of-hatbeta_j" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation-of-hatbeta_j">Interpretation of <span class="math inline">\hat\beta_j</span></h3>
+<p>In simple linear regression, we discussed how <span class="math inline">\hat\beta_1</span> is the change in <span class="math inline">y</span> given a one unit increase in <span class="math inline">x</span> (see <a href="https://statsnotes.github.io/intro/4.html#interpretation-and-standardisation">1.4.3</a>).</p>
+<p>However, with multiple linear regression, things change a little. <span class="math inline">\hat\beta_j</span> is now the relationship between <span class="math inline">x_j</span> and <span class="math inline">y</span>, holding all other explanatory variables <span class="math inline">x_1, \dots, x_k</span> not <span class="math inline">x_j</span> constant.</p>
+<p>We can prove this with a partial derivative (see appendix A.3 for mathematical guidance). We know that the rate of change between <span class="math inline">x_j</span> and <span class="math inline">y</span> should be the partial derivative of <span class="math inline">y</span> in respect to <span class="math inline">x_j</span>. Thus, let us find the partial derivative (for simplicity, we will use <span class="math inline">x_1</span>, but this applies to any <span class="math inline">x_j</span>):</p>
 <p><span class="math display">
 \begin{split}
-\begin{pmatrix}y_1 \\ y_2 \\ \vdots \\ y_n\end{pmatrix} &amp; = \begin{pmatrix}x_1'\beta + u_1 \\ x_2'\beta + u_2 \\ \vdots \\ x_n'\beta + u_n\end{pmatrix} \\
-&amp; \\
-\begin{pmatrix}y_1 \\ y_2 \\ \vdots \\ y_n\end{pmatrix}&amp; = \begin{pmatrix}x_1'\beta \\ x_2'\beta \\ \vdots \\ x_n'\beta\end{pmatrix} + \begin{pmatrix}u_1 \\ u_2 \\ \vdots \\ u_n\end{pmatrix}
+&amp; \hat y = \hat\beta_0 + \hat\beta_1x_{1i} + \hat\beta_2x_{2i} + \dots + \hat\beta_kx_{ki} \\
+&amp; \frac{\partial \hat y}{\partial x_1} = 0 + \hat\beta_1 + 0 + \dots + 0 \\
+&amp; \frac{\partial \hat y}{\partial x_1} = \hat\beta_1
 \end{split}
 </span></p>
-<p>Since <span class="math inline">\beta</span> vector appears as a common factor for all observations <span class="math inline">i=1,...,n</span>, we can factor it out and have an equation:</p>
-<p><span class="math display">
-\begin{pmatrix}y_1 \\ y_2 \\ \vdots \\ y_n\end{pmatrix} = \begin{pmatrix}x_1' \\ x_2' \\ \vdots \\ x_n'\end{pmatrix} \space \beta + \begin{pmatrix}u_1 \\ u_2 \\ \vdots \\ u_n\end{pmatrix}
-</span></p>
-<p><br></p>
-<p>We can expand the <span class="math inline">x_1',...,x_n'</span> vector into a matrix. Remember that each <span class="math inline">x_1',...,x_n'</span> is already a vector of different explanatory variables. So, we get the following result:</p>
-<p><span class="math display">
-y = X \beta + u, \text{ where } X = \begin{bmatrix}1 &amp; x_{21} &amp; \dots &amp; x_{k1} \\1 &amp; x_{22} &amp; \dots &amp; x_{k2} \\\vdots &amp; \vdots &amp; \vdots &amp; \vdots \\1 &amp; x_{2n} &amp; \dots &amp; x_{kn}\end{bmatrix}
-</span></p>
+<p>We know that by definition, partial derivatives treat other variables as constants. Thus, <span class="math inline">\hat\beta_j</span> is the rate of change between <span class="math inline">x_j</span> and <span class="math inline">y</span>, holding all other explanatory variables constant.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Definition: Multiple Linear Regression with Linear Algebra
+Interpretation of <span class="math inline">\hat\beta_1</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The multiple linear regression can be expressed in linear algebra as:</p>
-<p><span class="math display">
-y = X \beta + u
-</span></p>
-<p>Where vector <span class="math inline">y</span> is equal to:</p>
-<p><span class="math display">
-y = \begin{pmatrix}y_1 \\ y_2 \\ \vdots \\ y_n\end{pmatrix}
-</span></p>
-<p>Where matrix <span class="math inline">X</span> is equal to:</p>
-<p><span class="math display">
-X = \begin{bmatrix}1 &amp; x_{21} &amp; \dots &amp; x_{k1} \\1 &amp; x_{22} &amp; \dots &amp; x_{k2} \\\vdots &amp; \vdots &amp; \vdots &amp; \vdots \\1 &amp; x_{2n} &amp; \dots &amp; x_{kn}\end{bmatrix}
-</span></p>
-<ul>
-<li>Where the notation for elements of <span class="math inline">X</span> is <span class="math inline">x_{ki}</span>, with <span class="math inline">i</span> being the unit of observation <span class="math inline">i = 1, \dots n</span>, and <span class="math inline">k</span> being the explanatory variables index.</li>
-<li>The first column of <span class="math inline">X</span> is a vector of 1, which exists because these 1’s are multiplied with <span class="math inline">\beta_0</span> in our model (see below).</li>
-</ul>
-<p>Where vector <span class="math inline">\beta</span> is equal to:</p>
-<p><span class="math display">
-\beta = \begin{pmatrix}\beta_0 \\ \beta_1 \\ \vdots \\ \beta_k\end{pmatrix}
-</span></p>
+<p>When <span class="math inline">x_j</span> increases by one unit, there is an expected <span class="math inline">\hat{\beta}_1</span> unit change in <span class="math inline">y</span>, holding all other explanatory variables constant.</p>
 </div>
 </div>
-<p>The point of expressing the model in linear algebra is that it makes the estimation process far easier, as we will see in the next section.</p>
-<p><br></p>
-<p><br></p>
-<hr>
-<p><a href="https://statsnotes.github.io">Homepage</a></p>
-</section>
-<section id="mathematics-of-the-ordinary-least-squares-estimator" class="level1">
-<h1>1.5.4: Mathematics of the Ordinary Least Squares Estimator</h1>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning
+Warning!
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This section contains Linear Algebra. It is not essential that you understand this section, however, it can be helpful to develop intuition.</p>
+<p>Note how I have been using the word <strong>relationship</strong>, not causal effect.</p>
+<p>Causality is not established through estimators, it is established through a strong experimental design (which we will cover in part II of the course).</p>
 </div>
 </div>
-<p>As we remember from <a href="https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator">1.4.4</a>, the goal of Ordinary Least Squares Estimation is to minimise the sum of squared errors. The sum of squared errors in multiple regression is:</p>
-<p><span class="math display">
-\begin{split}
-SSE &amp; = \sum\limits_{i=1}^n (y_i - \hat y_i)^2\\
-&amp; = \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i} -  ... - \hat\beta_kx_{ki})^2
-\end{split}
-</span></p>
-<p>Similar to our simple linear regression (but with additional variables), our minimisation condition is:</p>
-<p><span class="math display">
-\begin{split}
-(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2, ...) &amp; = \min\limits_{(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2, ...)} (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i} ...)^2 \\
-&amp; = \min\limits_{(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2, ...)} S(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2, ...)
-\end{split}
-</span></p>
+<p>Note: the “accuracy” of the estimate of <span class="math inline">\hat\beta_1</span> can vary based on if a number of assumptions are met. We will discuss this more advanced topic in <a href="https://statsnotes.github.io/metrics/3.html">lesson 2.3</a>.</p>
 <p><br></p>
-<p>Taking the partial derivatives of each parameter like in simple linear regression (see <a href="https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator">1.4.4</a>), we get first order conditions:</p>
+<p>We know that we are holding all other explanatory variables constant. But what does that even mean?</p>
+<p>For example, take this regression:</p>
 <p><span class="math display">
-\begin{split}&amp; \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\&amp; \sum\limits_{i=1}^n x_{1i}(y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\
-&amp; \sum\limits_{i=1}^n x_{2i} (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0
-\end{split}
+\widehat{income}_i = \hat\beta_0 + \hat\beta_1 \text{education}_i + \hat\beta_2 \text{age}_i
 </span></p>
+<p>In this regression, <span class="math inline">\hat\beta_1</span> is the effect of education on income, holding all other explanatory variables (age) constant.</p>
 <ul>
-<li>and so on for <span class="math inline">x_{3i}, ..., x_{ki}</span>.</li>
+<li>In other words, it means, when holding age constant - at the same age levels, <span class="math inline">\hat\beta_1</span> is the relationship between education and income.</li>
+<li>So only looking at 30 year olds, what is the relationship between income and education? What about for 40 year olds?</li>
+<li>The regression estimates this for every level of the other explanatory variables (age), and then averages out the effect of education on income to produce <span class="math inline">\hat\beta_1</span>.</li>
 </ul>
-<p>This system of equations includes <span class="math inline">k+1</span> variables and <span class="math inline">k+1</span> equations, which is way too difficult to solve.</p>
+<p>There is another way to interpret <span class="math inline">\hat\beta_j</span> without discussing “holding other explanatory variables constant”. We can also say that <span class="math inline">\hat\beta_j</span> is the effect of <span class="math inline">x_j</span> on <span class="math inline">y</span> when partialling out the effect of other explanatory variables.</p>
+<ul>
+<li>This statement is more complex - we will discuss this later in <a href="https://statsnotes.github.io/metrics/2.html">lesson 2.2</a>.</li>
+</ul>
+<p>We can also standardise our <span class="math inline">\hat\beta_j</span> coefficient in terms of standard errors, in the same way we did in <a href="https://statsnotes.github.io/intro/4.html#interpretation-and-standardisation">1.4.3</a>.</p>
 <p><br></p>
-<p>Instead, we can use linear algebra. Let us define our estimation vector <span class="math inline">\hat{\beta}</span> as the value of <span class="math inline">\hat\beta</span> that minimises the sum of squared errors:</p>
-<p><span class="math display">
-\hat{\beta} = \min\limits_{b} (y - Xb)' (y - Xb) = \min\limits_b S(b)
-</span></p>
-<ul>
-<li><span class="math inline">(y - Xb)</span> is our error, since <span class="math inline">\hat y = Xb</span>,</li>
-</ul>
-<p>We can expand <span class="math inline">S(b)</span> as follows:</p>
+</section>
+<section id="interpretation-of-hatbeta_0" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation-of-hatbeta_0">Interpretation of <span class="math inline">\hat\beta_0</span></h3>
+<p>The intercept term <span class="math inline">\hat\beta_0</span> has a very similar interpretation to that of simple linear regression - the expected value of <span class="math inline">y</span> given all explanatory variables equal 0 (although in the case of simple linear regression, there was only one explanatory variable).</p>
+<p>We can prove this mathematically by plugging in <span class="math inline">\overrightarrow{x_i} = 0</span> into our fitted values equation:</p>
 <p><span class="math display">
 \begin{split}
-S(b) &amp; = y'y - b'X'y - y'Xb + b'X'Xb \\
-&amp; = y'y - 2b'X'y + b'X'Xb
+\hat y_{i, \ \overrightarrow{x_i} = 0} &amp; = \hat\beta_0 + \hat\beta_1 x_{1i} + \dots + \hat\beta_k x_{ki} \\
+&amp; = \hat\beta_0 + \hat\beta_1(0) + \dots + \hat\beta_k(0) \\
+&amp; = \hat\beta_0
 \end{split}
 </span></p>
-<p>Taking the partial derivative in respect to <span class="math inline">b</span>:</p>
-<p><span class="math display">
-\frac{\partial S(b)}{\partial b} = \begin{pmatrix}\frac{\partial S(b)}{\partial b_1} \\\vdots \\\frac{\partial S(b)}{\partial b_k}\end{pmatrix}
-</span></p>
-<p>Differentiating with the vector <span class="math inline">b</span> yields:</p>
-<p><span class="math display">
-\frac{\partial S(b)}{\partial b} = -2X'y + 2X'Xb
-</span></p>
-<p>Evaluted at <span class="math inline">\hat{\beta}</span>, the derivatives should equal zero (since first order condition of finding minimums):</p>
-<p><span class="math display">
-\frac{\partial S(b)}{\partial b} \biggr|_{\hat{\beta}} = -2X'y + 2X'X \hat{\beta} = 0
-</span></p>
-<p>When assuming <span class="math inline">X'X</span> is invertable, we can isolate <span class="math inline">\hat{\beta}</span> to find the solution to OLS:</p>
-<p><span class="math display">
-\begin{split}
--2X'y + 2X'X \hat{\beta} &amp; = 0 \\
-2X'X\hat\beta &amp; = 2X'y \\
-\hat\beta &amp; = (2X'X)^{-1} 2 X'y \\
-\hat\beta &amp; = (X'X)^{-1}X'y
-\end{split}
-</span></p>
+<p>Thus, knowing this, we can interpret <span class="math inline">\hat\beta_0</span>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Definition: OLS Estimate of <span class="math inline">\hat\beta</span>
+Interpretation of <span class="math inline">\hat\beta_0</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The Ordinary Least Squares Estimate of vector <span class="math inline">\hat\beta</span> for multiple linear regression is:</p>
-<p><span class="math display">
-\hat{\beta} = (X'X)^{-1} X'y
-</span></p>
+<p>When all explanatory variables equal 0, the expected value of <span class="math inline">y</span> is <span class="math inline">\hat{\beta}_0</span></p>
 </div>
 </div>
-<p>Once we have estimates of <span class="math inline">\hat{\beta}</span>, we can plug them into our linear model to obtain fitted values:</p>
-<p><span class="math display">
-\begin{split}
-\hat{y} &amp; = X\hat{\beta} \\
-&amp; = X(X'X)^{-1} X'y
-\end{split}
-</span></p>
-<p>Note: in <a href="https://statsnotes.github.io/theory/6.html">lesson 1.6</a>, we will discuss if the OLS estimator is a good estimator or not. For now, we just care about the mechanics of the estimator.</p>
 <p><br></p>
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
-<section id="regression-anatomy-and-controlling-for-confounders" class="level1">
-<h1>1.5.5: Regression Anatomy and Controlling for Confounders</h1>
-<p>We talked about how multiple linear regression allows us to control for confounders. But what does that mean? How does it affect our interpretations of coefficients?</p>
-<p>The <strong>Regression Anatomy</strong> Theory, also called the <strong>Frisch–Waugh–Lovell (FWL)</strong> theorem, illustrates this concept. Take our standard multiple linear regression:</p>
+</section>
+<section id="omitted-variable-bias-and-confounding-variables" class="level1">
+<h1>1.5.3: Omitted Variable Bias and Confounding Variables</h1>
+<p>We have introduced the multiple linear regression model and how we can add more explanatory variables. But why would we want to add more explanatory variables?</p>
+<p>Consider two regressions. The first regression, the “short” regression, is a simple linear regression with only explanatory variable <span class="math inline">x</span>. The second regression, the “long” regression, contains an extra variable <span class="math inline">z</span> that is omitted from the first regression:</p>
 <p><span class="math display">
-y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_k x_{ki} + u_i
-</span></p>
-<p><br></p>
-<p>Let us say we are interested in <span class="math inline">x_1</span> (this can be generalised to any explanatory variable <span class="math inline">x_j</span>). Let us make <span class="math inline">x_1</span> the outcome variable of a regression with explanatory variables <span class="math inline">x_2, ..., x_k</span>:</p>
-<p><span class="math display">
-x_{1i} = \gamma_0 + \gamma_1 x_{2i} + ... + \gamma_{k-1}x_{ki} + \widetilde{r_{1i}}
+\begin{split}y_i &amp; = \beta_0^S + \beta_1^Sx_i + u_i^S \quad \text{short} \\y_i &amp; = \beta_0 + \beta_1x_i + \beta_2z_i + u_i \quad \text{long}\end{split}
 </span></p>
 <ul>
-<li>Where <span class="math inline">\gamma_0, ..., \gamma_{k-1}</span> are coefficients.</li>
-<li>Where <span class="math inline">\widetilde{r_{1i}}</span> is the error term.</li>
+<li>Note: the <span class="math inline">S</span> in <span class="math inline">\beta_0^S</span> is a subscript representing short. It is not an exponent.</li>
 </ul>
-<p>The error term is <span class="math inline">\widetilde{r_{1i}}</span>, which represents the part of <span class="math inline">x_{1i}</span> that are uncorrelated to <span class="math inline">x_2, ..., x_k</span>.</p>
-<ul>
-<li>In other words, <span class="math inline">\widetilde{r_{1i}}</span> is the part of <span class="math inline">x_1</span> that cannot be explained by any other explanatory variable <span class="math inline">x_2, ..., x_k</span>. (uncorrelated with them)</li>
-</ul>
-<p><br></p>
-<p>Now, take the regression of with outcome variable <span class="math inline">y</span>, with all explanatory variables <u>except</u> <span class="math inline">x_1</span>:</p>
+<p>Now consider an auxiliary regression, where the omitted variable <span class="math inline">z</span> is the outcome variable, and <span class="math inline">x</span> is the explanatory variable:</p>
 <p><span class="math display">
-y_i = \delta_0 + \delta_1 x_{2i} + ... + \delta_{k-1} x_{ki} + \widetilde{y_i}
+z_i = \delta_0 + \delta_1 x_i + v_i
 </span></p>
 <ul>
-<li>Where <span class="math inline">\delta_0, ..., \delta_{k-1}</span> are coefficients.</li>
-<li>Where <span class="math inline">\widetilde {y_i}</span> is the error term.</li>
+<li>where <span class="math inline">\delta_0, \delta_1</span> are coefficients and <span class="math inline">v_i</span> is the error term</li>
 </ul>
-<p>The error term is <span class="math inline">\widetilde{y_i}</span>, which is the part of <span class="math inline">y_i</span> that cannot be explained by <span class="math inline">x_2, ..., x_k</span> (uncorrelated with them).</p>
 <p><br></p>
-<p>Since <span class="math inline">\widetilde{y_i}</span> is not explained by <span class="math inline">x_2, ..., x_k</span>, variable <span class="math inline">x_1</span> must be the one explaining <span class="math inline">\widetilde{y_i}</span>.</p>
-<ul>
-<li>But, it is not the whole of <span class="math inline">x_1</span> explaining <span class="math inline">\tilde{y_i}</span>.</li>
-<li>This is since <span class="math inline">x_1</span> may also correlated with <span class="math inline">x_2, ..., x_k</span>, and the correlated parts of <span class="math inline">x_1</span> with <span class="math inline">x_2, ..., x_k</span> are already picked up in the regression by the coefficients of <span class="math inline">x_2, ..., x_k</span>.</li>
-</ul>
-<p>Thus, <span class="math inline">\widetilde{y_i}</span> must be explained by the part of <span class="math inline">x_1</span> that is uncorrelated and not explained by <span class="math inline">x_2, ..., x_k</span>, which we derived earlier as <span class="math inline">\widetilde{r_{1i}}</span>.</p>
-<p><br></p>
-<p>Thus, we can create another regression with explanatory variable <span class="math inline">\widetilde{x_{1i}}</span> and outcome variable <span class="math inline">\widetilde{y_i}</span>.</p>
+<p>Now we have <span class="math inline">z</span> in terms of <span class="math inline">x</span>, let us plug <span class="math inline">z</span> into our long regression to “recreate” the short regression:</p>
 <p><span class="math display">
-\widetilde{y_i} = \alpha_0 + \alpha_1 \widetilde{r_{1i}} + u_i
+\begin{split}y_i &amp; = \beta_0 + \beta_1x_i + \beta_2z_i + u_i \\y_i &amp; = \beta_0 + \beta_1 x_i + \beta_2(\delta_0 + \delta_1x_i + v_i) + u_i \\y_i &amp; = \beta_0 + \beta_1 x_i + \beta_2 \delta_0 + \beta_2 \delta_1 x_i + \beta_2v_i + u_i \\y_i &amp; = \beta_0 + \beta_2 \delta_0 + (\beta_1 + \beta_2 \delta_1)x_i + \beta_2v_i + u_i\end{split}
 </span></p>
-<p>We can plug <span class="math inline">\widetilde{y_i}</span> back into our regression of <span class="math inline">y_i</span> with explanatory variables <span class="math inline">x_2 ..., x_k</span>, and re-arrange:</p>
+<p>We have “recreated” the short regression with one variable <span class="math inline">x</span>. Let us see our recreation next to the original short regression:</p>
 <p><span class="math display">
 \begin{split}
-y_i &amp; = \delta_0 + \delta_1 x_{2i} + ... + \delta_{k-1} x_{ki} + \widetilde{y_i} \\
-y_i &amp; = \delta_0 + \delta_1 x_{2i} + ... + \delta_{k-1} x_{ki} + \alpha_0 + \alpha_1 \widetilde{r_{1i}} + u_i \\
-y_i  &amp; = (\delta_0 + \alpha_0) + \alpha_1 \widetilde{r_{1i}} + \delta_1x_{2i} + ... + \delta_{k-1} x_{ki} + u_i
-\end{split}
-</span></p>
-<p>As we can see, this new regression mirrors the original standard multiple linear regression:</p>
-<p><span class="math display">
-\begin{split}
-y_i  &amp; = (\delta_0 + \alpha_0) + \alpha_1 \widetilde{r_{1i}} + \delta_1x_{2i} + ... + \delta_{k-1} x_{ki} + u_i \\
-y_i &amp; = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \dots + \beta_k x_{ki} + u_i
+y_i &amp; = \beta_0^S + \beta_1^Sx_i + u_i^S \\
+y_i &amp; = \beta_0 + \beta_2 \delta_0 + (\beta_1 + \beta_2 \delta_1)x_i + \beta_2v_i + u_i
 \end{split}
 </span></p>
 <ul>
-<li>The <span class="math inline">\beta_0</span> in the original is analogous to the <span class="math inline">(\delta_0 + \alpha 0)</span>.</li>
-<li>The <span class="math inline">\beta_1 x_{1i}</span> in the original is analogous to <span class="math inline">\alpha_1 \widetilde{r_{1i}}</span>.</li>
-<li>The <span class="math inline">\beta_2 x_{2i} + \dots + \beta_k x_{ki}</span> is analogous to <span class="math inline">\delta_1 x_{2i} + ... + \delta_{k-1} x_{ki}</span>.</li>
-<li>The <span class="math inline">u_i</span> is in both regressions.</li>
+<li>The short regression coefficient <span class="math inline">\beta_0^S</span> is analogous to the <span class="math inline">\beta_0 + \beta_2 \delta_0</span> in the recreation (both are the intercepts)</li>
+<li>The short regression coefficient <span class="math inline">\beta_1^S x_i</span> is analogous to the <span class="math inline">(\beta_1 + \beta_2 \delta_1)x_i</span> in the recreation (both are the slope and variable of interest)</li>
+<li>The short regression <span class="math inline">u_i^S</span> is analogous to the <span class="math inline">\beta_2 v_i + u_i</span> in the recreation (both are the error terms).</li>
+</ul>
+<p>Since the short regression <span class="math inline">\beta_1^S x_i</span> is analogous to the <span class="math inline">(\beta_1 + \beta_2 \delta_1)x_i</span> in the recreation, that means coefficient <span class="math inline">\beta_1^S = \beta_1 + \beta_2 \delta_1</span>.</p>
+<p>Thus, the difference between the short regression (simple linear regression) coefficient <span class="math inline">\beta_1^S</span>, and the original long regression coefficient <span class="math inline">\beta_1</span>, is <span class="math inline">\beta_2 \delta_1</span>.</p>
+<ul>
+<li>If <span class="math inline">\beta_2 = 0</span> (meaning no relationship between omitted <span class="math inline">x</span> and <span class="math inline">y</span>), or <span class="math inline">\delta_1 = 0</span> (meaning no relationship between omitted <span class="math inline">x</span> and <span class="math inline">x</span>), then difference <span class="math inline">\beta_2 \delta_1 = 0</span>, thus there is no difference.</li>
+<li>But if either of those facts are not true, then <span class="math inline">\beta_2 \delta_1 ≠ 0</span>, and there is a difference between <span class="math inline">\beta_1^S</span> and <span class="math inline">\beta_1</span>.</li>
 </ul>
 <p><br></p>
-<p>Importantly we know the <span class="math inline">\beta_1 x_{1i}</span> in the original is analogous to <span class="math inline">\alpha_1 \widetilde{r_{1i}}</span>. Thus, <u>the estimate of <span class="math inline">\alpha_1</span> will be the same as <span class="math inline">\beta_1</span> in the original regression</u>.</p>
+<p>More intuitively, if the omitted variable <span class="math inline">z</span> is both correlated with <span class="math inline">x</span> and <span class="math inline">y</span>, then the two coefficients are different by <span class="math inline">\beta_2 \delta_1</span>.</p>
 <ul>
-<li>The coefficient <span class="math inline">\alpha_1</span> (which is equal to <span class="math inline">\beta_1</span>) explains the expected change in <span class="math inline">y</span>, given an increase in the part of <span class="math inline">x_1</span> uncorrelated with <span class="math inline">x_2, ..., x_k</span>.</li>
-<li>So essentially, <u>we have <strong>partialed out</strong> the effect of the other explanatory variables, and only focus on the effect on <span class="math inline">y</span> of the uncorrelated part of <span class="math inline">x_1</span> (which is <span class="math inline">\widetilde{r_{1i}}</span>)</u></li>
+<li>Any variable <span class="math inline">z</span> correlated both with <span class="math inline">x</span> and <span class="math inline">y</span> is called a <strong>confounding variable</strong>.</li>
+<li>This <span class="math inline">\beta_2 \delta_1</span> amount is called the <strong>omitted variable bias</strong>.</li>
 </ul>
-<p>Or in other words, OLS in multiple linear regression estimates the effect of <span class="math inline">\widetilde{r_{1i}}</span> on <span class="math inline">y</span>.</p>
+<p>Even more intuitively, take the figure below. There are three variables: the independent variable <span class="math inline">x</span>, the dependent variable <span class="math inline">y</span>, and the confounder <span class="math inline">z</span>. The arrows represent correlation between the variables.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-1590374926.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+<p>If the confounding variable <span class="math inline">z</span> is correlated with independent variable <span class="math inline">x</span> and dependent variable <span class="math inline">y</span>, our simple linear regression with only explanatory variable <span class="math inline">x</span> (and not <span class="math inline">z</span>) will have a coefficient wrong by <span class="math inline">\beta_2 \delta_1</span>.</p>
 <ul>
-<li>We can apply this to any explanatory variable <span class="math inline">x_1, \dots, x_k</span>. The uncorrelated parts of any explanatory variable <span class="math inline">x_j</span> are labelled <span class="math inline">\widetilde{r_{ji}}</span>.</li>
+<li>This is because our simple linear regression (without <span class="math inline">z</span>) is estimating both the relationship between <span class="math inline">x \leftrightarrow y</span> (dependent and independent variable), <u>as well as</u> the relationship <span class="math inline">x \leftrightarrow z \leftrightarrow y</span> (since all three are correlated).</li>
+<li>This <span class="math inline">x \leftrightarrow z \leftrightarrow y</span> is called the <strong>backdoor</strong> path. However, this backdoor path is not actually the relationship between <span class="math inline">x</span> and <span class="math inline">y</span>, it is actually the relationship between <span class="math inline">z</span> and <span class="math inline">y</span>.</li>
+<li>However, our simple linear regression includes the backdoor path in our coefficient. We do not want that, since we are only interested in how <span class="math inline">x</span> affects <span class="math inline">y</span>, not the backdoor path through <span class="math inline">z</span>.</li>
 </ul>
+<p>Thus, without including <span class="math inline">z</span> in our regression, the regression with just <span class="math inline">y</span> and <span class="math inline">x</span> will be incorrect by <span class="math inline">\beta_2 \delta_1</span>.</p>
 <p><br></p>
-<p>Using all this info, we can interpret the meaning of any coefficient <span class="math inline">\hat\beta_j</span> on the relationship between <span class="math inline">x_j</span> and <span class="math inline">y</span>:</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Interpretation of Coefficients in OLS
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The interpretation of <span class="math inline">\hat\beta_j</span> coefficient, multiplied to variable <span class="math inline">x_j</span> is:</p>
+<p>Thus, <u>to prevent the incorrect estimation of the simple linear regression model, we must add confounding variables <span class="math inline">z</span> to our regression</u>.</p>
+<p>This is where multiple linear regression comes in: Multiple linear regression will allow us to add additional variables to our regressions, thus “controlling” (holding constant) <span class="math inline">z</span>, and allowing us to get an accurate estimate of the relationship between <span class="math inline">x</span> and <span class="math inline">y</span>.</p>
 <ul>
-<li>When <span class="math inline">x_j</span> increases by one unit, there is an expected <span class="math inline">\hat\beta_j</span> unit change in <span class="math inline">y</span>, holding all other explanatory variables constant.</li>
+<li>We will discuss this idea of “controlling” in more detail later in <a href="https://statsnotes.github.io/metrics/2.html">lesson 2.2</a>, as it is more advanced.</li>
 </ul>
-<p>The interpretation of intercept <span class="math inline">\hat\beta_0</span> is still the same: it is the expected value of <span class="math inline">y</span> when all explanatory variables equal 0.</p>
-</div>
-</div>
-<p>We can also standardise our interpretations as shown in <a href="https://statsnotes.github.io/theory/4.html#interpretation-and-standardisation">1.4.5</a>.</p>
 <p><br></p>
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
-<section id="regression-anatomy-formula-for-ols-estimation" class="level1">
-<h1>1.5.6: Regression Anatomy Formula for OLS Estimation</h1>
-<p>In the last section, we discussed the idea of regression anatomy, and how including confounding variables changes the estimates.</p>
-<ul>
-<li>That instead of finding the effect of <span class="math inline">x_j</span> entirely on <span class="math inline">y</span>, we partial out the effect of other explanatory variables, and only find the effect of the uncorrelated part of <span class="math inline">x_j</span> (labelled <span class="math inline">\widetilde {r_{ji}}</span>) on <span class="math inline">y</span>.</li>
-</ul>
-<p>We have already discussed the mathematical solution of OLS in relation to linear algebra (see <a href="https://statsnotes.github.io/theory/6.html#mathematics-of-the-ordinary-least-squares-estimator">1.6.4</a>). However, we can also express the estimation solution of <span class="math inline">\hat\beta_j</span> in relation to the regression anatomy formula.</p>
-<p><br></p>
-<div class="callout callout-style-default callout-note callout-titled">
+<section id="regression-goodness-of-fit-statistics" class="level1">
+<h1>1.5.4: Regression Goodness-of-Fit Statistics</h1>
+<p>We have fit a regression model with our estimates of coefficients. But how good is our regression model? We can use two main summary statistics to figure this out.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Useful Properties of Summation
+Warning!
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Before we start, here are a few key properties of summation</p>
-<p><strong>Property 1:</strong></p>
-<p><span class="math display">
-\sum\limits_{i=1}^n (x_i - \bar{x}) = 0
-</span></p>
-<ul>
-<li>This is because we can expand the left to <span class="math inline">\sum x_i - \sum \bar x</span>.</li>
-<li>Then, we know <span class="math inline">\sum x_i = \sum \bar x</span> (by the formula for mean), so <span class="math inline">\sum x_i - \sum \bar x = 0</span>.</li>
-</ul>
-<p><strong>Property 2:</strong></p>
-<p><span class="math display">
-\sum\limits_{i=1}^n x_i(y_i - \bar{y}) = \sum\limits_{i=1}^n(x_i - \bar{x}) (y_i - \bar{y})
-</span></p>
-<ul>
-<li>This is because on the right side can expand to <span class="math inline">\sum [x_i(y_i - \bar y) - \bar x (y_i - \bar y)]</span>.</li>
-<li>Then, split into <span class="math inline">\sum x_i (y_i - \bar y) - \bar x \sum (y_i - \bar y)</span>.</li>
-<li>We know that by property 1 (which applies to any variable), <span class="math inline">\sum (y_i - \bar y) = 0</span>. Thus, the right side disappears, and we are left with <span class="math inline">\sum x_i (y_i - \bar y)</span>.</li>
-</ul>
-<p><strong>Property 3:</strong></p>
-<p><span class="math display">
-\sum\limits_{i=1}^n x_i(x_i - \bar{x}) = \sum\limits_{i=1}^n(x_i - \bar{x})^2
-</span></p>
-<ul>
-<li>Start by expanding right side to <span class="math inline">\sum [ x_i ( x_i - \bar x) - \bar x (x_i - \bar x)]</span></li>
-<li>Which splits into <span class="math inline">\sum x_i (x_i - \bar x) - \bar x \sum (x_i - \bar x)</span></li>
-<li>By the first property, we know <span class="math inline">\sum x_i - \bar x = 0</span>, so we are only left with <span class="math inline">\sum x_i (x_i - \bar x)</span></li>
-</ul>
-<p>Knowing these properties of summation, w</p>
+<p>The content in this section is almost identical to <a href="https://statsnotes.github.io/intro/4.html#regression-goodness-of-fit-statistics">1.4.6</a>, just slightly adjusted to multiple linear regression. I recommend rereading this section if needed.</p>
 </div>
 </div>
-<p>Let us start off with the OLS estimator for simple linear regression, which calculates the <span class="math inline">\hat\beta_1</span>, the relationship between <span class="math inline">x</span> and <span class="math inline">y</span> (which we derived in <a href="https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator">1.4.4</a>):</p>
-<p><span class="math display">
-\hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n(x_i - \bar{x})^2}
-</span></p>
-<p>Let us look at the numerator. Let us expand the numerator:</p>
+<p><br></p>
+<section id="residual-standard-deviation" class="level3">
+<h3 class="anchored" data-anchor-id="residual-standard-deviation">Residual Standard Deviation</h3>
+<p>One way to summarise our fit is by considering our residuals/errors (see <a href="https://statsnotes.github.io/intro/4.html#regression-goodness-of-fit-statistics">1.4.6</a>).</p>
+<p>For each observation <span class="math inline">i</span>, we have a different residual <span class="math inline">\hat u_i</span>. We can plot the frequency of each error <span class="math inline">\hat u_i</span> into a distribution - which indicates how frequently we get different values of error <span class="math inline">\hat u_i</span>.</p>
+<ul>
+<li>And since <span class="math inline">\hat u_i</span> is the error/residual, the distribution of <span class="math inline">\hat u_i</span> tells us the probability of different sizes of errors (probability of being how far away from the true value <span class="math inline">y_i</span> in the data).</li>
+</ul>
+<p>Since <span class="math inline">\hat u_i</span> is a distribution, we can measure its variance <span class="math inline">\hat\sigma^2</span>, and its standard deviation <span class="math inline">\hat\sigma</span>.</p>
 <p><span class="math display">
 \begin{split}
-&amp; \sum\limits_{i=1}^n (x_i - \bar{x})(y_i - \bar{y}) \\
-= &amp; \sum\limits_{i=1}^n [(x_i - \bar x)y_i - (x_i - \bar x) \bar y] \\
-= &amp; \sum\limits_{i=1}^n(x_i - \bar x)y_i - \sum\limits_{i=1}^n (x_i - \bar x) \bar y \\
-= &amp; \sum\limits_{i=1}^n(x_i - \bar x)y_i - \bar y\sum\limits_{i=1}^n (x_i - \bar x) \\
+&amp; \hat\sigma^2 = Var(u_i) \\
+&amp; \sigma = \sqrt{Var(u_i)}
 \end{split}
 </span></p>
-<p>We know that <span class="math inline">\sum (x_i - \bar x) = 0</span> from the above properties. Thus, we can further simplify to:</p>
-<p><span class="math display">
-\begin{split}
-= &amp; \sum\limits_{i=1}^n(x_i - \bar x)y_i - \bar y\sum\limits_{i=1}^n (x_i - \bar x) \\
-= &amp; \sum\limits_{i=1}^n(x_i - \bar x)y_i - \bar y(0) \\
-= &amp; \sum\limits_{i=1}^n(x_i - \bar x)y_i
-\end{split}
-</span></p>
-<p>Thus, putting the numerator back in, we now we have the equation:</p>
-<p><span class="math display">
-\hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})y_i}{\sum_{i=1}^n(x_i - \bar{x})^2}
-</span></p>
+<p>This is a little difficult to understand. But consider the figure below - the vertical distributions are the distribution of the residual <span class="math inline">\hat u_i</span>. They represent how likely we are to get a certain error. Higher variance means this distribution is more spread out, and lower variance means this distribution is less spread out.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-3513031173.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%"></p>
+</figure>
+</div>
+<p>Naturally, the better fit our regression is, the smaller the variance of residuals should be.</p>
 <p><br></p>
-<p>We know that in multiple linear regression, <span class="math inline">\hat\beta_j</span> is not the full relationship between <span class="math inline">x_j</span> and <span class="math inline">y</span>. Instead, it is the relationship of the part of <span class="math inline">x_j</span> that is uncorrelated with all other explanatory variables, and <span class="math inline">y</span>.</p>
-<ul>
-<li>So in other words, it is the relationship of <span class="math inline">\widetilde{r_{ji}}</span> on <span class="math inline">y</span>.</li>
-</ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Reminder: Regression Anatomy
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Remember, in the last section, we defined <span class="math inline">\widetilde{r_{ji}}</span> as the error term in a regression of <span class="math inline">x_j</span> on all other explanatory variables:</p>
-<p><span class="math display">
-x_{ji} = \gamma_0 + \gamma_1 x_{1i} + ... + \gamma_{k-1}x_{ki} + \widetilde{r_{ji}}
-</span></p>
-<p>Thus, <span class="math inline">\widetilde{r_{ji}}</span> is the part of <span class="math inline">x_j</span> uncorrelated with any other explanatory variable.</p>
-</div>
-</div>
-<p>So, since multiple linear regression is the relationship of <span class="math inline">\widetilde{r_{ji}}</span> on <span class="math inline">y</span>, instead of <span class="math inline">x</span> on <span class="math inline">y</span>, let us replace the <span class="math inline">x</span>’s in our formula with <span class="math inline">\widetilde{r_{ji}}</span>:</p>
-<p><span class="math display">
-\hat{\beta}_j = \frac{\sum_{i=1}^n (\widetilde{r_{ji}} - E(\widetilde{r_{ji}}))y_i}{\sum_{i=1}^n(\widetilde{r_{ji}} - E(\widetilde{r_{ji}}))^2}
-</span></p>
-<p>We can actually simplify this more with a property of regression - remember, that the error term of a regression <span class="math inline">u</span>, should be such that <span class="math inline">E(u)=0</span>.</p>
-<p>We know that <span class="math inline">\widetilde{r_{ji}}</span> is also the error term of a regression, so, <span class="math inline">E(\widetilde{r_{ji}}) = 0</span> as well. Plugging that into our equation, we can get the regression anatomy formula for OLS.</p>
-<p><span class="math display">
-\begin{split}
-\hat{\beta}_j &amp; = \frac{\sum_{i=1}^n (\widetilde{r_{ji}} - E(\widetilde{r_{ji}}))y_i}{\sum_{i=1}^n(\widetilde{r_{ji}} - E(\widetilde{r_{ji}}))^2} \\
-\\
-&amp; = \frac{\sum_{i=1}^n (\widetilde{r_{ji}} - 0)y_i}{\sum_{i=1}^n(\widetilde{r_{ji}} - 0)^2} \\
-\\
-&amp; = \frac{\sum_{i=1}^n \widetilde{r_{ji}} \ y_i}{\sum_{i=1}^n \widetilde {r_{ji}}^2}
-\end{split}
-</span></p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Definition: Regression Anatomy Formula
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The OLS estimate of coefficient <span class="math inline">\beta_j</span> can be written in terms of regression anatomy as follows:</p>
-<p><span class="math display">
-\hat{\beta}_j = \frac{\sum_{i=1}^n \widetilde{r_{ji}} \ y_i}{\sum_{i=1}^n \widetilde {r_{ji}}^2}
-</span></p>
-</div>
-</div>
-<p>Note: in <a href="https://statsnotes.github.io/theory/6.html">lesson 1.6</a>, we will discuss if the OLS estimator is a good estimator or not. For now, we just care about the mechanics of the estimator.</p>
-<p><br></p>
-<p><br></p>
-<hr>
-<p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
-<section id="r-squared-and-goodness-of-fit" class="level1">
-<h1>1.5.7: R-Squared and Goodness of Fit</h1>
-<p>In <a href="https://statsnotes.github.io/theory/4.html#r-squared-and-goodness-of-fit">1.4.6</a>, we discussed R-squared as a measure of the goodness of fit of a model.</p>
-<p>In multiple linear regression, R-squared is the exact same.</p>
+<section id="r-squared" class="level3">
+<h3 class="anchored" data-anchor-id="r-squared">R-Squared</h3>
+<p>The R-squared statistic is another statistic commonly used when interpreting the fit of regressions.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -751,32 +481,266 @@ Definition: R-Squared
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The R-squared metric is a metric describing how good of a fit our model is.</p>
-<p>R-Squared is the proportion of variation in <span class="math inline">y</span>, explained by our model with all our explanatory variables.</p>
-<p>Mathematically:</p>
+<p>R-Squared measures the proportion of variation in <span class="math inline">y</span>, that is explained by our regression model with <span class="math inline">x</span>.</p>
+</div>
+</div>
+<p>R-squared is always between 0 and 1.</p>
+<ul>
+<li><p>Higher values indicates that our regression model with <span class="math inline">x</span> explains a large proportion of the variation in <span class="math inline">y</span>, which is good.</p></li>
+<li><p>Lower values indicates that our regression model with <span class="math inline">x</span> explains a small proportion of the variation in <span class="math inline">y</span>, which is not as good.</p></li>
+</ul>
+<p>However, it is important to not be overly concerned with R-squared, as there are several reasons why it can be a misleading metric.</p>
+<ul>
+<li>The main issue with <span class="math inline">R^2</span> is that adding more explanatory variables never reduces the <span class="math inline">R^2</span> value.</li>
+<li>Furthermore, <span class="math inline">R^2</span> often is high just by random chance - the more variables you have, the more likely you are to “accidentally” explain the variation in <span class="math inline">y</span> just through randomness.</li>
+<li>That means that if we only focus on <span class="math inline">R^2</span>, we might end up adding very unnecessary variables that are not confounders, and do not improve our model. There are some downsides to including too many variables, that we will discuss in Part II of the course on econometric theory.</li>
+</ul>
+<p>There is also another way to mathematically derive R-squared (which makes more intuitive sense based on its definition). We will do this derivation later in <a href="https://statsnotes.github.io/metrics/2.html">lesson 2.2</a>.</p>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+</section>
+<section id="inference-and-hypothesis-testing" class="level1">
+<h1>1.5.5: Inference and Hypothesis Testing</h1>
+<p>Just like in simple linear regression, we will have sampling variation in our estimates of <span class="math inline">\hat\beta_j</span>. We can quantify this variation/uncertainty with the standard error <span class="math inline">\widehat{se}(\hat\beta_j)</span>.</p>
+<ul>
+<li>Note, every explanatory variable <span class="math inline">\hat\beta_1, \dots, \hat\beta_k</span> will have its own standard error and sampling distribution.</li>
+</ul>
+<p>With the standard error, we can run confidence intervals and hypothesis testing.</p>
+<p><br></p>
+<section id="confidence-intervals" class="level3">
+<h3 class="anchored" data-anchor-id="confidence-intervals">Confidence Intervals</h3>
+<p>Just like previously discussed in <a href="https://statsnotes.github.io/intro/4.html#standard-errors-and-confidence-intervals">1.4.4</a>, the 95% confidence interval for our estimate of <span class="math inline">\hat\beta_j</span> has the bounds:</p>
 <p><span class="math display">
-R^2 = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}
+\hat\beta_j - 1.96 \widehat{se}(\hat\beta_j), \ \hat\beta_j + 1.96 \widehat{se}(\hat\beta_j)
 </span></p>
-<p>Where:</p>
-<p><span class="math display">
-\begin{split}
-&amp; SST = \sum\limits_{i=1}^n (y_i - \bar y)^2 \\
-&amp; SSE = \sum\limits_{i=1}^n (\hat y_i - \bar y )^2 \\
-&amp; SSR = \sum\limits_{i=1}^n (\hat u_i^2)
-\end{split}
-</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpretation of Confidence Intervals
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The confidence interval means that under repeated sampling and estimating <span class="math inline">\hat\beta_j</span>, 95% of the confidence intervals we construct will include the true <span class="math inline">\beta_j</span> value in the population.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpretation Warning!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is very important to note that confidence intervals do not mean a 95% probability that the true <span class="math inline">\beta_j</span> is within any specific confidence interval we calculated.</p>
+<p>We cannot know based on one confidence interval, whether it covers or does not cover the true <span class="math inline">\beta_j</span>.</p>
+<p>The correct interpretation is that over many samples from the same population, we would expect 95% of our confidence intervals to contain the true <span class="math inline">\beta_j</span> value.</p>
 </div>
 </div>
 <p><br></p>
-<p>There is an additional property with <span class="math inline">R^2</span> in multiple linear regression: <u><span class="math inline">R^2</span> never falls when another explanatory is added to the regression.</u></p>
+</section>
+<section id="hypothesis-testing" class="level3">
+<h3 class="anchored" data-anchor-id="hypothesis-testing">Hypothesis Testing</h3>
+<p>Hypothesis testing follows the same procedure as simple linear regression in <a href="https://statsnotes.github.io/intro/4.html#hypothesis-testing">1.4.5</a> (also see <a href="https://statsnotes.github.io/theory/2.html#intuition-of-hypothesis-testing">1.2.5</a> and <a href="https://statsnotes.github.io/theory/2.html#implementing-a-hypothesis-test">1.2.6</a> for more info on hypothesis tests).</p>
+<p>In regression, our typical null hypotheses is that there is no relationship between <span class="math inline">x_j</span> and <span class="math inline">y</span>, and our alternate hypothesis is that there is a relationship between <span class="math inline">x_j</span> and <span class="math inline">y</span>. Thus, our hypotheses are:</p>
+<p><span class="math display">
+\begin{split}
+&amp; H_0 : \beta_j = 0 \\
+&amp; H_1: \beta_j ≠ 0
+\end{split}
+</span></p>
+<p>Now, we calculate a t-test statistic:</p>
+<p><span class="math display">
+t = \frac{\hat\beta_j - 0}{\widehat{se}(\hat\beta_j)}
+</span></p>
 <ul>
-<li>So essentially, any explanatory variable added to the regression will always boost R-squared.</li>
+<li>Where the 0 represents the null hypothesis value. If you have any other null hypothesis value, change the 0 to your hypothesis value.</li>
 </ul>
-<p>This shows the downside of R-squared as a metric - if we just include random variables, by chance, these variables will explain the variation in <span class="math inline">y</span>.</p>
+<p>Now, we will consult a t-distribution (not a normal distribution) to calculate the p-values.</p>
 <ul>
-<li>Thus, focusing on R-squared can result in models with silly or nonsensical explanatory variables.</li>
+<li>We use a t-distribution, not a normal distribution, even if we have met the central limit theorem. The reason we do this is a little complicated, and will be explained later in <a href="https://statsnotes.github.io/metrics/4.html">lesson 2.4</a>.</li>
 </ul>
-<p>We will discuss the importance of careful model selection in the later parts of the course, when we move to more applied statistics for social science purposes.</p>
+<p>Once we have obtained our p-values from the t-distribution, we can interpret the p-values as follows:</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpretation of p-Values for Regression
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The p-value is the probability of getting a test statistic equally or more extreme than the one we got with our sample estimate <span class="math inline">\hat\beta_j</span>, given the null hypothesis is true.</p>
+<ul>
+<li><p>If <span class="math inline">p&lt;0.05</span>, we believe the probability of the null hypothesis is low enough, such that we reject the null hypothesis (that there is no relationship between <span class="math inline">x_j</span> and <span class="math inline">y</span>), and conclude our alternate hypothesis (that there is a relationship between <span class="math inline">x_j</span> and <span class="math inline">y</span>).</p></li>
+<li><p>If <span class="math inline">p&gt;0.05</span>, we cannot reject the null hypothesis, and cannot reject that there is no relationship between <span class="math inline">x_j</span> and <span class="math inline">y</span>.</p></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note how I have been using the word <strong>relationship</strong>, not causal effect.</p>
+<p>Causality is not established through estimators, it is established through a strong experimental design (which we will cover in part II of the course).</p>
+</div>
+</div>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+</section>
+<section id="hypothesis-testing-with-more-than-one-coefficient" class="level1">
+<h1>1.5.6: Hypothesis Testing with More than One Coefficient</h1>
+<p>Sometimes, we want to test more than one coefficient at a time in a hypothesis test.</p>
+<ul>
+<li>This will be especially obvious why after <a href="https://statsnotes.github.io/metrics/6.html">lesson 1.6</a>.</li>
+</ul>
+<p>For example, let us say we want to test the statistical significance of <span class="math inline">\hat\beta_2</span> and <span class="math inline">\hat\beta_3</span> at the same time in the following regression model:</p>
+<p><span class="math display">
+\hat y = \hat\beta_0 + \hat\beta_1x_1 + \hat\beta_2x_2 + \hat\beta_3x_3
+</span></p>
+<p>What we can do is create two models - the alternate model <span class="math inline">M_a</span>, and the null model <span class="math inline">M_0</span>. The alternate model <span class="math inline">M_a</span> is the model we have above, and the null modle <span class="math inline">M_0</span> is the model without the two coefficients that we want to test (<span class="math inline">\hat\beta_2</span> and <span class="math inline">\hat\beta_3</span>).</p>
+<p><span class="math display">
+\begin{split}
+&amp; M_0: y = \beta_0 + \beta_1x_1 \\
+&amp; M_a: y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3x_3
+\end{split}
+</span></p>
+<p>Our statistical test will be to test if the alternative model <span class="math inline">M_a</span> is significantly “better” than our null model <span class="math inline">M_0</span>. If <span class="math inline">M_a</span> is indeed significantly better, than we know that the coefficients <span class="math inline">\hat\beta_2</span> and <span class="math inline">\hat\beta_3</span> together are statistically significant.</p>
+<p>Let us generalise this framework.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: F-Test of Nested Models
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The F-test of Nested Models allows us to test multiple coefficients at once. It compares two models: <span class="math inline">M_0</span> and <span class="math inline">M_a</span>.</p>
+<p><span class="math display">
+\begin{split}
+&amp; M_0: y = \beta_0 + \beta_1x_1 + \dots + \beta_g x_g \\
+&amp; M_a: y = \beta_0 + \beta_1 x_1 + \dots + \beta_g x_g + \beta_{g+1} x_{g+1} + \dots + \beta_kx_k
+\end{split}
+</span></p>
+<ul>
+<li>The model <span class="math inline">M_a</span> contains all of the explanatory variables, including the ones we want to test.</li>
+<li>The model <span class="math inline">M_0</span> contains the other explanatory variables that are not a part of our test. Model <span class="math inline">M_0</span> must be “nested” in model <span class="math inline">M_a</span>: i.e.&nbsp;all explanatory variables present in <span class="math inline">M_0</span> must also be in <span class="math inline">M_a</span>.</li>
+</ul>
+<p>The model tests if <span class="math inline">M_a</span> is significantly better than <span class="math inline">M_0</span>. If this is the case, the extra coefficients in <span class="math inline">M_a</span> that we are testing are statistically significant.</p>
+</div>
+</div>
+<p><br></p>
+<p>How do we run a F-test of nested models?</p>
+<p>Recall the concept of <span class="math inline">R^2</span> discussed in 1.5.4. <span class="math inline">R^2</span> describes how much of the variation in <span class="math inline">y</span> our explanatory variables explain.</p>
+<p>The F-test uses the <span class="math inline">R^2</span> of the two models, and compares them.</p>
+<ul>
+<li>If the <span class="math inline">M_a</span> model has a statistically significantly higher <span class="math inline">R^2</span> value than the <span class="math inline">M_0</span> model, then <span class="math inline">M_a</span> is considered statistically significant, and we can conclude that the additional explanatory variables in <span class="math inline">M_a</span> are statistically significant.</li>
+</ul>
+<p><br></p>
+<p>As we know from hypothesis testing (see <a href="https://statsnotes.github.io/theory/2.html#intuition-of-hypothesis-testing">1.2.5</a> and <a href="https://statsnotes.github.io/theory/2.html#implementing-a-hypothesis-test">1.2.6</a> for intuition), we need a test statistic and distribution to run a hypothesis test.</p>
+<p>The statistic for a F-test is the F-statistic.</p>
+<ul>
+<li>Let us define <span class="math inline">R^2_a</span> and <span class="math inline">SSR_a</span> as the <span class="math inline">R^2</span> and sum of squared residuals for model <span class="math inline">M_a</span>.</li>
+<li>Let us define <span class="math inline">R^2_0</span> and <span class="math inline">SSR_0</span> as the <span class="math inline">R^2</span> and sum of squared residuals for model <span class="math inline">M_0</span>.</li>
+<li>The total number of coefficients in model <span class="math inline">M_a</span> is <span class="math inline">k_a</span>, and for model <span class="math inline">M_0</span>, is <span class="math inline">k_0</span>.</li>
+<li>Let us define <span class="math inline">n</span> as the number of observations (should be the same for both models).</li>
+</ul>
+<p>Our F-statistic is mathematically calculated as:</p>
+<p><span class="math display">
+F = \frac{(SSR_0 - SSE_a)/(k_a - k_0)}{SSR_a / (n - k_a - 1)}
+</span></p>
+<p>After calculating our F-statistic, we consult an F-distribution with <span class="math inline">k_a - k_0</span> and <span class="math inline">n-k_a - 1</span> degrees of freedom.</p>
+<p>With this distribution, we can obtain our p-value.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpretation of p-Values for F-tests
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The p-value is the probability of getting a test statistic equally or more extreme than the one we got with our alternate model <span class="math inline">M_a</span>, given the null hypothesis is true.</p>
+<ul>
+<li><p>If <span class="math inline">p&lt;0.05</span>, we believe the probability of the null hypothesis is low enough, such that we reject the null hypothesis (that <span class="math inline">M_0</span> is a better model), and conclude our alternate hypothesis (that <span class="math inline">M_a</span> is a better model). This also means that the extra coefficients in <span class="math inline">M_a</span> are jointly statistically significant.</p></li>
+<li><p>If <span class="math inline">p&gt;0.05</span>, we cannot reject the null hypothesis, and cannot reject that <span class="math inline">M_0</span> is the better model. Thus, the extra coefficients in <span class="math inline">M_a</span> are jointly not statistically significant.</p></li>
+</ul>
+</div>
+</div>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="prediction-with-regression" class="level1">
+<h1>1.5.7: Prediction with Regression</h1>
+<p>So far, we have focused on how to interpret the relationship between our explanatory and outcome variables. However, we can also use regression for prediction purposes.</p>
+<ul>
+<li>Multiple linear regression is typically much better and accurate at prediction than simple linear regression.</li>
+<li>This is because we are inputting more information for the predictions. Obviously, it is easier to predict something given more data. For example, it is hard to predict someone’s debt level with just their age. But if you have info on their age, credit score, income, occupation, etc., it becomes easier.</li>
+</ul>
+<p>Recall our fitted values equation from earlier:</p>
+<p><span class="math display">
+\hat y_i = \hat\beta_0 + \hat\beta_1 x_{1i} + \dots + \hat\beta_k x_{ki}
+</span></p>
+<p>We input some values of <span class="math inline">\overrightarrow{x_i}</span>, and we will get a predicted value <span class="math inline">\hat y_i</span>.</p>
+<p><br></p>
+<p>The best way to really illustrate this is with an example. Let us say that our outcome variable <span class="math inline">y</span> is income, and our explanatory variable <span class="math inline">x_1</span> is years of education, and <span class="math inline">x_2</span> is age. We will get a regression model like this:</p>
+<p><span class="math display">
+\text{income}_i = \beta_0 + \beta_1 \text{education}_i + \beta_2 \text{age}_i + u_i
+</span></p>
+<p>Our fitted values equation will take the form of:</p>
+<p><span class="math display">
+\widehat{\text{income}}_i = \hat\beta_0 + \hat\beta_1 \text{education}_i + \hat\beta_2 \text{age}_i
+</span></p>
+<p>For simplicity, let us say that our estimate calculates <span class="math inline">\hat\beta_0 = 20000</span>, <span class="math inline">\hat\beta_1 = 3000</span>, and <span class="math inline">\hat\beta_2 = 500</span>. Now, our fitted values equation will be:</p>
+<p><span class="math display">
+\widehat{\text{income}}_i = 20000 + 3000 \  \text{education}_i + 500 \ \text{age}_i
+</span></p>
+<p>Using this fitted value equation, we can plug in any education level and age, and get the predicted income for that education and age level.</p>
+<p>For example, what would we predict for a 30 year old with 10 years of education to have as an income? Let us plug in 10 for education into our fitted values:</p>
+<p><span class="math display">
+\begin{split}
+\widehat{\text{income}}_i &amp; = 20000 + 3000 \  \text{education}_i + 500 \text{age}_i \\
+\widehat{\text{income}}_i &amp; = 20000 + 3000 (10) + 500(30) \\
+\widehat{\text{income}}_i &amp; = 20000 + 30000 + 15000 \\
+\widehat{\text{income}}_i &amp; = 65000
+\end{split}
+</span></p>
+<ul>
+<li>Thus, someone who is 30 years old with 10 years of education has a predicted income of 65000.</li>
+</ul>
+<p>We can do this for any value of education (or any <span class="math inline">x</span> variable): just plug in <span class="math inline">\overrightarrow x</span> into the fitted values equation, and you will get a prediction of <span class="math inline">y</span>.</p>
+<p><br></p>
+<p>Remember in the past few sections, how we discussed statistical inference with <span class="math inline">\hat\beta_j</span>, and how in different samples, the value of <span class="math inline">\hat\beta_j</span> will change?</p>
+<p>Well, what implication does this have on our prediction task? After all, if <span class="math inline">\hat\beta_j</span> (and <span class="math inline">\hat\beta_0</span>) change in different samples, our estimates will also change in different samples.</p>
+<p>To address this, we can also create <strong>confidence intervals for predictions</strong>.</p>
+<p>The variance of the residuals <span class="math inline">\hat u_i</span>, <span class="math inline">Var(\hat u_i)</span>, is what we are interested in (discussed in the previous section). The standard deviation of the residuals is just the square root of variance. Let us call this <span class="math inline">sd(\hat u_i)</span>.</p>
+<p>Using this concept, we can create 95% confidence intervals for our predictions <span class="math inline">\hat y_i</span> (just like for estimates of <span class="math inline">\hat\beta_1</span>).</p>
+<p><span class="math display">
+\hat y_i - 1.96 \ sd(\hat u_i), \ \ \hat y_i + 1.96 \ sd(\hat u_i)
+</span></p>
 <p><br></p>
 <p><br></p>
 <hr>
@@ -786,12 +750,8 @@ R^2 = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}
 <h1>Implementation in R</h1>
 <section id="regression-estimation" class="level2">
 <h2 class="anchored" data-anchor-id="regression-estimation">Regression Estimation</h2>
-<p>To estimate a regression, we can use the <em>feols()</em> function from the package <em>fixest</em>, or we can use the base-R function <em>lm()</em>.</p>
-<ul>
-<li>The syntax is the same for both (at least for now).</li>
-<li>The <em>feols()</em> function does have a few advantages for techniques that will be discussed later, especially when it comes to causal inference and econometrics.</li>
-</ul>
-<p>For the <em>feols()</em> function, we will need the <em>fixest</em> package. Make sure to install it if you have not previously (google how to install R-packages if needed).</p>
+<p>To estimate a regression, we can use the <em>feols()</em> function from the package <em>fixest</em>.</p>
+<p>For the <em>feols()</em> function, we will need the <em>fixest</em> package. Make sure to install it if you have not previously (see appendix B.1).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fixest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -799,26 +759,25 @@ R^2 = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}
 <p><strong>Syntax:</strong></p>
 <p>For the <em>feols()</em> function, the syntax is as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">feols</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3, <span class="at">data =</span> mydata)</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">feols</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2<span class="sc">+</span> x3, <span class="at">data =</span> mydata, <span class="at">se =</span> <span class="st">"hetero"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Replace <em>model</em> with any name you want to store your regression model in.</li>
-<li>Replace <em>y</em> with your outcome variable name, and <em>x1, x2, x3</em> with your explanatory variable name.</li>
-<li>You can add more explanatory variables by adding + signs and <em>x4 + x5 …</em> and so on. You can also remove explanatory variables down to only 1.</li>
+<li>Replace <em>y</em> with your outcome variable name, and <em>x1, x2, x3</em> with your explanatory variables name. You can add more after a + sign, and remove down to one explanatory variable.</li>
 <li>Replace <em>mydata</em> with the name of your dataframe.</li>
 </ul>
-<p>The <em>lm()</em> function has the exact same syntax for simple linear regression, except that we replace <em>feols()</em> with <em>lm()</em>:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3, <span class="at">data =</span> mydata)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>The <em>se = “hetero”</em> tells R to use heteroscedasticity-robust standard errors (which we will discuss later in <a href="https://statsnotes.github.io/metrics/4.html">lesson 2.4</a>).</p>
+<ul>
+<li>Just know it is standard to use robust standard errors nowadays.</li>
+</ul>
+<p>Note: you can also use the <em>lm()</em> function with the same syntax, excluding the <em>se = “hetero”</em> section. However, this will not include robust standard errors.</p>
 <p><br></p>
 <p><strong>Example:</strong></p>
-<p>Let us run a regression with outcome variable <em>immatt</em> (attitude towards immigrants), explanatory variables <em>age</em> and <em>educ</em> (years of education), from the dataframe called <em>dta</em>:</p>
+<p>Let us run a regression with outcome variable <em>immatt</em> (attitude towards immigrants), explanatory variable <em>age</em> and <em>educ</em> (education), from the dataframe called <em>dta</em>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_model <span class="ot">&lt;-</span> <span class="fu">feols</span>(immatt <span class="sc">~</span> age <span class="sc">+</span> educ, <span class="at">data =</span> dta)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>my_model <span class="ot">&lt;-</span> <span class="fu">feols</span>(immatt <span class="sc">~</span> age <span class="sc">+</span> educ, <span class="at">data =</span> dta)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>OLS estimation, Dep. Var.: immatt
 Observations: 33,706
@@ -832,33 +791,79 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 RMSE: 0.932834   Adj. R2: 0.08225</code></pre>
 </div>
 </div>
-<p>We can see in the estimate column, we get our intercept estimate <span class="math inline">\hat\beta_0</span>, and our explanatory variables coefficient estimates <span class="math inline">\hat\beta_1</span> and <span class="math inline">\hat\beta_2</span>.</p>
-<p>The result is similar with <em>lm()</em>:</p>
+<p>We can see our output:</p>
+<ul>
+<li>In the estimate column, we get our intercept estimate <span class="math inline">\hat\beta_0</span>, and our explanatory variable coefficient estimates <span class="math inline">\hat\beta_1</span> and <span class="math inline">\hat\beta_2</span>.</li>
+<li>In the standard error column, we can see R calculates the standard errors for us.</li>
+<li>In the t-value column, we can see R calculates the t-test statistic for us.</li>
+<li>In the p-value column, we can see R calculates the p-value for us, and puts stars * if the coefficient is statistically significant.</li>
+</ul>
+<p><br></p>
+</section>
+<section id="confidence-intervals-1" class="level2">
+<h2 class="anchored" data-anchor-id="confidence-intervals-1">Confidence Intervals</h2>
+<p>To create confidence intervals for our coefficients, we can use the <em>confint()</em> function.</p>
+<ul>
+<li>Note: you must fit a regression model before doing this, see above.</li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>my_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(immatt <span class="sc">~</span> age <span class="sc">+</span> educ, <span class="at">data =</span> dta)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Replace <em>model</em> with the variable name that you stored your regression model to.</li>
+</ul>
+<p><br></p>
+<p><strong>Example:</strong></p>
+<p>Let us find the confidence intervals for the regression we fit above:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(my_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = immatt ~ age + educ, data = dta)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--2.97099 -0.58912  0.06513  0.63948  2.77153 
-
-Coefficients:
-              Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) -0.5293545  0.0266382  -19.87   &lt;2e-16 ***
-age         -0.0051753  0.0002906  -17.81   &lt;2e-16 ***
-educ         0.0638327  0.0013813   46.21   &lt;2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.9329 on 33703 degrees of freedom
-Multiple R-squared:  0.0823,    Adjusted R-squared:  0.08225 
-F-statistic:  1511 on 2 and 33703 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>                  2.5 %       97.5 %
+(Intercept) -0.58156640 -0.477142689
+age         -0.00574481 -0.004605809
+educ         0.06112520  0.066540126</code></pre>
 </div>
 </div>
+<p>We can see that R outputs the lower and upper bound of our confidence intervals for our coefficients.</p>
+<p><br></p>
+</section>
+<section id="prediction" class="level2">
+<h2 class="anchored" data-anchor-id="prediction">Prediction</h2>
+<p>For prediction, we can use the <em>predict()</em> function. You must fit a regression model before doing this, and also must have new <span class="math inline">x</span> values in which you want to predict.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predict</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">newdata =</span> x_values)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>predictions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Replace <em>predictions</em> with any variable name in which to store your predictions.</li>
+<li>Replace <em>model</em> with your regression model variable name that you fit earlier.</li>
+<li>Replace <em>x_values</em> with any vector of x-values you want to predict.</li>
+</ul>
+<p>The final <em>predictions</em> prints out our predictions.</p>
+<p><br></p>
+<p><strong>Example:</strong></p>
+<p>Let us use the previous regression example, with outcome variable <em>immatt</em> (attitude towards immigrants), explanatory variable <em>age</em>.</p>
+<p>Let us say I want to predict the immigration attitude of a 20 and a 60 year old, both at education years equalling 12. I will first create a vector with these explanatory variable values.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># my values for x1: age</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>x1_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">60</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># my values for x2: educ</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>x2_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">12</span>,<span class="dv">12</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># bind both variables into dataframe</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>x_values <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">cbind</span>(x1_values, x2_values))</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#name the columns so R knows what variables they are</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(x_values) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"age"</span>, <span class="st">"educ"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, let us predict:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>my_prediction <span class="ot">&lt;-</span> <span class="fu">predict</span>(my_model, <span class="at">newdata =</span> x_values)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>my_prediction</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  0.13313121 -0.07388117</code></pre>
+</div>
+</div>
+<p>We can see that our output includes predictions.</p>
 <p><br></p>
 <p><br></p>
 <hr>
