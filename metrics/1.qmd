@@ -365,7 +365,7 @@ Thus, the variance of our estimator $\bar x_n$ shrinks to zero, so as sample siz
 The same law of large numbers gives us these other properties:
 
 ::: callout-note
-## Probability Limit Probabilities
+## Probability Limit Properties
 
 The first two properties are that the sample variance and sample covariance estimators are consistent:
 

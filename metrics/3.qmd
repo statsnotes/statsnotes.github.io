@@ -43,9 +43,9 @@ This lesson covers the following topics:
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.6.1: Residuals and Properties of OLS Estimator
+# 2.3.1: Residuals and Properties of OLS Estimator
 
-Once we have our OLS estimates $\hat\beta_0$ and $\hat\beta_1$ in simple linear regression (explained in [1.4.4](https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator)), we can obtain both our fitted values, and the OLS residuals $\hat u_i$:
+Once we have our OLS estimates $\hat\beta_0$ and $\hat\beta_1$ in simple linear regression, we can obtain both our fitted values, and the OLS residuals $\hat u_i$:
 
 $$
 \begin{split}
@@ -54,20 +54,11 @@ $$
 \end{split}
 $$
 
-Important note, the residual $\hat u_i$ is different from the error $u_i$:
-
-$$
-\begin{split}
-& u_i = y_i - \beta_0 - \beta_1 x_i \\
-& \hat u_i = y_i - \hat\beta_0 - \hat\beta_1 x_i
-\end{split}
-$$
-
 The figure below shows what a residual for a point looks like: the distance between the best fit line.
 
 ![](images/clipboard-3479749458.png){fig-align="center" width="70%"}
 
-The same applies to the residuals of multiple regression, with the addition of more parameters (parameters derived in [1.5.4](https://statsnotes.github.io/theory/5.html#mathematics-of-the-ordinary-least-squares-estimator)):
+The same applies to the residuals of multiple regression, with the addition of more parameters:
 
 $$
 \begin{split}\hat u_i & = y_i - \hat y_i \\& = y_i - (\hat \beta_0 + \hat\beta_1x_{1i} + \dots + \hat\beta_k x_{ki}) \\& = y_i - \hat \beta_0 - \hat\beta_1x_{1i} - \dots - \hat\beta_k x_{ki}\end{split}
@@ -75,7 +66,7 @@ $$
 
 <br />
 
-Recall that the OLS estimates $\hat\beta_0$ and $\hat\beta_1$ are chosen to satisfy the following first order conditions for simple linear regression (see [1.4.4](https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator)):
+Recall that the OLS estimates $\hat\beta_0$ and $\hat\beta_1$ are chosen to satisfy the following first order conditions for simple linear regression (see [2.2.2](https://statsnotes.github.io/metrics/2.html#estimation-for-simple-linear-regression)):
 
 $$
 \begin{split}
@@ -84,7 +75,7 @@ $$
 \end{split}
 $$
 
-For multiple regression OLS estimates of $\hat\beta_0 , \dots \hat\beta_k$ are chosen to satisfy the following first order conditions (see [1.5.4](https://statsnotes.github.io/theory/5.html#mathematics-of-the-ordinary-least-squares-estimator)):
+For multiple regression OLS estimates of $\hat\beta_0 , \dots \hat\beta_k$ are chosen to satisfy the following first order conditions (see [2.2.4](https://statsnotes.github.io/metrics/2.html#estimation-for-multiple-linear-regression)):
 
 $$
 \begin{split}& \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\& \sum\limits_{i=1}^n x_{1i}(y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\
@@ -123,13 +114,13 @@ This property ensures that the average value of $y_i$ in our data is the same as
 
 ### Property 2: No Covariance Between $x$ and Residual.
 
-Using the first order conditions of OLS, and the definition of $\hat u_i$ from above, we know the following to be true:
+From above, we know the following to be true:
 
 $$
 \sum\limits_{i=1}^n \hat u_i = 0
 $$
 
-Which also means that $\bar{\hat u_i} = 0$ (since an average is just the sum divided by the number of observations, and the sum is equal to 0).
+Which also means that $\bar{\hat u} = 0$ (since an average is just the sum divided by the number of observations, and the sum is equal to 0).
 
 We also know that:
 
@@ -175,9 +166,7 @@ $$
 \end{split}
 $$
 
-Thus, the OLS estimated best-fit line always passes though point $(\bar x, \bar y)$ (the means of our data).
-
--   The same property applies to multiple linear regression.
+Thus, the OLS estimated best-fit line always passes though point $(\bar x, \bar y)$ (the means of our data). The same property applies to multiple linear regression, but for point $(\bar x_1, \dots, \bar x_k, \bar y)$.
 
 <br />
 
@@ -187,11 +176,11 @@ Thus, the OLS estimated best-fit line always passes though point $(\bar x, \bar 
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.6.2: Unbiasedness of OLS Under the Gauss-Markov Theorem
+# 2.3.2: Unbiasedness of OLS Under the Gauss-Markov Theorem
 
-An unbiased estimator, if we recall from [1.2.8](https://statsnotes.github.io/theory/2.html#properties-of-estimators), means that over many different estimates, the expected value of all the estimates is the true parameter value: $E(\hat{\theta}_n) = \theta$.
+An unbiased estimator, if we recall from [2.1.2](https://statsnotes.github.io/metrics/1.html#unbiasedness-of-estimators), means that over many different estimates, the expected value of all the estimates is the true parameter value: $E(\hat{\theta}_n) = \theta$.
 
-Unbiasedness is desirable property of estimators. Is OLS Unbiased? The Gauss-Markov Theorem proves that OLS is unbiased when 4 conditions are met.
+Unbiasedness is desirable property of estimators. The Gauss-Markov Theorem proves that OLS is unbiased when 4 conditions are met.
 
 ::: callout-tip
 ## Definition: Gauss-Markov Theorem for Simple Linear Regression
@@ -217,7 +206,7 @@ The Gauss-Markov Theorem states that under 4 conditions, the OLS estimator for m
 -   **MLR.4 (Zero Conditional Mean)**. $E(u|x_1, \dots, x_k) = 0$.
 :::
 
-This section will be focused on the conditions. The next section will prove the unbiasedness of OLS under these conditions.
+This section will be focused on the conditions. The next sections will prove the unbiasedness of OLS under these conditions.
 
 <br />
 
@@ -225,17 +214,7 @@ This section will be focused on the conditions. The next section will prove the 
 
 Assumption SLR.1 and MLR.1 state that a model must be **linear in parameters**.
 
-This means that the parameters of the model $\beta_0, \dots, \beta_k$ must not be multiplied together - they must be added together. For example, the following is linear:
-
-$$
-y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u
-$$
-
-While the following is not linear (since parameters $\beta_1$ and $\beta_2$ are multiplied):
-
-$$
-y = \beta_0 + \beta_1\beta_2x_1 + \beta_3 x_2 + u
-$$
+This means that the parameters of the model $\beta_0, \dots, \beta_k$ must not be multiplied together - they must be added together.
 
 Note: This does not mean that the actual regression line must be linear - only the parameters/coefficients must not be multiplied, the variables can be. For example, the following model is still linear in parameters:
 
@@ -249,11 +228,7 @@ $$
 
 ### Assumption SLR.2 and MLR.2: Random Sampling
 
-This assumption says that all observations in our sample are randomly sampled from the same population. Why is this useful? Take the standard linear model:
-
-$$
-y = \beta_0 + \beta_1x + u
-$$
+This assumption says that all observations in our sample are randomly sampled from the same population.
 
 The error term $u$ is some random variable (with its own probability distribution), that can be defined by its expectation $E(u)$.
 
@@ -262,35 +237,19 @@ The error term $u$ is some random variable (with its own probability distributio
 
 Thus, random sampling allows us to say $E(u) = E(u_i)$.
 
-Why is this not the case when random sampling is not present?
-
--   Imagine you are not random sampling. Perhaps, some observations $i$ with lower $u_i$ values are more likely to be sampled. If there is no random sampling, then $E(u_i)$ may not equal $E(u)$.
-
 <br />
 
 ### Assumption SLR.3: Sample Variation in $x$
 
-Recall that our $\hat\beta_1$ solution of OLS in simple linear regression is:
+This assumption says that for our explanatory variable, $Var(x) ≠ 0$.
 
-$$
-\hat{\beta}_1 = \frac{Cov(x, y)}{Var(x)}
-$$
-
-This tells us that for $\hat\beta_1$ to exist, $Var(x) ≠ 0$. We cannot divide by 0, so $Var(x) = 0$ would not produce any $\hat\beta_1$ estimate.
+Basically, not all $x$ values can be the same exact number, there must be at least some variation.
 
 <br />
 
 ### Assumption MLR.3: No Perfect Multicollinearity
 
-Recall that in [1.5.6](https://statsnotes.github.io/theory/5.html#regression-anatomy-formula-for-ols-estimation), we derived the OLS estimator in terms of regression anatomy as:
-
-$$
-\hat\beta_j = \frac{\sum_{i=1}^n \widetilde{r_{ji}} \ y_i}{\sum_{i=1}^n \widetilde{r_{ji}}^2}
-$$
-
--   Where $\widetilde{r_{ij}}$ is the part of $x_j$ that is uncorrelated with any other explanatory variables.
-
-Obviously, as we know from mathematics, the denominator cannot be zero, or else, $\hat\beta_j$ will not exists. This implies that we cannot derive $\hat\beta_j$ if $\sum \widetilde{r_{ij}}^2 = 0$.
+This assumption says that $\sum \widetilde{r_{ij}}^2 = 0$.
 
 -   If $\sum\widetilde{r_{ij}}^2 = 0$, that means there is no part of $x_j$ that is completely uncorrelated with any other explanatory variable. In other words, that means $x_j$ is **perfectly correlated** to at least one other explanatory variable, or a linear function of multiple other explanatory variables.
 
@@ -298,7 +257,6 @@ But practically, what does that mean when choosing our explanatory variables?
 
 -   It means that we cannot choose measurements of the same concept in different units.
 -   For example, you cannot include the two variables *height in inches* and *height in cm* in the same regression. This is because both variables are perfectly correlated, just differing only by a common factor.
--   This is also a consideration in categorical explanatory variables, which we will cover in [lesson 1.8](https://statsnotes.github.io/theory/8.html).
 
 <br />
 
@@ -320,7 +278,7 @@ $$
 
 -   In simple linear regression, $E(u_i|x_i) = 0$.
 
-This is the [key assumption]{.underline} of OLS, since it is the one that is most frequently violated. We will discuss this in more detail in section [1.6.5](https://statsnotes.github.io/theory/6.html#endogeneity-and-violation-of-gauss-markov).
+This is the [key assumption]{.underline} of OLS, since it is the one that is most frequently violated. We will discuss this in more detail in section [2.3.6](https://statsnotes.github.io/metrics/3.html#exogeneity-and-endogeneity).
 
 <br />
 
@@ -330,11 +288,9 @@ This is the [key assumption]{.underline} of OLS, since it is the one that is mos
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.6.3: Proof of OLS Unbiasedness in Simple Linear Regression
+# 2.3.3: Proof of OLS Unbiasedness in Simple Linear Regression
 
-In the last section, we covered the Gauss-Markov assumptions, and how when they are met, OLS is unbiased. In this section, we will use those assumptions to prove the unbiasedness of OLS in simple linear regression.
-
--   Or in other words, we want to show $E(\hat\beta_1) = \beta_1$
+In the last section, we covered the assumptions for OLS being unbiased. In this section, we will use those assumptions to prove the unbiasedness of OLS in simple linear regression. Or in other words, we want to show $E(\hat\beta_1) = \beta_1$
 
 ::: callout-note
 ## Useful Properties of Summation
@@ -373,7 +329,7 @@ $$
 
 <br />
 
-We want to show $E(\hat\beta_1) = \beta_1$. Let us start off with the OLS estimator (which we derived in [1.4.4](https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator)):
+We want to show $E(\hat\beta_1) = \beta_1$. Let us start off with the OLS estimator (which we derived in [2.2.2](https://statsnotes.github.io/metrics/2.html#estimation-for-simple-linear-regression)):
 
 $$
 \hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n(x_i - \bar{x})^2}
@@ -382,7 +338,7 @@ $$
 ::: callout-note
 ## SLR.3 Variance in $x$
 
-The existence of $\hat{\beta}_1$ is guaranteed by condition 2 from above, since the denominator is equal to $Var(x)$, so that must not be 0. Thus, this Gauss-Markov assumption must be met.
+The existence of $\hat{\beta}_1$ is guaranteed by SLR.3 $Var(x) ≠ 0$, since we cannot divide by 0.
 :::
 
 <br />
@@ -398,7 +354,7 @@ $$
 \end{split}
 $$
 
-We know that $\sum (x_i - \bar x) = 0$. Thus, we can further simplify to:
+We know that $\sum (x_i - \bar x) = 0$ (from the properties above). Thus, we can further simplify to:
 
 $$
 \begin{split}
@@ -407,14 +363,6 @@ $$
 = & \sum\limits_{i=1}^n(x_i - \bar x)y_i
 \end{split}
 $$
-
-Thus, putting the numerator back in, we now we have the equation:
-
-$$
-\hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})y_i}{\sum_{i=1}^n(x_i - \bar{x})^2}
-$$
-
-<br />
 
 Now, let us play with the numerator more (note the properties of summation introduced earlier):
 
@@ -437,7 +385,7 @@ $$
 \end{split}
 $$
 
-Where $w_i = \frac{x_i - \bar{x}}{\sum (x_i - \bar{x})^2}$, which is a function of random variable $x$. We could also write $w_i$ as $\frac{x_i - \bar{x}}{SST_x}$ (where $SST_x$ is total sum of squares for $x$).
+-   Where $w_i = \frac{x_i - \bar{x}}{\sum (x_i - \bar{x})^2}$, which is a function of random variable $x$. We could also write $w_i$ as $\frac{x_i - \bar{x}}{SST_x}$ (where $SST_x$ is total sum of squares for $x$).
 
 Since $w_i$ is a function of $x$, that means $\hat\beta_1$ is also a function of $x$ (depends on the value of $x$).
 
@@ -463,14 +411,12 @@ The Zero-Conditional Mean assumption says $E(u|x) = 0$.
 ::: callout-note
 ## SLR.2 Random Sampling
 
-Random sampling allows us to say that $E(u|x)$ is the same as $E(u_i|x_i)$, where both equal 0.
-:::
-
-Thus, with these two assumptions, we know that:
+Random sampling, combined with zero-conditional mean, allows us to say:
 
 $$
 E(u|x) = E(u_i | x_i) = E(u_i|x) = 0
 $$
+:::
 
 This means that:
 
@@ -510,7 +456,7 @@ $$
 
 Thus, $E(\hat\beta_1) = \beta_1$, proving the unbiasedness of OLS under the Gauss-Markov conditions.
 
--   The most critical assumption, and the one most frequently violated, is SLR.4 Zero-Conditional Mean. We will discuss this more in [1.6.5](https://statsnotes.github.io/theory/6.html#endogeneity-and-violation-of-gauss-markov).
+-   The most critical assumption, and the one most frequently violated, is SLR.4 Zero-Conditional Mean. We will discuss this assumption more as the lesson progresses.
 
 <br />
 
@@ -520,7 +466,7 @@ Thus, $E(\hat\beta_1) = \beta_1$, proving the unbiasedness of OLS under the Gaus
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.6.4: Proof of OLS Unbiasedness in Multiple Linear Regression
+# 2.3.4: Proof of OLS Unbiasedness in Multiple Linear Regression
 
 In the last section, we covered the proof of OLS unbiasedness for simple linear regression. Here, we cover the proof for multiple linear regression, which is similar, but has some differences.
 
@@ -559,7 +505,7 @@ $$
 
 <br />
 
-Recall the regression anatomy solution of OLS for $\hat\beta_1$ (derived in [1.5.6](https://statsnotes.github.io/theory/5.html#regression-anatomy-formula-for-ols-estimation)):
+Recall the regression anatomy solution of OLS for $\hat\beta_1$ (derived in [2.2.6](https://statsnotes.github.io/metrics/2.html#regression-anatomy-formula-for-ols-estimation)):
 
 $$
 \hat\beta_1 = \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ y_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
@@ -570,7 +516,7 @@ $$
 ::: callout-note
 ## MLR.3 No Perfect Multicollinearity
 
-The existence of $\hat\beta_1$ is guaranteed by condition 3 from above, since the denominator $\sum\widetilde{r_{1i}}^2$ must not be 0.
+The existence of $\hat\beta_1$ is guaranteed by MLR.3 $\sum\widetilde{r_{1i}}^2 ≠ 0$, since we cannot divide by 0.
 :::
 
 Now, let us plug in $y_i = \beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki} + u_i$ into our regression anatomy formula:
@@ -629,16 +575,14 @@ The Zero-Conditional Mean assumption says $E(u|x_1, \dots, x_k) = 0$.
 ::: callout-note
 ## MLR.2 Random Sampling
 
-Random sampling allows us to say that $E(u|x_1, \dots, x_k)$ is the same as $E(u_i|x_{1i}, \dots, x_{ki})$, where both equal 0.
+Random sampling, combined with Zero-Conditional Mean, allows us to say:
+
+$$
+E(u|x_1, \dots, x_k)=E(u_1|x_{1i}, \dots, x_{ki}) = 0
+$$
 :::
 
-Thus, with these two assumptions, we know that:
-
-$$
-E(u_i|x_{1i}, \dots, x_{ki}) = 0
-$$
-
-Which means that:
+Thus, plugging that in to our formula, we get:
 
 $$
 \begin{split}
@@ -650,7 +594,7 @@ E(\hat\beta_1 | x_{1i}, \dots x_{ki})
 \end{split}
 $$
 
-Now, just like in simple linear regression (see [1.6.3](https://statsnotes.github.io/theory/6.html#proof-of-ols-unbiasedness-in-simple-linear-regression)), we use the **law of iterated expectations** to conclude this proof:
+Now, just like in simple linear regression, we use the **law of iterated expectations** to conclude this proof:
 
 $$
 \begin{split}
@@ -662,7 +606,7 @@ $$
 
 Thus, OLS is unbiased under the Gauss-Markov conditions.
 
--   The most critical assumption, and the one most frequently violated, is SLR.4 Zero-Conditional Mean. We will discuss this more in [1.6.5](https://statsnotes.github.io/theory/6.html#endogeneity-and-violation-of-gauss-markov) (next section).
+-   The most critical assumption, and the one most frequently violated, is SLR.4 Zero-Conditional Mean. We will discuss this assumption more as the lesson progresses.
 
 <br />
 
@@ -672,68 +616,207 @@ Thus, OLS is unbiased under the Gauss-Markov conditions.
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.6.5: Endogeneity and Violation of Gauss-Markov
+# 2.3.5: Asymptotic Consistency of OLS
 
-We have discussed the importance of the Zero-Conditional Mean assumption (SLR.4 and MLR.4) and how it is key to the unbiasedness of OLS. Let us recall this assumption.
+We have proven OLS is unbiased under the 4 Gauss-Markov conditions. The key assumption (as mentioned multiple times) is Zero-Conditional Mean:
+
+$$
+E(u|x_1, \dots x_k) = 0
+$$
+
+This assumption means that the error term $u$ cannot be correlated with any $x_1, \dots x_k$, OR any function of $x_1, \dots, x_k$. This is quite restrictive.
+
+However, this assumption can be weakened to a new assumption:
 
 ::: callout-tip
-## SLR.4 and MLR.4 Zero-Conditional Mean
+## Definition: Zero Mean and Exogeneity Assumption
 
-In the population, the error term $u$ must have an expectation of 0, given all values of $x$. Mathematically:
+We can weaken *MLR.4 Zero-Conditional Mean* to the *Zero-Mean and Exogeneity assumption*:
 
 $$
-E(u|x_1, \dots x_k) = 0 \text{ for all } (x_1, \dots , x_k)
+\begin{split}
+& E(u) = 0 \\
+& Cov(x_j, u) = 0, \quad \text{for } j = 1,\dots k
+\end{split}
 $$
 
--   Of course, for simple linear regression, it is just $E(u|x)$ (without the extra $x$ variables).
+The second assumption can also be rewritten as:
+
+$$
+E(x_j u) = 0
+$$
+
+-   The proof of this is almost identical to the proof of $\sum x \hat u = 0$ implying $Cov(x, \hat u) = 0$ we did in section 2.3.1.
+
+Note: if we meet the full MLR.4 Zero-Conditional Mean assumption, we will automatically meet this weakened assumption. However, the reverse is not true.
+
+[Under this new assumption (and the other 3 Gauss-Markov assumptions), OLS is biased in small sample sizes, but asymptotically consistent.]{.underline}
 :::
 
-This also implies that the error term $u$ and any $x_1, \dots , x_k$ are uncorrelated with each other. This is because if $u$ was correlated with $x_j$, it would not always be equal to 0 no matter the value of $x$.
+This assumption is weaker than our original assumption MLR.4 Zero-Conditional Mean, as we no longer need to have $u$ uncorrelated with any function of $x_1, \dots, x_k$. We only need $u$ to be uncorrelated with each $x_j$ individually.
 
-This alternative statement relating to correlation/covariance is called **exogeneity**.
+Under this new assumption (and the other 3 Gauss-Markov assumptions), OLS is biased in small sample sizes, but asymptotically consistent. In other words:
 
--   If this assumption is violated (where $x_j$ is correlated with error $u$), then we have **endogeneity**, and $x_j$ is considered an **endogeneous regressor**.
--   We will discuss endogeneity in more detail in lesson 1.7.
+$$
+\text{plim}(\hat\beta_j) = \beta_j
+$$
 
 <br />
 
-::: callout-tip
-## Definition: Endogeneity
-
-Endogeneity is when a regressor/explanatory variable $x_j$ is correlated with the error term $u_i$. Mathematically, endogeneity is defined as when:
-
-$$
-Cov(x_j, u) ≠ 0
-$$
-
-When endogeneity exists, the assumption of zero-conditional mean/exogeneity $E(u|x_1, \dots, x_k) = 0$ is violated.
-
--   This means that OLS estimates are no longer unbiased if endogeneity/an endogenous variable are present.
-:::
+### Proof of OLS Asymptotic Consistency
 
 ::: callout-warning
 ## Warning!
 
-When endogeneity is present (i.e. $Cov(x_j, u) ≠ 0$), the Zero Conditional Mean is **guaranteed** to be violated.
+Ensure you understand section [2.1.5](https://statsnotes.github.io/metrics/1.html#asymptotic-consistency-of-estimators) well before starting this section.
+:::
 
-However, the reverse is not actually true. It is possible for to have zero endogeneity (i.e. $Cov(x_j , u) = 0$ for each explanatory variable $x_j$), and still violate the Zero Conditional Mean condition.
+In section 2.3.3, we got to this point when proving unbiasdeness:
 
-Why? This is a bit technical, but the condition $E(u|x_1, \dots x_k) = 0$ means that $u$ cannot be correlated with not just each explanatory variable $x_j$ separately, but all explanatory variables, and any function of multiple explanatory variables.
+$$
+\hat\beta_1=  \beta_1 + \frac{\sum_{i=1}^n(x_i - \bar{x}) u_i}{\sum_{i=1}^n (x_i - \bar{x})^2}
+$$
 
--   Do not worry, we will not care about this too much.
--   The reason we don't care very much is because of asymptotic properties of OLS, which allow us to weaken Zero-Conditional Mean to just exogeneity $Cov(x_j, u) = 0$ (beyond the scope of this class).
--   As long as our sample size is not really small, just meeting exogeneity (avoiding endogeneity) is usually good enough.
+We can add $\frac{1}{n}$ (or $n^{-1}$) to the top and bottom of the fraction (which cancel each other out, keeping the equation equivalent):
+
+$$
+\hat\beta_1=  \beta_1 + \frac{n^{-1} \sum_{i=1}^n(x_i - \bar{x}) u_i}{n^{-1} \sum_{i=1}^n (x_i - \bar{x})^2}
+$$
+
+Now, let us expand the numerator, and simplify, and we get:
+
+$$
+\begin{split}
+\hat\beta_1 & =  \beta_1 + \frac{n^{-1} \sum_{i=1}^n x_i u_i - n^{-1} \sum_{i=1}^n \bar x u_i}{n^{-1} \sum_{i=1}^n (x_i - \bar{x})^2} \\
+& =  \beta_1 + \frac{n^{-1} \sum_{i=1}^n x_i u_i - \bar x \ n^{-1} \sum_{i=1}^n u_i}{n^{-1} \sum_{i=1}^n (x_i - \bar{x})^2} \\
+& =  \beta_1 + \frac{ \overline{xu} - \bar x \bar u}{S.Var(x)}
+\end{split}
+$$
+
+-   Where $S.Var(x)$ is the sample variance of $x$.
+
+We want to find $\text{plim}(\hat\beta_1)$. We will need a few properties for this:
+
+::: callout-note
+## Properties of Probability Limits
+
+We know these general rules about probability limits (see [2.1.5](https://statsnotes.github.io/metrics/1.html#asymptotic-consistency-of-estimators))
+
+$$
+\begin{split}
+& \text{plim}(\bar x_n) = \mu _x \\
+& \text{plim}(S.Var(x_i)) = Var(x_i) \\
+& \text{plim}(S.Cov(x_i, y_i)) = Cov (x_i, y_i)
+\end{split}
+$$
+
+The other properties are about algebra with probability limits. Assume $\text{plim} (u_n) = a$, and $\text{plim}(v_n) = b$. Then, the following are true:
+
+$$
+\begin{split}
+& \text{plim} (u_n + v_n) = a + b \\
+& \text{plim} (u_n v_n) = ab \\
+& \text{plim} (u_n v_n) = a/b
+\end{split}
+$$
+:::
+
+Knowing this, we then know that:
+
+$$
+\begin{split}
+\text{plim}(\hat\beta_1) & = \beta_1 + \frac{ \text{plim}(\overline{xu}) - \text{plim}( \bar x \bar u) }{ \text{plim}(S.Var(x))} \\
+& = \beta_1 + \frac{ \text{plim}(\overline{xu}) - \text{plim}(\bar x) \text{plim}(\bar u) }{ \text{plim}(S.Var(x))} \\
+&  = \beta_1 + \frac{ E(xu) - E(x) E(u) }{Var(x)} \\
+\end{split}
+$$
+
+::: callout-note
+## Zero-Mean and Exogeneity Assumption
+
+The weakened Zero-Mean and Exogeneity assumption states:
+
+$$
+\begin{split}
+& E(u) = 0 \\
+& E(xu) = 0
+\end{split}
+$$
+:::
+
+Using this assumption, we can conclude the proof:
+
+$$
+\begin{split}
+\text{plim}(\hat\beta_1) & = \beta_1 + \frac{ E(xu) - E(x) E(u) }{Var(x)} \\
+& = \beta_1 + \frac{ 0 - E(x)0}{Var(x)} \\
+& = \beta_1 + \frac{ 0 }{Var(x)} \\
+& = \beta_1+0 \\
+\text{plim}(\hat\beta_1) & = \beta_1
+\end{split}
+$$
+
+Thus, OLS is asymptotically consistent under a weakened version of MLR.4 Zero-Conditional Mean - called the Zero-Mean and Exogeneity Assumption.
+
+-   Under this weakened assumption (without meeting the full MLR.4 assumption), OLS is [biased but consistent]{.underline}.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 2.3.6: Exogeneity and Endogeneity
+
+We have proven that OLS is unbiased under the key assumption of MLR.4 Zero-Conditional Mean:
+
+$$
+E(u|x_1, \dots x_k) = 0
+$$
+
+We also proven that OLS is asymptotically consistent under a weaker version of the assumption: Zero-Mean and Exogeneity:
+
+$$
+\begin{split}
+& E(u) = 0 \\
+& Cov(x_j, u) = 0, \quad \text{for } j = 1,\dots k
+\end{split}
+$$
+
+The critical part of both assumptions is **Exogeneity**.
+
+::: callout-tip
+## Definition: Exogeneity and Endogeneity
+
+**Exogeneity** is defined as each explanatory variable being uncorrelated with the error term:
+
+$$
+Cov(x_j, u)=0 \quad \text{for } j =1, \dots, k
+$$
+
+If this is violated, it is called **endogeneity**. An endogenous regressor is defined as an explanatory variable that is correlated with the error term.
+
+If exogeneity is violated and endogeneity is present, two things happen:
+
+1.  We fail the "weak" Zero-Mean and Exogeneity condition, meaning OLS is not asymptotically consistent if we have endogeneity.
+2.  We fail MLR.4 Zero-Conditional Mean, meaning OLS is biased.
+
+Thus, Exogeneity is a neccesary condition for OLS estimator to be reliable for estimation.
 :::
 
 <br />
 
-We want to avoid Endogeneity. But what causes Endogeneity?
+We want to avoid Endogeneity, as it means OLS is both biased and asymptotically inconsistent.
 
-The main cause of endogeneity is Omitted Variable Bias (covered in the last lesson)
+-   That basically means when endogeneity is present, under no circumstances can we rely on the accuracy of the estimates of OLS.
 
--   The omitted variable $z$'s effect is mostly subsumed into the error term $u_i^S$ of the short regression.
+But what causes Endogeneity? The main cause of endogeneity is Omitted Variable Bias (covered in [1.5.3](https://statsnotes.github.io/intro/5.html#omitted-variable-bias-and-confounding-variables)).
+
+-   The omitted confounding variable $z$'s effect is mostly subsumed into the error term $u_i^S$ of the short regression.
 -   But some bit of $z$ (that is correlated with $x$) is included in our coefficient (specifically, $\beta_2 \delta_1$).
--   That means our explanatory variable $x$ will be correlated with the error term, violating the Gauss-Markov assumption of zero-conditional mean, and producing biased OLS results.
+-   That means our explanatory variable $x$ will be correlated with the error term, meaning we have endogeneity and unreliable OLS estimates.
 
 However, there are other factors that can cause endogeneity as well.
 
@@ -747,168 +830,9 @@ How can we solve this problem?
 -   The easiest way is to add more control variables.
 -   If we include every single possible confounder that is correlated both with our explanatory variable of interest, and the outcome variable, then, there will be no more omitted variable bias, and no more endogeneity.
 
-However, as we will discuss a lot more in Part II on causal inference, including all confounding variables is often impossible, as many social science situations will have thousands of them, many of them **unobservable** or impossible to measure.
+However, as we will discuss a lot more in Part III on applied econometrics and causal inference, including all confounding variables is often impossible, as many social science situations will have thousands of them, many of them **unobservable** or impossible to measure.
 
--   Thus, there are also other techniques to "unbias" OLS without including all possible confounders. We will discuss an example of this in [lesson 1.10](https://statsnotes.github.io/theory/10.html) on instrumental variables.
-
-<br />
-
-<br />
-
-------------------------------------------------------------------------
-
-[Homepage](https://statsnotes.github.io)
-
-# 1.6.6: OLS as a Method of Moments Estimator
-
-We have mostly focused on one specific estimator: the Ordinary Least Squares estimator. However, in this section, we will focus on the Method of Moments Estimator, and how actually, OLS is a special case of the Method of Moments estimator.
-
-::: callout-tip
-## Definition: Method of Moments Estimator
-
-The Method of Moments Estimator is another estimator of the true value of populations in the parameter. The estimator defines key population **moments** of interest - which are the population parameters written in terms of expected values.
-
-Then, the Method of Moments uses the sample equivalents of the population moments to estimate the population parameter.
-
--   For example, to estimate the population mean, the Method of Moments uses the sample mean.
-
-We should have **at least** as many population moments, as we have estimands.
-:::
-
-<br />
-
-This is a little hard to grasp. However, a simple example of the Method of Moments estimator can help us understand this.
-
-Let us say that we have some random variable $y$, with a true population mean $\mu$. We want to estimate $\mu$, but we only have a sample of the population
-
-First, let us define the moment of interest $\mu$ in terms of expectation:
-
-$$
-\mu = E(y)
-$$
-
-The method of moments says we should use the sample equivalent of the population parameter. The sample equivalent of $\mu$ (the true mean of the population), is of course, the sample mean $\bar y$.
-
-With the method of moments estimator, our "moment" estimate of the true mean $\mu$ of $y$ would be:
-
-$$
-\hat\mu = \bar y = \frac{1}{n}\sum\limits_{i=1}^ny_i
-$$
-
-<br />
-
-Another example of a Method of Moments estimator is if we have some random variable $y$, and we want to estimate the population mean $\mu$ and variance $\sigma^2$.
-
-Here, we have two population moments $\mu$ and $\sigma^2$, that can be expressed in expected value:
-
-$$
-\begin{split}
-& \mu = E(y) \\
-& \sigma^2 = E((y - \mu)^2)
-\end{split}
-$$
-
-The method of moments estimator uses the sample equivalents of the population parameters to estimate it. Thus, our "moment" estimates are:
-
-$$
-\begin{split}
-& \hat\mu = \bar y \\
-& \hat\sigma^2 = S.Var(y)
-\end{split}
-$$
-
--   Where $S.Var(y)$ is the variance of the sample $y$.
-
-<br />
-
-[OLS can also be considered a Method of Moments estimator]{.underline}. We will have moments for each parameter $\beta_0$ and $\beta_1$ we are trying to estimate.
-
-::: callout-tip
-## Definition: Bivariate Regression as a Method of Moments Estimator
-
-Consider the bivariate regression model:
-
-$$
-y = \beta_0 + \beta_1x + u
-$$
-
-The OLS estimator can be derived as a method of moments estimator, with 2 moments, one for each parameter ($\beta_0, \beta_1$):
-
-$$
-\begin{split}
-& E(y-\beta_0 -\beta_1x) = 0 \\
-& E(x(y - \beta_0 - \beta_1 x)) = 0
-\end{split}
-$$
-
-Since we know $u = y - \beta_0 - \beta_1 x$, we can rewrite the two moments as:
-
-$$
-\begin{split}
-& E(u) = 0 \\
-& E(xu) = 0
-\end{split}
-$$
-
-The estimates of these moments would use the sample equivalents: $\hat\beta_0$ and $\hat\beta_1$.
-
-$$
-\begin{split}
-& E(y-\hat\beta_0 -\hat\beta_1x) = 0 \\
-& E(x(y - \hat\beta_0 - \hat\beta_1 x)) = 0
-\end{split}
-$$
-:::
-
-<br />
-
-Let us prove that OLS is a special case of the method of moments estimator. Remember our OLS minimisation conditions (from [1.4.4](https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator))
-
-$$
-\begin{split}
-& \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0 \\
-& \sum\limits_{i=1}^n x_i (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0
-\end{split}
-$$
-
-Since by definition, average/expectation is $E(x) = \frac{1}{n} \sum x_i$, we can rewrite the OLS minimisation conditions as:
-
-$$
-\begin{split}
-& n \times E(y_i - \hat\beta_0 - \hat\beta_1x_i) = 0 \\
-& n \times E(x_i(y_i - \hat\beta_0 - \hat\beta_1x_i)) = 0
-\end{split}
-$$
-
-And since anything multiplied to a zero turns into zero, we can ignore the $n$ in the first order condition, and only focus on the expected value part. Thus, our conditions are:
-
-$$
-\begin{split}
-& E(y_i - \hat\beta_0 - \hat\beta_1x_i) = 0 \\
-& E(x_i(y_i - \hat\beta_0 - \hat\beta_1x_i)) = 0
-\end{split}
-$$
-
-Which as we can see, are the exact same minimisation conditions as the method of moments estimator. Thus, the OLS estimator is a special case of the Method of Moments estimator, and they produce the same coefficients.
-
-<br />
-
-Note how the two moment conditions of the Method of Moments estimator can be written as:
-
-$$
-\begin{split}
-& E(u) = 0 \\
-& E(xu) = 0
-\end{split}
-$$
-
-These moments also imply that $Cov(x,u) = 0$, which was proved in [1.6.1](https://statsnotes.github.io/theory/6.html#residuals-and-properties-of-ols-estimator). This is the assumption of exogeneity, as discussed in [1.6.5](https://statsnotes.github.io/theory/6.html#endogeneity-and-violation-of-gauss-markov).
-
-Thus, this means that if we do not meet exogeneity, and have endogeneity present, we are estimating our parameters with an invalid moment condition - since the moments are not true of endogeneity is present.
-
--   This is another reason why violating endogeneity produces biased estimates - since endogeneity means the moment conditions are invalid.
-
-We will come back to the method of moments estimator in lesson 1.10 on instrumental variables, which will discuss how we can fix this invalid moment condition when endogeneity is present.
+-   Thus, there are also other techniques to "unbias" OLS without including all possible confounders. We will discuss an example of this in [lesson 2.6](https://statsnotes.github.io/metrics/6.html) on instrumental variables.
 
 <br />
 
@@ -918,7 +842,7 @@ We will come back to the method of moments estimator in lesson 1.10 on instrumen
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.6.7: OLS and the Conditional Expectation Function
+# 2.3.7: OLS and the Conditional Expectation Function
 
 We previously discussed random variables and distributions in [lesson 1.1](https://statsnotes.github.io/theory/1.html). There, we learned that random variables can be characterised by distributions, which can be summarised with the expectation and variance.
 
@@ -1036,19 +960,36 @@ $$
 \end{split}
 $$
 
-These are equivalent to the OLS Method of Moments estimator conditions (see [1.6.6](https://statsnotes.github.io/theory/6.html#ols-as-a-method-of-moments-estimator)), so the same estimates will be produced.
+<br />
+
+Now, recall our OLS minimisation conditions (from [2.2.3](https://statsnotes.github.io/metrics/2.html#estimation-for-simple-linear-regression))
 
 $$
 \begin{split}
-& E(y-\beta_0 -\beta_1x) = 0 \\
-& E(x(y - \beta_0 - \beta_1 x)) = 0
+& \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0 \\
+& \sum\limits_{i=1}^n x_i (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0
 \end{split}
 $$
 
-Thus, OLS best approximates the conditional expectation function.
+Since by definition, average/expectation is $E(x) = \frac{1}{n} \sum x_i$, we can rewrite the OLS minimisation conditions as:
 
--   Of course, assuming the Gauss-Markov conditions of OLS unbiasedness are met.
--   Or from the method of moments persepctive, the moment conditions $E(u) = E(xu) = 0$ are valid (which they are assuming exogeneity $Cov(x,u) = 0$).
+$$
+\begin{split}
+& n \times E(y_i - \hat\beta_0 - \hat\beta_1x_i) = 0 \\
+& n \times E(x_i(y_i - \hat\beta_0 - \hat\beta_1x_i)) = 0
+\end{split}
+$$
+
+And since anything multiplied to a zero turns into zero, we can ignore the $n$ in the first order condition, and only focus on the expected value part. Thus, our conditions are:
+
+$$
+\begin{split}
+& E(y_i - \hat\beta_0 - \hat\beta_1x_i) = 0 \\
+& E(x_i(y_i - \hat\beta_0 - \hat\beta_1x_i)) = 0
+\end{split}
+$$
+
+Which as we can see, are the exact same minimisation conditions as the conditional expectation function. Thus, OLS is the best approximation of the conditional expectation function.
 
 <br />
 
