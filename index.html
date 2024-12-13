@@ -63,14 +63,15 @@ ul.task-list li input[type="checkbox"] {
    
   <ul class="collapse">
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#part-i-statistical-and-econometric-theory" id="toc-part-i-statistical-and-econometric-theory" class="nav-link" data-scroll-target="#part-i-statistical-and-econometric-theory">Part I: Statistical and Econometric Theory</a></li>
-  <li><a href="#part-ii-applied-econometric-methods" id="toc-part-ii-applied-econometric-methods" class="nav-link" data-scroll-target="#part-ii-applied-econometric-methods">Part II: Applied Econometric Methods</a></li>
+  <li><a href="#part-i-introduction-to-statistical-models" id="toc-part-i-introduction-to-statistical-models" class="nav-link" data-scroll-target="#part-i-introduction-to-statistical-models">Part I: Introduction to Statistical Models</a></li>
+  <li><a href="#part-ii-econometric-theory" id="toc-part-ii-econometric-theory" class="nav-link" data-scroll-target="#part-ii-econometric-theory">Part II: Econometric Theory</a></li>
+  <li><a href="#part-iii-applied-econometrics" id="toc-part-iii-applied-econometrics" class="nav-link" data-scroll-target="#part-iii-applied-econometrics">Part III: Applied Econometrics</a></li>
   <li><a href="#part-iii-multivariate-statistical-methods" id="toc-part-iii-multivariate-statistical-methods" class="nav-link" data-scroll-target="#part-iii-multivariate-statistical-methods">Part III: Multivariate Statistical Methods</a></li>
   <li><a href="#part-iv-time-series-methods" id="toc-part-iv-time-series-methods" class="nav-link" data-scroll-target="#part-iv-time-series-methods">Part IV: Time Series Methods</a></li>
   <li><a href="#part-v-spatial-econometric-methods" id="toc-part-v-spatial-econometric-methods" class="nav-link" data-scroll-target="#part-v-spatial-econometric-methods">Part V: Spatial Econometric Methods</a></li>
-  <li><a href="#part-vi-statistical-learning-and-text-analysis" id="toc-part-vi-statistical-learning-and-text-analysis" class="nav-link" data-scroll-target="#part-vi-statistical-learning-and-text-analysis">Part VI: Statistical Learning and Text Analysis</a></li>
   <li><a href="#appendix-a-mathematical-methods" id="toc-appendix-a-mathematical-methods" class="nav-link" data-scroll-target="#appendix-a-mathematical-methods">Appendix A: Mathematical Methods</a></li>
   <li><a href="#appendix-b-programming-in-r" id="toc-appendix-b-programming-in-r" class="nav-link" data-scroll-target="#appendix-b-programming-in-r">Appendix B: Programming in R</a></li>
+  <li><a href="#appendix-c-simple-machine-learning" id="toc-appendix-c-simple-machine-learning" class="nav-link" data-scroll-target="#appendix-c-simple-machine-learning">Appendix C: Simple Machine Learning</a></li>
   <li><a href="#about-the-author" id="toc-about-the-author" class="nav-link" data-scroll-target="#about-the-author">About the Author</a></li>
   </ul>
 </nav>
@@ -86,84 +87,95 @@ ul.task-list li input[type="checkbox"] {
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>This is a guide on applied statistics, with a focus on applications to the social sciences. This guide was created during my masters degree, as a way to consolidate all my knowledge and skills in one area.</p>
-<p>The guide covers a variety of topics, including statistical theory, causal inference, multivariate statistics, spatial and time-series data, and statistical learning.</p>
-<p>The guide is divided into parts, with each part containing lessons. You do not have to undertake the parts in order, except that <em>Part I</em> is a prerequisite for subsequent parts. Each lesson provides R-code for implementation purposes.</p>
+<p>The guide covers a variety of topics, including statistical theory, causal inference, multivariate statistics, spatial econometrics, and time-series analysis.</p>
+<p>The guide is divided into parts, with each part containing lessons. Each lesson provides R-code for implementation purposes.</p>
 <ul>
 <li>I recommend using a laptop or tablet to access this page. Use the sidebar for easy navigation.</li>
-<li>In the appendix, I provide some guides on useful mathematical methods.</li>
+<li>In the appendix, I provide some guides on useful mathematical methods, R-programming, and simple machine learning.</li>
 </ul>
 <p>Also, if you are interested in political science, I recommend checking out my <a href="https://politicalscience.github.io">Political Science and Political Economics Guide</a>.</p>
 <p><br></p>
 </section>
-<section id="part-i-statistical-and-econometric-theory" class="level2">
-<h2 class="anchored" data-anchor-id="part-i-statistical-and-econometric-theory">Part I: Statistical and Econometric Theory</h2>
-<p><em>This part introduces basic statistical theory, the generalised linear model (GLM), and the common estimators used in econometrics. This part serves as the basis of all following material.</em></p>
-<p>Pre-requisites: Single Variable Calculus (see Appendix A, lessons A.1 through A.6). Linear Algebra and Multivariate Calculus is helpful.</p>
+<section id="part-i-introduction-to-statistical-models" class="level2">
+<h2 class="anchored" data-anchor-id="part-i-introduction-to-statistical-models">Part I: Introduction to Statistical Models</h2>
+<p><em>This part starts by introducing the basics of statistical theory. Then, we discuss the generalised linear model - the family of regression models form the basis of much of statistics.</em></p>
+<p>Pre-requisites: Single Variable Calculus is helpful.</p>
 <ul>
-<li><a href="https://statsnotes.github.io/theory/1.html">1.1: Random Variables and Distributions</a></li>
-<li><a href="https://statsnotes.github.io/theory/2.html">1.2: Estimates and Statistical Inference</a></li>
-<li><a href="https://statsnotes.github.io/theory/3.html">1.3: Relationships with Correlation and Covariance</a></li>
-<li><a href="https://statsnotes.github.io/theory/4.html">1.4: Simple Linear Regression</a></li>
-<li><a href="https://statsnotes.github.io/theory/5.html">1.5: Multiple Linear Regression</a></li>
-<li><a href="https://statsnotes.github.io/theory/6.html">1.6: Properties of the OLS Estimator</a></li>
-<li><a href="https://statsnotes.github.io/theory/7.html">1.7: Statistical Inference with OLS Estimator</a></li>
-<li><a href="https://statsnotes.github.io/theory/8.html">1.8: Categorical Explanatory Variables</a></li>
-<li><a href="https://statsnotes.github.io/theory/9.html">1.9: Interactions and Functional Form</a></li>
-<li>1.10: Instrumental Variables Estimator</li>
-<li>1.11: Logistic Regression Model</li>
-<li>1.12: Ordinal and Multinomial Logistic Models</li>
-<li>1.13: Poisson and Negative Binomial Models</li>
-<li>1.14: Maximum Likelihood Estimator</li>
+<li><a href="https://statsnotes.github.io/intro/1.html">1.1: Random Variables and Distributions</a></li>
+<li><a href="https://statsnotes.github.io/intro/2.html">1.2: Basics of Statistical Inference</a></li>
+<li><a href="https://statsnotes.github.io/intro/3.html">1.3: Relationships with Correlation and Covariance</a></li>
+<li><a href="https://statsnotes.github.io/intro/4.html">1.4: Simple Linear Regression</a></li>
+<li><a href="https://statsnotes.github.io/intro/5.html">1.5: Multiple Linear Regression</a></li>
+<li><a href="https://statsnotes.github.io/intro/8.html">1.6: Categorical Explanatory Variables</a></li>
+<li><a href="https://statsnotes.github.io/intro/9.html">1.7: Interactions and Functional Form</a></li>
+<li>1.8: Logistic Regression Model</li>
+<li>1.9: Ordinal and Multinomial Logistic Models</li>
+<li>1.10: Poisson and Negative Binomial Models</li>
 </ul>
 <p><br></p>
 </section>
-<section id="part-ii-applied-econometric-methods" class="level2">
-<h2 class="anchored" data-anchor-id="part-ii-applied-econometric-methods">Part II: Applied Econometric Methods</h2>
-<p><em>This part takes the theory introduced in Part I, and applies it to research designs and methods to identify and estimate causal effects.</em></p>
-<p>Pre-requisites: Part I (specifically 1.1 through 1.12).</p>
+<section id="part-ii-econometric-theory" class="level2">
+<h2 class="anchored" data-anchor-id="part-ii-econometric-theory">Part II: Econometric Theory</h2>
+<p><em>In the last part, we introduced a series of models. Each model, however, requires estimators in order to fit the model. This section explores the main estimators used in econometrics, and their properties.</em></p>
+<p>Prerequisites: Part I, and single variable calculus and probability (Appendix A.1-A.6). Basic Linear Algebra is helpful but not required.</p>
 <ul>
-<li>2.1: Causal Inference and Causal Frameworks</li>
-<li>2.2: Randomised Controlled Trials</li>
-<li>2.3: Regression and Selection on Observables</li>
-<li>2.4: Matching and Weighting Estimators</li>
-<li>2.5: Selection on Observables - Extensions</li>
-<li>2.6: Differences-in-Differences</li>
-<li>2.7: Fixed Effects Estimator</li>
-<li>2.8: Modern Differences-in-Differences Estimators</li>
-<li>2.9: Instrumental Variable Designs</li>
-<li>2.10: Examiner, Shift-Share, and Recentered Instruments</li>
-<li>2.11: Sharp Regression Discontinuity Designs</li>
-<li>2.12 Fuzzy Regression Discontinuity and Kink Designs</li>
-<li>2.13: Survey Experimental Designs</li>
+<li><a href="https://statsnotes.github.io/metrics/1.html">2.1: Introduction and Properties of Estimators</a></li>
+<li><a href="https://statsnotes.github.io/metrics/2.html">2.2: The Ordinary Least Squares Estimator</a></li>
+<li><a href="https://statsnotes.github.io/metrics/3.html">2.3: Unbiasedness of the OLS Estimator</a></li>
+<li><a href="https://statsnotes.github.io/metrics/4.html">2.4: Variance of the OLS Estimator</a></li>
+<li>2.5: Method of Moments Estimator</li>
+<li>2.6: Instrumental Variables Estimator</li>
+<li>2.7: The Maximum Likelihood Estimator</li>
+</ul>
+<p><br></p>
+</section>
+<section id="part-iii-applied-econometrics" class="level2">
+<h2 class="anchored" data-anchor-id="part-iii-applied-econometrics">Part III: Applied Econometrics</h2>
+<p><em>This part takes the theory introduced in Part I and II, and applies it to research designs and methods to identify and estimate causal effects.</em></p>
+<p>Pre-requisites: Part I and Part II.</p>
+<ul>
+<li>3.1: Causal Inference and Causal Frameworks</li>
+<li>3.2: Randomised Controlled Trials</li>
+<li>3.3: Regression and Selection on Observables</li>
+<li>3.4: Matching and Weighting Estimators</li>
+<li>3.5: Selection on Observables - Extensions</li>
+<li>3.6: Differences-in-Differences</li>
+<li>3.7: Fixed Effects Estimator</li>
+<li>3.8: Modern Differences-in-Differences Estimators</li>
+<li>3.9: Instrumental Variable Designs</li>
+<li>3.10: Examiner, Shift-Share, and Recentered Instruments</li>
+<li>3.11: Sharp Regression Discontinuity Designs</li>
+<li>3.12 Fuzzy Regression Discontinuity and Kink Designs</li>
 </ul>
 <p><br></p>
 </section>
 <section id="part-iii-multivariate-statistical-methods" class="level2">
 <h2 class="anchored" data-anchor-id="part-iii-multivariate-statistical-methods">Part III: Multivariate Statistical Methods</h2>
 <p><em>This part introduces the modern multivariate methods in statistics, relating to both dimensional reduction, as well as latent variable models.</em></p>
-<p>Pre-requisites: Part I</p>
+<p>Pre-requisites: Part I and Part II</p>
 <ul>
-<li>3.1: Principle Components Analysis</li>
-<li>3.2: Exploratory Factor Analysis</li>
-<li>3.3: Confirmatory Factor Analysis</li>
-<li>3.4: Latent Traits and Item Response Theory</li>
-<li>3.5: Latent Class Models</li>
-<li>3.6: Cluster Analysis</li>
-<li>3.7: Structural Equation Modelling</li>
-<li>3.8: Extensions to Structural Equation Modelling</li>
+<li>3.1: Introduction to Multivariate Statistics</li>
+<li>3.2: Principle Components Analysis</li>
+<li>3.3: Exploratory Factor Analysis</li>
+<li>3.4: Confirmatory Factor Analysis</li>
+<li>3.5: Latent Traits and Item Response Theory</li>
+<li>3.6: Latent Class Models</li>
+<li>3.7: Cluster Analysis</li>
+<li>3.8: Structural Equation Modelling</li>
+<li>3.9: Extensions to Structural Equation Modelling</li>
 </ul>
 <p><br></p>
 </section>
 <section id="part-iv-time-series-methods" class="level2">
 <h2 class="anchored" data-anchor-id="part-iv-time-series-methods">Part IV: Time Series Methods</h2>
 <p><em>This section introduces the statistical methods used for the analysis of time-series data, and how this can be used to make forecasts.</em></p>
-<p>Pre-requisites: Part I</p>
+<p>Pre-requisites: Part I and Part II</p>
 <p><br></p>
 </section>
 <section id="part-v-spatial-econometric-methods" class="level2">
 <h2 class="anchored" data-anchor-id="part-v-spatial-econometric-methods">Part V: Spatial Econometric Methods</h2>
 <p><em>This section introduces the concepts and methods behind spatial econometrics and the analysis of spatial data</em>.</p>
-<p>Pre-requisites: Part I</p>
+<p>Pre-requisites: Part I, Part II, and Part III</p>
 <ul>
 <li>5.1: Introduction to Spatial Data</li>
 <li>5.2: Descriptive Indicators of Spatial Clusters</li>
@@ -172,27 +184,8 @@ ul.task-list li input[type="checkbox"] {
 <li>5.5: Causal Inference with Spatial Econometrics</li>
 <li>5.6: Spatial Interaction and Discrete Choice</li>
 <li>5.7: The Modifiable Areal Unit Problem</li>
+<li>5.8: Machine Learning for Spatial Analysis</li>
 </ul>
-<p><br></p>
-</section>
-<section id="part-vi-statistical-learning-and-text-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="part-vi-statistical-learning-and-text-analysis">Part VI: Statistical Learning and Text Analysis</h2>
-<p><em>This section introduces modern machine learning techniques for improved prediction making, and how they can be used for the analysis of textual data.</em></p>
-<p>Pre-requisites: Part I (Part III and IV are helpful, but not necessary).</p>
-<ul>
-<li>6.1: Non-Linear Prediction and Generalised Additive Models</li>
-<li>6.2: Regression Trees, Bagging, and Random Forests</li>
-<li>6.3: Model Selection and Resampling Methods</li>
-<li>6.4: Classification with Naive Bayes and Random Forest</li>
-<li>6.5: Descriptive Statistics for Text Analysis</li>
-<li>6.6: Automated Dictionary Methods</li>
-<li>6.7: Machine Learning for Texts</li>
-<li>6.8: Supervised Scaling Models for Texts</li>
-<li>6.9: Unsupervised Models for Scaling Texts</li>
-<li>6.10: Similarity and Clustering Methods</li>
-<li>6.11: Structural Topic Models</li>
-</ul>
-<p><br></p>
 <p><br></p>
 <hr>
 </section>
@@ -219,7 +212,23 @@ ul.task-list li input[type="checkbox"] {
 <section id="appendix-b-programming-in-r" class="level2">
 <h2 class="anchored" data-anchor-id="appendix-b-programming-in-r">Appendix B: Programming in R</h2>
 <p><em>This is not a full course in the R-language. This provides a brief guide to useful tips in R</em>.</p>
+<ul>
+<li>B.1: Package Management and Importing Data</li>
+<li>B.2: Data Management in R</li>
+<li>B.3: Ggplot Basics</li>
+<li>B.4: Advanced Ggplot Techniques</li>
+</ul>
 <p><br></p>
+</section>
+<section id="appendix-c-simple-machine-learning" class="level2">
+<h2 class="anchored" data-anchor-id="appendix-c-simple-machine-learning">Appendix C: Simple Machine Learning</h2>
+<p><em>Some simple machine learning concepts that may be useful. This is not a full course.</em></p>
+<ul>
+<li>C.1: Non-Linear Generalised Additive Models</li>
+<li>C.2: Cross-Validation and Model Selection</li>
+<li>C.3: Trees, Bagging, and Random Forest</li>
+<li>C.4: Classification Methods</li>
+</ul>
 <hr>
 </section>
 <section id="about-the-author" class="level2">

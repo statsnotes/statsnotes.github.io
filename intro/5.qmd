@@ -1,0 +1,290 @@
+---
+title: "Statistics for Social Scientists"
+subtitle: "Lesson 1.5: Multiple Linear Regression"
+format:
+    html:
+        page-layout: article
+        grid:
+          sidebar-width: 300px
+          body-width: 750px
+          margin-width: 250px
+          gutter-width: 2em
+        fontsize: 12.5pt
+        theme: yeti
+        toc: TRUE
+        toc-depth: 2
+        toc-location: left
+        toc-expand: true
+        toc-title: "Lesson 1.5: Multiple Linear Regression"
+        mainfont: "Computer Modern"
+        title-block-banner: true
+        classoption: fleqn
+        html-math-method: katex
+---
+
+::: callout-note
+## Lesson Overview
+
+In the last lesson, we focused on the simple linear regression model. Now, we will expand the number of explanatory variables to get the multiple linear regression model, and we will discuss how our OLS estimation process changes as a result.
+
+This lesson covers the following topics:
+
+-   Omitted variable bias as a motivation for the need for multiple linear regression.
+-   The estimation process of the OLS estimator for Multiple Linear Regression.
+-   What it means to control for a variable (using the regression anatomy theory).
+-   How we can use the regression anatomy theory to create an analogous estimate for OLS.
+:::
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.5.1: Motivation: Omitted Variable Bias
+
+In the [last lesson](https://statsnotes.github.io/theory/4.html), we covered the simple linear regression model. However, there is a major issue with the simple linear regression model: omitted variable bias.
+
+Consider two regressions. The first regression, the "short" regression, is a simple linear regression, like the one we covered in the [last lesson](https://statsnotes.github.io/theory/4.html). The second regression, the "long" regression, contains an extra variable $z$ that is omitted from the first regression:
+
+$$
+\begin{split}y_i & = \beta_0^S + \beta_1^Sx_i + u_i^S \quad \text{short} \\y_i & = \beta_0 + \beta_1x_i + \beta_2z_i + u_i \quad \text{long}\end{split}
+$$
+
+-   Note: the $S$ in $\beta_0^S$ is a subscript representing short. It is not an exponent.
+
+Now consider an auxiliary regression, where the omitted variable $z$ is the outcome variable, and $x$ is the explanatory variable:
+
+$$
+z_i = \delta_0 + \delta_1 x_i + v_i
+$$
+
+-   where $\delta_0, \delta_1$ are coefficients and $v_i$ is the error term
+
+<br />
+
+Now we have $z$ in terms of $x$, let us plug $z$ into our long regression to "recreate" the short regression:
+
+$$
+\begin{split}y_i & = \beta_0 + \beta_1x_i + \beta_2z_i + u_i \\y_i & = \beta_0 + \beta_1 x_i + \beta_2(\delta_0 + \delta_1x_i + v_i) + u_i \\y_i & = \beta_0 + \beta_1 x_i + \beta_2 \delta_0 + \beta_2 \delta_1 x_i + \beta_2v_i + u_i \\y_i & = \beta_0 + \beta_2 \delta_0 + (\beta_1 + \beta_2 \delta_1)x_i + \beta_2v_i + u_i\end{split}
+$$
+
+We have "recreated" the short regression with one variable $x$. Let us see our recreation next to the original short regression:
+
+$$
+\begin{split}
+y_i & = \beta_0^S + \beta_1^Sx_i + u_i^S \\
+y_i & = \beta_0 + \beta_2 \delta_0 + (\beta_1 + \beta_2 \delta_1)x_i + \beta_2v_i + u_i
+\end{split}
+$$
+
+-   The short regression coefficient $\beta_0^S$ is analogous to the $\beta_0 + \beta_2 \delta_0$ in the recreation (both are the intercepts)
+-   The short regression coefficient $\beta_1^S x_i$ is analogous to the $(\beta_1 + \beta_2 \delta_1)x_i$ in the recreation (both are the slope and variable of interest)
+-   The short regression $u_i^S$ is analogous to the $\beta_2 v_i + u_i$ in the recreation (both are the error terms).
+
+Since the short regression $\beta_1^S x_i$ is analogous to the $(\beta_1 + \beta_2 \delta_1)x_i$ in the recreation, that means coefficient $\beta_1^S = \beta_1 + \beta_2 \delta_1$.
+
+<br />
+
+Thus, the difference between the short regression (simple linear regression) coefficient $\beta_1^S$, and the original long regression coefficient $\beta_1$, is $\beta_2 \delta_1$.
+
+-   If $\beta_2 = 0$ (meaning no relationship between omitted $x$ and $y$), or $\delta_1 = 0$ (meaning no relationship between omitted $x$ and $x$), then difference $\beta_2 \delta_1 = 0$, thus there is no difference.
+-   But if either of those facts are not true, then $\beta_2 \delta_1 ≠ 0$, and omitted variable bias is non-zero.
+
+More intuitively, if the omitted variable $z$ is both correlated with $x$ and $y$, then the two coefficients are different by $\beta_2 \delta_1$.
+
+-   Any variable $z$ correlated both with $x$ and $y$ is called a **confounding variable**.
+-   This $\beta_2 \delta_1$ amount is called the **omitted variable bias**.
+
+<br />
+
+What are the implications of non-zero omitted variable bias?
+
+-   We can see, that when we add a extra variable $z$, our estimate for parameter $\beta_1$ changes by $\beta_2 \delta_1$.
+-   What that means is that [our original short simple linear regression is incorrectly estimating the parameter $\beta_1$ by $\beta_2 \delta_1$.]{.underline}
+
+Thus, [to prevent the incorrect estimation of the simple linear regression model, we must add confounding variables $z$ to our regression]{.underline}.
+
+This is where multiple linear regression comes in:
+
+-   Multiple linear regression will allow us to add additional variables to our regressions.
+-   By adding additional variables, we will be able to "control" for the effect of these confounding variables, and more accurately estimate the relationship between $x$ and $y$. We will discuss this idea of "controlling" in [1.5.5](https://statsnotes.github.io/theory/5.html#regression-anatomy-and-controlling-for-confounders).
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.5.2: The Multiple Linear Regression Model
+
+Multiple linear regression is an extension of simple linear regression, that can help us deal with confounding variables.
+
+-   Multiple linear regression allows us to "control for the effect" of confounders. We will discuss this idea of "controlling" in [1.5.5](https://statsnotes.github.io/theory/5.html#regression-anatomy-and-controlling-for-confounders).
+
+The **response variable** (outcome variable) is notated $y$, just like in single linear regression.
+
+The **explanatory variable**s are $x_1, x_2, ..., x_k$. We sometimes also denote all explanatory variables as the vector $\overrightarrow{x}$.
+
+-   $k$ represents the total number of explanatory variables.
+-   Note: if you see the notation $x_j$, that means any explanatory variable $x_1, \dots , x_k$. The variable $x_j$ represents any individual coefficient (for generalisation purposes).
+
+<br />
+
+The multiple linear regression takes the following form:
+
+::: callout-tip
+## Definition: Multiple Linear Regression Model
+
+Take a set of observed data with $n$ number of pairs of $(\overrightarrow{x}_i, y_i)$ observations. The linear model takes the following form:
+
+$$
+y_i = \beta_0 + \beta_1x_{1i} + \dots + \beta_k x_{ki} + u_i
+$$
+
+-   Where the coefficients (that need to be estimated) are vector$\overrightarrow{\beta} = \beta_0, \beta_1, ..., \beta_k$. That means we have $k$ number of variables and $k+1$ number of coefficients (with the one not attached to a variable being the intercept).
+-   Where $u_i$ is the error term function - that determines the error for each unit $i$. Error $u_i$ has a variance of $\sigma^2$, and expectation $E(u_i) = 0$.
+:::
+
+<br />
+
+Same as in Simple Linear Regression, once we have estimated $\overrightarrow\beta$, we will have a best-fit **plane**, also called a fitted-values model (see [1.4.2](https://statsnotes.github.io/theory/4.html#fitted-values-and-best-fit-lines)). The fitted values model takes the form:
+
+$$
+\hat y_i = \hat\beta_0 + \hat\beta_1 x_{1i} + \dots + \hat\beta_k x_{ki}
+$$
+
+-   Where $\hat y$ are the predicted values of $y$ based on our best-fit plane.
+-   Where $\hat\beta_0, \dots, \hat\beta_k$ are our estimates for coefficients $\beta_0, \dots, \beta_k$.
+-   Just like in simple linear regression, the error term $u_i$ dispersal because $E(u_i) = 0$.
+
+Note how I have been saying best-fit **plane**, not best-fit line. This is because with multiple explanatory variables, we are now no longer in a 2-dimensional space, but a $k$-dimensional space (based on the number of variables).
+
+-   Essentially, each variable has its own axis/dimension.
+-   Mathematically, we are now in a $\mathbb{R}^k$ space.
+
+Thus, our best-fit line now is a best-fit plane. For example, take this model with 2 explanatory variables $x_1$ (years of education), $x_2$ (seniority), and $y$ (income):
+
+![](images/clipboard-365376575.png){fig-align="center" width="80%"}
+
+Any point on this plane is a part of our best-fit plane.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.5.7: R-Squared and Goodness of Fit
+
+In [1.4.6](https://statsnotes.github.io/theory/4.html#r-squared-and-goodness-of-fit), we discussed R-squared as a measure of the goodness of fit of a model.
+
+In multiple linear regression, R-squared is the exact same.
+
+::: callout-tip
+## Definition: R-Squared
+
+The R-squared metric is a metric describing how good of a fit our model is.
+
+R-Squared is the proportion of variation in $y$, explained by our model with all our explanatory variables.
+
+Mathematically:
+
+$$
+R^2 = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}
+$$
+
+Where:
+
+$$
+\begin{split}
+& SST = \sum\limits_{i=1}^n (y_i - \bar y)^2 \\
+& SSE = \sum\limits_{i=1}^n (\hat y_i - \bar y )^2 \\
+& SSR = \sum\limits_{i=1}^n (\hat u_i^2)
+\end{split}
+$$
+:::
+
+<br />
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# Implementation in R
+
+```{r, message = FALSE, echo = FALSE}
+dta <- readRDS('data/data1.rds')
+```
+
+## Regression Estimation
+
+To estimate a regression, we can use the *feols()* function from the package *fixest*, or we can use the base-R function *lm()*.
+
+-   The syntax is the same for both (at least for now).
+-   The *feols()* function does have a few advantages for techniques that will be discussed later, especially when it comes to causal inference and econometrics.
+
+For the *feols()* function, we will need the *fixest* package. Make sure to install it if you have not previously (google how to install R-packages if needed).
+
+```{r, message = FALSE}
+library(fixest)
+```
+
+<br />
+
+**Syntax:**
+
+For the *feols()* function, the syntax is as follows:
+
+```{r, eval = FALSE}
+model <- feols(y ~ x1 + x2 + x3, data = mydata)
+summary(model)
+```
+
+-   Replace *model* with any name you want to store your regression model in.
+-   Replace *y* with your outcome variable name, and *x1, x2, x3* with your explanatory variable name.
+-   You can add more explanatory variables by adding + signs and *x4 + x5 ...* and so on. You can also remove explanatory variables down to only 1.
+-   Replace *mydata* with the name of your dataframe.
+
+The *lm()* function has the exact same syntax for simple linear regression, except that we replace *feols()* with *lm()*:
+
+```{r, eval = FALSE}
+model <- lm(y ~ x1 + x2 + x3, data = mydata)
+summary(model)
+```
+
+<br />
+
+**Example:**
+
+Let us run a regression with outcome variable *immatt* (attitude towards immigrants), explanatory variables *age* and *educ* (years of education), from the dataframe called *dta*:
+
+```{r, message = FALSE}
+my_model <- feols(immatt ~ age + educ, data = dta)
+summary(my_model)
+```
+
+We can see in the estimate column, we get our intercept estimate $\hat\beta_0$, and our explanatory variables coefficient estimates $\hat\beta_1$ and $\hat\beta_2$.
+
+The result is similar with *lm()*:
+
+```{r, message = FALSE}
+my_model <- lm(immatt ~ age + educ, data = dta)
+summary(my_model)
+```
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
