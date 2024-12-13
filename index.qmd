@@ -24,9 +24,7 @@ format:
 
 ## Introduction
 
-This is a guide on applied statistics, with a focus on applications to the social sciences. This guide was created during my masters degree, as a way to consolidate all my knowledge and skills in one area.
-
-The guide covers a variety of topics, including statistical theory, causal inference, multivariate statistics, spatial econometrics, and time-series analysis.
+This is a guide on statistics for social scientists. This guide was created during my masters degree, as a way to consolidate and store all the knowledge I have accumulated.
 
 The guide is divided into parts, with each part containing lessons. Each lesson provides R-code for implementation purposes.
 
@@ -48,7 +46,7 @@ Pre-requisites: Single Variable Calculus is helpful.
 -   [1.3: Relationships with Correlation and Covariance](https://statsnotes.github.io/intro/3.html)
 -   [1.4: Simple Linear Regression](https://statsnotes.github.io/intro/4.html)
 -   [1.5: Multiple Linear Regression](https://statsnotes.github.io/intro/5.html)
--   [1.6: Categorical Explanatory Variables](https://statsnotes.github.io/intro/8.html)
+-   [1.6: Categorical Variables in Regression](https://statsnotes.github.io/intro/8.html)
 -   [1.7: Interactions and Functional Form](https://statsnotes.github.io/intro/9.html)
 -   1.8: Logistic Regression Model
 -   1.9: Ordinal and Multinomial Logistic Models
@@ -66,9 +64,8 @@ Prerequisites: Part I, and single variable calculus and probability (Appendix A.
 -   [2.2: The Ordinary Least Squares Estimator](https://statsnotes.github.io/metrics/2.html)
 -   [2.3: Unbiasedness of the OLS Estimator](https://statsnotes.github.io/metrics/3.html)
 -   [2.4: Variance of the OLS Estimator](https://statsnotes.github.io/metrics/4.html)
--   2.5: Method of Moments Estimator
--   2.6: Instrumental Variables Estimator
--   2.7: The Maximum Likelihood Estimator
+-   2.5: Method of Moments and Instrumental Variables
+-   2.6: The Maximum Likelihood Estimator
 
 <br />
 
@@ -93,25 +90,25 @@ Pre-requisites: Part I and Part II.
 
 <br />
 
-## Part III: Multivariate Statistical Methods
+## Part IV: Multivariate Statistical Methods
 
 *This part introduces the modern multivariate methods in statistics, relating to both dimensional reduction, as well as latent variable models.*
 
 Pre-requisites: Part I and Part II
 
--   3.1: Introduction to Multivariate Statistics
--   3.2: Principle Components Analysis
--   3.3: Exploratory Factor Analysis
--   3.4: Confirmatory Factor Analysis
--   3.5: Latent Traits and Item Response Theory
--   3.6: Latent Class Models
--   3.7: Cluster Analysis
--   3.8: Structural Equation Modelling
--   3.9: Extensions to Structural Equation Modelling
+-   4.1: Introduction to Multivariate Statistics
+-   4.2: Principle Components Analysis
+-   4.3: Exploratory Factor Analysis
+-   4.4: Confirmatory Factor Analysis
+-   4.5: Latent Traits and Item Response Theory
+-   4.6: Latent Class Models
+-   4.7: Cluster Analysis
+-   4.8: Structural Equation Modelling
+-   4.9: Extensions to Structural Equation Modelling
 
 <br />
 
-## Part IV: Time Series Methods
+## Part V: Time Series Methods
 
 *This section introduces the statistical methods used for the analysis of time-series data, and how this can be used to make forecasts.*
 
@@ -119,20 +116,20 @@ Pre-requisites: Part I and Part II
 
 <br />
 
-## Part V: Spatial Econometric Methods
+## Part VI: Spatial Econometric Methods
 
 *This section introduces the concepts and methods behind spatial econometrics and the analysis of spatial data*.
 
 Pre-requisites: Part I, Part II, and Part III
 
--   5.1: Introduction to Spatial Data
--   5.2: Descriptive Indicators of Spatial Clusters
--   5.3: Spatial Weights, Aggregation, and Smoothing
--   5.4: Spatial Regression and Neighbourhood Effects
--   5.5: Causal Inference with Spatial Econometrics
--   5.6: Spatial Interaction and Discrete Choice
--   5.7: The Modifiable Areal Unit Problem
--   5.8: Machine Learning for Spatial Analysis
+-   6.1: Introduction to Spatial Data
+-   6.2: Descriptive Indicators of Spatial Clusters
+-   6.3: Spatial Weights, Aggregation, and Smoothing
+-   6.4: Spatial Regression and Neighbourhood Effects
+-   6.5: Causal Inference with Spatial Econometrics
+-   6.6: Spatial Interaction and Discrete Choice
+-   6.7: The Modifiable Areal Unit Problem
+-   6.8: Machine Learning for Spatial Analysis
 
 <br />
 

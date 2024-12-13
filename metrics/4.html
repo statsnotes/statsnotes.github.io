@@ -136,6 +136,7 @@ Lesson Overview
 <p>In the last lesson, we discussed the properties of the OLS estimator. In this lesson, we discuss the variance and standard error of the OLS estimator in order to conduct hypothesis testing.</p>
 <p>This lesson covers the following topics:</p>
 <ul>
+<li>What homoscedasticity and heteroscedasticity are.</li>
 <li>How standard errors are calculated under the assumption of homoscedasticity.</li>
 <li>How the presence of heteroscedasticity affects our standard errors, and how we can adjust for this with robust standard errors.</li>
 </ul>
@@ -205,7 +206,7 @@ Var(u|x_1, \dots, x_k) = \sigma^2 \text{ for all } x
 <h1>2.4.2: Variance of OLS Estimates in Simple Linear Regression</h1>
 <p>Assuming Homoscedasticity is met, we know <span class="math inline">Var(u|x) = \sigma^2</span>.</p>
 <ul>
-<li>When homoscedasticity is not met, nothing in this section applies. See <a href="https://statsnotes.github.io/theory/7.html#robust-standard-errors-for-bivariate-regression">1.7.7</a> for more information on how to do estimates when this is violated.</li>
+<li>When homoscedasticity is not met, nothing in this section applies. See <a href="https://statsnotes.github.io/metrics/4.html#robust-standard-errors-for-bivariate-regression">2.4.6</a> for more information on how to do estimates when this is violated.</li>
 </ul>
 <p>What is variance? From <a href="https://statsnotes.github.io/theory/1.html#variance-and-standard-deviation">1.1.5</a>, we know that the formula for variance is:</p>
 <p><span class="math display">
@@ -225,7 +226,7 @@ Var(u|x) = \sigma^2 &amp; = E[ \ ((u|x) - E(u|x))^2 \ ] \\
 E(u^2|x) = E(u^2) = \sigma^2
 </span></p>
 <p><br></p>
-<p>Remember when we were proving unbiasedness of OLS in <a href="https://statsnotes.github.io/theory/6.html#proof-of-ols-unbiasedness-in-simple-linear-regression">1.6.3</a>, we got to this stage:</p>
+<p>Remember when we were proving unbiasedness of OLS in <a href="https://statsnotes.github.io/metrics/3.html#proof-of-ols-unbiasedness-in-simple-linear-regression">2.3.3</a>, we got to this stage:</p>
 <p><span class="math display">
 \hat\beta_1 = \beta_1 + \sum\limits_{i=1}^n w_i u_i
 </span></p>
@@ -241,7 +242,7 @@ Var(\hat\beta_1|x) &amp; = Var\left( \sum\limits_{i=1}^n w_i u_i \bigg| x\right)
 &amp; = \sum\limits_{i=1}^n w_i^2 Var(u_i | x)
 \end{split}
 </span></p>
-<p>And given SLR.2 Random Sampling (see <a href="https://statsnotes.github.io/theory/6.html#unbiasedness-of-ols-under-the-gauss-markov-theorem">1.6.2</a>), we know <span class="math inline">Var(u_i | x)</span> is also equal to <span class="math inline">Var(u_i|x_i)</span>. Thus:</p>
+<p>And given SLR.2 Random Sampling (see <a href="https://statsnotes.github.io/metrics/3.html#unbiasedness-of-ols-under-the-gauss-markov-theorem">2.3.2</a>), we know <span class="math inline">Var(u_i | x)</span> is also equal to <span class="math inline">Var(u_i|x_i)</span>. Thus:</p>
 <p><span class="math display">
 Var(\hat\beta_1|x) = \sum\limits_{i=1}^n w_i^2 Var(u_i | x_i)
 </span></p>
@@ -253,8 +254,8 @@ Var(\hat\beta_1 | x) &amp; = \sum\limits_{i=1}^n w_i^2 Var(u_i | x_i) \\
 &amp; = \sigma^2 \sum\limits_{i=1}^n w_i^2
 \end{split}
 </span></p>
-<p>Remember, <span class="math inline">w_i</span> is its own function of <span class="math inline">x</span>, where <span class="math inline">w_i = \frac{x_i - \bar{x}}{\sum (x_i - \bar{x})^2}</span>, or can be written as <span class="math inline">\frac{x_i - \bar{x}}{SST_x}</span> (see <a href="https://statsnotes.github.io/theory/6.html#proof-of-ols-unbiasedness-in-simple-linear-regression">1.6.3</a> for derivation).</p>
-<p>We have <span class="math inline">\sum w_i^2</span> in our final equation, and we can do some quick algebra to rearrange it (note, if you are not familiar with SST, see <a href="https://statsnotes.github.io/theory/4.html#r-squared-and-goodness-of-fit">1.4.6</a>):</p>
+<p>Remember, <span class="math inline">w_i</span> is its own function of <span class="math inline">x</span>, where <span class="math inline">w_i = \frac{x_i - \bar{x}}{\sum (x_i - \bar{x})^2}</span>, or can be written as <span class="math inline">\frac{x_i - \bar{x}}{SST_x}</span> (see <a href="https://statsnotes.github.io/metrics/3.html#proof-of-ols-unbiasedness-in-simple-linear-regression">2.3.3</a> for derivation).</p>
+<p>We have <span class="math inline">\sum w_i^2</span> in our final equation, and we can do some quick algebra to rearrange it (note, if you are not familiar with SST, see <a href="https://statsnotes.github.io/metrics/2.html#r-squared-and-goodness-of-fit">2.2.7</a>):</p>
 <p><span class="math display">
 \begin{split}
 \sum\limits_{i=1}^n w_i^2 &amp; = \sum\limits_{i=1}^n \frac{(x_i - \bar{x})^2}{(SST_x)^2} \\
@@ -272,7 +273,7 @@ Var(\hat\beta|x) &amp; = \sigma^2 \sum\limits_{i=1}^n w_i^2 \\
 </span></p>
 <p>Thus, that is the variance of our OLS estimator <span class="math inline">\hat\beta_1</span>, and also the variance of the sampling distribution of <span class="math inline">\hat\beta_1</span>.</p>
 <ul>
-<li>This is only the case if SLR.5 homoscedasticity assumption holds. It is not valid if the assumption is not met. See <a href="https://statsnotes.github.io/theory/7.html#robust-standard-errors-for-bivariate-regression">1.7.7</a> for more information on how to do estimates when this is violated.</li>
+<li>This is only the case if SLR.5 homoscedasticity assumption holds. It is not valid if the assumption is not met. See <a href="https://statsnotes.github.io/metrics/4.html#robust-standard-errors-for-bivariate-regression">2.4.6</a> for more information on how to do estimates when this is violated.</li>
 <li>One might notice we calculated <span class="math inline">Var(\hat\beta_1|x)</span>, not <span class="math inline">Var(\hat\beta_1)</span>. However, this does not matter, since our final formula does not depend on the value of <span class="math inline">x</span> (from homoscedasticity, we know <span class="math inline">\sigma^2</span> is independent of <span class="math inline">x</span>, and also <span class="math inline">SST_x</span> is constant no matter the specific value of <span class="math inline">x</span> as it includes all values of <span class="math inline">x</span>).</li>
 </ul>
 <p>There is one issue: we know that <span class="math inline">\sigma^2 = E(u^2)</span> (see earlier in the section). However, we do not actually know the value of <span class="math inline">E(u^2)</span>! Remember, that is the error term <span class="math inline">u</span> - while we only know the residual term <span class="math inline">\hat u</span>.</p>
@@ -305,10 +306,10 @@ sd(\hat\beta_1) = \frac{\sigma}{\sqrt{SST_x}}
 \end{split}
 </span></p>
 <ul>
-<li>Where <span class="math inline">SSR</span> is the square sum of residuals (see <a href="https://statsnotes.github.io/theory/4.html#r-squared-and-goodness-of-fit">1.4.6</a> for more details).</li>
+<li>Where <span class="math inline">SSR</span> is the square sum of residuals (see <a href="https://statsnotes.github.io/metrics/2.html#r-squared-and-goodness-of-fit">2.2.7</a> for more details).</li>
 </ul>
 <p>However, there is an issue with this estimate of <span class="math inline">\sigma^2</span>. It is biased - the expected value is actually slightly less than <span class="math inline">\sigma^2</span>.</p>
-<p>We will not prove this mathematically, but this bias is because OLS imposes two conditions on its estimation process (that we discussed in <a href="https://statsnotes.github.io/theory/6.html#residuals-and-properties-of-ols-estimator">1.6.1</a>):</p>
+<p>We will not prove this mathematically, but this bias is because OLS imposes two conditions on its estimation process (that we discussed in <a href="https://statsnotes.github.io/metrics/3.html#residuals-and-properties-of-ols-estimator">2.3.1</a>):</p>
 <p><span class="math display">
 \begin{split}
 &amp; \sum\limits_{i=1}^n \hat u_i = 0 \\
@@ -353,7 +354,8 @@ SST_x = \sum_{i=1}^n(x_i - \bar x)^2
 </span></p>
 </div>
 </div>
-<p>When homoscedasticity is not met, this standard error is invalid. See <a href="https://statsnotes.github.io/theory/7.html#robust-standard-errors-for-bivariate-regression">1.7.7</a> for more information on how to do estimates when this is violated.</p>
+<p>Using these standard errors, we can conduct confidence intervals and hypothesis testing as shown in <a href="https://statsnotes.github.io/intro/4.html#standard-errors-and-confidence-intervals">1.4.4</a> and <a href="https://statsnotes.github.io/intro/4.html#hypothesis-testing">1.4.5</a>.</p>
+<p>When homoscedasticity is not met, this standard error is invalid. See <a href="https://statsnotes.github.io/metrics/4.html#robust-standard-errors-for-bivariate-regression">2.4.6</a> for more information on how to do estimates when this is violated.</p>
 <p><br></p>
 <p><br></p>
 <hr>
@@ -364,9 +366,9 @@ SST_x = \sum_{i=1}^n(x_i - \bar x)^2
 <p>Now, we will do the same exercise, but for multiple linear regression.</p>
 <p>Assuming homoscedasticity is met, we know <span class="math inline">Var(u|x_1, \dots, x_k) = \sigma^2</span>.</p>
 <ul>
-<li>When homoscedasticity is not met, nothing in this section applies. See <a href="https://statsnotes.github.io/theory/7.html#robust-standard-errors-for-multiple-regression">1.7.8</a> for more information on how to do estimates when this is violated.</li>
+<li>When homoscedasticity is not met, nothing in this section applies. See <a href="https://statsnotes.github.io/metrics/4.html#robust-standard-errors-for-multiple-regression">2.4.7</a> for more information on how to do estimates when this is violated.</li>
 </ul>
-<p>Let us find the variance of OLS estimates (we will use <span class="math inline">\hat\beta_1</span> for simplicity, but this applies to any other coefficient <span class="math inline">\hat\beta_1 , \dots, \hat\beta_k</span>. In proving unbiasedness of OLS in <a href="https://statsnotes.github.io/theory/6.html#proof-of-ols-unbiasedness-in-multiple-linear-regression-1">1.6.4</a>, we got to this stage:</p>
+<p>Let us find the variance of OLS estimates (we will use <span class="math inline">\hat\beta_1</span> for simplicity, but this applies to any other coefficient <span class="math inline">\hat\beta_1 , \dots, \hat\beta_k</span>. In proving unbiasedness of OLS in <a href="https://statsnotes.github.io/metrics/3.html#proof-of-ols-unbiasedness-in-multiple-linear-regression">2.3.4</a>, we got to this stage:</p>
 <p><span class="math display">
 \hat\beta_1 = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
 </span></p>
@@ -380,7 +382,7 @@ w_i = \frac{\widetilde{r_{1i}}}{\sum_{i=1}^n\widetilde{r_{1i}}^2}
 \hat\beta_1 = \beta_1 + \sum\limits_{i=1}^nw_i u_i
 </span></p>
 <p><br></p>
-<p>Thus, we can proceed in the same way as the simple linear regression case (see <a href="https://statsnotes.github.io/theory/7.html#variance-of-ols-estimates-in-simple-linear-regression">1.7.2</a> for more details):</p>
+<p>Thus, we can proceed in the same way as the simple linear regression case:</p>
 <p><span class="math display">
 \begin{split}
 Var(\hat\beta_1|x_1, \dots, x_k) &amp; = Var\left( \sum\limits_{i=1}^nw_i u_i \biggr|x_1, \dots ,x_k \right) \\ &amp; = \sum\limits_{i=1}^n Var(w_i u_i | x_1, \dots, x_k) \\
@@ -403,7 +405,7 @@ Var(\hat\beta_1|x_1, \dots, x_k) &amp; = \sigma^2 \sum\limits_{i=1}^n w_i^2 \\
 Var(\hat\beta_1) = \frac{\sigma^2}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
 </span></p>
 <ul>
-<li>When homoscedasticity is not met, this is not valid. See <a href="https://statsnotes.github.io/theory/7.html#robust-standard-errors-for-multiple-regression">1.7.8</a> for more information on how to do estimates when this is violated.</li>
+<li>When homoscedasticity is not met, this is not valid. See <a href="https://statsnotes.github.io/metrics/4.html#robust-standard-errors-for-multiple-regression">2.4.7</a> for more information on how to do estimates when this is violated.</li>
 </ul>
 <p><br></p>
 <p><br></p>
@@ -412,8 +414,8 @@ Var(\hat\beta_1) = \frac{\sigma^2}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
 </section>
 <section id="standard-errors-and-multicollinearity-in-multiple-regression" class="level1">
 <h1>2.4.5: Standard Errors and Multicollinearity in Multiple Regression</h1>
-<p>However, just like we mentioned in <a href="https://statsnotes.github.io/theory/7.html#standard-errors-in-simple-linear-regression">1.7.3</a>, the real value of <span class="math inline">\sigma^2</span> of a regression not calculable. This is an issue because our variance formula has <span class="math inline">\sigma^2</span> in the numerator.</p>
-<p>Just like in simple linear regression (see <a href="https://statsnotes.github.io/theory/7.html#standard-errors-in-simple-linear-regression">1.7.3</a>), we can estimate <span class="math inline">\sigma^2</span> by using the residual term <span class="math inline">\hat u_i</span> with a degrees of freedom adjustment.</p>
+<p>However, just like we mentioned in <a href="https://statsnotes.github.io/metrics/4.html#standard-errors-in-simple-linear-regression">2.4.3</a>, the real value of <span class="math inline">\sigma^2</span> of a regression not calculable. This is an issue because our variance formula has <span class="math inline">\sigma^2</span> in the numerator.</p>
+<p>Just like in simple linear regression (see <a href="https://statsnotes.github.io/metrics/4.html#standard-errors-in-simple-linear-regression">2.4.3</a>), we can estimate <span class="math inline">\sigma^2</span> by using the residual term <span class="math inline">\hat u_i</span> with a degrees of freedom adjustment.</p>
 <p><span class="math display">
 \hat\sigma^2 = \frac{SSR}{n-k-1} = \frac{\sum_{i=1}^n \hat u_i^2}{n-k-1}
 </span></p>
@@ -445,7 +447,8 @@ Definition: Standard Errors for Multiple Linear Regression
 </span></p>
 </div>
 </div>
-<p>When homoscedasticity is not met, this is not valid. See <a href="https://statsnotes.github.io/theory/7.html#robust-standard-errors-for-multiple-regression">1.7.8</a> for more information on how to do estimates when this is violated.</p>
+<p>Using these standard errors, we can conduct confidence intervals and hypothesis testing as shown in <a href="https://statsnotes.github.io/intro/5.html#inference-and-hypothesis-testing">1.5.5</a>.</p>
+<p>When homoscedasticity is not met, this is not valid. See <a href="https://statsnotes.github.io/metrics/4.html#robust-standard-errors-for-multiple-regression">2.4.7</a> for more information on how to do estimates when this is violated.</p>
 <p><br></p>
 <section id="multicollinearity" class="level3">
 <h3 class="anchored" data-anchor-id="multicollinearity">Multicollinearity</h3>
@@ -481,7 +484,7 @@ Var(u_i|x_i) = \sigma_i^2
 <ul>
 <li>Where <span class="math inline">\sigma^2_1</span> is the error term variance for <span class="math inline">x_1</span>, and <span class="math inline">\sigma_2^2</span> is the error term variance for <span class="math inline">x_2</span>, and so on <span class="math inline">\sigma_3^2, \dots, \sigma_n^2</span>.</li>
 </ul>
-<p>Then, recalling from the start of <a href="https://statsnotes.github.io/theory/7.html#variance-of-ols-estimates-in-simple-linear-regression">1.7.2</a>, we have the following formula for the simple linear regression <span class="math inline">\hat\beta_1</span> estimate:</p>
+<p>Then, recalling from the start of <a href="https://statsnotes.github.io/metrics/4.html#variance-of-ols-estimates-in-simple-linear-regression">2.4.2</a>, we have the following formula for the simple linear regression <span class="math inline">\hat\beta_1</span> estimate:</p>
 <p><span class="math display">
 \hat\beta_1 = \beta_1 + \sum_{i=1}^nw_i u_i
 </span></p>
@@ -531,7 +534,7 @@ Definition: Robust Standard Error for Bivariate Regression
 </ul>
 </div>
 </div>
-<p>We can use these robust standard errors to conduct hypothesis testing and confidence intervals as normal.</p>
+<p>Using these standard errors, we can conduct confidence intervals and hypothesis testing as shown in <a href="https://statsnotes.github.io/intro/4.html#standard-errors-and-confidence-intervals">1.4.4</a> and <a href="https://statsnotes.github.io/intro/4.html#hypothesis-testing">1.4.5</a>.</p>
 <p>Nowadays, it is typical to use heteroscedasticity-robust standard errors as default, and only using normal standard errors if we can prove homoscedasticity is met.</p>
 <p><br></p>
 <p><br></p>
@@ -545,7 +548,7 @@ Definition: Robust Standard Error for Bivariate Regression
 <p><span class="math display">
 Var(u_i|x_{1i}, \dots, x_{ki}) = \sigma_i^2
 </span></p>
-<p>Let us find the variance of OLS estimates (we will use <span class="math inline">\hat\beta_1</span> for simplicity, but this applies to any other coefficient <span class="math inline">\hat\beta_1 , \dots, \hat\beta_k</span>. In proving unbiasedness of OLS in <a href="https://statsnotes.github.io/theory/6.html#proof-of-ols-unbiasedness-in-multiple-linear-regression-1">1.6.4</a>, we got to this stage:</p>
+<p>Let us find the variance of OLS estimates (we will use <span class="math inline">\hat\beta_1</span> for simplicity, but this applies to any other coefficient <span class="math inline">\hat\beta_1 , \dots, \hat\beta_k</span>. In proving unbiasedness of OLS in <a href="https://statsnotes.github.io/metrics/3.html#proof-of-ols-unbiasedness-in-multiple-linear-regression">2.3.4</a>, we got to this stage:</p>
 <p><span class="math display">
 \hat\beta_1 = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
 </span></p>
@@ -599,7 +602,7 @@ Definition: Robust Standard Error for Multiple Regression
 </span></p>
 </div>
 </div>
-<p>We can use these robust standard errors to conduct hypothesis testing and confidence intervals as normal.</p>
+<p>Using these standard errors, we can conduct confidence intervals and hypothesis testing as shown in <a href="https://statsnotes.github.io/intro/5.html#inference-and-hypothesis-testing">1.5.5</a>.</p>
 <p>Nowadays, it is typical to use heteroscedasticity-robust standard errors as default, and only using normal standard errors if we can prove homoscedasticity is met.</p>
 <p><br></p>
 <p><br></p>

@@ -23,17 +23,60 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="index_files/libs/clipboard/clipboard.min.js"></script>
-<script src="index_files/libs/quarto-html/quarto.js"></script>
-<script src="index_files/libs/quarto-html/popper.min.js"></script>
-<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="index_files/libs/quarto-html/anchor.min.js"></script>
-<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="6_files/libs/clipboard/clipboard.min.js"></script>
+<script src="6_files/libs/quarto-html/quarto.js"></script>
+<script src="6_files/libs/quarto-html/popper.min.js"></script>
+<script src="6_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="6_files/libs/quarto-html/anchor.min.js"></script>
+<link href="6_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="6_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="6_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="6_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="6_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: true
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -43,7 +86,7 @@ ul.task-list li input[type="checkbox"] {
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Statistics for Social Scientists</h1>
-            <p class="subtitle lead">Kevin’s Guide to Quantitative Social Science</p>
+            <p class="subtitle lead">Lesson 1.6: Categorical Variables in Regression</p>
                       </div>
   </div>
     
@@ -59,20 +102,16 @@ ul.task-list li input[type="checkbox"] {
   </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
 <div id="quarto-sidebar-toc-left" class="sidebar toc-left">
   <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
-    <h2 id="toc-title">Guide to Statistical Methods</h2>
+    <h2 id="toc-title">Lesson 1.6: Categorical Variables in Regression</h2>
    
   <ul class="collapse">
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#part-i-introduction-to-statistical-models" id="toc-part-i-introduction-to-statistical-models" class="nav-link" data-scroll-target="#part-i-introduction-to-statistical-models">Part I: Introduction to Statistical Models</a></li>
-  <li><a href="#part-ii-econometric-theory" id="toc-part-ii-econometric-theory" class="nav-link" data-scroll-target="#part-ii-econometric-theory">Part II: Econometric Theory</a></li>
-  <li><a href="#part-iii-applied-econometrics" id="toc-part-iii-applied-econometrics" class="nav-link" data-scroll-target="#part-iii-applied-econometrics">Part III: Applied Econometrics</a></li>
-  <li><a href="#part-iv-multivariate-statistical-methods" id="toc-part-iv-multivariate-statistical-methods" class="nav-link" data-scroll-target="#part-iv-multivariate-statistical-methods">Part IV: Multivariate Statistical Methods</a></li>
-  <li><a href="#part-v-time-series-methods" id="toc-part-v-time-series-methods" class="nav-link" data-scroll-target="#part-v-time-series-methods">Part V: Time Series Methods</a></li>
-  <li><a href="#part-vi-spatial-econometric-methods" id="toc-part-vi-spatial-econometric-methods" class="nav-link" data-scroll-target="#part-vi-spatial-econometric-methods">Part VI: Spatial Econometric Methods</a></li>
-  <li><a href="#appendix-a-mathematical-methods" id="toc-appendix-a-mathematical-methods" class="nav-link" data-scroll-target="#appendix-a-mathematical-methods">Appendix A: Mathematical Methods</a></li>
-  <li><a href="#appendix-b-programming-in-r" id="toc-appendix-b-programming-in-r" class="nav-link" data-scroll-target="#appendix-b-programming-in-r">Appendix B: Programming in R</a></li>
-  <li><a href="#appendix-c-simple-machine-learning" id="toc-appendix-c-simple-machine-learning" class="nav-link" data-scroll-target="#appendix-c-simple-machine-learning">Appendix C: Simple Machine Learning</a></li>
-  <li><a href="#about-the-author" id="toc-about-the-author" class="nav-link" data-scroll-target="#about-the-author">About the Author</a></li>
+  <li><a href="#what-are-categorical-variables" id="toc-what-are-categorical-variables" class="nav-link active" data-scroll-target="#what-are-categorical-variables">1.6.1: What are Categorical Variables</a></li>
+  <li><a href="#binary-explanatory-variables-in-regression" id="toc-binary-explanatory-variables-in-regression" class="nav-link" data-scroll-target="#binary-explanatory-variables-in-regression">1.6.2: Binary Explanatory Variables in Regression</a></li>
+  <li><a href="#categorical-explanatory-variables-in-regression" id="toc-categorical-explanatory-variables-in-regression" class="nav-link" data-scroll-target="#categorical-explanatory-variables-in-regression">1.6.3: Categorical Explanatory Variables in Regression</a></li>
+  <li><a href="#interpreting-categorical-explanatory-variables" id="toc-interpreting-categorical-explanatory-variables" class="nav-link" data-scroll-target="#interpreting-categorical-explanatory-variables">1.6.4: Interpreting Categorical Explanatory Variables</a></li>
+  <li><a href="#the-dummy-variable-trap" id="toc-the-dummy-variable-trap" class="nav-link" data-scroll-target="#the-dummy-variable-trap">1.9.5: The Dummy Variable Trap</a></li>
+  <li><a href="#the-linear-probability-model" id="toc-the-linear-probability-model" class="nav-link" data-scroll-target="#the-linear-probability-model">1.9.6: The Linear Probability Model</a></li>
+  <li><a href="#limitations-of-linear-regression" id="toc-limitations-of-linear-regression" class="nav-link" data-scroll-target="#limitations-of-linear-regression">1.9.7: Limitations of Linear Regression</a></li>
   </ul>
 </nav>
 </div>
@@ -84,161 +123,182 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>This is a guide on statistics for social scientists. This guide was created during my masters degree, as a way to consolidate and store all the knowledge I have accumulated.</p>
-<p>The guide is divided into parts, with each part containing lessons. Each lesson provides R-code for implementation purposes.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Lesson Overview
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the last few lessons, we have discussed the linear regression model, focusing on continuous <span class="math inline">x</span> variables. In this lesson, we explore how binary and categorical variables, which are very frequent in the social sciences, can be used in regression with OLS.</p>
+<p>This lesson covers the following topics:</p>
 <ul>
-<li>I recommend using a laptop or tablet to access this page. Use the sidebar for easy navigation.</li>
-<li>In the appendix, I provide some guides on useful mathematical methods, R-programming, and simple machine learning.</li>
+<li>What categorical variables are (including binary and ordinal variables).</li>
+<li>How binary and categorical explanatory variables work in regression.</li>
+<li>How binary outcome variables work in the framework of the linear probability model.</li>
+<li>The limitations of linear regression when it comes to binary and categorical outcome variables.</li>
 </ul>
-<p>Also, if you are interested in political science, I recommend checking out my <a href="https://politicalscience.github.io">Political Science and Political Economics Guide</a>.</p>
-<p><br></p>
-</section>
-<section id="part-i-introduction-to-statistical-models" class="level2">
-<h2 class="anchored" data-anchor-id="part-i-introduction-to-statistical-models">Part I: Introduction to Statistical Models</h2>
-<p><em>This part starts by introducing the basics of statistical theory. Then, we discuss the generalised linear model - the family of regression models form the basis of much of statistics.</em></p>
-<p>Pre-requisites: Single Variable Calculus is helpful.</p>
-<ul>
-<li><a href="https://statsnotes.github.io/intro/1.html">1.1: Random Variables and Distributions</a></li>
-<li><a href="https://statsnotes.github.io/intro/2.html">1.2: Basics of Statistical Inference</a></li>
-<li><a href="https://statsnotes.github.io/intro/3.html">1.3: Relationships with Correlation and Covariance</a></li>
-<li><a href="https://statsnotes.github.io/intro/4.html">1.4: Simple Linear Regression</a></li>
-<li><a href="https://statsnotes.github.io/intro/5.html">1.5: Multiple Linear Regression</a></li>
-<li><a href="https://statsnotes.github.io/intro/8.html">1.6: Categorical Variables in Regression</a></li>
-<li><a href="https://statsnotes.github.io/intro/9.html">1.7: Interactions and Functional Form</a></li>
-<li>1.8: Logistic Regression Model</li>
-<li>1.9: Ordinal and Multinomial Logistic Models</li>
-<li>1.10: Poisson and Negative Binomial Models</li>
-</ul>
-<p><br></p>
-</section>
-<section id="part-ii-econometric-theory" class="level2">
-<h2 class="anchored" data-anchor-id="part-ii-econometric-theory">Part II: Econometric Theory</h2>
-<p><em>In the last part, we introduced a series of models. Each model, however, requires estimators in order to fit the model. This section explores the main estimators used in econometrics, and their properties.</em></p>
-<p>Prerequisites: Part I, and single variable calculus and probability (Appendix A.1-A.6). Basic Linear Algebra is helpful but not required.</p>
-<ul>
-<li><a href="https://statsnotes.github.io/metrics/1.html">2.1: Introduction and Properties of Estimators</a></li>
-<li><a href="https://statsnotes.github.io/metrics/2.html">2.2: The Ordinary Least Squares Estimator</a></li>
-<li><a href="https://statsnotes.github.io/metrics/3.html">2.3: Unbiasedness of the OLS Estimator</a></li>
-<li><a href="https://statsnotes.github.io/metrics/4.html">2.4: Variance of the OLS Estimator</a></li>
-<li>2.5: Method of Moments and Instrumental Variables</li>
-<li>2.6: The Maximum Likelihood Estimator</li>
-</ul>
-<p><br></p>
-</section>
-<section id="part-iii-applied-econometrics" class="level2">
-<h2 class="anchored" data-anchor-id="part-iii-applied-econometrics">Part III: Applied Econometrics</h2>
-<p><em>This part takes the theory introduced in Part I and II, and applies it to research designs and methods to identify and estimate causal effects.</em></p>
-<p>Pre-requisites: Part I and Part II.</p>
-<ul>
-<li>3.1: Causal Inference and Causal Frameworks</li>
-<li>3.2: Randomised Controlled Trials</li>
-<li>3.3: Regression and Selection on Observables</li>
-<li>3.4: Matching and Weighting Estimators</li>
-<li>3.5: Selection on Observables - Extensions</li>
-<li>3.6: Differences-in-Differences</li>
-<li>3.7: Fixed Effects Estimator</li>
-<li>3.8: Modern Differences-in-Differences Estimators</li>
-<li>3.9: Instrumental Variable Designs</li>
-<li>3.10: Examiner, Shift-Share, and Recentered Instruments</li>
-<li>3.11: Sharp Regression Discontinuity Designs</li>
-<li>3.12: Fuzzy Regression Discontinuity and Kink Designs</li>
-</ul>
-<p><br></p>
-</section>
-<section id="part-iv-multivariate-statistical-methods" class="level2">
-<h2 class="anchored" data-anchor-id="part-iv-multivariate-statistical-methods">Part IV: Multivariate Statistical Methods</h2>
-<p><em>This part introduces the modern multivariate methods in statistics, relating to both dimensional reduction, as well as latent variable models.</em></p>
-<p>Pre-requisites: Part I and Part II</p>
-<ul>
-<li>4.1: Introduction to Multivariate Statistics</li>
-<li>4.2: Principle Components Analysis</li>
-<li>4.3: Exploratory Factor Analysis</li>
-<li>4.4: Confirmatory Factor Analysis</li>
-<li>4.5: Latent Traits and Item Response Theory</li>
-<li>4.6: Latent Class Models</li>
-<li>4.7: Cluster Analysis</li>
-<li>4.8: Structural Equation Modelling</li>
-<li>4.9: Extensions to Structural Equation Modelling</li>
-</ul>
-<p><br></p>
-</section>
-<section id="part-v-time-series-methods" class="level2">
-<h2 class="anchored" data-anchor-id="part-v-time-series-methods">Part V: Time Series Methods</h2>
-<p><em>This section introduces the statistical methods used for the analysis of time-series data, and how this can be used to make forecasts.</em></p>
-<p>Pre-requisites: Part I and Part II</p>
-<p><br></p>
-</section>
-<section id="part-vi-spatial-econometric-methods" class="level2">
-<h2 class="anchored" data-anchor-id="part-vi-spatial-econometric-methods">Part VI: Spatial Econometric Methods</h2>
-<p><em>This section introduces the concepts and methods behind spatial econometrics and the analysis of spatial data</em>.</p>
-<p>Pre-requisites: Part I, Part II, and Part III</p>
-<ul>
-<li>6.1: Introduction to Spatial Data</li>
-<li>6.2: Descriptive Indicators of Spatial Clusters</li>
-<li>6.3: Spatial Weights, Aggregation, and Smoothing</li>
-<li>6.4: Spatial Regression and Neighbourhood Effects</li>
-<li>6.5: Causal Inference with Spatial Econometrics</li>
-<li>6.6: Spatial Interaction and Discrete Choice</li>
-<li>6.7: The Modifiable Areal Unit Problem</li>
-<li>6.8: Machine Learning for Spatial Analysis</li>
-</ul>
+</div>
+</div>
 <p><br></p>
 <hr>
-</section>
-<section id="appendix-a-mathematical-methods" class="level2">
-<h2 class="anchored" data-anchor-id="appendix-a-mathematical-methods">Appendix A: Mathematical Methods</h2>
-<p><em>This appendix discusses some key mathematical concepts needed for the courses above. Specifically, lessons A.1-A.6 are mandatory for Part I.</em></p>
-<p>Pre-requisites: Good background in High-School Algebra.</p>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+<section id="what-are-categorical-variables" class="level1">
+<h1>1.6.1: What are Categorical Variables</h1>
+<p>The three main types of variables in statistics are <strong>categorical</strong>, <strong>ordinal</strong>, and <strong>continuous</strong> variables. What are these different types of variables, and how do they differ?</p>
+<p><br></p>
+<p><strong>Categorical variables</strong> are variables that have discrete categories, that cannot be ordered.</p>
+<ol type="1">
+<li>Discrete categories means that there are different “categories” of outcomes, and you can only get values in those categories. For example, if you roll a dice, you can only get one of 6 outcomes. You cannot get outcome 3.4234783 - that is not a category.</li>
+<li>Categories cannot be ordered. For example, take the categories Microsoft, Apple, and Google. There is no “order” to these. For example, we know <span class="math inline">5 &gt; 1</span>. But we cannot say Microsoft &gt; apple, or Google &gt; apple.</li>
+</ol>
+<p>Categorical variables are described by discrete random variables, as discussed in <a href="https://statsnotes.github.io/theory/1.html#probability-mass-and-density-functions">1.1.3</a>, and are described by probability mass functions.</p>
+<p>A special type of categorical variable is the <strong>binary/dummy variable</strong>, which is a variable that has only two categories.</p>
 <ul>
-<li>A.1: Set Theory and Algebra Review</li>
-<li>A.2: Precalculus - Functions and Limits</li>
-<li>A.3: Derivatives and Partial Derivatives</li>
-<li>A.4: Simple Optimisation</li>
-<li>A.5: Integration</li>
-<li>A.6: Introductory Probability Theory</li>
-<li>A.7: Basics of Vectors and Matrices</li>
-<li>A.8: General Linear Systems</li>
-<li>A.9: Vector Spaces</li>
-<li>A.10: Linear Operators and Diagonalisation</li>
-<li>A.11: Multivariate Differentiation</li>
-<li>A.12: Multivariate Optimisation</li>
+<li>These are extremely common in social sciences. For example, variables involving treatment/control groups, true/false, did/didn’t, yes/no, are all examples of binary/dummy variables.</li>
+</ul>
+<p><u>Categorical variables require special treatment in linear regression (and regression models in general), which we will discuss in this lesson.</u></p>
+<p><br></p>
+<p><strong>Ordinal variables</strong> are variables that have discrete categories, that can be ordered.</p>
+<ul>
+<li>Discrete categories means the same thing as above with categorical variables.</li>
+</ul>
+<p>However, ordinal variables are ordered.</p>
+<ul>
+<li>For example, pretent you fill out a survey ranking your experience with a service, that gives you the options <em>poor experience, neutral, good experience</em>. We can say that <em>poor experience &lt; neutral</em>, and <em>neutral &lt; good experience</em>. These categories can be ordered.</li>
+<li>Or for example, you are to giving a star rating to a restaurant: either 1, 2, 3, 4, or 5 stars. You cannot give 4.5 stars, or 3.432748 stars, so there are discrete categories. However you can order these categories: clearly 5 stars &gt; 3 stars.</li>
+</ul>
+<p>However, we cannot say anything about the <em>distance</em> between categories.</p>
+<ul>
+<li>For example, we cannot say that the distance between <em>poor experience</em> and <em>neutral</em> is equal to the distance between <em>neutral</em> and <em>good experience</em>.</li>
+<li>We can only conclude on the order, not the distance.</li>
+</ul>
+<p>Ordinal variables can be “treated” as continuous variables in a regression setting (see below for what continuous variables are).</p>
+<ul>
+<li>However, they can also be treated as categorical variables (if you have some reason to believe the ordering is arbitrary and not useful).</li>
 </ul>
 <p><br></p>
-</section>
-<section id="appendix-b-programming-in-r" class="level2">
-<h2 class="anchored" data-anchor-id="appendix-b-programming-in-r">Appendix B: Programming in R</h2>
-<p><em>This is not a full course in the R-language. This provides a brief guide to useful tips in R</em>.</p>
+<p><strong>Continuous</strong> variables are variables that are, well, continuous. More specifically, continuous variables have 2 characteristics:</p>
+<ol type="1">
+<li>They have infinite subdivisions between any two values - there is always some value in between two different values. For example, take two values: <span class="math inline">1</span> and <span class="math inline">2</span>. In a continuous variable, <span class="math inline">1.5</span> is in between them. Take another example of two values: <span class="math inline">1</span> and <span class="math inline">1.000001</span>. In a continuous variable, <span class="math inline">1.00000000001</span> is between those two values.</li>
+<li>The distance between values is consistent and meaningful. For example, the distance between 3 and 1 is 2, and the distance between 11 and 9 is also 2. That distance 2 is consistent and meaningful. This is in contrast to ordinal variables.</li>
+</ol>
+<p>An example of a continuous variable is temperature:</p>
 <ul>
-<li>B.1: Package Management and Importing Data</li>
-<li>B.2: Data Management in R</li>
-<li>B.3: Ggplot Basics</li>
-<li>B.4: Advanced Ggplot Techniques</li>
+<li>Temperature has infinite subdivisions: We can have temperature at 20.34372 Celsius.</li>
+<li>Temperature also has consistent distance between values. Going from 5 to 6 Celsius, or 7 to 8 Celsius, are all a 1 Celsius increase.</li>
 </ul>
+<p>Continuous variables can be described by probability density functions as discussed in <a href="https://statsnotes.github.io/theory/1.html#probability-mass-and-density-functions">1.1.3</a>.</p>
 <p><br></p>
-</section>
-<section id="appendix-c-simple-machine-learning" class="level2">
-<h2 class="anchored" data-anchor-id="appendix-c-simple-machine-learning">Appendix C: Simple Machine Learning</h2>
-<p><em>Some simple machine learning concepts that may be useful. This is not a full course.</em></p>
+<p>Continuous variables have been what we have discussed so far in regression.</p>
 <ul>
-<li>C.1: Non-Linear Generalised Additive Models</li>
-<li>C.2: Cross-Validation and Model Selection</li>
-<li>C.3: Trees, Bagging, and Random Forest</li>
-<li>C.4: Classification Methods</li>
+<li>All of our previous interpretation has focused on assuming both <span class="math inline">x</span> and <span class="math inline">y</span> are continuous (or ordinal if we treat the ordinal variable as continuous).</li>
 </ul>
+<p>However, categorical variables have slightly different interpretations and implementations, due to their unique characteristics of discreteness and unorderedness. This chapter focuses on how we can adjust the linear regression model to fit these characteristics.</p>
+<p><br></p>
 <hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
-<section id="about-the-author" class="level2">
-<h2 class="anchored" data-anchor-id="about-the-author">About the Author</h2>
-<p>This website was created by Kevin Lingfeng Li.</p>
+<section id="binary-explanatory-variables-in-regression" class="level1">
+<h1>1.6.2: Binary Explanatory Variables in Regression</h1>
+<p><strong>Binary explanatory</strong> variables are categorical variables with 2 categories, 0 and 1.</p>
 <ul>
-<li><a href="https://www.linkedin.com/in/kevinlingfengli/">LinkedIn</a> | <a href="https://kevinli03.github.io/">Website</a></li>
-<li>My other guide on <a href="https://politicalscience.github.io">political science and political economics</a>.</li>
+<li>Binary explanatory variables are extremely common in the social sciences. They can include things such as yes/no questions, treatment/control, true/false questions, voted/did not vote, etc.</li>
 </ul>
-<p>I am a candidate for a MSc in Political Science &amp; Political Economics at the London School of Economics (LSE), focusing on Applied Statistics/Econometrics. Prior to my Masters, I completed a BSc in Politics at King’s College London, focusing on statistical methods and game theory, obtaining a First-Class Honours (US equivalent: Summa Cum Laude) classification. During my Undergraduate Degree, I also took classes in Data Science + Machine Learning and Accounting at the London School of Economics.</p>
-<p>I created this page as a helpful guide while studying for my Masters degree. I realised that it would be useful for me, and for my fellow students, to have a collection of Political Science resources in one place.</p>
-<p>I do my best to update this website: it is a tool not only for my classmates and other political science students, but for me myself. However, as a full-time student with an internship, I may not be able to update this site at a fast enough pace.</p>
+<p>Implementing binary explanatory variables is very simple in regression - we just include them in our regression model as a normal <span class="math inline">x</span>:</p>
+<p><span class="math display">
+y_i = \beta_0 + \beta_1x_i + u_i
+</span></p>
+<ul>
+<li>Where <span class="math inline">x</span> is a binary explanatory variable.</li>
+</ul>
+<p>However, Binary explanatory variables will change the interpretations of our coefficients, and slightly change the estimation process of OLS.</p>
+<p><br></p>
+<p>How are binary explaantory variables interpreted in linear regression? We can “solve” for these interpretations. Assume <span class="math inline">x</span> has two categories <span class="math inline">x=0</span> and <span class="math inline">x=1</span>:</p>
+<ul>
+<li>I will use the conditional expectation function since it makes more sense (as you will see in a second).</li>
+</ul>
+<p><span class="math display">
+\begin{split}
+&amp;E(y|x=0) = \hat\beta_0 + \hat\beta_1(0) = \hat\beta_0 \\
+&amp; E(y|x=1) = \hat\beta_0 + \hat\beta_1(1) = \hat\beta_0 + \hat\beta_1 \\
+&amp; E(y|x=1) - E(y|x=0) = (\hat\beta_0 + \hat\beta_1) - \hat\beta_0 = \hat\beta_1
+\end{split}
+</span></p>
+<p>Thus, through this, we can see:</p>
+<ul>
+<li>The expected value of <span class="math inline">y</span> when <span class="math inline">x = 0</span> is <span class="math inline">\hat\beta_0</span></li>
+<li>The expected value of <span class="math inline">y</span> when <span class="math inline">x = 1</span> is <span class="math inline">\hat\beta_0 + \hat\beta_1</span></li>
+<li>The difference between the expected values of <span class="math inline">y</span> when <span class="math inline">x=1</span> and <span class="math inline">x=0</span> is <span class="math inline">\hat\beta_1</span></li>
+</ul>
+<p>Thus, we can interpret the coefficients as following:</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpretation of Coefficient with a Binary Explanatory Variable
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When <span class="math inline">x</span> is a binary explanatory variable:</p>
+<ul>
+<li><span class="math inline">\hat\beta_0</span> is the expected value of <span class="math inline">y</span> given an observation in category <span class="math inline">x = 0</span></li>
+<li><span class="math inline">\hat\beta_0 + \hat\beta_1</span> is the expected value of <span class="math inline">y</span> given an observation in category <span class="math inline">x = 1</span></li>
+<li><span class="math inline">\hat\beta_1</span> is the expected difference in <span class="math inline">y</span> between the categories <span class="math inline">x=1</span> and <span class="math inline">x=0</span>.</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note how I have been using the word <strong>relationship</strong>, not causal effect.</p>
+<p>Causality is not established through estimators, it is established through a strong experimental design (which we will cover in part II of the course).</p>
+</div>
+</div>
+<p><br></p>
+<p>We can see here that our <span class="math inline">\hat\beta_1</span> is the expected <u>difference-in-means</u> of the two categories of <span class="math inline">x</span>.</p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="categorical-explanatory-variables-in-regression" class="level1">
+<h1>1.6.3: Categorical Explanatory Variables in Regression</h1>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="interpreting-categorical-explanatory-variables" class="level1">
+<h1>1.6.4: Interpreting Categorical Explanatory Variables</h1>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="the-dummy-variable-trap" class="level1">
+<h1>1.9.5: The Dummy Variable Trap</h1>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="the-linear-probability-model" class="level1">
+<h1>1.9.6: The Linear Probability Model</h1>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="limitations-of-linear-regression" class="level1">
+<h1>1.9.7: Limitations of Linear Regression</h1>
 </section>
 
 </main>

@@ -1,6 +1,6 @@
 ---
 title: "Statistics for Social Scientists"
-subtitle: "Lesson 1.8: Categorical Explanatory Variables"
+subtitle: "Lesson 1.6: Categorical Variables in Regression"
 format:
     html:
         page-layout: article
@@ -15,7 +15,7 @@ format:
         toc-depth: 2
         toc-location: left
         toc-expand: true
-        toc-title: "Lesson 1.8: Categorical Variables in Regression"
+        toc-title: "Lesson 1.6: Categorical Variables in Regression"
         mainfont: "Computer Modern"
         title-block-banner: true
         classoption: fleqn
@@ -31,7 +31,8 @@ This lesson covers the following topics:
 
 -   What categorical variables are (including binary and ordinal variables).
 -   How binary and categorical explanatory variables work in regression.
--   Extensions of categorical variables used in regression.
+-   How binary outcome variables work in the framework of the linear probability model.
+-   The limitations of linear regression when it comes to binary and categorical outcome variables.
 :::
 
 <br />
@@ -40,7 +41,7 @@ This lesson covers the following topics:
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.8.1: What are Categorical Variables
+# 1.6.1: What are Categorical Variables
 
 The three main types of variables in statistics are **categorical**, **ordinal**, and **continuous** variables. What are these different types of variables, and how do they differ?
 
@@ -107,7 +108,7 @@ However, categorical variables have slightly different interpretations and imple
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.8.2: Binary Explanatory Variables in Regression
+# 1.6.2: Binary Explanatory Variables in Regression
 
 **Binary explanatory** variables are categorical variables with 2 categories, 0 and 1.
 
@@ -167,9 +168,13 @@ Causality is not established through estimators, it is established through a str
 
 We can see here that our $\hat\beta_1$ is the expected [difference-in-means]{.underline} of the two categories of $x$.
 
--   In fact, computer software doing OLS estimation will simply estimate the mean $y$ of each category of $x$, and find the difference.
+<br />
 
-We will prove why computer softwares can take this shortcut, and show that OLS is equal to the difference-in-means in the next section.
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# 1.6.3: Categorical Explanatory Variables in Regression
 
 <br />
 
@@ -177,153 +182,7 @@ We will prove why computer softwares can take this shortcut, and show that OLS i
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.8.3: OLS as a Difference-in-means Estimator
-
-In the last section, we established that $\hat\beta_1$ was simply a difference in sample means of $y$ in categories $x=1$ and $x=0$.
-
-In this section, let us mathematically prove this is the case.
-
-We will use simple linear regression for simplicity. Recall our OLS estimation solution derived in [1.4.4](https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator):
-
-$$
-\hat\beta_1 = \frac{\sum_{i=1}^n (x_i - \bar x)(y_i - \bar y)}{\sum_{i=1}^n (x_i - \bar x)^2}
-$$
-
-Let us focus on the numerator. Let us expand it out:
-
-$$
-\begin{split}
-& \sum_{i=1}^n (x_i - \bar x)(y_i - \bar y) \\
-& = \sum_{i=1}^n  (x_i y_i - x_i \bar y - \bar x y_i + \bar x \bar y) \\
-& = \sum_{i=1}^n x_i y_i - \sum_{i=1}^n x_i \bar y - \sum_{i=1}^n  \bar x y_i + \sum_{i=1}^n \bar x \bar y \\
-& = \sum_{i=1}^n  x_i y_i - \bar y \sum_{i=1}^n x_i - \bar x \sum_{i=1}^n  y_i + n \bar x \bar y
-\end{split}
-$$
-
-Now, let us consider a few properties of summation in this scenario.
-
-::: callout-note
-## Useful Properties
-
-Remember, $x$ is a binary variable, with two values: $x=1$ and $x=0$.
-
-We know $n$ is the number of total observations. Let us define $n_1$ as the number of observations in category $x=1$, and $n_0$ as the number of observations in category $x=0$.
-
-With this, we have a few properties:
-
-**Property 1:**
-
-$$
-\sum\limits_{i=1}^n x_i y_i = n_1 \bar y _1
-$$
-
--   Why? Think about the scenarios of $x_iy_i$
--   If we have category $x_i=0$ for observation $i$, then $x_i y_i = 0$.
--   If we have category $x_i = 1$ for observation $i$, then $x_i y_i = y_i$. So, only observations in category $x=1$ get their $y$ values as non-zero in this summation.
--   That means our sum is now $\sum_{i=1}^{n_1} y_i$ (for only observations in $x=1$), and by definition of average, we know that should equal $\sum_{i=1}^{n_1} \bar y_1$.
--   Since $\bar y$ is a constant, we know the value of the summation is $n_1 \times \bar y_1$.
-
-**Property 2:**
-
-$$
-\sum_{i=1}^{n} x_i = n_1
-$$
-
--   Why? Well when observation $i$ is in category $x=0$, $x_i = 0$. When observation $i$ is in category $x=1$, $x_i = 1$.
--   Thus, our sum is only adding a 1 for observations in the category $x=1$.
--   Since the sum is only summing 1's, that should equal the number of observations in category $x=1$, which we defined as $n_1$.
-
-**Property 3:**
-
-$$
-\bar x = \frac{n_1}{n}
-$$
-
--   Why? The expected value of a binary variable is simply the proportion of observations in category $x=1$.
-
-**Property 4:**
-
-$$
-\sum_{i=1}^n y_i = n\bar y
-$$
-
--   Why? By definition of average, $\sum y_i = \sum \bar y$.
--   And since $\bar y$ is a constant, $\sum^n \bar y = n \times \bar y$.
-:::
-
-<br />
-
-Now, with these properties, we can return to the numerator, and further simplify:
-
-$$
-\begin{split}
-& \sum_{i=1}^n  x_i y_i - \bar y \sum_{i=1}^n x_i - \bar x \sum_{i=1}^n  y_i + n \bar x \bar y \\
-& = n_1 \bar y_1 - n_1 \bar y - \frac{n_1}{n} n \bar y + n \frac{n_1}{n}  \bar y \\
-& = n_1 \bar y_1 - n_1 \bar y - n_1 \bar y + n_1 \bar y \\
-& = n_1 \bar y_1 - n_1 \bar y \\
-& = n_1 (\bar y_1 - \bar y)
-\end{split}
-$$
-
-Now, we can consult another property, derived from the definition of expecation.
-
-::: callout-note
-## Useful Property
-
-The definition of expectation for a discrete random variable is:
-
-$$
-E(x) = \sum\limits_{i=1}^n (x_i \times p(x_i))
-$$
-
--   Where $p(x_i)$ is the probability associated with the specific random outcome.
-
-We know that in our example, $\bar y$ is an expectation: $E(y)$.
-
-We also can think of variable $y$ as a discrete variable:
-
--   How? We only know $x$ is a discrete variable.
--   But, let us think of $y$ in terms of $x$. We have two groups of $y$ values, one in category $x=0$, and one in category $x=1$.
--   Each group of $y$ values can be thought of having their own discrete outcome: the average $y$ in each group: $\bar y_0$ and bar $y_1$.
--   The probability of each group is simply the proportion of observations in each $x$ category compared to the total number of observations.
-
-Using this idea, we know that:
-
-$$
-\begin{split}
-E(y) = \bar y & = \sum\limits_{i=1}^n (y_i \times p(y_i)) \\
-& =\bar y_0\frac{n_0}{n} + \bar y_1 \frac{n_1}{n} \\
-& = \frac{1}{n}n_0 \bar y_0 + \frac{1}{n}n_1 \bar y_1 \\
-& = \frac{1}{n}(n_0 \bar y_0 + n_1 \bar y_1)
-\end{split}
-$$
-
-This final equation, we can plug in for $\bar y$ as our property.
-:::
-
-<br />
-
-Now with this property for $\bar y$, we can plug it into our numerator, and get:
-
-$$
-\begin{split}
-& n_1 (\bar y_1 - \bar y) \\
-& = n_1 \left( \bar y_1 - \frac{1}{n}(n_0 \bar y_0 + n_1 \bar y_1) \right) \\
-& = n_1 \bar y_1 - \frac{n_1}{n}(n_0 \bar y_0 + n_1 \bar y_1) \\
-& = n_1 \bar y_1 - \left(  \frac{n_1n_0 \bar y_0}{n} + \frac{n_1n_1 \bar y_1}{n} \right) \\
-& = n_1 \bar y_1 - \frac{n_1n_0 \bar y_0}{n} - \frac{n_1^2 \bar y_1}{n} \\
-& = n_1 \bar y_1 -\frac{n_1^2 \bar y_1}{n} - \frac{n_1n_0 \bar y_0}{n} \\
-& = \bar y_1 \left( n_1 - \frac{n_1^2}{n} \right) - \bar y_0 \left(\frac{n_1n_0}{n}\right)
-\end{split}
-$$
-
-<br />
-
-------------------------------------------------------------------------
-
-[Homepage](https://statsnotes.github.io)
-
-# 1.9.4: Categorical Explanatory Variables in Regression
+# 1.6.4: Interpreting Categorical Explanatory Variables
 
 <br />
 
@@ -339,7 +198,7 @@ $$
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.9.6: Introduction to Fixed Effects
+# 1.9.6: The Linear Probability Model
 
 <br />
 
@@ -347,4 +206,4 @@ $$
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.9.7: Clustered Standard Errors
+# 1.9.7: Limitations of Linear Regression
