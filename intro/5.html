@@ -183,6 +183,19 @@ Lesson Overview
 </ul>
 </div>
 </div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This lesson is an introduction to the multiple linear regression model. It does not cover the mathematics behind the estimation process, or the properties of OLS. If you already have a strong grasp of multiple linear regression, lessons <a href="https://statsnotes.github.io/metrics/2.html">2.2</a>, <a href="https://statsnotes.github.io/metrics/3.html">2.3</a>, and <a href="https://statsnotes.github.io/metrics/4.html">2.4</a> provide a more detailed and mathematical analysis.</p>
+</div>
+</div>
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
@@ -221,7 +234,13 @@ y_i = \beta_0 + \beta_1x_{1i} + \dots + \beta_k x_{ki} + u_i
 </div>
 </div>
 <p><br></p>
-<p>Same as in Simple Linear Regression, once we have estimated <span class="math inline">\overrightarrow\beta</span>, we will have a best-fit <strong>plane</strong>, also called a fitted-values model (see <a href="https://statsnotes.github.io/theory/4.html#fitted-values-and-best-fit-lines">1.4.2</a>). The fitted values model takes the form:</p>
+<p>The estimation process, just like in simple linear regression, uses the sum of squared errors (SSE):</p>
+<p><span class="math display">
+SSE =\sum\limits_{i=1}^n (y_i - \hat y_i)^2
+</span></p>
+<p>This lesson will not go into the mathematics of the ordinary least squares estimator, or the properties of the estimator. These will be covered later in Part II on Econometric Theory (lessons <a href="https://statsnotes.github.io/metrics/2.html">2.2</a>, <a href="https://statsnotes.github.io/metrics/3.html">2.3</a>, and <a href="https://statsnotes.github.io/metrics/4.html">2.4</a>).</p>
+<p><br></p>
+<p>Once we have estimated <span class="math inline">\overrightarrow\beta</span>, we will have a best-fit <strong>plane</strong>, also called a fitted-values model (see <a href="https://statsnotes.github.io/theory/4.html#fitted-values-and-best-fit-lines">1.4.2</a>). The fitted values model takes the form:</p>
 <p><span class="math display">
 \hat y_i = \hat\beta_0 + \hat\beta_1 x_{1i} + \dots + \hat\beta_k x_{ki}
 </span></p>

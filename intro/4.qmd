@@ -36,6 +36,12 @@ This lesson covers the following topics:
 -   How we can use simple linear regression to make predictions.
 :::
 
+::: callout-warning
+## Warning!
+
+This lesson is an introduction to the simple linear regression model. It does not cover the mathematics behind the estimation process, or the properties of OLS. If you already have a strong grasp of simple linear regression, lessons [2.2](https://statsnotes.github.io/metrics/2.html), [2.3](https://statsnotes.github.io/metrics/3.html), and [2.4](https://statsnotes.github.io/metrics/4.html) provide a more detailed and mathematical analysis.
+:::
+
 <br />
 
 ------------------------------------------------------------------------
@@ -147,11 +153,11 @@ $$
 -   The sum of squared errors is exactly as it sounds. Find the error, the distance between the actual $y_i$ and predicted $\hat y$, which is $y_i - \hat y$, then square that error $(y_i - \hat y_i)^2$, then sum up for all observations $i$ in the data.
 :::
 
-More inuitively, the errors of a best-fit line are highlighted in red. We will square each error, then sum all the errors up, to get the sum of squared errors for that best-fit line:
+More intuitively, the errors of a best-fit line are highlighted in red. We will square each error, then sum all the errors up, to get the sum of squared errors for that best-fit line:
 
 ![](images/clipboard-846785636.png){fig-align="center" width="75%"}
 
-We will discuss this estimation process, called the Ordinary Least Squared Estimator, in much more detail in [lesson 2.2](https://statsnotes.github.io/metrics/2.html). Do not worry about the mathematics/mechanics behind it now.
+This lesson will not go into the mathematics of the ordinary least squares estimator, or the properties of the estimator. These will be covered later in Part II on Econometric Theory (lessons [2.2](https://statsnotes.github.io/metrics/2.html), [2.3](https://statsnotes.github.io/metrics/3.html), and [2.4](https://statsnotes.github.io/metrics/4.html)).
 
 <br />
 
