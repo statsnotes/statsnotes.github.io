@@ -89,7 +89,7 @@ Pre-requisites: Part I and Part II.
 -   3.9: Instrumental Variable Designs
 -   3.10: Examiner, Shift-Share, and Recentered Instruments
 -   3.11: Sharp Regression Discontinuity Designs
--   3.12 Fuzzy Regression Discontinuity and Kink Designs
+-   3.12: Fuzzy Regression Discontinuity and Kink Designs
 
 <br />
 

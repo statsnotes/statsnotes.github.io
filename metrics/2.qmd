@@ -26,6 +26,12 @@ format:
 ## Lesson Overview
 
 In the last part of the course, lessons [1.4](https://statsnotes.github.io/intro/4.html) and [1.5](https://statsnotes.github.io/intro/5.html), we discussed the linear regression model. However, we did not go into details on how the coefficients of the model are estimated. This lesson introduces the most popular method of estimation for the linear-regression model: the ordinary least squares estimator.
+
+This lesson covers the following topics:
+
+-   How to mathematically derive the ordinary least squares estimator.
+-   The regression anatomy theory, and what it means to control for confounding variables.
+-   A more mathematical approach to understanding R-squared and goodness of fit.
 :::
 
 ::: callout-warning
@@ -227,6 +233,7 @@ $$
 \end{split}
 $$
 
+::: callout-note
 ## Useful Properties of Summation
 
 Before we finish, here are a few key properties of summation
@@ -259,6 +266,7 @@ $$
 -   Start by expanding right side to $\sum [ x_i ( x_i - \bar x) - \bar x (x_i - \bar x)]$
 -   Which splits into $\sum x_i (x_i - \bar x) - \bar x \sum (x_i - \bar x)$
 -   By the first property, we know $\sum x_i - \bar x = 0$, so we are only left with $\sum x_i (x_i - \bar x)$
+:::
 
 Knowing these properties of summation, we can transform what we had before:
 
@@ -293,7 +301,7 @@ Of course, we still need to find $\hat\beta_0$ (the slope). We found that $\hat\
 
 And now, we have our estimates $\hat\beta_0$ and $\hat\beta_1$, and thus we now have a best-fit line and an estimate of the relationship between $x$ and $y$.
 
-Note: in [lesson 1.6](https://statsnotes.github.io/metrics/3.html), we will discuss if the OLS estimator is a good estimator or not. For now, we just care about the mechanics of the estimator.
+Note: in [lesson 2.3](https://statsnotes.github.io/metrics/3.html), we will discuss if the OLS estimator is a good estimator or not. For now, we just care about the mechanics of the estimator.
 
 <br />
 
@@ -403,13 +411,13 @@ The point of expressing the model in linear algebra is that it makes the estimat
 
 [Homepage](https://statsnotes.github.io)
 
-# 2.2.4: Mathematics of the Ordinary Least Squares Estimator
+# 2.2.4: Estimation for Multiple Linear Regression
 
 ::: callout-warning
 This section contains Linear Algebra. It is not essential that you understand this section, however, it can be helpful to develop intuition.
 :::
 
-As we remember from [1.4.4](https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator), the goal of Ordinary Least Squares Estimation is to minimise the sum of squared errors. The sum of squared errors in multiple regression is:
+As we remember from [2.2.1](https://statsnotes.github.io/metrics/2.html#sum-of-squared-errors), the goal of Ordinary Least Squares Estimation is to minimise the sum of squared errors. The sum of squared errors in multiple regression is:
 
 $$
 \begin{split}
@@ -617,9 +625,7 @@ Using all this info, we can interpret the meaning of any coefficient $\hat\beta_
 ::: callout-tip
 ## Interpretation of Coefficients in OLS
 
-The interpretation of $\hat\beta_j$ coefficient, multiplied to variable $x_j$ is:
-
--   When $x_j$ increases by one unit, there is an expected $\hat\beta_j$ unit change in $y$, holding all other explanatory variables constant.
+When $x_j$ increases by one unit, there is an expected $\hat\beta_j$ unit change in $y$, when partialling out the effect of all other explanatory variables.
 :::
 
 <br />
@@ -636,9 +642,7 @@ In the last section, we discussed the idea of regression anatomy, and how includ
 
 -   That instead of finding the effect of $x_j$ entirely on $y$, we partial out the effect of other explanatory variables, and only find the effect of the uncorrelated part of $x_j$ (labelled $\widetilde {r_{ji}}$) on $y$.
 
-We have already discussed the mathematical solution of OLS in relation to linear algebra (see [1.6.4](https://statsnotes.github.io/theory/6.html#mathematics-of-the-ordinary-least-squares-estimator)). However, we can also express the estimation solution of $\hat\beta_j$ in relation to the regression anatomy formula.
-
-<br />
+We have already discussed the mathematical solution of OLS in relation to linear algebra (see [2.2.4](https://statsnotes.github.io/metrics/2.html#estimation-for-multiple-linear-regression)). However, we can also express the estimation solution of $\hat\beta_j$ in relation to the regression anatomy formula.
 
 ::: callout-note
 ## Useful Properties of Summation
@@ -679,7 +683,7 @@ $$
 
 Knowing these properties of summation, let us begin.
 
-Let us start off with the OLS estimator for simple linear regression, which calculates the $\hat\beta_1$, the relationship between $x$ and $y$ (which we derived in [1.4.4](https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator)):
+Let us start off with the OLS estimator for simple linear regression, which calculates the $\hat\beta_1$, the relationship between $x$ and $y$ (which we derived in [2.2.2](https://statsnotes.github.io/metrics/2.html#estimation-for-simple-linear-regression)):
 
 $$
 \hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n(x_i - \bar{x})^2}
@@ -772,6 +776,8 @@ Note: in [lesson 2.3](https://statsnotes.github.io/metrics/3.html), we will disc
 
 # 2.2.7: R-Squared and Goodness of Fit
 
+We briefly discussed residuals and R-squared in [1.4.6](https://statsnotes.github.io/intro/4.html#regression-goodness-of-fit-statistics) and [1.5.4](https://statsnotes.github.io/intro/5.html#regression-goodness-of-fit-statistics). This section takes a more mathematical and in-depth look at these goodness of fit metrics.
+
 For each observation, we know that the actual $y_i$ value is the predicted $\hat y_i$ plus the residual term $\hat u_i$. Thus:
 
 $$
@@ -858,3 +864,9 @@ This shows the downside of R-squared as a metric - if we just include random var
 We will discuss the importance of careful model selection in the later parts of the course, when we move to more applied statistics for social science purposes.
 
 <br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)

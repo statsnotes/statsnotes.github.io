@@ -106,12 +106,9 @@ window.Quarto = {
    
   <ul class="collapse">
   <li><a href="#sum-of-squared-errors" id="toc-sum-of-squared-errors" class="nav-link active" data-scroll-target="#sum-of-squared-errors">2.2.1: Sum of Squared Errors</a></li>
-  <li><a href="#estimation-for-simple-linear-regression" id="toc-estimation-for-simple-linear-regression" class="nav-link" data-scroll-target="#estimation-for-simple-linear-regression">2.2.2: Estimation for Simple Linear Regression</a>
-  <ul class="collapse">
-  <li><a href="#useful-properties-of-summation" id="toc-useful-properties-of-summation" class="nav-link" data-scroll-target="#useful-properties-of-summation">Useful Properties of Summation</a></li>
-  </ul></li>
+  <li><a href="#estimation-for-simple-linear-regression" id="toc-estimation-for-simple-linear-regression" class="nav-link" data-scroll-target="#estimation-for-simple-linear-regression">2.2.2: Estimation for Simple Linear Regression</a></li>
   <li><a href="#multiple-linear-regression-with-linear-algebra" id="toc-multiple-linear-regression-with-linear-algebra" class="nav-link" data-scroll-target="#multiple-linear-regression-with-linear-algebra">2.2.3: Multiple Linear Regression with Linear Algebra</a></li>
-  <li><a href="#mathematics-of-the-ordinary-least-squares-estimator" id="toc-mathematics-of-the-ordinary-least-squares-estimator" class="nav-link" data-scroll-target="#mathematics-of-the-ordinary-least-squares-estimator">2.2.4: Mathematics of the Ordinary Least Squares Estimator</a></li>
+  <li><a href="#estimation-for-multiple-linear-regression" id="toc-estimation-for-multiple-linear-regression" class="nav-link" data-scroll-target="#estimation-for-multiple-linear-regression">2.2.4: Estimation for Multiple Linear Regression</a></li>
   <li><a href="#regression-anatomy-and-controlling-for-confounders" id="toc-regression-anatomy-and-controlling-for-confounders" class="nav-link" data-scroll-target="#regression-anatomy-and-controlling-for-confounders">2.5.5: Regression Anatomy and Controlling for Confounders</a></li>
   <li><a href="#regression-anatomy-formula-for-ols-estimation" id="toc-regression-anatomy-formula-for-ols-estimation" class="nav-link" data-scroll-target="#regression-anatomy-formula-for-ols-estimation">2.2.6: Regression Anatomy Formula for OLS Estimation</a></li>
   <li><a href="#r-squared-and-goodness-of-fit" id="toc-r-squared-and-goodness-of-fit" class="nav-link" data-scroll-target="#r-squared-and-goodness-of-fit">2.2.7: R-Squared and Goodness of Fit</a></li>
@@ -137,6 +134,12 @@ Lesson Overview
 </div>
 <div class="callout-body-container callout-body">
 <p>In the last part of the course, lessons <a href="https://statsnotes.github.io/intro/4.html">1.4</a> and <a href="https://statsnotes.github.io/intro/5.html">1.5</a>, we discussed the linear regression model. However, we did not go into details on how the coefficients of the model are estimated. This lesson introduces the most popular method of estimation for the linear-regression model: the ordinary least squares estimator.</p>
+<p>This lesson covers the following topics:</p>
+<ul>
+<li>How to mathematically derive the ordinary least squares estimator.</li>
+<li>The regression anatomy theory, and what it means to control for confounding variables.</li>
+<li>A more mathematical approach to understanding R-squared and goodness of fit.</li>
+</ul>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -330,9 +333,16 @@ Definition: First Order Conditions of OLS
 &amp; = \sum\limits_{i=1}^n x_i (y_i - \bar{y}) - \hat{\beta}_1 \sum\limits_{i=1}^nx_i (x_i - \bar{x})
 \end{split}
 </span></p>
-</section>
-<section id="useful-properties-of-summation" class="level2">
-<h2 class="anchored" data-anchor-id="useful-properties-of-summation">Useful Properties of Summation</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Useful Properties of Summation
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Before we finish, here are a few key properties of summation</p>
 <p><strong>Property 1:</strong></p>
 <p><span class="math display">
@@ -360,6 +370,8 @@ Definition: First Order Conditions of OLS
 <li>Which splits into <span class="math inline">\sum x_i (x_i - \bar x) - \bar x \sum (x_i - \bar x)</span></li>
 <li>By the first property, we know <span class="math inline">\sum x_i - \bar x = 0</span>, so we are only left with <span class="math inline">\sum x_i (x_i - \bar x)</span></li>
 </ul>
+</div>
+</div>
 <p>Knowing these properties of summation, we can transform what we had before:</p>
 <p><span class="math display">
 \begin{split}
@@ -393,7 +405,7 @@ Definition: OLS Estimate of Coefficient
 <p><br></p>
 <p>Of course, we still need to find <span class="math inline">\hat\beta_0</span> (the slope). We found that <span class="math inline">\hat\beta_0 = \bar{y} - \hat{\beta}_1 \bar{x}</span> earlier, so we just plug our solution of <span class="math inline">\hat\beta_1</span> in.</p>
 <p>And now, we have our estimates <span class="math inline">\hat\beta_0</span> and <span class="math inline">\hat\beta_1</span>, and thus we now have a best-fit line and an estimate of the relationship between <span class="math inline">x</span> and <span class="math inline">y</span>.</p>
-<p>Note: in <a href="https://statsnotes.github.io/metrics/3.html">lesson 1.6</a>, we will discuss if the OLS estimator is a good estimator or not. For now, we just care about the mechanics of the estimator.</p>
+<p>Note: in <a href="https://statsnotes.github.io/metrics/3.html">lesson 2.3</a>, we will discuss if the OLS estimator is a good estimator or not. For now, we just care about the mechanics of the estimator.</p>
 <p><br></p>
 <p><br></p>
 <hr>
@@ -494,8 +506,8 @@ X = \begin{bmatrix}1 &amp; x_{21} &amp; \dots &amp; x_{k1} \\1 &amp; x_{22} &amp
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
-<section id="mathematics-of-the-ordinary-least-squares-estimator" class="level1">
-<h1>2.2.4: Mathematics of the Ordinary Least Squares Estimator</h1>
+<section id="estimation-for-multiple-linear-regression" class="level1">
+<h1>2.2.4: Estimation for Multiple Linear Regression</h1>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -509,7 +521,7 @@ Warning
 <p>This section contains Linear Algebra. It is not essential that you understand this section, however, it can be helpful to develop intuition.</p>
 </div>
 </div>
-<p>As we remember from <a href="https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator">1.4.4</a>, the goal of Ordinary Least Squares Estimation is to minimise the sum of squared errors. The sum of squared errors in multiple regression is:</p>
+<p>As we remember from <a href="https://statsnotes.github.io/metrics/2.html#sum-of-squared-errors">2.2.1</a>, the goal of Ordinary Least Squares Estimation is to minimise the sum of squared errors. The sum of squared errors in multiple regression is:</p>
 <p><span class="math display">
 \begin{split}
 SSE &amp; = \sum\limits_{i=1}^n (y_i - \hat y_i)^2\\
@@ -685,10 +697,7 @@ Interpretation of Coefficients in OLS
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The interpretation of <span class="math inline">\hat\beta_j</span> coefficient, multiplied to variable <span class="math inline">x_j</span> is:</p>
-<ul>
-<li>When <span class="math inline">x_j</span> increases by one unit, there is an expected <span class="math inline">\hat\beta_j</span> unit change in <span class="math inline">y</span>, holding all other explanatory variables constant.</li>
-</ul>
+<p>When <span class="math inline">x_j</span> increases by one unit, there is an expected <span class="math inline">\hat\beta_j</span> unit change in <span class="math inline">y</span>, when partialling out the effect of all other explanatory variables.</p>
 </div>
 </div>
 <p><br></p>
@@ -702,8 +711,7 @@ Interpretation of Coefficients in OLS
 <ul>
 <li>That instead of finding the effect of <span class="math inline">x_j</span> entirely on <span class="math inline">y</span>, we partial out the effect of other explanatory variables, and only find the effect of the uncorrelated part of <span class="math inline">x_j</span> (labelled <span class="math inline">\widetilde {r_{ji}}</span>) on <span class="math inline">y</span>.</li>
 </ul>
-<p>We have already discussed the mathematical solution of OLS in relation to linear algebra (see <a href="https://statsnotes.github.io/theory/6.html#mathematics-of-the-ordinary-least-squares-estimator">1.6.4</a>). However, we can also express the estimation solution of <span class="math inline">\hat\beta_j</span> in relation to the regression anatomy formula.</p>
-<p><br></p>
+<p>We have already discussed the mathematical solution of OLS in relation to linear algebra (see <a href="https://statsnotes.github.io/metrics/2.html#estimation-for-multiple-linear-regression">2.2.4</a>). However, we can also express the estimation solution of <span class="math inline">\hat\beta_j</span> in relation to the regression anatomy formula.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -745,7 +753,7 @@ Useful Properties of Summation
 </div>
 <p><br></p>
 <p>Knowing these properties of summation, let us begin.</p>
-<p>Let us start off with the OLS estimator for simple linear regression, which calculates the <span class="math inline">\hat\beta_1</span>, the relationship between <span class="math inline">x</span> and <span class="math inline">y</span> (which we derived in <a href="https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator">1.4.4</a>):</p>
+<p>Let us start off with the OLS estimator for simple linear regression, which calculates the <span class="math inline">\hat\beta_1</span>, the relationship between <span class="math inline">x</span> and <span class="math inline">y</span> (which we derived in <a href="https://statsnotes.github.io/metrics/2.html#estimation-for-simple-linear-regression">2.2.2</a>):</p>
 <p><span class="math display">
 \hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n(x_i - \bar{x})^2}
 </span></p>
@@ -831,6 +839,7 @@ Definition: Regression Anatomy Formula
 </section>
 <section id="r-squared-and-goodness-of-fit" class="level1">
 <h1>2.2.7: R-Squared and Goodness of Fit</h1>
+<p>We briefly discussed residuals and R-squared in <a href="https://statsnotes.github.io/intro/4.html#regression-goodness-of-fit-statistics">1.4.6</a> and <a href="https://statsnotes.github.io/intro/5.html#regression-goodness-of-fit-statistics">1.5.4</a>. This section takes a more mathematical and in-depth look at these goodness of fit metrics.</p>
 <p>For each observation, we know that the actual <span class="math inline">y_i</span> value is the predicted <span class="math inline">\hat y_i</span> plus the residual term <span class="math inline">\hat u_i</span>. Thus:</p>
 <p><span class="math display">
 y_i = \hat y_i + \hat u_i
@@ -910,6 +919,9 @@ R^2 = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}
 </ul>
 <p>We will discuss the importance of careful model selection in the later parts of the course, when we move to more applied statistics for social science purposes.</p>
 <p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
 
 </main>
