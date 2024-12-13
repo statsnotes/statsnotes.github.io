@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Statistics for Social Scientists</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="1_files/libs/clipboard/clipboard.min.js"></script>
+<script src="1_files/libs/quarto-html/quarto.js"></script>
+<script src="1_files/libs/quarto-html/popper.min.js"></script>
+<script src="1_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="1_files/libs/quarto-html/anchor.min.js"></script>
+<link href="1_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="1_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="1_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="1_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="1_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: true
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body>
+
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Statistics for Social Scientists</h1>
+            <p class="subtitle lead">Lesson 2.1: Introduction and Properties of Estimators</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">Lesson 2.1: Introduction and Properties of Estimators</h2>
+   
+  <ul class="collapse">
+  <li><a href="#introduction-to-econometrics" id="toc-introduction-to-econometrics" class="nav-link active" data-scroll-target="#introduction-to-econometrics">2.1.1: Introduction to Econometrics</a></li>
+  <li><a href="#unbiasedness-of-estimators" id="toc-unbiasedness-of-estimators" class="nav-link" data-scroll-target="#unbiasedness-of-estimators">2.1.2: Unbiasedness of Estimators</a></li>
+  <li><a href="#variance-and-efficiency-of-estimators" id="toc-variance-and-efficiency-of-estimators" class="nav-link" data-scroll-target="#variance-and-efficiency-of-estimators">2.1.3: Variance and Efficiency of Estimators</a></li>
+  <li><a href="#introduction-to-asymptotic-large-sample-properties" id="toc-introduction-to-asymptotic-large-sample-properties" class="nav-link" data-scroll-target="#introduction-to-asymptotic-large-sample-properties">2.1.4: Introduction to Asymptotic Large Sample Properties</a></li>
+  <li><a href="#asymptotic-consistency-of-estimators" id="toc-asymptotic-consistency-of-estimators" class="nav-link" data-scroll-target="#asymptotic-consistency-of-estimators">2.1.5: Asymptotic Consistency of Estimators</a></li>
+  <li><a href="#asymptotic-normality-of-estimators" id="toc-asymptotic-normality-of-estimators" class="nav-link" data-scroll-target="#asymptotic-normality-of-estimators">2.1.6: Asymptotic Normality of Estimators</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Lesson Overview
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the last part (Part I: Introduction to Statistical Models), we discussed a variety of models from the Generalised Linear Model family. We briefly discussed the estimators used, but we did not go into detail. In this part (Part II Econometric Theory), we focus in on estimators. This lesson dives into the basics of estimators, and the desirable properties of estimators.</p>
+<p>This lesson covers the following topics:</p>
+<ul>
+<li>A brief introduction to econometrics, and the goals of econometrics.</li>
+<li>A discussion on the finite sample properties of estimators - unbiasedness and variance.</li>
+<li>A discussion on the asymptotic (infinitely large sample size) properties of estimators.</li>
+</ul>
+</div>
+</div>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+<section id="introduction-to-econometrics" class="level1">
+<h1>2.1.1: Introduction to Econometrics</h1>
+<p>What is econometrics, and how does it relate to statistics and the social sciences?</p>
+<p>Econometrics is a field developed by economists, to use data to answer economic questions (although these methods are applicable to other social sciences). Specifically, econometrics was very concerned about causal questions:</p>
+<ul>
+<li>What is the effect of years of education on income?</li>
+<li>What is the effect of a company receiving a patent on sales growth?</li>
+<li>What is the effect of getting an internship on your wage after graduating?</li>
+</ul>
+<p>Social sciences are also very concerned with causal questions. For example:</p>
+<ul>
+<li>Political Science: how do different voting systems effect voter turnout?</li>
+<li>Sociology: How do different traditional gender roles in countries effect the domestic violence rates?</li>
+<li>Public Policy: How does a specific policy effect outcomes?</li>
+<li>Psychology: Does discussing contentious issues with your partner cause marital disputes?</li>
+</ul>
+<p><br></p>
+<p>Causality is not unique to the social sciences - it is used extensively in the natural and physical sciences as well. However, one main difference is that the sciences tend to be able to run more randomised controlled experiments (like drug trials) with control and treatment groups.</p>
+<ul>
+<li>Randomisation is powerful, since it eliminates the effects of other confounders, and ensures both treatment and control groups are similar.</li>
+</ul>
+<p>On the other hand, social sciences have a much more difficult time running these randomised experiments (we will explore this issue later). Instead, social scientists have been forced to adapt and find new ways of using <strong>observational data</strong> to show causality.</p>
+<p>Statistics has traditionally been dedicated to the sciences, where causality was easier to show. As a result, economists had to develop their own methods, econometrics, in order to identify causal effects in observational data.</p>
+<p>Today, econometrics is the dominant field for causal inference in the social sciences, as it provides a strong toolkit for the identification of causal effects in observational data.</p>
+<p><br></p>
+<p>Because of the focus on causal inference, and the lack of randomised controlled trials, econometricians have been forced to study <strong>estimators</strong> extensively.</p>
+<p>We briefly discussed <strong>estimators</strong> in <a href="https://statsnotes.github.io/intro/2.html#estimands-estimators-and-estimates">1.2.2</a>, as well as referenced them extensively throughout Part I as a way to find the estimates of our coefficients in our regression models.</p>
+<ul>
+<li>In classical statistics, understanding regression models is enough. This is because with a randomised controlled trial, regression estimates are (frequently) directly interpretable as causal effects.</li>
+<li>However, in observational data situations that we face in the social sciences, we do not have randomisation of treatment. Thus, our regression coefficients are not directly interpretable as causal effects.</li>
+</ul>
+<p>As econometricians and social scientists, we must then analyse estimators, and their properties, to determine if our estimators, under a set of assumptions, are a good estimator of the causal effects.</p>
+<p>This Part of the course (Part II: Econometric Theory) focuses on the econometric theory of estimators. We will look at the theoretical properties of common estimators, such as Ordinary Least Squares, Method of Moments, Instrumental Variables, and Maximum Likelihood.</p>
+<ul>
+<li>The following part (Part III: Applied Econometrics) will take our theory of estimators, and apply them to real research designs.</li>
+<li>These two parts thus go together and will provide you with a strong basis in causal identification, estimation, and inference.</li>
+</ul>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="unbiasedness-of-estimators" class="level1">
+<h1>2.1.2: Unbiasedness of Estimators</h1>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ensure you understand the difference between estimators, estimates, and estimands, as discussed in <a href="https://statsnotes.github.io/intro/2.html#estimands-estimators-and-estimates">1.2.2</a>.</p>
+</div>
+</div>
+<p>An estimator is a mathematical rule, that takes our sample data, and produces an estimate <span class="math inline">\hat\theta_n</span> of a true population value <span class="math inline">\theta</span>.</p>
+<p>The most important property of an estimator is that its estimates are relatively correct.</p>
+<ul>
+<li>If the true population <span class="math inline">\theta</span> is actually, for example, <span class="math inline">\theta = 10</span>, we would hope that our estimator produces estimates centered around that value.</li>
+<li>If our estimator is producing estimates that center around <span class="math inline">\hat\theta_n = 1000</span>, that is clearly not a good estimator.</li>
+</ul>
+<p>This idea leads us to the property of <strong>unbiasedness</strong>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Unbiasedness
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An estimator is unbiased, if its estimates <span class="math inline">\hat\theta_n</span> are of the following:</p>
+<p><span class="math display">
+E(\hat\theta_n) = \theta
+</span></p>
+<p>Or in other words, if we repeatedly sample and use the estimator, on average, the estimates will be equal to the true population value.</p>
+</div>
+</div>
+<p><br></p>
+<p>We want an estimator that is unbiased. Why?</p>
+<ul>
+<li>We know that the expectation of a random variable is its “best guess” of its value.</li>
+<li>We know that estimates <span class="math inline">\hat\theta_n</span> from an estimator are a random variable called the sampling distribution (see <a href="https://statsnotes.github.io/intro/2.html#uncertainty-in-estimates-and-sampling-distributions">1.2.3</a>)</li>
+<li>Thus, if <span class="math inline">E(\hat\theta_n) = \theta</span>, that means our “best guess” of the estimator value is the true parameter value <span class="math inline">\theta</span>. That means any one estimate <span class="math inline">\hat\theta_n</span> is on average, correct.</li>
+</ul>
+<p><br></p>
+<p>We can also quantify the idea of <strong>bias</strong>.</p>
+<p><span class="math display">
+Bias(\hat\theta_n) = E(\hat\theta_n) - \theta
+</span></p>
+<ul>
+<li>If an estimator is unbiased, <span class="math inline">E(\hat\theta_n) = \theta</span>, so the bias will be 0.</li>
+<li>If an estimator is not unbiased, then bias will be non-zero.</li>
+</ul>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="variance-and-efficiency-of-estimators" class="level1">
+<h1>2.1.3: Variance and Efficiency of Estimators</h1>
+<p>Unbiasedness is not the only desirable property of estimators.</p>
+<p>For example, let us say the true population parameter <span class="math inline">\theta = 0</span>. We will have two estimators: estimator <span class="math inline">A</span> and estimator <span class="math inline">B</span>.</p>
+<ul>
+<li>Estimator <span class="math inline">A</span>, after two samples (for simplicity), produces estimates -1 and 1.</li>
+<li>Estimator <span class="math inline">B</span>, after two samples (for simplicity), produces estimates -100 and 100.</li>
+</ul>
+<p>Both estimators <span class="math inline">A</span> and <span class="math inline">B</span> are unbiased:</p>
+<p><span class="math display">
+E(\hat\theta_A) = E(\hat\theta_B) = \theta = 0
+</span></p>
+<p>However, clearly, estimator <span class="math inline">A</span> is, on average, much more closer to the true <span class="math inline">\theta = 0</span> than estimator <span class="math inline">B</span>.</p>
+<ul>
+<li>This is because while estimator <span class="math inline">B</span> is unbiased, its estimates are very spread out, meaning that each estimate is far from the expected value (and true population value of <span class="math inline">\theta</span>).</li>
+</ul>
+<p>Thus, we want an estimator that is not only unbiased, but also has low variance.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Variance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The variance of an estimator is defined as:</p>
+<p><span class="math display">
+E((\hat\theta_n - E(\hat\theta_n))^2) = Var (\hat\theta_n)
+</span></p>
+<ul>
+<li>This formula is just the formula for variance introduced in <a href="https://statsnotes.github.io/intro/1.html#variance-and-standard-deviation">1.1.5</a>, but substituting <span class="math inline">\hat\theta_n</span> in.</li>
+</ul>
+</div>
+</div>
+<p><br></p>
+<p>As I said above, when judging two unbiased estimators for <span class="math inline">\theta</span>, we should chose the one with the lower variance, as it is less likely to have an estimate very far from the truth.</p>
+<p>The more mathematical reason for this is because the unbiased estimator with the lower variance has more <strong>precision</strong> (and more <strong>efficiency</strong>).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Precision
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The precision of an estimator is, on average, how far its estimates are from the true population parameter.</p>
+<p>Precision is measured with mean squared error:</p>
+<p><span class="math display">
+\begin{split}
+MSE(\hat\theta_n) &amp; = E((\hat\theta_n - \theta)^2) \\
+&amp; = Var(\hat\theta_n) + Bias(\hat\theta_n)^2
+\end{split}
+</span></p>
+<ul>
+<li>The first line is just the average distance between estimate <span class="math inline">\hat\theta_n</span> and population parameter <span class="math inline">\theta</span>, squared (to remove direction).</li>
+<li>The second equation shows why when bias is equal, the estimator with the lower variance is preferred.</li>
+</ul>
+</div>
+</div>
+<p><br></p>
+<p>One thing you may have noticed is that, in theory, it is possible for a biased estimator to have a lower MSE than a unbiased estimator.</p>
+<ul>
+<li>This is particularly the case when the biased estimator has a slight bias but small variance, while the unbiased estimator has a giant variance.</li>
+</ul>
+<p>This brings us the case of <strong>efficiency</strong>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Efficiency
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An estimator <span class="math inline">A</span> is more efficient than an estimator <span class="math inline">B</span> if:</p>
+<p><span class="math display">
+MSE(\hat\theta_A) &lt; MSE(\hat\theta_B)
+</span></p>
+<p>When judging estimators, we want to chose the estimator that is more efficient.</p>
+</div>
+</div>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="introduction-to-asymptotic-large-sample-properties" class="level1">
+<h1>2.1.4: Introduction to Asymptotic Large Sample Properties</h1>
+<p>In the past two sections, we have focused on finite-sample properties of estimators: unbiasedness and variance.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Finite-Sample Properties
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Finite sample properties are properties of estimators when sample size <span class="math inline">n</span> is equal to any real number.</p>
+<p>The properties apply to any <span class="math inline">n</span> (from a tiny sample size to a large sample size).</p>
+</div>
+</div>
+<p><br></p>
+<p>However, sometimes, we are not just interested in finite sample properties.</p>
+<p>We may also be interested in how the estimator behaves as we increase the sample size to be larger and lager.</p>
+<ul>
+<li>This is useful for multiple reasons, as we will cover in this course.</li>
+<li>The central limit theorem is actually a large-sample property, which we will discuss later.</li>
+</ul>
+<p>These properties are called large-sample properties or asymptotic properties.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Asymptotic Properties
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Asymptotic properties are properties of estimators as the sample size becomes larger and larger.</p>
+<p>Or more mathematically, as the sample size <span class="math inline">n</span> approaches infinity.</p>
+</div>
+</div>
+<p>Asymptotics can help us with many things:</p>
+<ul>
+<li>They can make statistical inference possible.</li>
+<li>They can help us relax assumptions of unbiasedness, assuming we have a large-enough sample size.</li>
+<li>They can also tell us if a estimator is good or not.</li>
+</ul>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="asymptotic-consistency-of-estimators" class="level1">
+<h1>2.1.5: Asymptotic Consistency of Estimators</h1>
+<p>A desirable large sample property of any estimator is consistency.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Consistency
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An estimator is consistent, if as we increase sample size towards infinity, the estimate will become more and more concentrated around the true population value <span class="math inline">\theta</span>.</p>
+<p>Or in other words, as sample size increases indefinitely, we will get closer and closer to the true population value <span class="math inline">\theta</span>, until at infinite sample size, all our estimates will be exactly <span class="math inline">\theta</span>.</p>
+<p>Mathematically:</p>
+<p><span class="math display">
+Pr(|\hat\theta_n - \theta|&gt; \epsilon) \rightarrow 0, \text { as } n \rightarrow ∞
+</span></p>
+<ul>
+<li>Or in other words, the proabability that the distance between an estimate <span class="math inline">\hat\theta_n</span> and the true population value <span class="math inline">\theta</span> will be higher than a small close-to-zero value <span class="math inline">\epsilon</span> will be 0, since our estimates <span class="math inline">\hat\theta_n</span> will converge at the <span class="math inline">\theta</span>.</li>
+</ul>
+</div>
+</div>
+<p><br></p>
+<p>An estimator can be both biased, but consistent.</p>
+<ul>
+<li>i.e.&nbsp;in smaller sample sizes, the estimator might not be on average correct, but over a large enough sample size, it will become “unbiased”.</li>
+</ul>
+<p>For example, in the figure below, we can see that this estimator is biased at small values of <span class="math inline">n</span>, but as <span class="math inline">n</span> increases, it becomes more consistent, collapsing its distribution around the true <span class="math inline">\theta</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-1215503621.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+<p><br></p>
+<p>One useful property in establishing asymptotic consistency is the <strong>law of large numbers.</strong></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Law of Large Numbers
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The law of large numbers states that the sample average of a random sample, is a consistent estimator of the population mean.</p>
+<p>For example, let us say we have a random variable <span class="math inline">x</span>. We take a random sample of <span class="math inline">n</span> units, so our sample is <span class="math inline">(x_1, \dots, x_n)</span>.</p>
+<ul>
+<li>Let us define <span class="math inline">\bar x_n</span> as our sample average.</li>
+<li>Let us define <span class="math inline">\mu</span> as the true population mean of variable <span class="math inline">x</span>.</li>
+</ul>
+<p>The law of large numbers states that:</p>
+<p><span class="math display">
+\text{plim}( \bar x_n) = \mu
+</span></p>
+<ul>
+<li>Where <span class="math inline">\text{plim}</span> states that as <span class="math inline">n</span> approaches infinity, the probability distribution of <span class="math inline">\bar x_n</span> collapses around <span class="math inline">\mu</span>.</li>
+</ul>
+</div>
+</div>
+<p><br></p>
+<p>Why is this the case? This sample mean estimator is calculated simply through the formula for mean:</p>
+<p><span class="math display">
+\bar x_n = \frac{1}{n}\sum\limits_{i=1}^n x_i
+</span></p>
+<p>Let us define the variance of our sample of <span class="math inline">x_1, \dots, x_n</span> as <span class="math inline">Var(x_i) = \sigma^2</span>. We can now find the variance of our sampling distribution of estimator <span class="math inline">\bar x_n</span>:</p>
+<p><span class="math display">
+\begin{split}
+Var(\bar x_n) &amp; = Var\left( \frac{1}{n}\sum\limits_{i=1}^n x_i \right) \\
+&amp; = \frac{1}{n^2} Var \left(\sum\limits_{i=1}^n x_i\right) \\
+&amp; = \frac{1}{n^2} \sum\limits_{i=1}^n Var(x_i) \\
+&amp; = \frac{1}{n^2} \sigma^2 \\
+&amp; = \frac{\sigma^2}{n}
+\end{split}
+</span></p>
+<p>And as sample size <span class="math inline">n</span> increases to infinity, we get:</p>
+<p><span class="math display">
+\lim\limits_{n \rightarrow ∞} Var(\bar x_n) = \lim\limits_{n \rightarrow ∞} \frac{\sigma^2}{n} = 0
+</span></p>
+<p>Thus, the variance of our estimator <span class="math inline">\bar x_n</span> shrinks to zero, so as sample size increases to infinity <span class="math inline">n</span>, the sampling distribution of estimator <span class="math inline">\bar x_n</span> collapses around the true population mean.</p>
+<p><br></p>
+<p>The same law of large numbers gives us these other properties:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Probability Limit Probabilities
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The first two properties are that the sample variance and sample covariance estimators are consistent:</p>
+<p><span class="math display">
+\begin{split}
+&amp; \text{plim}(S.Var(x_i)) = Var(x_i) \\
+&amp; \text{plim}(S.Cov(x_i, y_i)) = Cov (x_i, y_i)
+\end{split}
+</span></p>
+<p>The other properties are about algebra with probability limits. Assume <span class="math inline">\text{plim} (u_n) = a</span>, and <span class="math inline">\text{plim}(v_n) = b</span>. Then, the following are true:</p>
+<p><span class="math display">
+\begin{split}
+&amp; \text{plim} (u_n + v_n) = a + b \\
+&amp; \text{plim} (u_n v_n) = ab \\
+&amp; \text{plim} (u_n v_n) = a/b
+\end{split}
+</span></p>
+</div>
+</div>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+<section id="asymptotic-normality-of-estimators" class="level1">
+<h1>2.1.6: Asymptotic Normality of Estimators</h1>
+<p>We already discussed the variance of sampling distributions of estimators. However, variance is not enough for us to run statistical inference tests - we need to know the distribution of the sampling distribution.</p>
+<p>In <a href="https://statsnotes.github.io/intro/2.html#central-limit-theorem">1.2.4</a>, we said that the central limit theorem states that the sampling distribution mimics a normal distribution.</p>
+<p>However, this statement is not entirely accurate - it is oversimplified. In actuality, the central limit theorem states:</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Central Limit Theorem
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The Central Limit Theorem states that, regardless of the population distribution, the sampling distribution of an estimator will be a normal distribution as sample size increases to infinity.</p>
+<p>Mathematically, let us say we have a random variable <span class="math inline">x</span>. We take a random sample of <span class="math inline">n</span> units, so our sample is <span class="math inline">(x_1, \dots, x_n)</span>. The central limit theorem states</p>
+<p><span class="math display">
+Pr(w_n &lt; w) \rightarrow \Phi(w) \quad \text{as } n \rightarrow ∞
+</span></p>
+<ul>
+<li>Where <span class="math inline">\Phi(w)</span> is the cumulative density function (cdf) of <span class="math inline">\mathcal N(0,1)</span> (the standard normal distribution introduced in <a href="https://statsnotes.github.io/intro/1.html#the-standard-normal-distribution">1.1.7</a>).</li>
+<li>Where <span class="math inline">w_n</span> is a random variable defined as <span class="math inline">w_n = \frac{\bar x_n - \mu}{\sigma / \sqrt n}</span>.</li>
+</ul>
+<p><span class="math inline">w_n</span>, as you probably recall, takes a form almost identical to the test statistics we worked with in regression.</p>
+</div>
+</div>
+<p><br></p>
+<p>Importantly, central limit theory says that any sample estimator’s distribution is asymptotically normal, no matter the original distribution of the variables.</p>
+<ul>
+<li>This allows us to run statistical tests, like we did in regression, without worrying about the underlying distribution of our variables <span class="math inline">y</span> and <span class="math inline">x</span>.</li>
+</ul>
+<p><br></p>
+<p>However, you might have noticed that all of this is an asymptotic property - where sample size approaches infinity.</p>
+<ul>
+<li>Obviously, we do not have infinite sample sizes in our data.</li>
+</ul>
+<p>So how does this asymptotic property affect us when we never have infinite sample sizes?</p>
+<p>The answer is that if we have a sufficiently large sample size (generally 30 or more), the sampling distribution <strong>approximates</strong> the normal distribution (but is not exactly a normal distribution until <span class="math inline">n = ∞</span>.</p>
+<ul>
+<li>Thus, we adjust for this approximation by using a <span class="math inline">t</span>-distribution instead of a normal distribution (as we saw when doing simple and multiple linear regression).</li>
+</ul>
+<p>But the more important note is that all of our statistical inference is only <strong>approximate</strong> - it is not completely accurate.</p>
+<ul>
+<li>The only way we can ensure our statistical inference is “completely accurate” is if our error term in regression <span class="math inline">u</span> is normally distributed, which generally occurs when our underlying variables are normally distributed.</li>
+<li>In practice, we treat the approximation as “good enough”.</li>
+</ul>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
