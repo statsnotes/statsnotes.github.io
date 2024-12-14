@@ -45,62 +45,92 @@ This lesson covers the following topics:
 
 The three main types of variables in statistics are **categorical**, **ordinal**, and **continuous** variables. What are these different types of variables, and how do they differ?
 
-<br />
-
-**Categorical variables** are variables that have discrete categories, that cannot be ordered.
-
-1.  Discrete categories means that there are different "categories" of outcomes, and you can only get values in those categories. For example, if you roll a dice, you can only get one of 6 outcomes. You cannot get outcome 3.4234783 - that is not a category.
-2.  Categories cannot be ordered. For example, take the categories Microsoft, Apple, and Google. There is no "order" to these. For example, we know $5 > 1$. But we cannot say Microsoft \> apple, or Google \> apple.
-
-Categorical variables are described by discrete random variables, as discussed in [1.1.3](https://statsnotes.github.io/theory/1.html#probability-mass-and-density-functions), and are described by probability mass functions.
-
-A special type of categorical variable is the **binary/dummy variable**, which is a variable that has only two categories.
-
--   These are extremely common in social sciences. For example, variables involving treatment/control groups, true/false, did/didn't, yes/no, are all examples of binary/dummy variables.
-
-[Categorical variables require special treatment in linear regression (and regression models in general), which we will discuss in this lesson.]{.underline}
+-   We will first introduce the main types of variables.
+-   Then, we will introduce the implications for these variables in regression.
 
 <br />
 
-**Ordinal variables** are variables that have discrete categories, that can be ordered.
+### Categorical Variables
 
--   Discrete categories means the same thing as above with categorical variables.
+Categorical variables are variables which have a group of different categories in which each observation can fall in. These categories are discrete, distinct, and have no natural order.
 
-However, ordinal variables are ordered.
+::: callout-note
+## Example: State
 
--   For example, pretent you fill out a survey ranking your experience with a service, that gives you the options *poor experience, neutral, good experience*. We can say that *poor experience \< neutral*, and *neutral \< good experience*. These categories can be ordered.
--   Or for example, you are to giving a star rating to a restaurant: either 1, 2, 3, 4, or 5 stars. You cannot give 4.5 stars, or 3.432748 stars, so there are discrete categories. However you can order these categories: clearly 5 stars \> 3 stars.
+An example of a categorical variable is *state of birth*. For example, the variable could have the categories: New York, California, Nevada, etc..
 
-However, we cannot say anything about the *distance* between categories.
+-   There are a finite number of categories - there are 50 categories. For simplicity, we can label each category with a number between 1 and 50.
+-   These categories are discrete and distinct: you cannot have any individual $i$ who was born in category 3.5 - they have to either be born in category 3, or category 4, or one category. They cannot be born in-between categories.
+-   These categories have no natural order: there is no "inherent" way to organise states. Of course, we could order them by population, alphabetical order, etc., but these are all choices we have to make - there is no **natural** order.
+:::
 
--   For example, we cannot say that the distance between *poor experience* and *neutral* is equal to the distance between *neutral* and *good experience*.
--   We can only conclude on the order, not the distance.
+A sub-category of categorical variables are **binary variables**. These are categorical variables with only 2 categories. We can label each category as either 0 or 1.
 
-Ordinal variables can be "treated" as continuous variables in a regression setting (see below for what continuous variables are).
+Binary variables are extremely common, including true/false, yes/no, voted/did not vote, etc.
 
--   However, they can also be treated as categorical variables (if you have some reason to believe the ordering is arbitrary and not useful).
+::: callout-note
+## Example: Gender
 
-<br />
-
-**Continuous** variables are variables that are, well, continuous. More specifically, continuous variables have 2 characteristics:
-
-1.  They have infinite subdivisions between any two values - there is always some value in between two different values. For example, take two values: $1$ and $2$. In a continuous variable, $1.5$ is in between them. Take another example of two values: $1$ and $1.000001$. In a continuous variable, $1.00000000001$ is between those two values.
-2.  The distance between values is consistent and meaningful. For example, the distance between 3 and 1 is 2, and the distance between 11 and 9 is also 2. That distance 2 is consistent and meaningful. This is in contrast to ordinal variables.
-
-An example of a continuous variable is temperature:
-
--   Temperature has infinite subdivisions: We can have temperature at 20.34372 Celsius.
--   Temperature also has consistent distance between values. Going from 5 to 6 Celsius, or 7 to 8 Celsius, are all a 1 Celsius increase.
-
-Continuous variables can be described by probability density functions as discussed in [1.1.3](https://statsnotes.github.io/theory/1.html#probability-mass-and-density-functions).
+An example of a binary variable is *gender*. This variable has two categories: female and non-female (male).
+:::
 
 <br />
 
-Continuous variables have been what we have discussed so far in regression.
+### Ordinal Variables
 
--   All of our previous interpretation has focused on assuming both $x$ and $y$ are continuous (or ordinal if we treat the ordinal variable as continuous).
+Ordinal variables are very similar to categorical variables. They also have categories that are discrete and distinct. However, the main difference is that ordinal variable categories [have a natural order]{.underline}.
 
-However, categorical variables have slightly different interpretations and implementations, due to their unique characteristics of discreteness and unorderedness. This chapter focuses on how we can adjust the linear regression model to fit these characteristics.
+::: callout-note
+## Example: Agreement
+
+In many surveys, you will have a variable called agreement. This variable has 3 categories: disagree, neutral, and agree.
+
+-   There are a finite number of categories - there are 3 categories. For simplicity, we can label each category with a number between 1 and 3.
+-   These categories are discrete and distinct: you cannot have any individual $i$ who responds with category 1.5 - they have to choose one of the three options.
+-   However, these categories have a natural order. Clearly, in order of agreement, we can order the categories: disagree, neutral, and agree.
+:::
+
+<br />
+
+### Continuous Variables
+
+Continuous variables can take on all numeric values (including decimals) within a range.
+
+-   This means they are not discrete. For example, 3 and 4 are not discrete outcomes in a continuous variable, because you can have values of 3.5, 3.1, 3.3248932, etc.
+
+::: callout-note
+## Example: Temperature
+
+Temperature is a continuous variable. You can have values of 0 Celsius, 50 Celsius, 32.3247 Celsius, etc.
+:::
+
+There is an extension of continuous variables: **Count Variables**.
+
+-   Count variables have values that start from 0, and go to infinity. They cannot be negative.
+-   Interestingly, count variables should in theory only have full integer values. This seems a little more similar to an ordinal variable, however, count variables tend to fit better with continuous variables in terms of statistical models.
+
+<br />
+
+### Types of Variables and Regression
+
+We discussed three types of variables: categorical, ordinal, and continuous. But what are the implications of these on linear regression models?
+
+Up until now (Lesson [1.4](https://statsnotes.github.io/intro/4.html) and [1.5](https://statsnotes.github.io/intro/5.html)), we have focused on continuous variables. Continuous variables always work with linear regression, either as explanatory variables $x$ or outcome variables $y$.
+
+-   This is the same with Count Variables. However, there are specialised regression models for **Count Outcome Variables** (negative binomial and poisson) that we will explore in a later lesson. These models have some advantages over linear regression, however, linear regression still works.
+
+<br />
+
+Categorical variables are a little different - we will explore this throughout the lesson.
+
+<br />
+
+Ordinal variables are perhaps the most complex.
+
+-   All ordinal variables (explanatory and outcome) can be treated as continuous variables in linear regression. There is generally no issue with this.
+-   Ordinal explanatory variables can also be treated the same as categorical explanatory variables in linear regression (although, this is not common).
+
+<br />
 
 <br />
 
@@ -122,19 +152,17 @@ $$
 
 -   Where $x$ is a binary explanatory variable.
 
-However, Binary explanatory variables will change the interpretations of our coefficients, and slightly change the estimation process of OLS.
-
 <br />
 
-How are binary explaantory variables interpreted in linear regression? We can "solve" for these interpretations. Assume $x$ has two categories $x=0$ and $x=1$:
+However, Binary explanatory variables will change the interpretations of our coefficients, and slightly change the estimation process of OLS.
 
--   I will use the conditional expectation function since it makes more sense (as you will see in a second).
+We can "solve" for these interpretations. Assume $x$ has two categories $x=0$ and $x=1$. We can plug these two into our fitted values model:
 
 $$
 \begin{split}
-&E(y|x=0) = \hat\beta_0 + \hat\beta_1(0) = \hat\beta_0 \\
-& E(y|x=1) = \hat\beta_0 + \hat\beta_1(1) = \hat\beta_0 + \hat\beta_1 \\
-& E(y|x=1) - E(y|x=0) = (\hat\beta_0 + \hat\beta_1) - \hat\beta_0 = \hat\beta_1
+& \hat y_{i, \ x_i = 0} = \hat\beta_0 + \hat\beta_1(0) = \hat\beta_0 \\
+& \hat y_{i, \ x_i = 1} = \hat\beta_0 + \hat\beta_1(1) = \hat\beta_0 + \hat\beta_1 \\
+& \hat y_{i, \ x_i = 1} - \hat y_{i, \ x_i = 0} \ = \ (\hat\beta_0 + \hat\beta_1) - \hat\beta_0 = \hat\beta_1
 \end{split}
 $$
 
@@ -154,6 +182,8 @@ When $x$ is a binary explanatory variable:
 -   $\hat\beta_0$ is the expected value of $y$ given an observation in category $x = 0$
 -   $\hat\beta_0 + \hat\beta_1$ is the expected value of $y$ given an observation in category $x = 1$
 -   $\hat\beta_1$ is the expected difference in $y$ between the categories $x=1$ and $x=0$.
+
+We can see here that our $\hat\beta_1$ is the expected [difference-in-means]{.underline} of the two categories of $x$.
 :::
 
 ::: callout-warning
@@ -166,8 +196,6 @@ Causality is not established through estimators, it is established through a str
 
 <br />
 
-We can see here that our $\hat\beta_1$ is the expected [difference-in-means]{.underline} of the two categories of $x$.
-
 <br />
 
 ------------------------------------------------------------------------
@@ -175,6 +203,70 @@ We can see here that our $\hat\beta_1$ is the expected [difference-in-means]{.un
 [Homepage](https://statsnotes.github.io)
 
 # 1.6.3: Categorical Explanatory Variables in Regression
+
+Categorical variables have multiple distinct and unordered categories. How do we include categorical variables as explanatory variables in linear regression?
+
+What we typically do is to "transform" the categorical variable of many categories, into a series of binary variables. This is easier to see with an example.
+
+::: callout-note
+## Example: Income Level Variable
+
+Let us say we have a variable: *Income Level of the Country*. This variable has three categories: *Low Income (L), Middle Income (M), and High Income (H)*.
+
+-   This is a categorical variable with 3 categories.
+
+To include this in a regression, we will transform this variable into a set of binary variables. More specifically, we will create binary variables for [each category except one]{.underline}, in the categorical variable.
+
+For example, we could create 2 binary variables out of this regression:
+
+1.  *Middle (M) Variable* $x_M$: This variable takes $x_M = 1$ if a country is a middle income country, and $x_M = 0$ for a country in all other categories.
+2.  *High (H) Variable* $x_H$: This variable takes $x_H = 1$ if a country is a high income country, and $x_H = 0$ for a country in all other categories.
+
+What about the third category (low income) that we left out? Why do we not need 3 categorical variables?
+
+-   This is because if an observation is both $x_M = 0$ and $x_H = 0$ (not in either middle income or high income categories), we know that they will be in the low income category. So, we do not need an extra variable for that.
+
+-   Another reason why we do not include the final cateogry is because of the issue of multicollinearity and the dummy variable trap, which is explained in [1.6.5](https://statsnotes.github.io/intro/6.html#the-dummy-variable-trap).
+:::
+
+<br />
+
+So more generally, we always split a categorical variable into smaller binary variables, with one binary variable for each category [except one]{.underline}.
+
+-   That one category left out is called the **reference category**.
+-   There are no rules in choosing the reference category. We can choose any category, and the regression still works.
+-   However, we often want to choose some meaningful category to leave out as the reference. This is because, as we will see in the next section, our regression results are interpreted in comparison to this reference category.
+
+So, this means if we have 10 categories, we will need 9 binary variables. If we have $n$ categories, we will need $n-1$ binary variables.
+
+::: callout-tip
+## Definition: Linear Regression with a Polytomous Explanatory Variable
+
+A **categorical explanatory variable** with $n$ number of categories in $x$, we would create $n-1$ dummy variables, and input it into a regression equation as follows:
+
+$$
+y_i = \beta_0 + \beta_{1}x_{1} + ... + \beta_{k}x_{n-1} + u_i
+$$
+
+-   Where $\beta_0$ is the mean of the reference category $n$.
+-   All the other categories $1, \dots, n-1$ get their own binary variables $x_1, \dots, x_{n-1}$.
+:::
+
+<br />
+
+For example, let us return to the above example of *income level*.
+
+-   This variable has three categories: *Low Income (L), Middle Income (M), and High Income (H)*.
+
+-   We will use *Low Income* as the reference category, just as previously (so binary variables for only $x_M$ middle income and $x_H$ high income).
+
+Let us make the outcome variable *crime*. So essentially, we want to see the relationship between the income level of a country, and its crime rate. Our regression will take the following form:
+
+$$
+\text{crime}_i = \beta_0 + \beta_1 x_{Mi} + \beta_2 x_{Hi} + u_i
+$$
+
+<br />
 
 <br />
 
@@ -184,6 +276,105 @@ We can see here that our $\hat\beta_1$ is the expected [difference-in-means]{.un
 
 # 1.6.4: Interpreting Categorical Explanatory Variables
 
+So we have the categorical explanatory variable regression. Our fitted values model will take the following form:
+
+$$
+\hat y_i = \hat\beta_0 + \hat\beta_{1}x_{1} + ... + \hat\beta_{k}x_{n-1}
+$$
+
+How do we interpret the coefficients $\hat\beta_0, \dots \hat\beta_k$?
+
+<br />
+
+The easiest way is to show these interpretations is with an example, and then generalise to all other categorical variables.
+
+Let us use the same example from the previous section. Our explanatory variable is the income level of a country (categorical: low, medium, or high income), and our outcome variable is crime rate. We established that our regression model takes the form:
+
+$$
+\text{crime}_i = \beta_0 + \beta_1 x_{Mi} + \beta_2 x_{Hi} + u_i
+$$
+
+-   Where $x_M$ is the binary variable for category *middle income*, and $x_H$ is the binary variable for category *high income*.
+
+So our fitted values regression will take the form:
+
+$$
+\widehat{\text{crime}}_i = \hat\beta_0 + \hat\beta_1x_{Mi} + \hat\beta_2x_{Hi}
+$$
+
+Let us calculate the predicted crime rate of each type of country: low income, middle income, and high income.
+
+<br />
+
+Let us say country $i$ is a [low income]{.underline} country (reference category). That means they are not a middle income country ($x_M = 0$), and they are not a high income country ($x_H = 0$). Let us plug those in:
+
+$$
+\begin{split}
+\widehat{\text{crime}}_i & = \hat\beta_0 + \hat\beta_1x_{Mi} + \hat\beta_2x_{Hi} \\
+\widehat{\text{crime}}_i & = \hat\beta_0 + \hat\beta_1(0) + \hat\beta_2(0) \\
+\widehat{\text{crime}}_i & = \hat\beta_0 \\
+\end{split}
+$$
+
+-   Thus, a country in the low income category (reference category) has an expected outcome of $\hat\beta_0$.
+
+Now, let us say country $i$ is a [middle income]{.underline} country. That means they are a middle income country ($x_M = 1$), and they are not a high income country ($x_H = 0$). Let us plug those in:
+
+$$
+\begin{split}
+\widehat{\text{crime}}_i & = \hat\beta_0 + \hat\beta_1x_{Mi} + \hat\beta_2x_{Hi} \\
+\widehat{\text{crime}}_i & = \hat\beta_0 + \hat\beta_1(1) + \hat\beta_2(0) \\
+\widehat{\text{crime}}_i & = \hat\beta_0 + \hat\beta_1\\
+\end{split}
+$$
+
+-   Thus, a country in the middle income category has an expected outcome of $\hat\beta_0 + \hat\beta_1$.
+-   Thus, $\hat\beta_1$ is the [difference]{.underline} between the outcome of a middle income country, and a low income country (because low income country is outcome $\hat\beta_0$)
+
+Finally, let us say country $i$ is a [high income]{.underline} country. That means they are not a middle income country ($x_M = 0$), and they are a high income country ($x_H = 1$). Let us plug those in:
+
+$$
+\begin{split}
+\widehat{\text{crime}}_i & = \hat\beta_0 + \hat\beta_1x_{Mi} + \hat\beta_2x_{Hi} \\
+\widehat{\text{crime}}_i & = \hat\beta_0 + \hat\beta_1(0) + \hat\beta_2(1) \\
+\widehat{\text{crime}}_i & = \hat\beta_0 + \hat\beta_2\\
+\end{split}
+$$
+
+-   Thus, a country in the high income category has an expected outcome of $\hat\beta_0 + \hat\beta_2$.
+-   Thus, $\hat\beta_2$ is the [difference]{.underline} between the outcome of a high income country, and a low income country (because low income country is outcome $\hat\beta_0$)
+
+<br />
+
+We can generalise these interpretations to all categorical variables.
+
+::: callout-tip
+## Interpretation of Categorical Explanatory Variables
+
+Taking what we have seen in the example above, we can interpret all categorical variables.
+
+-   We can see that the reference category (category without a binary variable) has an expected outcome of the intercept $\hat\beta_0$.
+-   We can also see that every other category has an expected outcome of $\hat\beta_0 + \hat\beta_j$, where $\hat\beta_j$ is the coefficient multiplied to the category's binary variable.
+-   That also tells us that $\hat\beta_j$ is the [difference]{.underline} between the expected outcome of the respective category and the reference category.
+:::
+
+<br />
+
+In linear regression, we can run a hypothesis test. What does a statistically significant hypothesis test mean in a categorical explanatory variable.
+
+-   A statistically significant $\hat\beta_j$ indicates that [there is a significant difference in outcomes between the respective category and the reference category]{.underline}.
+
+Note that it [does not mean that the categorical variable as a whole is statistically significant]{.underline}. It only shows the statistical significance of a difference between a category and the reference category.
+
+In order to test the significance of the relationship between the categorical goal as a whole and the outcome, we have to use a **F-test** (see [1.5.6](https://statsnotes.github.io/intro/5.html#hypothesis-testing-with-more-than-one-coefficient)). Our hypotheses for the test will be:
+
+-   $M_0$: the regression model [without]{.underline} the categorical variable (without any of the binary variables of the categories).
+-   $M_a$: the regression model [with]{.underline} the categorical variable.
+
+If the F-test is statistically significant, than we know that the categorical variable has a statistically significant relationship with the outcome variable.
+
+<br />
+
 <br />
 
 ------------------------------------------------------------------------
@@ -192,13 +383,133 @@ We can see here that our $\hat\beta_1$ is the expected [difference-in-means]{.un
 
 # 1.9.5: The Dummy Variable Trap
 
+Notice how so far, when covering binary and categorical variables, we always include one less binary variable than the number of categories.
+
+-   For binary variables, we have two categories, but only one variable in our regression.
+
+-   For categorical variables, we have $n$ categories, but only $n-1$ binary variables in our regression.
+
+Why is this? Obviously, we do not need each category to have its own variable, since we can infer an observation in the final (reference) category is in that category, if it is not a part of any other category.
+
+However, there is another reason why we always drop one category as the reference category: if we do not drop it, the regression does not work.
+
+-   This is because of **multicollinearity**, which is not allowed in linear regression.
+-   Multicollinearity means that no explanatory variable can be [perfectly correlated]{.underline} with any other explanatory variable, or correlated with any function of explanatory variables.
+
+The reason for this is because, actually, it is not mathematically possible to calculate regression results if there is multicollinearity.
+
+-   If there is multicollinearity, you will have to divide by 0 in the OLS formula.
+-   We will discuss this in sections [2.3.2](https://statsnotes.github.io/metrics/3.html#unbiasedness-of-ols-under-the-gauss-markov-theorem) and [2.3.4](https://statsnotes.github.io/metrics/3.html#proof-of-ols-unbiasedness-in-multiple-linear-regression).
+
+This issue of including all categories of the categorical variable as binary variables in the regression, is called the dummy variable trap.
+
+<br />
+
+[We can always avoid the dummy variable trap by simply dropping one category, and treating it as a reference category.]{.underline}
+
+-   Just as we did in the previous section.
+
+<br />
+
+We can actually solve this issue in another way - dropping the constant term.
+
+Let us use the same example from the previous section. Our explanatory variable is the income level of a country (categorical: low (L), medium (M), or high (H) income), and our outcome variable is crime rate. We established that our regression model takes the form:
+
+$$
+\text{crime}_i = \beta_0 + \beta_1 x_{Mi} + \beta_2 x_{Hi} + u_i
+$$
+
+We can drop the intercept $\beta_0$, which will allow us to add the reference category into our regression.
+
+$$
+\text{crime}_i = \beta_1x_{Li} + \beta_2 x_{Mi} + \beta_3 x_{Hi} + u_i
+$$
+
+-   This slightly changes our interpretations. Now, each $\beta$ has the same interpretation - the average outcome in each respective category (if there are other explanatory variables, then, it is the average outcome in each respective category when all other explanatory variables equal 0).
+
+This solution is less common. However, it is used when no category makes sense as a reference category.
+
+-   For example, in our example, it makes sense to treat one category (low income) as a reference category. This is because we are comparing all other categories against that reference category, and it is meaningful to evaluate how much crime changes in comparison to low income, as our country becomes wealthier.
+
+-   However, for other categorical variables, it makes less sense. For example, take the categorical variable *US State*. Which state should be the reference category? Why should we compare all states to Alaska, or Alabama, or New Hampshire? In this case, no reference category might make more sense.
+
+<br />
+
 <br />
 
 ------------------------------------------------------------------------
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.9.6: The Linear Probability Model
+# 1.9.6: Binary Outcomes and the Linear Probability Model
+
+So far, we have focused on explanatory variables. What about outcome variables in regression.
+
+-   As we will see, outcome variables are much more trickier than their explanatory variable counterparts.
+
+First, let us talk about binary outcome variables, where outcome $y$ has two categories: $y=0$ and $y=1$. When this is the case, our linear model changes quite a bit. Our typical regression model has looked like this:
+
+$$
+y_i = \beta_0 + \beta_1 x_i + \dots + \beta_k x_{ki} +u_i
+$$
+
+However, when our outcome variable $y$ has categories $y=0$ and $y=1$, this no longer makes sense.
+
+-   After all, the linear line $y=mx+b$ will produce $y$ values that are not exactly $0$ and $1$. For example, the line can produce outcomes $y=0.23$, $y=0.5849$, etc.
+-   These decimals do not really make sense as an outcome of $y$, since it can only be $0$ or $1$.
+
+<br />
+
+So, instead of our linear model predicting outcome $y$, they actually predict the probability of an observation $i$ being in category $y=1$.
+
+-   Why is this the case? It is a little advanced. As we will cover later in [2.3.7](https://statsnotes.github.io/metrics/3.html#ols-and-the-conditional-expectation-function), linear regression $y$ is equal to the conditional expectation function $E(y|x)$. We also know that the expectation $E(y)$, if $y$ is binary, is the proportion of observations in $y=1$. The proportion of observations in $y=1$ is also equal to the probability of picking an observation in category $y=1$, if we are randomly selecting.
+
+So basically, our outcome of our regression is no longer the $y$ value of observation $i$, but the probability of observation $i$ being in category $y=1$. The probability of observation $i$ being in category $y=1$ is notated $\pi_i$ or $Pr(y_i =1)$.
+
+<br />
+
+This modified model for probabilities is called the linear probability model.
+
+::: callout-tip
+## Definition: Linear Probability Model
+
+The linear probability model is the form of the linear model, when outcome $y$ is binary. The model takes the form:
+
+$$
+\pi_i = \beta_0 + \beta_1x_{1i} + \dots + \beta_kx_{ki}+u_i
+$$
+
+-   Where $\pi_i = Pr(y_i=1)$.
+:::
+
+<br />
+
+Our fitted values model will now be:
+
+$$
+\hat\pi_i = \hat\beta_0 + \hat\beta_1x_{1i} + \dots + \hat\beta_k x_{ki}
+$$
+
+Since our outcome of the linear probability model is now $\hat\pi_i$ instead of $\hat y_i$, we will have to update our interpretations.
+
+::: callout-tip
+## Interpretation of Linear Probability Model
+
+The coefficients in the linear probability model are interpreted as following:
+
+-   $\hat\beta_j$: When $x_j$ increases by one unit, the probability of an observation being in category $y=1$ increases by $\hat\beta_j$.
+-   $\hat\beta_0$: When all explanatory variables equal 0, the probability of an observation being in category $y=1$ is equal to $\hat\beta_0$.
+
+Hypothesis testing works the same way as in linear regression.
+:::
+
+We can use all the techniques we have covered previously in the linear probability model, including binary and categorical explanatory variables.
+
+<br />
+
+There are some issues with the linear probability model, that we will cover in the next section.
+
+<br />
 
 <br />
 
@@ -206,4 +517,128 @@ We can see here that our $\hat\beta_1$ is the expected [difference-in-means]{.un
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.9.7: Limitations of Linear Regression
+# 1.9.7: Limitations of Linear Regression for Non-Continuous Outcomes
+
+There are many limitations of linear regression when it comes to binary, categorical, and ordinal outcome variables.
+
+-   This section will cover these limitations. We start with binary outcomes, then talk about categorical outcomes, before finishing with ordinal outcomes.
+
+<br />
+
+### Limitations of the Linear Probability Model
+
+Let us start with binary outcome variables. We discussed how the linear probability model can be used to deal with binary outcomes $y$.
+
+However, the linear probability model has a huge weakness - impossible predictions.
+
+-   We know by the laws of probability, that any probability must be between 0 and 1.
+-   However, a linear straight line (like the best-fit line in the linear probability model) goes from $±∞$ to $±∞$.
+-   That means that it is possible to get fitted outcomes $\hat \pi_i$ that are above 1 or below 0. This makes no sense.
+
+That means that the linear probability model may often make nonsensical predictions. This is a pretty big issue with the model.
+
+-   There are other issues, including inference issues, that we will cover in more detail in [lesson 1.8](https://statsnotes.github.io/intro/8.html)..
+
+The most common solution to this problem is an alternative model: the logistic regression model.
+
+-   We will cover this model in [lesson 1.8](https://statsnotes.github.io/intro/8.html).
+-   But simply speaking, it applies a "link function" which modifies the linear model so that it never goes beyond 0 or 1 in predictions.
+
+Since it addresses the main issues with the linear probability model, the logistic model is generally the preferred method of modelling binary $y$ outcomes, not the linear probability model introduced in this lesson.
+
+-   This is especially the case in prediction, where the linear probability model is almost never used.
+-   However, the linear probability model is still used, especially in causal inference settings where the predictive outcomes are not the main concern.
+
+<br />
+
+### Limitations Relating to Categorical Outcomes
+
+If we have a categorical outcome variable $y$ with more than 2 categories, with categories having no natural order, the linear regression model [is never okay to use]{.underline}.
+
+The reason for this is quite simple - the linear regression model outputs numerical outcomes, such as $y_i$ or $\pi_i$. Numerical outcomes always imply order - 2 is always greater than 1, 3 is always greater than 2, etc.
+
+But if categorical outcome variables have no natural order, they make no sense to use in a regression model that only outputs results with order.
+
+To address this issue, we will use the Multinomial Logistic Regression model, which will be introduced in [lesson 1.9](https://statsnotes.github.io/intro/9.html).
+
+<br />
+
+### Limitations Relating to Ordinal Outcomes
+
+Ordinal variables can be used in linear regression - we just pretend they are continuous outcomes.
+
+-   For example, if our ordinal variable has categories *disagree, neutral, and agree*, we can just treat them as 0, 1, and 2, and pretend they are a continuous variable.
+
+This generally works without too many issues.
+
+However, there is a limitation regarding ordinal variables in linear regression. Our output, $y_i$, will tell us about the expected outcome given the values of our explanatory variables. However, they will not tell us the probabilities of being in each category.
+
+For example, take the same ordinal variable as before with categories *disagree, neutral, and agree*, which we will label as 0, 1, and 2.
+
+-   The output $y_i$ will tell us the expected level of agreement given some explanatory variable $x$ values (like 1.3 for example).
+
+-   However, it will not tell us the probability of a random person with certain $x$ values of being in each category of *disagree, neutral, and agree*. It only tells us the average outcome, not the individual probabilities of each category.
+
+The Ordinal Logistic Model, that will be discussed in [lesson 1.9](https://statsnotes.github.io/intro/9.html), will allow us to predict the individual category probabilities.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
+
+# Implementation in R
+
+To run linear regressions with binary/categorical variables, the syntax is the exact same as linear regression covered in the last 2 lessons.
+
+The only thing we have to make sure is to ensure the binary/categorical variables we want to use are properly marked in R as binary/categorical variables, and not numeric variables.
+
+-   This is especially the case in many datasets, where categorical variables are coded in numbers, but they are not numeric variables and need to be treated as categorical variables.
+
+<br />
+
+R calls categorical/binary variables **factor variables**.
+
+R automatically treats double (true/false) and string (text) variables as factor variables, so we do not need to worry about this if our variables are already coded as such.
+
+If our categorical variable is a numeric variable, we will need to convert it into a factor variable. This is simply done with the *as.factor()* function.
+
+<br />
+
+We can do this in the data cleaning stage, as follows:
+
+```{r, eval = FALSE}
+variable <- as.factor(variable)
+```
+
+-   Replace *variable* with the name of your variable.
+
+<br />
+
+We can also directly do this in a regression *feols()* (or *lm*) function:
+
+```{r, eval = FALSE}
+feols(y | x1 + as.factor(x2) + x3, data = mydata, se = "hetero")
+```
+
+-   In this example, variable *x2* is being factored, while all the other variables are not.
+-   Simply put *as.factor()* around the variable you want to make categorical.
+
+<br />
+
+We talked about reference categories in this lesson. R will automatically choose a reference category when you factor it (typically the first or last category). However, you can manually change this reference category as follows:
+
+```{r, eval = FALSE}
+variable <- relevel(variable, ref = "reference category name")
+```
+
+-   Replace *variable* with the name of your variable.
+-   Replace *reference category name* with the name of the reference category you want to use.
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
