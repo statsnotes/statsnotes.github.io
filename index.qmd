@@ -64,8 +64,8 @@ Prerequisites: Part I, and single variable calculus and probability (Appendix A.
 -   [2.2: The Ordinary Least Squares Estimator](https://statsnotes.github.io/metrics/2.html)
 -   [2.3: Unbiasedness of the OLS Estimator](https://statsnotes.github.io/metrics/3.html)
 -   [2.4: Variance of the OLS Estimator](https://statsnotes.github.io/metrics/4.html)
--   2.5: Method of Moments and Instrumental Variables
--   2.6: The Maximum Likelihood Estimator
+-   [2.5: Method of Moments and Instrumental Variables](https://statsnotes.github.io/metrics/5.html)
+-   [2.6: The Maximum Likelihood Estimator](https://statsnotes.github.io/metrics/6.html)
 
 <br />
 
