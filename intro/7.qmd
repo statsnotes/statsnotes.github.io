@@ -411,7 +411,7 @@ Most usefully, $\hat\beta_2$ in a hypothesis test has the null hypothesis of $H_
 
 <br />
 
-There are a few more things we can interpretation.
+There are a few more things we can interpret.
 
 First of all, we know that from mathematics, in the quadratic $ax^2 + bx + c$, if $a$ is positive, the parabola opens up, and if $a$ is negative, the parabola opens down.
 

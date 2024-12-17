@@ -188,8 +188,7 @@ E(m(\theta; y)) = 0
 <ul>
 <li>Well, what is <span class="math inline">\mu</span>, the mean, intuitively speaking? It is the expectation of <span class="math inline">y</span>, so <span class="math inline">\mu = E(y)</span>.</li>
 </ul>
-<p>Now that we know that <span class="math inline">\mu = E(y)</span>, since they are equal, <span class="math inline">\mu - E(y) = 0</span>.</p>
-<p>Thus, we can define the mean as a moment of the following condition:</p>
+<p>Now that we know that <span class="math inline">\mu = E(y)</span>, since they are equal, <span class="math inline">\mu - E(y) = 0</span>. Thus, we can define the mean as a moment of the following condition:</p>
 <p><span class="math display">
 E(y - \mu) = 0
 </span></p>
@@ -209,10 +208,7 @@ E(y_i - \hat\mu) = \frac{1}{n}\sum\limits_{i=1}^n (y_i - \hat\mu) = 0
 \end{split}
 </span></p>
 <p>So, we see the method of moments estimates our true population mean <span class="math inline">\mu</span>, with the sample mean <span class="math inline">\bar y</span>.</p>
-<p>Method of moments estimators are generally asymptotically consistent. This is because of the law of large numbers introduced in 2.1.5.</p>
-<ul>
-<li>However, method of moments estimators can be biased in small sample sizes.</li>
-</ul>
+<p>Method of moments estimators are generally asymptotically consistent. This is because of the law of large numbers introduced in <a href="https://statsnotes.github.io/metrics/1.html#asymptotic-consistency-of-estimators">2.1.5</a>. However, method of moments estimators can be biased in small sample sizes.</p>
 <p>But why do we care about the method of moments estimator? In the next section, we will discuss how OLS is also thought of as a method of moments estimator.</p>
 <p><br></p>
 <p><br></p>
@@ -261,7 +257,7 @@ y = \beta_0 + \beta_1x + u
 </div>
 </div>
 <p><br></p>
-<p>Let us prove that OLS is a special case of the method of moments estimator. Remember our OLS minimisation conditions:</p>
+<p>Let us prove that OLS is a special case of the method of moments estimator. Remember our OLS minimisation conditions from <a href="https://statsnotes.github.io/metrics/2.html#estimation-for-simple-linear-regression">2.2.2</a>:</p>
 <p><span class="math display">
 \begin{split}
 &amp; \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0 \\
@@ -282,8 +278,7 @@ y = \beta_0 + \beta_1x + u
 &amp; E(x_i(y_i - \hat\beta_0 - \hat\beta_1x_i)) = 0
 \end{split}
 </span></p>
-<p>Which as we can see, are the exact same minimisation conditions as the method of moments estimator.</p>
-<p>Thus, the OLS estimator is a special case of the Method of Moments estimator, and they produce the same coefficients.</p>
+<p>Which as we can see, are the exact same minimisation conditions as the method of moments estimator. Thus, the OLS estimator is a special case of the Method of Moments estimator, and they produce the same coefficients.</p>
 <p><br></p>
 <p>Note how the two moment conditions of the Method of Moments estimator can be written as:</p>
 <p><span class="math display">
@@ -292,8 +287,7 @@ y = \beta_0 + \beta_1x + u
 &amp; E(xu) = 0
 \end{split}
 </span></p>
-<p>These moments also imply that <span class="math inline">Cov(x,u) = 0</span>, as we discussed in lesson 2.3. This is the assumption of exogeneity.</p>
-<p>These moments also imply that <span class="math inline">Cov(x,u) = 0</span>, as we discussed in lesson 2.3. This is the assumption of exogeneity.</p>
+<p>These moments also imply that <span class="math inline">Cov(x,u) = 0</span>, as we discussed in <a href="https://statsnotes.github.io/metrics/3.html#exogeneity-and-endogeneity">2.3.6</a>. This is the assumption of exogeneity.</p>
 <p>Thus, if <span class="math inline">Cov(x,u)≠0</span>, we do not meet exogeneity, and have endogeneity present. Under endogeneity, if we use the OLS estimator, we will be estimating our parameters with an invalid moment condition - since the moments are not true if endogeneity is present.</p>
 <ul>
 <li>This is another reason why violating endogeneity produces biased (and asymptotically inconsistent) estimates - since endogeneity means the moment conditions are invalid.</li>
@@ -319,8 +313,7 @@ y_i = \beta_0 + \beta_1 x + u_i, \quad E(u) = 0, \ E(xu)≠0
 <p><span class="math display">
 Cov(z,u) = E(zu) = 0
 </span></p>
-<p>This new variable <span class="math inline">z</span> that provides a valid moment condition is called an <strong>instrumental variable</strong>.</p>
-<p>The idea of this variable <span class="math inline">z</span> is that we can first use <span class="math inline">z</span> to explain <span class="math inline">x</span>, then use the part of <span class="math inline">x</span> explained by <span class="math inline">z</span> to explain <span class="math inline">y</span>.</p>
+<p>This new variable <span class="math inline">z</span> that provides a valid moment condition is called an <strong>instrumental variable</strong>. The idea of this variable <span class="math inline">z</span> is that we can first use <span class="math inline">z</span> to explain <span class="math inline">x</span>, then use the part of <span class="math inline">x</span> explained by <span class="math inline">z</span> to explain <span class="math inline">y</span>.</p>
 <ul>
 <li>So first, we find the part of <span class="math inline">x</span> explained by <span class="math inline">z</span>, which we will label as <span class="math inline">\hat x</span>.</li>
 <li>Then, we find the relationship between <span class="math inline">\hat x</span> and <span class="math inline">y</span>.</li>
@@ -350,10 +343,7 @@ Definition: Instrumental Variable
 </ol>
 </div>
 </div>
-<p>If we have found a valid instrument <span class="math inline">z</span>, we can then apply this back into our method of moments estimator to find the relationship between <span class="math inline">x</span> and <span class="math inline">y</span>.</p>
-<ul>
-<li>We will show this in the next section.</li>
-</ul>
+<p>If we have found a valid instrument <span class="math inline">z</span>, we can then apply this back into our method of moments estimator to find the relationship between <span class="math inline">x</span> and <span class="math inline">y</span>. We will show this in the next section.</p>
 <p><br></p>
 <p><br></p>
 <hr>
@@ -407,6 +397,20 @@ Cov(z,y) &amp; = \beta_1 \ Cov(z,x) \\
 \beta_1 &amp; = \frac{Cov(z,y)}{Cov(z,x)}
 \end{split}
 </span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Relevance of the Instrument
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>One of the assumptions of the instrument <span class="math inline">z</span> is that it is relevant: <span class="math inline">Cov(z, x) ≠ 0</span>.</p>
+</div>
+</div>
+<p>Knowing that the condition of relevance is met, we know that our denominator will not be 0, and our <span class="math inline">\beta_1</span> will exist.</p>
 <p>This is the true population value of <span class="math inline">\beta_1</span>. We can estimate this by using the sample analogues.</p>
 <ul>
 <li>The sample analogue of <span class="math inline">Cov(z,y)</span> is the sample covariance <span class="math inline">S.Cov(z,y)</span>.</li>
@@ -429,7 +433,6 @@ Instrumental Variables Estimator
 </span></p>
 </div>
 </div>
-<p>Note: the <span class="math inline">\hat\beta^{IV}_1</span> is only calculable given <span class="math inline">S.Cov(z,x) ≠ 0</span>, which is why <strong>relevance</strong> is one of the assumptions of instrumental variables.</p>
 <p><br></p>
 <p>Of course, so far, we have only estimated <span class="math inline">\beta_1</span>, not <span class="math inline">\beta_0</span>. Let us estimate <span class="math inline">\beta_0</span>. We have the following linear model:</p>
 <p><span class="math display">
@@ -450,8 +453,7 @@ E(y) &amp; = \beta_0 + \beta_1 E(x) \\
 \beta_0 &amp; = E(y) - \beta_1E(x)
 \end{split}
 </span></p>
-<p>Of course, we do not know the population expected value <span class="math inline">E(y)</span> and <span class="math inline">E(x)</span>. Thus, we use their sample analogues - the sample mean.</p>
-<p>We also do not know <span class="math inline">\beta_1</span>, so we can use our earlier sample estimate <span class="math inline">\hat\beta_1^{IV}</span>.</p>
+<p>Of course, we do not know the population expected value <span class="math inline">E(y)</span> and <span class="math inline">E(x)</span>. Thus, we use their sample analogues - the sample mean. We also do not know <span class="math inline">\beta_1</span>, so we can use our earlier sample estimate <span class="math inline">\hat\beta_1^{IV}</span>.</p>
 <p>Thus, we can get our instrumental variables estimate <span class="math inline">\hat\beta_0^{IV}</span>.</p>
 <p><span class="math display">
 \hat\beta_0^{IV} = \bar y - \hat\beta_1^{IV}\bar x
@@ -463,8 +465,7 @@ E(y) &amp; = \beta_0 + \beta_1 E(x) \\
 </section>
 <section id="asymptotic-consistency-of-the-instrumental-variables-estimator" class="level1">
 <h1>2.5.5: Asymptotic Consistency of the Instrumental Variables Estimator</h1>
-<p>The instrumental variables estimator <span class="math inline">\hat\beta_1^{IV}</span> is asymptotically consistent - as we increase sample size towards infinity, the estimate will become more and more concentrated around the true population value <span class="math inline">\beta_1</span>.</p>
-<p>More mathematically:</p>
+<p>The instrumental variables estimator <span class="math inline">\hat\beta_1^{IV}</span> is asymptotically consistent - as we increase sample size towards infinity, the estimate will become more and more concentrated around the true population value <span class="math inline">\beta_1</span>. More mathematically:</p>
 <p><span class="math display">
 \text{plim}(\hat\beta_1^{IV}) = \beta_1
 </span></p>
@@ -516,10 +517,7 @@ Properties of Probability Limits
 </ul>
 <p><br></p>
 <p>Note that this shows that under the assumptions of an instrument <span class="math inline">z</span> (exogeneity, relevance, exclusion), the instrumental variables estimate <span class="math inline">\hat\beta_1^{IV}</span> is asymptotically consistent.</p>
-<p>This does not mean that instrumental variables estimates are unbiased in smaller sample sizes.</p>
-<ul>
-<li>We will discuss this much more in Part III of the course, where we discuss the experimental designs with instrumental variables.</li>
-</ul>
+<p>This does not mean that instrumental variables estimates are unbiased in smaller sample sizes. We will discuss this much more in Part III of the course, where we discuss the experimental designs with instrumental variables.</p>
 <p><br></p>
 <p>We can also prove that the instrumental variables estimator <span class="math inline">\hat\beta_0^{IV}</span> is asymptotically consistent, using the properties of probability limits:</p>
 <p><span class="math display">
@@ -538,7 +536,7 @@ Properties of Probability Limits
 </section>
 <section id="variance-of-the-estimator-and-weak-instruments" class="level1">
 <h1>2.5.6: Variance of the Estimator and Weak Instruments</h1>
-<p>For this section, we will assume homoscedasticity:</p>
+<p>For this section, we will assume homoscedasticity (see <a href="https://statsnotes.github.io/metrics/4.html#gauss-markov-and-homoscedasticity">2.4.1</a>):</p>
 <p><span class="math display">
 Var(u|x) = \sigma^2
 </span></p>
@@ -546,6 +544,9 @@ Var(u|x) = \sigma^2
 <p><span class="math display">
 Var(u) = E(u^2 | z) = \sigma^2_u
 </span></p>
+<ul>
+<li>See <a href="https://statsnotes.github.io/metrics/4.html#variance-of-ols-estimates-in-simple-linear-regression">2.4.2</a> for proof of why <span class="math inline">Var(u) = E(u^2)</span>.</li>
+</ul>
 <p>Now, we can find the variance. I will not derive it, since it is a little complicated and beyond what we need.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -574,12 +575,8 @@ Var(\hat\beta_1^{IV}) = \frac{\sigma^2_u}{n \sigma^2_x \rho^2_{xz}}
 <section id="weak-instruments" class="level3">
 <h3 class="anchored" data-anchor-id="weak-instruments">Weak Instruments</h3>
 <p>Notice how the instrumental variables estimator has <span class="math inline">\rho^2_{xz}</span>, the square of the correlation coefficient between <span class="math inline">x</span> and <span class="math inline">z</span>, in the denominator.</p>
-<ul>
-<li>This value is always between 0 and 1.</li>
-</ul>
-<p>This means that if <span class="math inline">\rho^2_{xz}</span> is very small, our standard error of <span class="math inline">\hat\beta_1^{IV}</span> will be very very large.</p>
-<p>But when is <span class="math inline">\rho^2_{xz}</span> very small? It is when the correlation between <span class="math inline">x</span> and <span class="math inline">z</span> is very weak.</p>
-<p>Thus, when we have weak instruments (that have a low correlation with <span class="math inline">x</span>), we will have very imprecise estimates, that are hard to draw conclusions are.</p>
+<p>This value is always between 0 and 1. This means that if <span class="math inline">\rho^2_{xz}</span> is very small, our standard error of <span class="math inline">\hat\beta_1^{IV}</span> will be very very large.</p>
+<p>But when is <span class="math inline">\rho^2_{xz}</span> very small? It is when the correlation between <span class="math inline">x</span> and <span class="math inline">z</span> is very weak. Thus, when we have <strong>weak instruments</strong> (that have a low correlation with <span class="math inline">x</span>), we will have very imprecise estimates, that are hard to draw conclusions are.</p>
 <ul>
 <li>IV also becomes severely biased in small samples with weak instruments.</li>
 </ul>
@@ -611,7 +608,7 @@ Var(\hat\beta_1^{OLS}) = \frac{\sigma^2}{n \sigma^2_x}
 <section id="two-stage-least-squares-estimator" class="level1">
 <h1>2.5.7: Two-Stage Least Squares Estimator</h1>
 <p>We can obtain the instrumental variables estimates of <span class="math inline">\beta_1</span> and <span class="math inline">\beta_2</span> using the 2-stage least squares estimator.</p>
-<p>Recall how in 2.5.3, we discussed how the intuitive idea behind instrumental variables is using only parts of <span class="math inline">x</span> explained by <span class="math inline">z</span> to predict <span class="math inline">y</span>. Since <span class="math inline">z</span> is exogenous, the part of <span class="math inline">x</span> explained by <span class="math inline">z</span> should also be exogenous.</p>
+<p>Recall how in <a href="https://statsnotes.github.io/metrics/5.html#endogeneity-and-instrumental-variables.">2.5.3</a>, we discussed how the intuitive idea behind instrumental variables is using only parts of <span class="math inline">x</span> explained by <span class="math inline">z</span> to predict <span class="math inline">y</span>. Since <span class="math inline">z</span> is exogenous, the part of <span class="math inline">x</span> explained by <span class="math inline">z</span> should also be exogenous.</p>
 <p>We can use this intuitive idea to create the 2-stage least squares estimator:</p>
 <ol type="1">
 <li>First, we find the part of <span class="math inline">x</span> that is explained by <span class="math inline">z</span>, which we label <span class="math inline">\hat x</span> (First-stage).</li>
@@ -639,10 +636,7 @@ y_i = \beta_0 + \beta_1 \hat x_i + u_i
 <p><span class="math display">
 \hat y_i = \hat\beta_0 + \hat\beta_1 \hat x_i
 </span></p>
-<p>Where <span class="math inline">\hat\beta_1</span> is the 2 stage least squares estimate of the true coefficient <span class="math inline">\beta_1</span> (relationship between <span class="math inline">x</span> and <span class="math inline">y</span>.</p>
-<ul>
-<li>We will often label this estimate <span class="math inline">\hat\beta_1^{2SLS}</span>.</li>
-</ul>
+<p>Where <span class="math inline">\hat\beta_1</span> is the 2 stage least squares estimate of the true coefficient <span class="math inline">\beta_1</span> (relationship between <span class="math inline">x</span> and <span class="math inline">y</span>. We will often label this estimate <span class="math inline">\hat\beta_1^{2SLS}</span>.</p>
 <p><br></p>
 <p>There are two main advantages of the two-stage-least-squares estimator.</p>
 <p>First of all, the two stage least squares is relatively straight forward to calculate, especially with statistical software.</p>
@@ -662,6 +656,10 @@ y_i = \gamma_0 + \gamma_1z_i + e_i
 <li>Where <span class="math inline">\gamma_0, \gamma_1</span> are coefficients, and <span class="math inline">e_i</span> is the error term.</li>
 </ul>
 <p>The reduced form equation is not too relevant for us right now, but in causal inference research designs, it does have a meaningful meaning (as we will discuss in Part III of the course).</p>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
 
 </main>

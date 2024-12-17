@@ -85,9 +85,7 @@ How can we define our true population parameter $\mu$ in an expectation equation
 
 -   Well, what is $\mu$, the mean, intuitively speaking? It is the expectation of $y$, so $\mu = E(y)$.
 
-Now that we know that $\mu = E(y)$, since they are equal, $\mu - E(y) = 0$.
-
-Thus, we can define the mean as a moment of the following condition:
+Now that we know that $\mu = E(y)$, since they are equal, $\mu - E(y) = 0$. Thus, we can define the mean as a moment of the following condition:
 
 $$
 E(y - \mu) = 0
@@ -115,9 +113,7 @@ $$
 
 So, we see the method of moments estimates our true population mean $\mu$, with the sample mean $\bar y$.
 
-Method of moments estimators are generally asymptotically consistent. This is because of the law of large numbers introduced in 2.1.5.
-
--   However, method of moments estimators can be biased in small sample sizes.
+Method of moments estimators are generally asymptotically consistent. This is because of the law of large numbers introduced in [2.1.5](https://statsnotes.github.io/metrics/1.html#asymptotic-consistency-of-estimators). However, method of moments estimators can be biased in small sample sizes.
 
 But why do we care about the method of moments estimator? In the next section, we will discuss how OLS is also thought of as a method of moments estimator.
 
@@ -172,7 +168,7 @@ $$
 
 <br />
 
-Let us prove that OLS is a special case of the method of moments estimator. Remember our OLS minimisation conditions:
+Let us prove that OLS is a special case of the method of moments estimator. Remember our OLS minimisation conditions from [2.2.2](https://statsnotes.github.io/metrics/2.html#estimation-for-simple-linear-regression):
 
 $$
 \begin{split}
@@ -199,9 +195,7 @@ $$
 \end{split}
 $$
 
-Which as we can see, are the exact same minimisation conditions as the method of moments estimator.
-
-Thus, the OLS estimator is a special case of the Method of Moments estimator, and they produce the same coefficients.
+Which as we can see, are the exact same minimisation conditions as the method of moments estimator. Thus, the OLS estimator is a special case of the Method of Moments estimator, and they produce the same coefficients.
 
 <br />
 
@@ -214,9 +208,7 @@ $$
 \end{split}
 $$
 
-These moments also imply that $Cov(x,u) = 0$, as we discussed in lesson 2.3. This is the assumption of exogeneity.
-
-These moments also imply that $Cov(x,u) = 0$, as we discussed in lesson 2.3. This is the assumption of exogeneity.
+These moments also imply that $Cov(x,u) = 0$, as we discussed in [2.3.6](https://statsnotes.github.io/metrics/3.html#exogeneity-and-endogeneity). This is the assumption of exogeneity.
 
 Thus, if $Cov(x,u)≠0$, we do not meet exogeneity, and have endogeneity present. Under endogeneity, if we use the OLS estimator, we will be estimating our parameters with an invalid moment condition - since the moments are not true if endogeneity is present.
 
@@ -252,9 +244,7 @@ $$
 Cov(z,u) = E(zu) = 0
 $$
 
-This new variable $z$ that provides a valid moment condition is called an **instrumental variable**.
-
-The idea of this variable $z$ is that we can first use $z$ to explain $x$, then use the part of $x$ explained by $z$ to explain $y$.
+This new variable $z$ that provides a valid moment condition is called an **instrumental variable**. The idea of this variable $z$ is that we can first use $z$ to explain $x$, then use the part of $x$ explained by $z$ to explain $y$.
 
 -   So first, we find the part of $x$ explained by $z$, which we will label as $\hat x$.
 -   Then, we find the relationship between $\hat x$ and $y$.
@@ -278,9 +268,7 @@ New variable $z$ is called an instrumental variable, or instrument, for the endo
 3.  The **exclusions restriction**. This restriction essentially says that $z$ should have no independent effect on outcome $y$. The only effect $z$ has on $y$ should be through $x$.
 :::
 
-If we have found a valid instrument $z$, we can then apply this back into our method of moments estimator to find the relationship between $x$ and $y$.
-
--   We will show this in the next section.
+If we have found a valid instrument $z$, we can then apply this back into our method of moments estimator to find the relationship between $x$ and $y$. We will show this in the next section.
 
 <br />
 
@@ -341,6 +329,14 @@ Cov(z,y) & = \beta_1 \ Cov(z,x) \\
 \end{split}
 $$
 
+::: callout-note
+## Relevance of the Instrument
+
+One of the assumptions of the instrument $z$ is that it is relevant: $Cov(z, x) ≠ 0$.
+:::
+
+Knowing that the condition of relevance is met, we know that our denominator will not be 0, and our $\beta_1$ will exist.
+
 This is the true population value of $\beta_1$. We can estimate this by using the sample analogues.
 
 -   The sample analogue of $Cov(z,y)$ is the sample covariance $S.Cov(z,y)$.
@@ -357,8 +353,6 @@ $$
 \hat\beta_1^{IV} = \frac{S.Cov(z,y)}{S.Cov(z,x)} = \frac{\sum_{i=1}^n (z_i - \bar z)(y_i - \bar y)}{\sum_{i=1}^n (z_i - \bar z)(x_i - \bar x)}
 $$
 :::
-
-Note: the $\hat\beta^{IV}_1$ is only calculable given $S.Cov(z,x) ≠ 0$, which is why **relevance** is one of the assumptions of instrumental variables.
 
 <br />
 
@@ -387,9 +381,7 @@ E(y) & = \beta_0 + \beta_1 E(x) \\
 \end{split}
 $$
 
-Of course, we do not know the population expected value $E(y)$ and $E(x)$. Thus, we use their sample analogues - the sample mean.
-
-We also do not know $\beta_1$, so we can use our earlier sample estimate $\hat\beta_1^{IV}$.
+Of course, we do not know the population expected value $E(y)$ and $E(x)$. Thus, we use their sample analogues - the sample mean. We also do not know $\beta_1$, so we can use our earlier sample estimate $\hat\beta_1^{IV}$.
 
 Thus, we can get our instrumental variables estimate $\hat\beta_0^{IV}$.
 
@@ -407,9 +399,7 @@ $$
 
 # 2.5.5: Asymptotic Consistency of the Instrumental Variables Estimator
 
-The instrumental variables estimator $\hat\beta_1^{IV}$ is asymptotically consistent - as we increase sample size towards infinity, the estimate will become more and more concentrated around the true population value $\beta_1$.
-
-More mathematically:
+The instrumental variables estimator $\hat\beta_1^{IV}$ is asymptotically consistent - as we increase sample size towards infinity, the estimate will become more and more concentrated around the true population value $\beta_1$. More mathematically:
 
 $$
 \text{plim}(\hat\beta_1^{IV}) = \beta_1
@@ -466,9 +456,7 @@ $$
 
 Note that this shows that under the assumptions of an instrument $z$ (exogeneity, relevance, exclusion), the instrumental variables estimate $\hat\beta_1^{IV}$ is asymptotically consistent.
 
-This does not mean that instrumental variables estimates are unbiased in smaller sample sizes.
-
--   We will discuss this much more in Part III of the course, where we discuss the experimental designs with instrumental variables.
+This does not mean that instrumental variables estimates are unbiased in smaller sample sizes. We will discuss this much more in Part III of the course, where we discuss the experimental designs with instrumental variables.
 
 <br />
 
@@ -495,7 +483,7 @@ Thus, the instrumental variables estimator for $\beta_0$ is also asymptotically 
 
 # 2.5.6: Variance of the Estimator and Weak Instruments
 
-For this section, we will assume homoscedasticity:
+For this section, we will assume homoscedasticity (see [2.4.1](https://statsnotes.github.io/metrics/4.html#gauss-markov-and-homoscedasticity)):
 
 $$
 Var(u|x) = \sigma^2
@@ -506,6 +494,8 @@ But since $x$ is now a function of instrument $z$, we can write the variance as:
 $$
 Var(u) = E(u^2 | z) = \sigma^2_u
 $$
+
+-   See [2.4.2](https://statsnotes.github.io/metrics/4.html#variance-of-ols-estimates-in-simple-linear-regression) for proof of why $Var(u) = E(u^2)$.
 
 Now, we can find the variance. I will not derive it, since it is a little complicated and beyond what we need.
 
@@ -533,13 +523,9 @@ With the standard error, we can conduct hypotheses tests and confidence interval
 
 Notice how the instrumental variables estimator has $\rho^2_{xz}$, the square of the correlation coefficient between $x$ and $z$, in the denominator.
 
--   This value is always between 0 and 1.
+This value is always between 0 and 1. This means that if $\rho^2_{xz}$ is very small, our standard error of $\hat\beta_1^{IV}$ will be very very large.
 
-This means that if $\rho^2_{xz}$ is very small, our standard error of $\hat\beta_1^{IV}$ will be very very large.
-
-But when is $\rho^2_{xz}$ very small? It is when the correlation between $x$ and $z$ is very weak.
-
-Thus, when we have weak instruments (that have a low correlation with $x$), we will have very imprecise estimates, that are hard to draw conclusions are.
+But when is $\rho^2_{xz}$ very small? It is when the correlation between $x$ and $z$ is very weak. Thus, when we have **weak instruments** (that have a low correlation with $x$), we will have very imprecise estimates, that are hard to draw conclusions are.
 
 -   IV also becomes severely biased in small samples with weak instruments.
 
@@ -581,7 +567,7 @@ Thus, when we meet the conditions for asymptotic normality for OLS (exogeneity a
 
 We can obtain the instrumental variables estimates of $\beta_1$ and $\beta_2$ using the 2-stage least squares estimator.
 
-Recall how in 2.5.3, we discussed how the intuitive idea behind instrumental variables is using only parts of $x$ explained by $z$ to predict $y$. Since $z$ is exogenous, the part of $x$ explained by $z$ should also be exogenous.
+Recall how in [2.5.3](https://statsnotes.github.io/metrics/5.html#endogeneity-and-instrumental-variables.), we discussed how the intuitive idea behind instrumental variables is using only parts of $x$ explained by $z$ to predict $y$. Since $z$ is exogenous, the part of $x$ explained by $z$ should also be exogenous.
 
 We can use this intuitive idea to create the 2-stage least squares estimator:
 
@@ -620,9 +606,7 @@ $$
 \hat y_i = \hat\beta_0 + \hat\beta_1 \hat x_i
 $$
 
-Where $\hat\beta_1$ is the 2 stage least squares estimate of the true coefficient $\beta_1$ (relationship between $x$ and $y$.
-
--   We will often label this estimate $\hat\beta_1^{2SLS}$.
+Where $\hat\beta_1$ is the 2 stage least squares estimate of the true coefficient $\beta_1$ (relationship between $x$ and $y$. We will often label this estimate $\hat\beta_1^{2SLS}$.
 
 <br />
 
@@ -653,3 +637,11 @@ $$
 -   Where $\gamma_0, \gamma_1$ are coefficients, and $e_i$ is the error term.
 
 The reduced form equation is not too relevant for us right now, but in causal inference research designs, it does have a meaningful meaning (as we will discuss in Part III of the course).
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)
