@@ -43,7 +43,7 @@ This lesson covers the following topics:
 
 # 2.6.1: Intuition of the Maximum Likelihood Estimator
 
-In Part I, lessons 1.8, 1.9, and 1.10, we covered non-linear extensions to the linear model, including logistic, negative binomial, and poisson regression.
+In Part I, lessons [1.8](https://statsnotes.github.io/intro/8.html), [1.9](https://statsnotes.github.io/intro/9.html), and [1.10](https://statsnotes.github.io/intro/10.html), we covered non-linear extensions to the linear model, including logistic, negative binomial, and poisson regression.
 
 All of these models involve a **link-function**, which takes the linear model, and transforms it into a non-linear output.
 
@@ -59,9 +59,7 @@ $$
 \min\limits_b \sum\limits_{i=1}^n (y_i - \hat y)^2 = \min\limits_b \sum\limits_{i=1}^n (y_i - G(b_0 + b_1 x_1 + \dots + b_kx_k)^2
 $$
 
-However, this estimate would not be efficient due to **heteroscedasticity**.
-
--   Because the assumption of constant variance is unrealistic in binary/categorical outcomes.
+However, this estimate would not be efficient due to **heteroscedasticity**. This is because the assumption of constant variance is unrealistic in binary/categorical outcomes.
 
 We can use an alternative estimator in this case: the **Maximum Likelihood Estimator**
 
@@ -87,7 +85,7 @@ Maximum Likelihood attempts to find the value of $\theta$ that gives the highest
 
 So the goal is to find the parameter values that maximise the likelihood of the data observed. But what is the likelihood of the data observed?
 
-We are randomly sampling from a population of variable $y$, with the population described by some probability density function $f(y; \theta)$.
+Let us be randomly sampling from a population of random variable $y$, with the population described by some probability density function $f(y; \theta)$ (see [1.1.3](https://statsnotes.github.io/intro/1.html#probability-mass-and-density-functions))
 
 -   This probability density function is determined by some parameter $\theta$ (for example, maybe mean, or variance, or multiple parameters), and the variable in question $y$.
 -   The probability density function outputs the likelihood of randomly selecting that specific $y$, given the parameter $\theta$.
@@ -111,19 +109,45 @@ $$
 
 -   Where the likelihood function $L$ depends on our population parameter $\theta$, and the observed data $y_1, \dots, y_n$.
 
-We want to find some $\hat\theta$ that maximises this function
+<br />
+
+We want to find some $\hat\theta$ that **maximises** this likelihood function:
 
 $$
 \hat\theta = \max\limits_{\theta}L(\theta; y_1, \dots, y_n)
 $$
 
-We actually typically work with the log likelihood function, since it is easier mathematically, and the maximum of the log function is at the same $\theta$ value as the normal likelihood function:
+However, this is typically quite difficult. However, product notation is very difficult to work with in terms of calculus (which is how we typically optimise functions).
+
+There is a solution to this problem - we can use the log-likelihood function, which is just the log of the likelihood function. This is because the value of $\theta$ which maximises the log-likelihood function, also maximises the likelihood function:
+
+$$
+\log L(\theta; y_i, \dots, y_n) = \log \prod_{i=1}^n f(y_i; \theta)
+$$
+
+But why is the log-likelihood function useful - it still has product notation in it? Well actually, with properties of logarithms, we can convert the log of a product notation, into a summation notation (which is much easier to work with mathematically).
+
+::: callout-note
+## Converting Between Product and Summation Notation
+
+We can convert between the log of a product notation to the log of a summation notation as follows (because of the rules of logarithms):
+
+$$
+\begin{split}
+\log \left( \prod\limits_{i=1}^n x_i\right) & = \log(x_1 \times x_2 \times \dots \times x_n) \\
+& = \log(x_1) + \log(x_2) + \dots + \log(x_n) \\
+& = \sum\limits_{i=1}^n\log (x_i)
+\end{split}
+$$
+:::
+
+Thus, we can rewrite our log-likelihood function as following:
 
 $$
 Log \  L(\theta; y_1, \dots, y_n) = \sum\limits_{i=1}^n f(y_i; \theta)
 $$
 
--   This is because of log properties (see Appendix A for mathematics).
+This is typically much more easier to optimise mathematically.
 
 <br />
 
@@ -141,7 +165,7 @@ $$
 \log \left( \frac{\pi_i}{1 - \pi_i} \right) = \beta_0
 $$
 
-And thus (if you do not understand, see lesson 1.8 on logistic regression):
+And thus (if you do not understand, see lesson [1.8](https://statsnotes.github.io/intro/8.html) on logistic regression):
 
 $$
 \pi_i = Pr(y_i = 1) = \frac{e^{\beta_0}}{1 + e^{\beta_0}} = \pi
@@ -151,7 +175,7 @@ $$
 
 <br />
 
-We have observations $y_1, \dots, y_n$ from a bernoulli distribution. The probability density function of a bernoulli distribution is the following:
+We have observations $y_1, \dots, y_n$ from a Bernoulli distribution. The probability density function of a Bernoulli distribution is the following:
 
 $$
 f(y; \theta) = Pr(y = 1) = \pi^y(1 - \pi)^{1-y}
@@ -277,7 +301,7 @@ The maximum likelihood estimator has a few very useful properties for us.
 First, the maximum likelihood estimator is **asymptotically consistent**. That means under large sample sizes $n \rightarrow ∞$, the estimator will converge around the true parameter value:
 
 $$
-\text{plim}(\hat\theta^{MLE}) = \theta
+\text{plim} \left( \hat\theta^{MLE} \right) = \theta
 $$
 
 Second, the maximum likelihood estimator is **asymptotically normal**. That means under large sample sizes $n \rightarrow ∞$, the sampling distribution will be normally distributed.
@@ -295,7 +319,7 @@ Thus, the Maximum Likelihood Estimator is an ideal estimator for the logistic, p
 
 Also, a final property of maximum likelihood estimation is that under the gauss-markov conditions, the maximum likelihood estimator is equivalent to the ordinary least squares estimator.
 
--   We will explore this in section 2.6.7.
+-   We will explore this in section [2.6.7](https://statsnotes.github.io/metrics/6.html#ols-as-a-maximum-likelihood-estimator).
 
 <br />
 
@@ -310,7 +334,7 @@ Also, a final property of maximum likelihood estimation is that under the gauss-
 In regressions, we sometimes want to test more than one coefficient at a time.
 
 -   In linear regression, we use the F-test to do this. F-tests compare the $R^2$ of each model.
--   In logistic, poisson, and negative binomial regression, we use the likelihood ratio tests (that we briefly went over in lesson 1.8).
+-   In logistic, poisson, and negative binomial regression, we use the likelihood ratio tests (that we briefly went over in lesson [1.8](https://statsnotes.github.io/intro/8.html)).
 
 However, we did not go into detail on what the likelihood ratio test is doing.
 
@@ -327,17 +351,13 @@ In linear regression, $R^2$ is the natural choice of determining how well a mode
 
 However, in logistic (and other non-linear regressions), the $R^2$ idea does not really make sense.
 
--   The variation in $y$ isn't a very useful idea when $y$ is binary and comes from a bernoulli distribution.
+-   The variation in $y$ isn't a very useful idea when $y$ is binary and comes from a Bernoulli distribution.
 
 <br />
 
-Thus, we need an alternative way to measure the fit of a model. Well, we already know a great way to determine the fit - the likelihood function.
+Thus, we need an alternative way to measure the fit of a model. Well, we already know a great way to determine the fit - the likelihood function. After all, the likelihood function is how likely we are to observe the data we have, given our parameters and our model.
 
--   After all, the likelihood function is how likely we are to observe the data we have, given our parameters and our model.
-
-Larger values of likelihood indicate our model better explains $y$.
-
-Thus, we can use the likelihood function outputs as an indication of fit, just like we did $R^2$ in linear regression.
+Larger values of likelihood indicate our model better explains $y$. Thus, we can use the likelihood function outputs as an indication of fit, just like we did $R^2$ in linear regression.
 
 <br />
 
@@ -365,7 +385,7 @@ Once we have our test statistic $L^2$, we consult a $\chi^2$ distribution, with 
 
 [Homepage](https://statsnotes.github.io)
 
-# 2.6.6: Information Crieteria Statistics
+# 2.6.6: Information Criteria Statistics
 
 We have talked about using the likelihood ratio test in comparing different models.
 
@@ -384,9 +404,7 @@ First, we have to decide what we want in a comparison of models.
 
 <br />
 
-So we want a statistic that balances the fit of the model, and the complexity of the model.
-
-These statistics are often called **Information Criteria (IC) Statistics**.
+So we want a statistic that balances the fit of the model, and the complexity of the model. These statistics are often called **Information Criteria (IC) Statistics**.
 
 The most commonly used one is called **Akaike's Information Criterion**.
 
@@ -434,7 +452,13 @@ The Maximum Likelihood Estimator produces the same results as the OLS when a few
 This proof's content is advanced. You do not need to know this.
 :::
 
-Assuming our error term is normally distributed, we know that the conditional probability density function is as follows:
+A normal distribution has the following probability density function (as discussed in [1.1.6](https://statsnotes.github.io/intro/1.html#the-normal-distribution)):
+
+$$
+f(y) = \frac{1}{\sqrt{2 \pi \sigma^2}}e^{\left( \frac{(x- \mu)^2}{2 -\sigma^2}\right)}
+$$
+
+Assuming our error term is normally distributed, we know that the conditional probability density function of our linear model $y = \beta_0 + \beta_1 x + u_i$ is as follows:
 
 $$
 f(y_i|x_i;\beta_0, \beta_1, \sigma^2) = \frac{1}{\sqrt{2 \pi \sigma^2}}

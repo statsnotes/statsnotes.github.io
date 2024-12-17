@@ -110,7 +110,7 @@ window.Quarto = {
   <li><a href="#gradient-descent-methods-of-estimation" id="toc-gradient-descent-methods-of-estimation" class="nav-link" data-scroll-target="#gradient-descent-methods-of-estimation">2.6.3: Gradient Descent Methods of Estimation</a></li>
   <li><a href="#properties-of-the-maximum-likelihood-estimate" id="toc-properties-of-the-maximum-likelihood-estimate" class="nav-link" data-scroll-target="#properties-of-the-maximum-likelihood-estimate">2.6.4: Properties of the Maximum Likelihood Estimate</a></li>
   <li><a href="#likelihood-ratios" id="toc-likelihood-ratios" class="nav-link" data-scroll-target="#likelihood-ratios">2.6.5: Likelihood Ratios</a></li>
-  <li><a href="#information-crieteria-statistics" id="toc-information-crieteria-statistics" class="nav-link" data-scroll-target="#information-crieteria-statistics">2.6.6: Information Crieteria Statistics</a></li>
+  <li><a href="#information-criteria-statistics" id="toc-information-criteria-statistics" class="nav-link" data-scroll-target="#information-criteria-statistics">2.6.6: Information Criteria Statistics</a></li>
   <li><a href="#ols-as-a-maximum-likelihood-estimator" id="toc-ols-as-a-maximum-likelihood-estimator" class="nav-link" data-scroll-target="#ols-as-a-maximum-likelihood-estimator">2.6.7: OLS as a Maximum Likelihood Estimator</a></li>
   </ul>
 </nav>
@@ -148,7 +148,7 @@ Lesson Overview
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
 <section id="intuition-of-the-maximum-likelihood-estimator" class="level1">
 <h1>2.6.1: Intuition of the Maximum Likelihood Estimator</h1>
-<p>In Part I, lessons 1.8, 1.9, and 1.10, we covered non-linear extensions to the linear model, including logistic, negative binomial, and poisson regression.</p>
+<p>In Part I, lessons <a href="https://statsnotes.github.io/intro/8.html">1.8</a>, <a href="https://statsnotes.github.io/intro/9.html">1.9</a>, and <a href="https://statsnotes.github.io/intro/10.html">1.10</a>, we covered non-linear extensions to the linear model, including logistic, negative binomial, and poisson regression.</p>
 <p>All of these models involve a <strong>link-function</strong>, which takes the linear model, and transforms it into a non-linear output.</p>
 <p>Let us define any link functions as function <span class="math inline">G</span>. Our models all take the form:</p>
 <p><span class="math display">
@@ -158,10 +158,7 @@ y = G(\beta_0 + \beta_1 x_1 + \dots + \beta_k x_k) + u
 <p><span class="math display">
 \min\limits_b \sum\limits_{i=1}^n (y_i - \hat y)^2 = \min\limits_b \sum\limits_{i=1}^n (y_i - G(b_0 + b_1 x_1 + \dots + b_kx_k)^2
 </span></p>
-<p>However, this estimate would not be efficient due to <strong>heteroscedasticity</strong>.</p>
-<ul>
-<li>Because the assumption of constant variance is unrealistic in binary/categorical outcomes.</li>
-</ul>
+<p>However, this estimate would not be efficient due to <strong>heteroscedasticity</strong>. This is because the assumption of constant variance is unrealistic in binary/categorical outcomes.</p>
 <p>We can use an alternative estimator in this case: the <strong>Maximum Likelihood Estimator</strong></p>
 <ul>
 <li>The maximum likelihood estimator can also be used on other models where there is no “error term” or algebraic way to solve for the solution.</li>
@@ -188,7 +185,7 @@ Definition: Maximum Likelihood Estimation
 </div>
 <p><br></p>
 <p>So the goal is to find the parameter values that maximise the likelihood of the data observed. But what is the likelihood of the data observed?</p>
-<p>We are randomly sampling from a population of variable <span class="math inline">y</span>, with the population described by some probability density function <span class="math inline">f(y; \theta)</span>.</p>
+<p>Let us be randomly sampling from a population of random variable <span class="math inline">y</span>, with the population described by some probability density function <span class="math inline">f(y; \theta)</span> (see <a href="https://statsnotes.github.io/intro/1.html#probability-mass-and-density-functions">1.1.3</a>)</p>
 <ul>
 <li>This probability density function is determined by some parameter <span class="math inline">\theta</span> (for example, maybe mean, or variance, or multiple parameters), and the variable in question <span class="math inline">y</span>.</li>
 <li>The probability density function outputs the likelihood of randomly selecting that specific <span class="math inline">y</span>, given the parameter <span class="math inline">\theta</span>.</li>
@@ -208,17 +205,42 @@ L(\theta; y_1, \dots, y_n) &amp; = f(y_1; \theta) f(y_2; \theta) \dots f(y_n; \t
 <ul>
 <li>Where the likelihood function <span class="math inline">L</span> depends on our population parameter <span class="math inline">\theta</span>, and the observed data <span class="math inline">y_1, \dots, y_n</span>.</li>
 </ul>
-<p>We want to find some <span class="math inline">\hat\theta</span> that maximises this function</p>
+<p><br></p>
+<p>We want to find some <span class="math inline">\hat\theta</span> that <strong>maximises</strong> this likelihood function:</p>
 <p><span class="math display">
 \hat\theta = \max\limits_{\theta}L(\theta; y_1, \dots, y_n)
 </span></p>
-<p>We actually typically work with the log likelihood function, since it is easier mathematically, and the maximum of the log function is at the same <span class="math inline">\theta</span> value as the normal likelihood function:</p>
+<p>However, this is typically quite difficult. However, product notation is very difficult to work with in terms of calculus (which is how we typically optimise functions).</p>
+<p>There is a solution to this problem - we can use the log-likelihood function, which is just the log of the likelihood function. This is because the value of <span class="math inline">\theta</span> which maximises the log-likelihood function, also maximises the likelihood function:</p>
+<p><span class="math display">
+\log L(\theta; y_i, \dots, y_n) = \log \prod_{i=1}^n f(y_i; \theta)
+</span></p>
+<p>But why is the log-likelihood function useful - it still has product notation in it? Well actually, with properties of logarithms, we can convert the log of a product notation, into a summation notation (which is much easier to work with mathematically).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Converting Between Product and Summation Notation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We can convert between the log of a product notation to the log of a summation notation as follows (because of the rules of logarithms):</p>
+<p><span class="math display">
+\begin{split}
+\log \left( \prod\limits_{i=1}^n x_i\right) &amp; = \log(x_1 \times x_2 \times \dots \times x_n) \\
+&amp; = \log(x_1) + \log(x_2) + \dots + \log(x_n) \\
+&amp; = \sum\limits_{i=1}^n\log (x_i)
+\end{split}
+</span></p>
+</div>
+</div>
+<p>Thus, we can rewrite our log-likelihood function as following:</p>
 <p><span class="math display">
 Log \  L(\theta; y_1, \dots, y_n) = \sum\limits_{i=1}^n f(y_i; \theta)
 </span></p>
-<ul>
-<li>This is because of log properties (see Appendix A for mathematics).</li>
-</ul>
+<p>This is typically much more easier to optimise mathematically.</p>
 <p><br></p>
 <p><br></p>
 <hr>
@@ -230,7 +252,7 @@ Log \  L(\theta; y_1, \dots, y_n) = \sum\limits_{i=1}^n f(y_i; \theta)
 <p><span class="math display">
 \log \left( \frac{\pi_i}{1 - \pi_i} \right) = \beta_0
 </span></p>
-<p>And thus (if you do not understand, see lesson 1.8 on logistic regression):</p>
+<p>And thus (if you do not understand, see lesson <a href="https://statsnotes.github.io/intro/8.html">1.8</a> on logistic regression):</p>
 <p><span class="math display">
 \pi_i = Pr(y_i = 1) = \frac{e^{\beta_0}}{1 + e^{\beta_0}} = \pi
 </span></p>
@@ -238,7 +260,7 @@ Log \  L(\theta; y_1, \dots, y_n) = \sum\limits_{i=1}^n f(y_i; \theta)
 <li>Since there is no explanatory variables, all units <span class="math inline">i</span> will have the same probability <span class="math inline">\pi</span> to be in category <span class="math inline">y = 1</span>.</li>
 </ul>
 <p><br></p>
-<p>We have observations <span class="math inline">y_1, \dots, y_n</span> from a bernoulli distribution. The probability density function of a bernoulli distribution is the following:</p>
+<p>We have observations <span class="math inline">y_1, \dots, y_n</span> from a Bernoulli distribution. The probability density function of a Bernoulli distribution is the following:</p>
 <p><span class="math display">
 f(y; \theta) = Pr(y = 1) = \pi^y(1 - \pi)^{1-y}
 </span></p>
@@ -342,7 +364,7 @@ L(\pi; y_i) &amp; = \prod\limits_{i=1}^n f(y_i;\pi)\\
 <p>The maximum likelihood estimator has a few very useful properties for us.</p>
 <p>First, the maximum likelihood estimator is <strong>asymptotically consistent</strong>. That means under large sample sizes <span class="math inline">n \rightarrow ∞</span>, the estimator will converge around the true parameter value:</p>
 <p><span class="math display">
-\text{plim}(\hat\theta^{MLE}) = \theta
+\text{plim} \left( \hat\theta^{MLE} \right) = \theta
 </span></p>
 <p>Second, the maximum likelihood estimator is <strong>asymptotically normal</strong>. That means under large sample sizes <span class="math inline">n \rightarrow ∞</span>, the sampling distribution will be normally distributed.</p>
 <ul>
@@ -357,7 +379,7 @@ L(\pi; y_i) &amp; = \prod\limits_{i=1}^n f(y_i;\pi)\\
 <p><br></p>
 <p>Also, a final property of maximum likelihood estimation is that under the gauss-markov conditions, the maximum likelihood estimator is equivalent to the ordinary least squares estimator.</p>
 <ul>
-<li>We will explore this in section 2.6.7.</li>
+<li>We will explore this in section <a href="https://statsnotes.github.io/metrics/6.html#ols-as-a-maximum-likelihood-estimator">2.6.7</a>.</li>
 </ul>
 <p><br></p>
 <p><br></p>
@@ -369,7 +391,7 @@ L(\pi; y_i) &amp; = \prod\limits_{i=1}^n f(y_i;\pi)\\
 <p>In regressions, we sometimes want to test more than one coefficient at a time.</p>
 <ul>
 <li>In linear regression, we use the F-test to do this. F-tests compare the <span class="math inline">R^2</span> of each model.</li>
-<li>In logistic, poisson, and negative binomial regression, we use the likelihood ratio tests (that we briefly went over in lesson 1.8).</li>
+<li>In logistic, poisson, and negative binomial regression, we use the likelihood ratio tests (that we briefly went over in lesson <a href="https://statsnotes.github.io/intro/8.html">1.8</a>).</li>
 </ul>
 <p>However, we did not go into detail on what the likelihood ratio test is doing.</p>
 <p><br></p>
@@ -384,15 +406,11 @@ L(\pi; y_i) &amp; = \prod\limits_{i=1}^n f(y_i;\pi)\\
 </ul>
 <p>However, in logistic (and other non-linear regressions), the <span class="math inline">R^2</span> idea does not really make sense.</p>
 <ul>
-<li>The variation in <span class="math inline">y</span> isn’t a very useful idea when <span class="math inline">y</span> is binary and comes from a bernoulli distribution.</li>
+<li>The variation in <span class="math inline">y</span> isn’t a very useful idea when <span class="math inline">y</span> is binary and comes from a Bernoulli distribution.</li>
 </ul>
 <p><br></p>
-<p>Thus, we need an alternative way to measure the fit of a model. Well, we already know a great way to determine the fit - the likelihood function.</p>
-<ul>
-<li>After all, the likelihood function is how likely we are to observe the data we have, given our parameters and our model.</li>
-</ul>
-<p>Larger values of likelihood indicate our model better explains <span class="math inline">y</span>.</p>
-<p>Thus, we can use the likelihood function outputs as an indication of fit, just like we did <span class="math inline">R^2</span> in linear regression.</p>
+<p>Thus, we need an alternative way to measure the fit of a model. Well, we already know a great way to determine the fit - the likelihood function. After all, the likelihood function is how likely we are to observe the data we have, given our parameters and our model.</p>
+<p>Larger values of likelihood indicate our model better explains <span class="math inline">y</span>. Thus, we can use the likelihood function outputs as an indication of fit, just like we did <span class="math inline">R^2</span> in linear regression.</p>
 <p><br></p>
 <p>More specifically, we want to consider the difference between two model’s likelihoods. This is the likelihood ratio test statistic <span class="math inline">L^2</span>:</p>
 <p><span class="math display">
@@ -413,8 +431,8 @@ L^2 = 2\log \left( \frac{L_1}{L_0}\right) = 2 \log (L_2) - 2 \log (L_1)
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
-<section id="information-crieteria-statistics" class="level1">
-<h1>2.6.6: Information Crieteria Statistics</h1>
+<section id="information-criteria-statistics" class="level1">
+<h1>2.6.6: Information Criteria Statistics</h1>
 <p>We have talked about using the likelihood ratio test in comparing different models.</p>
 <p>However, there is an issue with the likelihood ratio test - it is a nested model test:</p>
 <ul>
@@ -428,8 +446,7 @@ L^2 = 2\log \left( \frac{L_1}{L_0}\right) = 2 \log (L_2) - 2 \log (L_1)
 <li>But, we also do not want an overly complex model. Why? Well, say we have one model with 3 explanatory variables, and another with 20 explanatory variables, but both have the same likelihood. Which one is better? We would rather the more efficient model with 3 explanatory variables (not to mention, this will reduce our variance in our estimates).</li>
 </ul>
 <p><br></p>
-<p>So we want a statistic that balances the fit of the model, and the complexity of the model.</p>
-<p>These statistics are often called <strong>Information Criteria (IC) Statistics</strong>.</p>
+<p>So we want a statistic that balances the fit of the model, and the complexity of the model. These statistics are often called <strong>Information Criteria (IC) Statistics</strong>.</p>
 <p>The most commonly used one is called <strong>Akaike’s Information Criterion</strong>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -482,7 +499,11 @@ Warning!
 <p>This proof’s content is advanced. You do not need to know this.</p>
 </div>
 </div>
-<p>Assuming our error term is normally distributed, we know that the conditional probability density function is as follows:</p>
+<p>A normal distribution has the following probability density function (as discussed in <a href="https://statsnotes.github.io/intro/1.html#the-normal-distribution">1.1.6</a>):</p>
+<p><span class="math display">
+f(y) = \frac{1}{\sqrt{2 \pi \sigma^2}}e^{\left( \frac{(x- \mu)^2}{2 -\sigma^2}\right)}
+</span></p>
+<p>Assuming our error term is normally distributed, we know that the conditional probability density function of our linear model <span class="math inline">y = \beta_0 + \beta_1 x + u_i</span> is as follows:</p>
 <p><span class="math display">
 f(y_i|x_i;\beta_0, \beta_1, \sigma^2) = \frac{1}{\sqrt{2 \pi \sigma^2}}
 e^{ \left( -\frac{1}{2 \sigma^2}(y_i - \beta_0 - \beta_1 x_i)^2 \right)}</span></p>
