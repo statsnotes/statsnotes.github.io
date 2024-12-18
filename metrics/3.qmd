@@ -1,6 +1,6 @@
 ---
 title: "Statistics for Social Scientists"
-subtitle: "Lesson 2.3: Unbiasedness of the OLS Estimator"
+subtitle: "Lesson 2.3: Properties of the OLS Estimator"
 format:
     html:
         page-layout: article
@@ -15,7 +15,7 @@ format:
         toc-depth: 2
         toc-location: left
         toc-expand: true
-        toc-title: "Lesson 2.3: Unbiasedness of the OLS Estimator"
+        toc-title: "Lesson 2.3: Properties of the OLS Estimator"
         mainfont: "Computer Modern"
         title-block-banner: true
         classoption: fleqn

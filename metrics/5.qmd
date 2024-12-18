@@ -41,7 +41,7 @@ This lesson covers the following topics:
 
 [Homepage](https://statsnotes.github.io)
 
-# 2.5.1: OLS as a Method of Moments Estimator
+# 2.5.1: Method of Moments Estimator
 
 We have mostly focused on one specific estimator: the Ordinary Least Squares estimator. However, in this section, we will focus on another estimator, the method of moments estimator.
 
