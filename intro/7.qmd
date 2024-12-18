@@ -465,10 +465,206 @@ So, we know the minimum/maximum point of the best-fit parabola occurs at $-\hat\
 
 # 1.7.6: Logarithmic Transformations
 
+Another very common transformation used on variables is the **logarithmic transformation**. These transformations are used for primarily three purposes:
+
+1.  Just like polynomial transformations, they can be used to model non-linear relationships.
+2.  Log transformation can also reduce heteroscedasticity in data, making it more homoscedastic. This is a little bit complicated, and we will discuss this more in [2.4.1](https://statsnotes.github.io/metrics/4.html#gauss-markov-and-homoscedasticity). For now, just know that it can help reduce the standard errors in our hypothesis testing.
+3.  Log transformations can reduce the impact of outliers - which is useful if we do not want influential outliers having an outsized impact on our findings.
+
+In particular, logarithmic transformations are used commonly when either our $x$ variables or $y$ variable has a heavily skewed distribution, which can cause non-linearity and strong outliers.
+
+-   In fact, taking the log of a variable that is heavily skewed often results in a near-normal distribution.
+
+The most common logarithmic transformation is called the linear-log regression, which is used for when our explanatory variable(s) are heavily skewed:
+
+::: callout-tip
+## Definition: Linear-Log Regression
+
+The linear-log regression transformation takes the following form:
+
+$$
+y_i = \beta_0 + \beta_1 \log(x_i) + u_i
+$$
+
+-   Note: in statistics, when we say $\log(x_i)$, we mean with base $e$, such that $\log(x_i) = \ln (x_i)$.
+:::
+
+More simply, we take our explanatory variable $x$, and find $\log (x_i)$ for every observation within $x$. Then, we use the $\log (x_i)$ as our new explanatory variable.
+
+<br />
+
+Having an explanatory variable transformed with a logarithm will change our interpretations. First, our fitted values will take the following form:
+
+$$
+\hat y_i = \hat\beta_0 + \hat\beta_1 \log(x_i)
+$$
+
+We could interpret the linear-log regression coefficient $\beta_1$ simply as the expected change in $y$ for every one unit increase in $\log (x_i)$. However, that last part - a one unit in $\log (x_i)$, is really not meaningful. What is a one unit increase in $\log(\text{income}_i)$, or $\log(\text{education}_i)$?
+
+Luckily, there is another more useful way to interpret this - by using a few properties of logarithms.
+
+::: callout-note
+## Useful Properties of Logarithms
+
+A very useful property of logarithms is shown below:
+
+$$
+\log(e^ax) = \log (x) + \log (e^a) = \log (x) + a
+$$
+:::
+
+We know that when $x_i = x$ (any value of $x$), $\hat y_i$ will equal:
+
+$$
+\begin{split}
+\hat y_{i , x_i = x} & = \hat\beta_0 + \hat\beta_1 \log (x_i) \\
+& = \hat\beta_0 + \hat\beta_1 \log(x)
+\end{split}
+$$
+
+And with the property above, let us find our predicted value of $\hat y_i$, given an $x_i$ value of $e^a x$:
+
+$$
+\begin{split}
+\hat y_{i, \ x_i = e^a x} & = \hat\beta_0 + \hat\beta_1\log(x_i) \\
+& = \hat\beta_0 + \hat\beta_1 \log(e^ax) \\
+& = \hat\beta_0 + \hat\beta_1(\log(x) + a) \\
+& = \hat\beta_0 + \hat\beta_1 \log(x) + \hat\beta_1 a
+\end{split}
+$$
+
+Now, let us find the difference in predicted $\hat y_i$, between when $x_i = e^a x$ and $x_i = x$ (or in other words, the change in $\hat y_i$ when we multiply $x$ by $e^a$):
+
+$$
+\begin{split}
+\hat y_{i, \ x_i = e^a x} - \hat y_{i, \ x_i = x} & = \hat\beta_0 + \hat\beta_1 \log(x) + \hat\beta_1 a - (\hat\beta_0 + \hat\beta_1 \log(x)) \\
+& = \hat\beta_0 + \hat\beta_1\log(x) + \hat\beta_1a - \hat\beta_0 - \hat\beta_1 \log(x) \\
+& = \hat\beta_0 - \hat\beta_0 + \hat\beta_1\log(x) - \hat\beta_1 \log(x) + \hat\beta_1 a \\
+& = \hat\beta_1 a
+\end{split}
+$$
+
+This, this shows as that when we multiply our $x$ value by $e^a$, we will get an expected $\beta_1 a$ change in $y$.
+
+But why is that useful at all? Well, we can choose some value of $a$ that can make this easy to interpret.
+
+-   For example, if $a = 0.095$, then $e^a \approx 1.1$.
+-   That means that when we multiply $x$ by 1.1, we will get an expected $0.095 \hat\beta_1$ change in $y$.
+-   But what is multiplying $x$ by 1.1? Well, it means a 10% increase in $x$.
+
+Thus, a 10% increase in $x$ is associated with an expected $0.095 \hat\beta_1$ change in $y$.
+
+<br />
+
 <br />
 
 ------------------------------------------------------------------------
 
 [Homepage](https://statsnotes.github.io)
 
-# 1.7.7: Interpreting Logarithmic Transformations
+# 1.7.7: Extensions of Logarithmic Transformations
+
+In the last section, we discussed the linear-log regression, the most common form of logarithmic transformation. However, there are two other possible logarithmic transformations: log-linear, and log-log.
+
+<br />
+
+### Log-Linear Regression
+
+The log-linear regression is similar to the previously covered linear-log regression, but instead of logging the $x$ variable, we now log the $y$ variable. This is useful when our $y$ variable is skewed or has outliers.
+
+::: callout-tip
+## Definition: Log-Linear Regression
+
+The log-linear regression takes the following form:
+
+$$
+\log(y_i) = \beta_0 + \beta_1x_i + u_i
+$$
+:::
+
+Our fitted values of a log-linear regression will be:
+
+$$
+\log(\hat y_i) = \hat\beta_0 + \hat\beta_1x_i
+$$
+
+How do we interpret the coefficient $\hat\beta_1$?
+
+We can do the simple interpretation, which is that a one unit increase in $x$ is associated with a $\hat\beta_1$ change in $\log(\hat y_i)$. However, just as we discussed for linear-log regression, $\log(\hat y_i)$ is not very meaningful in terms of interpretation.
+
+Just like linear-log regression, we can use a few properties of logarithms to get a more useful interpretation.
+
+::: callout-note
+## Useful Property of Logarithms
+
+A useful property of logarithms is that $e^{\log a} = a$.
+:::
+
+So we do not want to interpret in terms of $\log (\hat y_i)$, but in terms of the variable $\hat y_i$ itself. How do we "un-log" $\log (\hat y_i)$? The property above shows that taking $e$ to the $\log (\hat y_i)$ power can isolate $\hat y_i$:
+
+$$
+e^{\log (\hat y_i)} = \hat y_i
+$$
+
+But, if we do this to $\log (\hat y_i)$, we also have to do it to the other side of our fitted values equation. Thus:
+
+$$
+\begin{split}
+& \log(\hat y_i) = \hat\beta_0 + \hat\beta_1x_i \\
+& e^{\log (\hat y_i)} = e^{\hat\beta_0 + \hat\beta_1 x_i} \\
+& \hat y_i = e^{\hat\beta_0}e^{\hat\beta_1x_i}
+\end{split}
+$$
+
+So now, with this equation, what does a one unit increase in $x$ result in? Well, let us plug in $x_i = x+1$, and $x_i = x$, and find the ratio (multiplicative change):
+
+$$
+\begin{split}
+\frac{\hat y_{i, \ x_i = x+1}}{ \hat y_{i, \ x_i = x}} & = \frac{e^{\hat\beta_0}e^{\hat\beta_1(x+1)}}{  e^{\hat\beta_0}e^{\hat\beta_1x}} \\
+& = \frac{e^{\hat\beta_0}e^{\hat\beta_1x +\hat\beta_1}} {e^{\hat\beta_0}e^{\hat\beta_1x}} \\
+& = \frac{e^{\hat\beta_0}e^{\hat\beta_1 x}e^{\hat\beta_1}}{e^{\hat\beta_0}e^{\hat\beta_1x}} \\
+& = e^{\hat\beta_1}
+\end{split}
+$$
+
+Thus, we can see, that with every one unit increase in $x$, our expected $\hat y_i$ is multiplied by $e^{\hat\beta_1}$.
+
+-   So, if $e^{\hat\beta_1} > 1$, then $y$ increases by some percent when $x$ increases by one unit.
+-   If $e^{\hat\beta_1} < 1$, then $y$ decreases by some percent when $x$ increases by one unit.
+-   And if $e^{\hat\beta_1} = 1$, then $y$ does not change when $x$ increases by one unit.
+
+<br />
+
+### Log-Log Regression
+
+A log-log regression is when both the outcome $y$ and explanatory variable $x$ are logged.
+
+::: callout-tip
+## Definition: Log-Log Regression
+
+The log-log regression takes the following form:
+
+$$
+\log (y_i) = \beta_0 + \beta_1 \log (x_i) + u_i
+$$
+:::
+
+Our fitted values will take the following form:
+
+$$
+\log (\hat y_i) = \hat\beta_0 + \hat\beta_1 \log(x_i)
+$$
+
+Our interpretation will combine the previous log-linear and linear-log interpretations.
+
+When we multiply $x$ by $e$, the expected value of $y$ will multiply by $e^{\hat\beta_1}$. However, this is not that inuitive, since the mathematical constant $e = 2.718$ is not a very meaningful number.
+
+We can also get a proportional change interpretation: For a $p$ percent increase in $x$, the expected value of $y$ is equal to $e^{\hat\beta_1(\log((100+p)/100)}$.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)

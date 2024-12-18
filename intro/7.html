@@ -111,7 +111,7 @@ window.Quarto = {
   <li><a href="#interactions-with-continuous-variables" id="toc-interactions-with-continuous-variables" class="nav-link" data-scroll-target="#interactions-with-continuous-variables">1.7.4: Interactions with Continuous Variables</a></li>
   <li><a href="#polynomial-transformations" id="toc-polynomial-transformations" class="nav-link" data-scroll-target="#polynomial-transformations">1.7.5: Polynomial Transformations</a></li>
   <li><a href="#logarithmic-transformations" id="toc-logarithmic-transformations" class="nav-link" data-scroll-target="#logarithmic-transformations">1.7.6: Logarithmic Transformations</a></li>
-  <li><a href="#interpreting-logarithmic-transformations" id="toc-interpreting-logarithmic-transformations" class="nav-link" data-scroll-target="#interpreting-logarithmic-transformations">1.7.7: Interpreting Logarithmic Transformations</a></li>
+  <li><a href="#extensions-of-logarithmic-transformations" id="toc-extensions-of-logarithmic-transformations" class="nav-link" data-scroll-target="#extensions-of-logarithmic-transformations">1.7.7: Extensions of Logarithmic Transformations</a></li>
   </ul>
 </nav>
 </div>
@@ -529,12 +529,201 @@ x_i &amp; =  - \hat\beta_1/2\hat\beta_2
 </section>
 <section id="logarithmic-transformations" class="level1">
 <h1>1.7.6: Logarithmic Transformations</h1>
+<p>Another very common transformation used on variables is the <strong>logarithmic transformation</strong>. These transformations are used for primarily three purposes:</p>
+<ol type="1">
+<li>Just like polynomial transformations, they can be used to model non-linear relationships.</li>
+<li>Log transformation can also reduce heteroscedasticity in data, making it more homoscedastic. This is a little bit complicated, and we will discuss this more in <a href="https://statsnotes.github.io/metrics/4.html#gauss-markov-and-homoscedasticity">2.4.1</a>. For now, just know that it can help reduce the standard errors in our hypothesis testing.</li>
+<li>Log transformations can reduce the impact of outliers - which is useful if we do not want influential outliers having an outsized impact on our findings.</li>
+</ol>
+<p>In particular, logarithmic transformations are used commonly when either our <span class="math inline">x</span> variables or <span class="math inline">y</span> variable has a heavily skewed distribution, which can cause non-linearity and strong outliers.</p>
+<ul>
+<li>In fact, taking the log of a variable that is heavily skewed often results in a near-normal distribution.</li>
+</ul>
+<p>The most common logarithmic transformation is called the linear-log regression, which is used for when our explanatory variable(s) are heavily skewed:</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Linear-Log Regression
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The linear-log regression transformation takes the following form:</p>
+<p><span class="math display">
+y_i = \beta_0 + \beta_1 \log(x_i) + u_i
+</span></p>
+<ul>
+<li>Note: in statistics, when we say <span class="math inline">\log(x_i)</span>, we mean with base <span class="math inline">e</span>, such that <span class="math inline">\log(x_i) = \ln (x_i)</span>.</li>
+</ul>
+</div>
+</div>
+<p>More simply, we take our explanatory variable <span class="math inline">x</span>, and find <span class="math inline">\log (x_i)</span> for every observation within <span class="math inline">x</span>. Then, we use the <span class="math inline">\log (x_i)</span> as our new explanatory variable.</p>
+<p><br></p>
+<p>Having an explanatory variable transformed with a logarithm will change our interpretations. First, our fitted values will take the following form:</p>
+<p><span class="math display">
+\hat y_i = \hat\beta_0 + \hat\beta_1 \log(x_i)
+</span></p>
+<p>We could interpret the linear-log regression coefficient <span class="math inline">\beta_1</span> simply as the expected change in <span class="math inline">y</span> for every one unit increase in <span class="math inline">\log (x_i)</span>. However, that last part - a one unit in <span class="math inline">\log (x_i)</span>, is really not meaningful. What is a one unit increase in <span class="math inline">\log(\text{income}_i)</span>, or <span class="math inline">\log(\text{education}_i)</span>?</p>
+<p>Luckily, there is another more useful way to interpret this - by using a few properties of logarithms.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Useful Properties of Logarithms
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A very useful property of logarithms is shown below:</p>
+<p><span class="math display">
+\log(e^ax) = \log (x) + \log (e^a) = \log (x) + a
+</span></p>
+</div>
+</div>
+<p>We know that when <span class="math inline">x_i = x</span> (any value of <span class="math inline">x</span>), <span class="math inline">\hat y_i</span> will equal:</p>
+<p><span class="math display">
+\begin{split}
+\hat y_{i , x_i = x} &amp; = \hat\beta_0 + \hat\beta_1 \log (x_i) \\
+&amp; = \hat\beta_0 + \hat\beta_1 \log(x)
+\end{split}
+</span></p>
+<p>And with the property above, let us find our predicted value of <span class="math inline">\hat y_i</span>, given an <span class="math inline">x_i</span> value of <span class="math inline">e^a x</span>:</p>
+<p><span class="math display">
+\begin{split}
+\hat y_{i, \ x_i = e^a x} &amp; = \hat\beta_0 + \hat\beta_1\log(x_i) \\
+&amp; = \hat\beta_0 + \hat\beta_1 \log(e^ax) \\
+&amp; = \hat\beta_0 + \hat\beta_1(\log(x) + a) \\
+&amp; = \hat\beta_0 + \hat\beta_1 \log(x) + \hat\beta_1 a
+\end{split}
+</span></p>
+<p>Now, let us find the difference in predicted <span class="math inline">\hat y_i</span>, between when <span class="math inline">x_i = e^a x</span> and <span class="math inline">x_i = x</span> (or in other words, the change in <span class="math inline">\hat y_i</span> when we multiply <span class="math inline">x</span> by <span class="math inline">e^a</span>):</p>
+<p><span class="math display">
+\begin{split}
+\hat y_{i, \ x_i = e^a x} - \hat y_{i, \ x_i = x} &amp; = \hat\beta_0 + \hat\beta_1 \log(x) + \hat\beta_1 a - (\hat\beta_0 + \hat\beta_1 \log(x)) \\
+&amp; = \hat\beta_0 + \hat\beta_1\log(x) + \hat\beta_1a - \hat\beta_0 - \hat\beta_1 \log(x) \\
+&amp; = \hat\beta_0 - \hat\beta_0 + \hat\beta_1\log(x) - \hat\beta_1 \log(x) + \hat\beta_1 a \\
+&amp; = \hat\beta_1 a
+\end{split}
+</span></p>
+<p>This, this shows as that when we multiply our <span class="math inline">x</span> value by <span class="math inline">e^a</span>, we will get an expected <span class="math inline">\beta_1 a</span> change in <span class="math inline">y</span>.</p>
+<p>But why is that useful at all? Well, we can choose some value of <span class="math inline">a</span> that can make this easy to interpret.</p>
+<ul>
+<li>For example, if <span class="math inline">a = 0.095</span>, then <span class="math inline">e^a \approx 1.1</span>.</li>
+<li>That means that when we multiply <span class="math inline">x</span> by 1.1, we will get an expected <span class="math inline">0.095 \hat\beta_1</span> change in <span class="math inline">y</span>.</li>
+<li>But what is multiplying <span class="math inline">x</span> by 1.1? Well, it means a 10% increase in <span class="math inline">x</span>.</li>
+</ul>
+<p>Thus, a 10% increase in <span class="math inline">x</span> is associated with an expected <span class="math inline">0.095 \hat\beta_1</span> change in <span class="math inline">y</span>.</p>
+<p><br></p>
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
-<section id="interpreting-logarithmic-transformations" class="level1">
-<h1>1.7.7: Interpreting Logarithmic Transformations</h1>
+<section id="extensions-of-logarithmic-transformations" class="level1">
+<h1>1.7.7: Extensions of Logarithmic Transformations</h1>
+<p>In the last section, we discussed the linear-log regression, the most common form of logarithmic transformation. However, there are two other possible logarithmic transformations: log-linear, and log-log.</p>
+<p><br></p>
+<section id="log-linear-regression" class="level3">
+<h3 class="anchored" data-anchor-id="log-linear-regression">Log-Linear Regression</h3>
+<p>The log-linear regression is similar to the previously covered linear-log regression, but instead of logging the <span class="math inline">x</span> variable, we now log the <span class="math inline">y</span> variable. This is useful when our <span class="math inline">y</span> variable is skewed or has outliers.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Log-Linear Regression
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The log-linear regression takes the following form:</p>
+<p><span class="math display">
+\log(y_i) = \beta_0 + \beta_1x_i + u_i
+</span></p>
+</div>
+</div>
+<p>Our fitted values of a log-linear regression will be:</p>
+<p><span class="math display">
+\log(\hat y_i) = \hat\beta_0 + \hat\beta_1x_i
+</span></p>
+<p>How do we interpret the coefficient <span class="math inline">\hat\beta_1</span>?</p>
+<p>We can do the simple interpretation, which is that a one unit increase in <span class="math inline">x</span> is associated with a <span class="math inline">\hat\beta_1</span> change in <span class="math inline">\log(\hat y_i)</span>. However, just as we discussed for linear-log regression, <span class="math inline">\log(\hat y_i)</span> is not very meaningful in terms of interpretation.</p>
+<p>Just like linear-log regression, we can use a few properties of logarithms to get a more useful interpretation.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Useful Property of Logarithms
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A useful property of logarithms is that <span class="math inline">e^{\log a} = a</span>.</p>
+</div>
+</div>
+<p>So we do not want to interpret in terms of <span class="math inline">\log (\hat y_i)</span>, but in terms of the variable <span class="math inline">\hat y_i</span> itself. How do we “un-log” <span class="math inline">\log (\hat y_i)</span>? The property above shows that taking <span class="math inline">e</span> to the <span class="math inline">\log (\hat y_i)</span> power can isolate <span class="math inline">\hat y_i</span>:</p>
+<p><span class="math display">
+e^{\log (\hat y_i)} = \hat y_i
+</span></p>
+<p>But, if we do this to <span class="math inline">\log (\hat y_i)</span>, we also have to do it to the other side of our fitted values equation. Thus:</p>
+<p><span class="math display">
+\begin{split}
+&amp; \log(\hat y_i) = \hat\beta_0 + \hat\beta_1x_i \\
+&amp; e^{\log (\hat y_i)} = e^{\hat\beta_0 + \hat\beta_1 x_i} \\
+&amp; \hat y_i = e^{\hat\beta_0}e^{\hat\beta_1x_i}
+\end{split}
+</span></p>
+<p>So now, with this equation, what does a one unit increase in <span class="math inline">x</span> result in? Well, let us plug in <span class="math inline">x_i = x+1</span>, and <span class="math inline">x_i = x</span>, and find the ratio (multiplicative change):</p>
+<p><span class="math display">
+\begin{split}
+\frac{\hat y_{i, \ x_i = x+1}}{ \hat y_{i, \ x_i = x}} &amp; = \frac{e^{\hat\beta_0}e^{\hat\beta_1(x+1)}}{  e^{\hat\beta_0}e^{\hat\beta_1x}} \\
+&amp; = \frac{e^{\hat\beta_0}e^{\hat\beta_1x +\hat\beta_1}} {e^{\hat\beta_0}e^{\hat\beta_1x}} \\
+&amp; = \frac{e^{\hat\beta_0}e^{\hat\beta_1 x}e^{\hat\beta_1}}{e^{\hat\beta_0}e^{\hat\beta_1x}} \\
+&amp; = e^{\hat\beta_1}
+\end{split}
+</span></p>
+<p>Thus, we can see, that with every one unit increase in <span class="math inline">x</span>, our expected <span class="math inline">\hat y_i</span> is multiplied by <span class="math inline">e^{\hat\beta_1}</span>.</p>
+<ul>
+<li>So, if <span class="math inline">e^{\hat\beta_1} &gt; 1</span>, then <span class="math inline">y</span> increases by some percent when <span class="math inline">x</span> increases by one unit.</li>
+<li>If <span class="math inline">e^{\hat\beta_1} &lt; 1</span>, then <span class="math inline">y</span> decreases by some percent when <span class="math inline">x</span> increases by one unit.</li>
+<li>And if <span class="math inline">e^{\hat\beta_1} = 1</span>, then <span class="math inline">y</span> does not change when <span class="math inline">x</span> increases by one unit.</li>
+</ul>
+<p><br></p>
+</section>
+<section id="log-log-regression" class="level3">
+<h3 class="anchored" data-anchor-id="log-log-regression">Log-Log Regression</h3>
+<p>A log-log regression is when both the outcome <span class="math inline">y</span> and explanatory variable <span class="math inline">x</span> are logged.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Log-Log Regression
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The log-log regression takes the following form:</p>
+<p><span class="math display">
+\log (y_i) = \beta_0 + \beta_1 \log (x_i) + u_i
+</span></p>
+</div>
+</div>
+<p>Our fitted values will take the following form:</p>
+<p><span class="math display">
+\log (\hat y_i) = \hat\beta_0 + \hat\beta_1 \log(x_i)
+</span></p>
+<p>Our interpretation will combine the previous log-linear and linear-log interpretations.</p>
+<p>When we multiply <span class="math inline">x</span> by <span class="math inline">e</span>, the expected value of <span class="math inline">y</span> will multiply by <span class="math inline">e^{\hat\beta_1}</span>. However, this is not that inuitive, since the mathematical constant <span class="math inline">e = 2.718</span> is not a very meaningful number.</p>
+<p>We can also get a proportional change interpretation: For a <span class="math inline">p</span> percent increase in <span class="math inline">x</span>, the expected value of <span class="math inline">y</span> is equal to <span class="math inline">e^{\hat\beta_1(\log((100+p)/100)}</span>.</p>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
+</section>
 </section>
 
 </main>
