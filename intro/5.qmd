@@ -493,8 +493,8 @@ The F-test of Nested Models allows us to test multiple coefficients at once. It 
 
 $$
 \begin{split}
-& M_0: y = \beta_0 + \beta_1x_1 + \dots + \beta_g x_g \\
-& M_a: y = \beta_0 + \beta_1 x_1 + \dots + \beta_g x_g + \beta_{g+1} x_{g+1} + \dots + \beta_kx_k
+& M_0: y = \beta_0 + \beta_1x_1 + \dots + \beta_g x_g + u_i \\
+& M_a: y = \beta_0 + \beta_1 x_1 + \dots + \beta_g x_g + \beta_{g+1} x_{g+1} + \dots + \beta_kx_k + u_i
 \end{split}
 $$
 
