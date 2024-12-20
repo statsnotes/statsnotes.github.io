@@ -31,13 +31,13 @@ The guide is divided into parts, with each part containing lessons. Each lesson 
 -   I recommend using a laptop or tablet to access this page. Use the sidebar for easy navigation.
 -   In the appendix, I provide some guides on useful mathematical methods, R-programming, and simple machine learning.
 
-Also, if you are interested in political science, I recommend checking out my [Political Science and Political Economics Guide](https://politicalscience.github.io).
+Also, if you are interested in political science, I recommend checking out my [Quantitative Political Science Guide](https://politicalscience.github.io).
 
 <br />
 
 ## Part I: Introduction to Statistical Models
 
-*This part starts by introducing the basics of statistical theory. Then, we discuss the generalised linear model - the family of regression models form the basis of much of statistics.*
+*This part starts by introducing the basics of statistical theory. Then, we discuss the generalised linear model - the family of models form the basis of much of statistics.*
 
 Pre-requisites: Single Variable Calculus is helpful.
 
@@ -49,7 +49,7 @@ Pre-requisites: Single Variable Calculus is helpful.
 -   [1.6: Categorical Variables in Regression](https://statsnotes.github.io/intro/6.html)
 -   [1.7: Interactions and Functional Form](https://statsnotes.github.io/intro/7.html)
 -   [1.8: Logistic Regression Model](https://statsnotes.github.io/intro/8.html)
--   1.9: Ordinal and Multinomial Logistic Models
+-   [1.9: Ordinal and Multinomial Logistic Models](https://statsnotes.github.io/intro/9.html)
 -   1.10: Poisson and Negative Binomial Models
 
 <br />
