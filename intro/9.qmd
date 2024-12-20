@@ -22,6 +22,18 @@ format:
         html-math-method: katex
 ---
 
+::: callout-note
+## Lesson Overview
+
+In the last lesson, we covered the standard logistic regression model. In this lesson, we explore extensions of the logistic regression model to deal with ordinal and categorical outcome variables.
+
+This lesson covers the following topics:
+
+-   What ordinal and categorical outcome variables are, and how they work.
+-   The ordinal logistic regression model, its layout, and how to use it for inference and prediction.
+-   The multinomial logistic regression model, its layout, and how to use it for inference and prediction.
+:::
+
 ::: callout-warning
 ## Warning!
 
@@ -189,7 +201,7 @@ We can also use odds ratios in the same way to interpret the coefficient's magni
 
 -   So, if $e^{\hat\beta_1}>1$ (or any $\hat\beta_1, \dots, \hat\beta_k$), then a one unit increase in $x$ increases the odds of being in a higher category of $y$ by $(e^{\hat\beta_1} -1) \times 100$ percent.
 -   If $e^{\hat\beta_1}<1$ (or any $\hat\beta_1, \dots, \hat\beta_k$), then a one unit increase in $x$ decreases the odds of being in a higher category of $y$ by $(1-e^{\hat\beta_1}) \times 100$ percent.
--   if $e^{\hat\beta_1=1}$ (or any $\hat\beta_1, \dots, \hat\beta_k$), then a one unit increase in $x$ does not affect the odds of being in a higher category of $y$.
+-   if $e^{\hat\beta_1}=1$ (or any $\hat\beta_1, \dots, \hat\beta_k$), then a one unit increase in $x$ does not affect the odds of being in a higher category of $y$.
 
 <br />
 
@@ -265,6 +277,8 @@ We described the logistic regression model as a model for the cumulative probabi
 
 Luckily, with rules of probability, we can quickly calculate the probabilities of each category $1, \dots, c$ from the ordinal logistic regression model.
 
+<br />
+
 For the first category $j=1$, the cumulative probability is equal to the cumulative probability (since there are no categories prior to category 1):
 
 $$
@@ -274,8 +288,32 @@ $$
 For any category $j$ from $2, \dots, c-1$ (so not the first or last category), the actual probability of the category $j$ is simply that categories cumulative probability $\gamma_j$, minus the cumulative probability of the category before it, $j-1$.
 
 $$
-Pr(y=j) = \gamma_j - \gamma_{j-1}
+\begin{split}
+Pr(y=j) & = \gamma_j - \gamma_{j-1} \\
+& = \frac{e^{\beta_{0j} - (\beta_1x_1 + \dots + \beta_k x_k)}}{1+e^{\beta_{0j} - (\beta_1x_1 + \dots + \beta_k x_k)}} - \frac{e^{\beta_{0j-1} - (\beta_1x_1 + \dots + \beta_k x_k)}}{1+e^{\beta_{0j-1} - (\beta_1x_1 + \dots + \beta_k x_k)}}
+\end{split}
 $$
+
+For the final category $c$,the actual probability of that category is 1 minus the cumulative probability of $c-1$:
+
+$$
+\begin{split}
+Pr(y = c) & = 1 -\gamma_{c-1} \\
+& = 1 - \frac{e^{\beta_{0c-1} - (\beta_1x_1 + \dots + \beta_k x_k)}}{1+e^{\beta_{0c-1} - (\beta_1x_1 + \dots + \beta_k x_k)}}
+\end{split}
+$$
+
+<br />
+
+Aside from fitted probabilities, we can also conduct classification (similar to logistic regression in [1.8.7](https://statsnotes.github.io/intro/8.html#prediction-and-classification-with-logistic-regression)). We simply assign a unit $i$ to the category in which it has the highest probability of being a part of.
+
+Finally, note that the proportional odds assumption (that all $c-1$ binary logistic regressions have the same coefficient values $\beta_1, \dots, \beta_k$) is a quite restrictive assumption for logistic regression.
+
+-   This can lead to poor classification accuracy in certain datasets.
+
+To address this, you can also model ordinal outcome variables (and other categorical outcome variables) with a multinomial logistic model, that we will discuss in the next section.
+
+<br />
 
 <br />
 
@@ -285,6 +323,54 @@ $$
 
 # 1.9.5: The Multinomial Logistic Model
 
+In the ordinal logistic regression, we compared different dichotomies of cumulative probabilities $\gamma_j$. However, that is only possible with ordinal variables, and not possible with categorical variables.
+
+-   Why is it not possible with categorical variables? Well, a cumulative probability $\gamma_j$ is the probability of category $j$ or anything before category $j$ ocurring. However, to know anything "before" category $j$, there must be some natural order of categories. There is no natural order of categories in categorical variables.
+
+Thus, we can no longer use cumulative probabilities.
+
+Instead, the multinomial logistic model uses a series of $c-1$ binary logistic regressions, but instead of comparing cumulative probabilities, it compares all categories to a reference category (similar to that of a categorical explanatory variable described in [1.6.3](https://statsnotes.github.io/intro/6.html#categorical-explanatory-variables-in-regression)).
+
+This might be a little unintuitive, so let us use an example. Let us say our outcome variable $y$ has $c=4$ categories. The $c-1$ number of binary logistic regressions would be:
+
+1.  Category 1 vs. Category 2 (probability of being in category 1 when compared to category 2).
+2.  Category 1 vs. Category 3 (probability of being in category 1 when compared to category 3).
+3.  Category 1 vs. Category 4 (probability of being in category 1 when compared to category 4).
+
+Here, category 1 is our reference category. The figure below shows this graphically:
+
+![](images/clipboard-4153123951.png){fig-align="center" width="80%"}
+
+<br />
+
+Using this intuition, we can define the multinomial logistic model:
+
+::: callout-tip
+## Definition: Multinomial Logistic Model
+
+The multinomial logistic model is a set of $c-1$ binary logistic models (estimated simultaneously), for each response category $j = 2, \dots, c$, in comparison against a reference category $j=1$:
+
+$$
+\log\left( \frac{\pi_j}{\pi_1} \right) = \beta_{0j} + \beta_{1j} x_1 + \dots + \beta_{kj}x_k
+$$
+
+-   Where $\pi_j$ is the probability of being in category $j$, and $\pi_1$ is the probability of being in category 1.
+-   Where $\beta_{0j}, \dots, \beta_{kj}$ are the parameters of the model. Note how each has a subscript $j$ - each $c-1$ binary logistic regression has their own unique parameter values, which means there is no proportional odds assumption in the multinomial model.
+:::
+
+The ratio $\frac{\pi_j}{\pi_1}$ is the odds of category $j$ versus category 1. The $c-1$ logistic regression models are the log-odds models of each category $j=2,\dots,c$ versus category 1.
+
+<br />
+
+For example, let us we want to see how years of education ($x$) affects preference for either electric, petrol, or diesel cars ($y$). Our outcome variable of *cartype* will have three categories: petrol (reference category), electric, and diesel car. Our multinomial model will run the following regressions simultaneously:
+
+$$
+\begin{split}
+& \log\left( \frac{\pi_{\text{electric}}}{\pi_{\text{petrol}}} \right) = \beta_{0\text{electric}} + \beta_{1\text{electric}}\ \text{education} \\
+& \log\left( \frac{\pi_{\text{diesel}}}{\pi_{\text{petrol}}} \right) = \beta_{0\text{diesel}} + \beta_{1\text{diesel}}\ \text{education} \\
+\end{split}
+$$
+
 <br />
 
 ------------------------------------------------------------------------
@@ -293,6 +379,52 @@ $$
 
 # 1.9.6: Coefficients of the Multinomial Model
 
+Remember that in our multinomial model, we have $c-1$ number of binary logistic regressions, for each $j = 2, \dots, c$ compared against reference category 1.
+
+By estimating the parameters $\beta_{0j}, \beta_{1j}, \dots, \beta_{kj}$ using maximum likelihood estimation (quite advanced, see [lesson 2.6](https://statsnotes.github.io/metrics/6.html)), we can obtain the estimates of $\hat\beta_{0j}, \hat\beta_{1j}, \dots, \hat\beta_{kj}$.
+
+The coefficients $\hat\beta_{1j}, \dots, \hat\beta_{kj}$ are interpreted in a very similar way to binary logistic regression. The sign of the coefficient tells us the direction of the relationship, and a coefficient value of 0 means no relationship.
+
+-   Remember, that our outcome in each binary logistic regression is comparing the probability of being in category $j$ to being in category 1 (reference category).
+
+We can also use odds ratios in the same way to interpret the coefficient's magnitudes (see [1.8.4](https://statsnotes.github.io/intro/8.html#odds-ratios-and-interpretation)): An increase in one unit of $x$ increases the odds of a unit being in a higher category of $y$ by a multiplicative increase of $e^{\hat\beta_1}$.
+
+-   So, if $e^{\hat\beta_{1j}}>1$ (or any $\hat\beta_{1j}, \dots, \hat\beta_{kj}$), then a one unit increase in $x$ increases the odds of being in category $y=j$ compared to category $y=1$ by $(e^{\hat\beta_1} -1) \times 100$ percent.
+-   If $e^{\hat\beta_{1j}}<1$ (or any $\hat\beta_{1j}, \dots, \hat\beta_{kj}$), then a one unit increase in $x$ decreases the odds of being in category $y=j$ compared to category $y=1$ by $(1-e^{\hat\beta_1}) \times 100$ percent.
+-   if $e^{\hat\beta_{1j}} = 1$ (or any $\hat\beta_{1j}, \dots, \hat\beta_{kj}$), , then a one unit increase in $x$ does not affect the odds of being in category $y=j$ compared to category $y=1$.
+
+<br />
+
+Notice how all these odds ratios are in comparison to the reference category. However, what if we want to compare two categories that are not the reference category?
+
+The easiest way to do this (with statistical software) is to simply change the reference category. This is typically very easy to do in statistical software, and will get our desired results quickly and easily.
+
+However, we could also manually calculate the odds ratios by finding the differences between the coefficients.
+
+For example, let us say we have the coefficient $\beta_{12}$ for category 2 compared to category 1 (reference), and $\beta_{13}$ for category 3 compared to category 1 (reference). What we could do to find the odds ratio of category 3 to category 2 is:
+
+$$
+e^{\beta_{13} - \beta_{12}}
+$$
+
+Why does this work? Well, properties of logarithms. Take the log-odds of the probabilities between category $j$ and category $l$:
+
+$$
+\log\left( \frac{\pi_j}{\pi_l} \right) = (\beta_{0j} - \beta_{0l}) + (\beta_{1j}-\beta_{1l})x_1 + \dots + (\beta_{kj} - \beta_{kl}) x_k
+$$
+
+This property of logarithms allows us to just take the coefficient differences, then exponential them, to get the odds ratios between two non-reference categories.
+
+<br />
+
+Just as we did with ordinal logistic regression (and the standard logistic regression), we can run statistical inference.
+
+-   This includes 95% confidence intervals for both coefficients and odds ratios
+-   Also, hypothesis testing with both z-tests and Wald tests.
+-   Finally, also the likelihood ratio test for multiple coefficients.
+
+<br />
+
 <br />
 
 ------------------------------------------------------------------------
@@ -300,3 +432,41 @@ $$
 [Homepage](https://statsnotes.github.io)
 
 # 1.9.7: Classification with the Multinomial Model
+
+We have our log-odds logistic regression in our multinomial regression as follows:
+
+$$
+\log\left( \frac{\pi_j}{\pi_1} \right) = \beta_{0j} + \beta_{1j} x_1 + \dots + \beta_{kj}x_k
+$$
+
+We can solve for the fitted probabilities by isolating $\pi_1$ (for the probability of category 1), and $\pi_j$ (for all other categories). The algebra is a little complicated, so I will give you the solutions.
+
+For the fitted probability of category 1, $\pi_1$, the equation is as follows:
+
+$$
+\pi_1 = \frac{1}{1 + e^{\beta_{02} + \beta_{12}x_1 + \dots +\beta_{k2}x_k} + \dots + e^{\beta_{0c} + \beta_{1c}x_1 + \dots +\beta_{kc}x_k}}
+$$
+
+For the fitted probability of any other category $j$, the equation is as follows:
+
+$$
+\pi_j = \frac{e^{\beta_{0j} + \beta_{1j}x_1 + \dots +\beta_{kj}x_k} }{1 + e^{\beta_{02} + \beta_{12}x_1 + \dots +\beta_{k2}x_k} + \dots + e^{\beta_{0c} + \beta_{1c}x_1 + \dots +\beta_{kc}x_k}}
+$$
+
+We can also rewrite this expression as:
+
+$$
+\pi_j = \frac{e^{\beta_{0j} + \beta_{1j}x_1 + \dots +\beta_{kj}x_k} }{\sum_{l=1}^ce^{\beta_{0l} + \beta_{1l}x_1 + \dots +\beta_{kl}x_k}}
+$$
+
+These calculations are very tedious by hand, so we will almost never do these by hand. The R-software (and other statistical software) can help us calculate these very quickly.
+
+Aside from fitted probabilities, we can also conduct classification (similar to logistic regression in [1.8.7](https://statsnotes.github.io/intro/8.html#prediction-and-classification-with-logistic-regression)). We simply assign a unit $i$ to the category in which it has the highest probability of being a part of.
+
+<br />
+
+<br />
+
+------------------------------------------------------------------------
+
+[Homepage](https://statsnotes.github.io)

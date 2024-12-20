@@ -123,6 +123,25 @@ window.Quarto = {
 
 
 
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Lesson Overview
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the last lesson, we covered the standard logistic regression model. In this lesson, we explore extensions of the logistic regression model to deal with ordinal and categorical outcome variables.</p>
+<p>This lesson covers the following topics:</p>
+<ul>
+<li>What ordinal and categorical outcome variables are, and how they work.</li>
+<li>The ordinal logistic regression model, its layout, and how to use it for inference and prediction.</li>
+<li>The multinomial logistic regression model, its layout, and how to use it for inference and prediction.</li>
+</ul>
+</div>
+</div>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -274,7 +293,7 @@ Definition: Ordinal Logistic Model
 <ul>
 <li>So, if <span class="math inline">e^{\hat\beta_1}&gt;1</span> (or any <span class="math inline">\hat\beta_1, \dots, \hat\beta_k</span>), then a one unit increase in <span class="math inline">x</span> increases the odds of being in a higher category of <span class="math inline">y</span> by <span class="math inline">(e^{\hat\beta_1} -1) \times 100</span> percent.</li>
 <li>If <span class="math inline">e^{\hat\beta_1}&lt;1</span> (or any <span class="math inline">\hat\beta_1, \dots, \hat\beta_k</span>), then a one unit increase in <span class="math inline">x</span> decreases the odds of being in a higher category of <span class="math inline">y</span> by <span class="math inline">(1-e^{\hat\beta_1}) \times 100</span> percent.</li>
-<li>if <span class="math inline">e^{\hat\beta_1=1}</span> (or any <span class="math inline">\hat\beta_1, \dots, \hat\beta_k</span>), then a one unit increase in <span class="math inline">x</span> does not affect the odds of being in a higher category of <span class="math inline">y</span>.</li>
+<li>if <span class="math inline">e^{\hat\beta_1}=1</span> (or any <span class="math inline">\hat\beta_1, \dots, \hat\beta_k</span>), then a one unit increase in <span class="math inline">x</span> does not affect the odds of being in a higher category of <span class="math inline">y</span>.</li>
 </ul>
 <p><br></p>
 <p>We can also use the same statistical tests as in logistic regression to test the significance of the coefficients.</p>
@@ -347,32 +366,156 @@ Warning!
 <li>For example, we might not care about the probability of an observation being in a category equal or less than 3 (categories 1, 2, or 3). We might care about the probability of an observation being in category 3 specifically.</li>
 </ul>
 <p>Luckily, with rules of probability, we can quickly calculate the probabilities of each category <span class="math inline">1, \dots, c</span> from the ordinal logistic regression model.</p>
+<p><br></p>
 <p>For the first category <span class="math inline">j=1</span>, the cumulative probability is equal to the cumulative probability (since there are no categories prior to category 1):</p>
 <p><span class="math display">
 Pr(y =1) = \gamma_1 = \frac{e^{\beta_{01} - (\beta_1x_1 + \dots + \beta_k x_k)}}{1+e^{\beta_{01} - (\beta_1x_1 + \dots + \beta_k x_k)}}
 </span></p>
 <p>For any category <span class="math inline">j</span> from <span class="math inline">2, \dots, c-1</span> (so not the first or last category), the actual probability of the category <span class="math inline">j</span> is simply that categories cumulative probability <span class="math inline">\gamma_j</span>, minus the cumulative probability of the category before it, <span class="math inline">j-1</span>.</p>
 <p><span class="math display">
-Pr(y=j) = \gamma_j - \gamma_{j-1}
+\begin{split}
+Pr(y=j) &amp; = \gamma_j - \gamma_{j-1} \\
+&amp; = \frac{e^{\beta_{0j} - (\beta_1x_1 + \dots + \beta_k x_k)}}{1+e^{\beta_{0j} - (\beta_1x_1 + \dots + \beta_k x_k)}} - \frac{e^{\beta_{0j-1} - (\beta_1x_1 + \dots + \beta_k x_k)}}{1+e^{\beta_{0j-1} - (\beta_1x_1 + \dots + \beta_k x_k)}}
+\end{split}
 </span></p>
+<p>For the final category <span class="math inline">c</span>,the actual probability of that category is 1 minus the cumulative probability of <span class="math inline">c-1</span>:</p>
+<p><span class="math display">
+\begin{split}
+Pr(y = c) &amp; = 1 -\gamma_{c-1} \\
+&amp; = 1 - \frac{e^{\beta_{0c-1} - (\beta_1x_1 + \dots + \beta_k x_k)}}{1+e^{\beta_{0c-1} - (\beta_1x_1 + \dots + \beta_k x_k)}}
+\end{split}
+</span></p>
+<p><br></p>
+<p>Aside from fitted probabilities, we can also conduct classification (similar to logistic regression in <a href="https://statsnotes.github.io/intro/8.html#prediction-and-classification-with-logistic-regression">1.8.7</a>). We simply assign a unit <span class="math inline">i</span> to the category in which it has the highest probability of being a part of.</p>
+<p>Finally, note that the proportional odds assumption (that all <span class="math inline">c-1</span> binary logistic regressions have the same coefficient values <span class="math inline">\beta_1, \dots, \beta_k</span>) is a quite restrictive assumption for logistic regression.</p>
+<ul>
+<li>This can lead to poor classification accuracy in certain datasets.</li>
+</ul>
+<p>To address this, you can also model ordinal outcome variables (and other categorical outcome variables) with a multinomial logistic model, that we will discuss in the next section.</p>
+<p><br></p>
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
 <section id="the-multinomial-logistic-model" class="level1">
 <h1>1.9.5: The Multinomial Logistic Model</h1>
+<p>In the ordinal logistic regression, we compared different dichotomies of cumulative probabilities <span class="math inline">\gamma_j</span>. However, that is only possible with ordinal variables, and not possible with categorical variables.</p>
+<ul>
+<li>Why is it not possible with categorical variables? Well, a cumulative probability <span class="math inline">\gamma_j</span> is the probability of category <span class="math inline">j</span> or anything before category <span class="math inline">j</span> ocurring. However, to know anything “before” category <span class="math inline">j</span>, there must be some natural order of categories. There is no natural order of categories in categorical variables.</li>
+</ul>
+<p>Thus, we can no longer use cumulative probabilities.</p>
+<p>Instead, the multinomial logistic model uses a series of <span class="math inline">c-1</span> binary logistic regressions, but instead of comparing cumulative probabilities, it compares all categories to a reference category (similar to that of a categorical explanatory variable described in <a href="https://statsnotes.github.io/intro/6.html#categorical-explanatory-variables-in-regression">1.6.3</a>).</p>
+<p>This might be a little unintuitive, so let us use an example. Let us say our outcome variable <span class="math inline">y</span> has <span class="math inline">c=4</span> categories. The <span class="math inline">c-1</span> number of binary logistic regressions would be:</p>
+<ol type="1">
+<li>Category 1 vs.&nbsp;Category 2 (probability of being in category 1 when compared to category 2).</li>
+<li>Category 1 vs.&nbsp;Category 3 (probability of being in category 1 when compared to category 3).</li>
+<li>Category 1 vs.&nbsp;Category 4 (probability of being in category 1 when compared to category 4).</li>
+</ol>
+<p>Here, category 1 is our reference category. The figure below shows this graphically:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-4153123951.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+<p><br></p>
+<p>Using this intuition, we can define the multinomial logistic model:</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Multinomial Logistic Model
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The multinomial logistic model is a set of <span class="math inline">c-1</span> binary logistic models (estimated simultaneously), for each response category <span class="math inline">j = 2, \dots, c</span>, in comparison against a reference category <span class="math inline">j=1</span>:</p>
+<p><span class="math display">
+\log\left( \frac{\pi_j}{\pi_1} \right) = \beta_{0j} + \beta_{1j} x_1 + \dots + \beta_{kj}x_k
+</span></p>
+<ul>
+<li>Where <span class="math inline">\pi_j</span> is the probability of being in category <span class="math inline">j</span>, and <span class="math inline">\pi_1</span> is the probability of being in category 1.</li>
+<li>Where <span class="math inline">\beta_{0j}, \dots, \beta_{kj}</span> are the parameters of the model. Note how each has a subscript <span class="math inline">j</span> - each <span class="math inline">c-1</span> binary logistic regression has their own unique parameter values, which means there is no proportional odds assumption in the multinomial model.</li>
+</ul>
+</div>
+</div>
+<p>The ratio <span class="math inline">\frac{\pi_j}{\pi_1}</span> is the odds of category <span class="math inline">j</span> versus category 1. The <span class="math inline">c-1</span> logistic regression models are the log-odds models of each category <span class="math inline">j=2,\dots,c</span> versus category 1.</p>
+<p><br></p>
+<p>For example, let us we want to see how years of education (<span class="math inline">x</span>) affects preference for either electric, petrol, or diesel cars (<span class="math inline">y</span>). Our outcome variable of <em>cartype</em> will have three categories: petrol (reference category), electric, and diesel car. Our multinomial model will run the following regressions simultaneously:</p>
+<p><span class="math display">
+\begin{split}
+&amp; \log\left( \frac{\pi_{\text{electric}}}{\pi_{\text{petrol}}} \right) = \beta_{0\text{electric}} + \beta_{1\text{electric}}\ \text{education} \\
+&amp; \log\left( \frac{\pi_{\text{diesel}}}{\pi_{\text{petrol}}} \right) = \beta_{0\text{diesel}} + \beta_{1\text{diesel}}\ \text{education} \\
+\end{split}
+</span></p>
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
 <section id="coefficients-of-the-multinomial-model" class="level1">
 <h1>1.9.6: Coefficients of the Multinomial Model</h1>
+<p>Remember that in our multinomial model, we have <span class="math inline">c-1</span> number of binary logistic regressions, for each <span class="math inline">j = 2, \dots, c</span> compared against reference category 1.</p>
+<p>By estimating the parameters <span class="math inline">\beta_{0j}, \beta_{1j}, \dots, \beta_{kj}</span> using maximum likelihood estimation (quite advanced, see <a href="https://statsnotes.github.io/metrics/6.html">lesson 2.6</a>), we can obtain the estimates of <span class="math inline">\hat\beta_{0j}, \hat\beta_{1j}, \dots, \hat\beta_{kj}</span>.</p>
+<p>The coefficients <span class="math inline">\hat\beta_{1j}, \dots, \hat\beta_{kj}</span> are interpreted in a very similar way to binary logistic regression. The sign of the coefficient tells us the direction of the relationship, and a coefficient value of 0 means no relationship.</p>
+<ul>
+<li>Remember, that our outcome in each binary logistic regression is comparing the probability of being in category <span class="math inline">j</span> to being in category 1 (reference category).</li>
+</ul>
+<p>We can also use odds ratios in the same way to interpret the coefficient’s magnitudes (see <a href="https://statsnotes.github.io/intro/8.html#odds-ratios-and-interpretation">1.8.4</a>): An increase in one unit of <span class="math inline">x</span> increases the odds of a unit being in a higher category of <span class="math inline">y</span> by a multiplicative increase of <span class="math inline">e^{\hat\beta_1}</span>.</p>
+<ul>
+<li>So, if <span class="math inline">e^{\hat\beta_{1j}}&gt;1</span> (or any <span class="math inline">\hat\beta_{1j}, \dots, \hat\beta_{kj}</span>), then a one unit increase in <span class="math inline">x</span> increases the odds of being in category <span class="math inline">y=j</span> compared to category <span class="math inline">y=1</span> by <span class="math inline">(e^{\hat\beta_1} -1) \times 100</span> percent.</li>
+<li>If <span class="math inline">e^{\hat\beta_{1j}}&lt;1</span> (or any <span class="math inline">\hat\beta_{1j}, \dots, \hat\beta_{kj}</span>), then a one unit increase in <span class="math inline">x</span> decreases the odds of being in category <span class="math inline">y=j</span> compared to category <span class="math inline">y=1</span> by <span class="math inline">(1-e^{\hat\beta_1}) \times 100</span> percent.</li>
+<li>if <span class="math inline">e^{\hat\beta_{1j}} = 1</span> (or any <span class="math inline">\hat\beta_{1j}, \dots, \hat\beta_{kj}</span>), , then a one unit increase in <span class="math inline">x</span> does not affect the odds of being in category <span class="math inline">y=j</span> compared to category <span class="math inline">y=1</span>.</li>
+</ul>
+<p><br></p>
+<p>Notice how all these odds ratios are in comparison to the reference category. However, what if we want to compare two categories that are not the reference category?</p>
+<p>The easiest way to do this (with statistical software) is to simply change the reference category. This is typically very easy to do in statistical software, and will get our desired results quickly and easily.</p>
+<p>However, we could also manually calculate the odds ratios by finding the differences between the coefficients.</p>
+<p>For example, let us say we have the coefficient <span class="math inline">\beta_{12}</span> for category 2 compared to category 1 (reference), and <span class="math inline">\beta_{13}</span> for category 3 compared to category 1 (reference). What we could do to find the odds ratio of category 3 to category 2 is:</p>
+<p><span class="math display">
+e^{\beta_{13} - \beta_{12}}
+</span></p>
+<p>Why does this work? Well, properties of logarithms. Take the log-odds of the probabilities between category <span class="math inline">j</span> and category <span class="math inline">l</span>:</p>
+<p><span class="math display">
+\log\left( \frac{\pi_j}{\pi_l} \right) = (\beta_{0j} - \beta_{0l}) + (\beta_{1j}-\beta_{1l})x_1 + \dots + (\beta_{kj} - \beta_{kl}) x_k
+</span></p>
+<p>This property of logarithms allows us to just take the coefficient differences, then exponential them, to get the odds ratios between two non-reference categories.</p>
+<p><br></p>
+<p>Just as we did with ordinal logistic regression (and the standard logistic regression), we can run statistical inference.</p>
+<ul>
+<li>This includes 95% confidence intervals for both coefficients and odds ratios</li>
+<li>Also, hypothesis testing with both z-tests and Wald tests.</li>
+<li>Finally, also the likelihood ratio test for multiple coefficients.</li>
+</ul>
+<p><br></p>
 <p><br></p>
 <hr>
 <p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
 <section id="classification-with-the-multinomial-model" class="level1">
 <h1>1.9.7: Classification with the Multinomial Model</h1>
+<p>We have our log-odds logistic regression in our multinomial regression as follows:</p>
+<p><span class="math display">
+\log\left( \frac{\pi_j}{\pi_1} \right) = \beta_{0j} + \beta_{1j} x_1 + \dots + \beta_{kj}x_k
+</span></p>
+<p>We can solve for the fitted probabilities by isolating <span class="math inline">\pi_1</span> (for the probability of category 1), and <span class="math inline">\pi_j</span> (for all other categories). The algebra is a little complicated, so I will give you the solutions.</p>
+<p>For the fitted probability of category 1, <span class="math inline">\pi_1</span>, the equation is as follows:</p>
+<p><span class="math display">
+\pi_1 = \frac{1}{1 + e^{\beta_{02} + \beta_{12}x_1 + \dots +\beta_{k2}x_k} + \dots + e^{\beta_{0c} + \beta_{1c}x_1 + \dots +\beta_{kc}x_k}}
+</span></p>
+<p>For the fitted probability of any other category <span class="math inline">j</span>, the equation is as follows:</p>
+<p><span class="math display">
+\pi_j = \frac{e^{\beta_{0j} + \beta_{1j}x_1 + \dots +\beta_{kj}x_k} }{1 + e^{\beta_{02} + \beta_{12}x_1 + \dots +\beta_{k2}x_k} + \dots + e^{\beta_{0c} + \beta_{1c}x_1 + \dots +\beta_{kc}x_k}}
+</span></p>
+<p>We can also rewrite this expression as:</p>
+<p><span class="math display">
+\pi_j = \frac{e^{\beta_{0j} + \beta_{1j}x_1 + \dots +\beta_{kj}x_k} }{\sum_{l=1}^ce^{\beta_{0l} + \beta_{1l}x_1 + \dots +\beta_{kl}x_k}}
+</span></p>
+<p>These calculations are very tedious by hand, so we will almost never do these by hand. The R-software (and other statistical software) can help us calculate these very quickly.</p>
+<p>Aside from fitted probabilities, we can also conduct classification (similar to logistic regression in <a href="https://statsnotes.github.io/intro/8.html#prediction-and-classification-with-logistic-regression">1.8.7</a>). We simply assign a unit <span class="math inline">i</span> to the category in which it has the highest probability of being a part of.</p>
+<p><br></p>
+<p><br></p>
+<hr>
+<p><a href="https://statsnotes.github.io">Homepage</a></p>
 </section>
 
 </main>
