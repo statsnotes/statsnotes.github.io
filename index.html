@@ -64,7 +64,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#regression-toolkit" id="toc-regression-toolkit" class="nav-link" data-scroll-target="#regression-toolkit">Regression Toolkit</a></li>
-  <li><a href="#causal-inference-econometrics-toolkit" id="toc-causal-inference-econometrics-toolkit" class="nav-link" data-scroll-target="#causal-inference-econometrics-toolkit">Causal Inference (Econometrics) Toolkit</a></li>
+  <li><a href="#causal-inference-toolkit" id="toc-causal-inference-toolkit" class="nav-link" data-scroll-target="#causal-inference-toolkit">Causal Inference Toolkit</a></li>
   <li><a href="#multivariate-statistics-toolkit" id="toc-multivariate-statistics-toolkit" class="nav-link" data-scroll-target="#multivariate-statistics-toolkit">Multivariate Statistics Toolkit</a></li>
   <li><a href="#time-series-toolkit" id="toc-time-series-toolkit" class="nav-link" data-scroll-target="#time-series-toolkit">Time Series Toolkit</a></li>
   <li><a href="#spatial-statistics-toolkit" id="toc-spatial-statistics-toolkit" class="nav-link" data-scroll-target="#spatial-statistics-toolkit">Spatial Statistics Toolkit</a></li>
@@ -86,22 +86,16 @@ ul.task-list li input[type="checkbox"] {
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>This is a toolkit on commonly used statistical methods for social scientists. This guide was created during my masters degree, as a way to consolidate and store all the knowledge I have accumulated.</p>
-<p>The guide is divided into parts, with each part containing lessons. Each lesson provides R-code for implementation purposes.</p>
 <ul>
-<li>I recommend using a laptop or tablet to access this page. Use the sidebar for easy navigation.</li>
-<li>In the appendix, I provide some guides on useful mathematical methods, R-programming, and simple machine learning.</li>
+<li>Note: this is not a “course” on statistics. It is a toolkit and reference material for those who already have an understanding of statistical methods, and want to implement these methods in social science research.</li>
 </ul>
+<p>This toolkit is divided into sections, with each section covering a category of tools used in statistics. Sections include regression, causal inference, multivariate statistics, time series, spatial statistics, machine learning, and text analysis.</p>
 <p>Also, if you are interested in political science, I recommend checking out my <a href="https://politicalscience.github.io">Quantitative Political Science Guide</a>.</p>
 <p><br></p>
 </section>
 <section id="regression-toolkit" class="level2">
 <h2 class="anchored" data-anchor-id="regression-toolkit">Regression Toolkit</h2>
-<p><em>Introduction: Statistical Testing and Estimators</em></p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 31%">
-<col style="width: 68%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Method</th>
@@ -110,37 +104,28 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td>Linear Regression Model</td>
-<td><em>The classic model, for continuous outcome variables.</em></td>
+<td><a href="https://statsnotes.github.io/regression/linear.html">Multiple Linear Regression</a></td>
+<td><em>The classic linear model for continuous outcome variables.</em></td>
 </tr>
 <tr class="even">
-<td>Extensions of the Linear Model</td>
-<td><em>Extensions to deal with categorical explanatory variables, interactions, and transformations.</em></td>
+<td>Logistic Regression Models</td>
+<td><em>Models to deal with binary, categorical, and ordinal outcome variables.</em></td>
 </tr>
 <tr class="odd">
-<td>Binomial Logistic Regression</td>
-<td><em>The Model to deal with binary outcome variables.</em></td>
-</tr>
-<tr class="even">
-<td>Ordinal and Multinomial Logistic Regression</td>
-<td><em>Models to deal with ordinal and categorical outcome variables.</em></td>
-</tr>
-<tr class="odd">
-<td>Poisson and Negative Binomial Regression</td>
+<td>Negative Binomial Regression</td>
 <td><em>Models to deal with count and rate outcome variables.</em></td>
 </tr>
 </tbody>
 </table>
+<p>Useful Reference Material: Estimators and Statistical Inference</p>
 <p><br></p>
 </section>
-<section id="causal-inference-econometrics-toolkit" class="level2">
-<h2 class="anchored" data-anchor-id="causal-inference-econometrics-toolkit">Causal Inference (Econometrics) Toolkit</h2>
-<p><em>Introduction: Causal Inference and Potential Outcomes</em></p>
+<section id="causal-inference-toolkit" class="level2">
+<h2 class="anchored" data-anchor-id="causal-inference-toolkit">Causal Inference Toolkit</h2>
 <table class="caption-top table">
-<caption><br></caption>
 <colgroup>
-<col style="width: 25%">
-<col style="width: 74%">
+<col style="width: 26%">
+<col style="width: 73%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -155,7 +140,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td>Selection on Observables Designs</td>
-<td><em>Matching, weighting, and regression methods for observational causal identification.</em></td>
+<td><em>Matching, weighting, and regression for observational causal identification.</em></td>
 </tr>
 <tr class="odd">
 <td>Differences-in-Differences Designs</td>
@@ -163,11 +148,11 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td>Instrumental Variables Designs</td>
-<td><em>Causal identification for non-compliance in randomised experiments and other observational settings</em>.</td>
+<td><em>Causal identification for non-compliance and other observational settings</em>.</td>
 </tr>
 <tr class="odd">
 <td>Regression Discontinuity Designs</td>
-<td><em>Causal identification for treatments assigned based on some cutoff value of a variable</em>.</td>
+<td><em>Causal identification for treatments assigned based on cutoffs.</em></td>
 </tr>
 <tr class="even">
 <td>Survey Experimental Design</td>
@@ -175,10 +160,11 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+<p>Useful Reference Material: Causal Inference and Potential Outcomes</p>
+<p><br></p>
 </section>
 <section id="multivariate-statistics-toolkit" class="level2">
 <h2 class="anchored" data-anchor-id="multivariate-statistics-toolkit">Multivariate Statistics Toolkit</h2>
-<p><em>Introduction: Multivariate Statistics</em></p>
 <table class="caption-top table">
 <caption><br></caption>
 <thead>
@@ -221,9 +207,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="time-series-toolkit" class="level2">
 <h2 class="anchored" data-anchor-id="time-series-toolkit">Time Series Toolkit</h2>
-<p><em>Introduction: Time Series, Autocorrelation, Trends, and Cycles</em></p>
 <table class="caption-top table">
-<caption><br></caption>
 <thead>
 <tr class="header">
 <th>Method</th>
@@ -249,6 +233,8 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+<p>Useful Reference Material: Time Series, Autocorrelation, Trends, and Cycles</p>
+<p><br></p>
 </section>
 <section id="spatial-statistics-toolkit" class="level2">
 <h2 class="anchored" data-anchor-id="spatial-statistics-toolkit">Spatial Statistics Toolkit</h2>

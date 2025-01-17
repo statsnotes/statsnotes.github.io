@@ -26,10 +26,9 @@ format:
 
 This is a toolkit on commonly used statistical methods for social scientists. This guide was created during my masters degree, as a way to consolidate and store all the knowledge I have accumulated.
 
-The guide is divided into parts, with each part containing lessons. Each lesson provides R-code for implementation purposes.
+-   Note: this is not a "course" on statistics. It is a toolkit and reference material for those who already have an understanding of statistical methods, and want to implement these methods in social science research.
 
--   I recommend using a laptop or tablet to access this page. Use the sidebar for easy navigation.
--   In the appendix, I provide some guides on useful mathematical methods, R-programming, and simple machine learning.
+This toolkit is divided into sections, with each section covering a category of tools used in statistics. Sections include regression, causal inference, multivariate statistics, time series, spatial statistics, machine learning, and text analysis.
 
 Also, if you are interested in political science, I recommend checking out my [Quantitative Political Science Guide](https://politicalscience.github.io).
 
@@ -37,36 +36,32 @@ Also, if you are interested in political science, I recommend checking out my [Q
 
 ## Regression Toolkit
 
-*Introduction: Statistical Testing and Estimators*
+| Method                                                                            | Description                                                               |
+|-----------------------|-------------------------------------------------|
+| [Multiple Linear Regression](https://statsnotes.github.io/regression/linear.html) | *The classic linear model for continuous outcome variables.*              |
+| Logistic Regression Models                                                        | *Models to deal with binary, categorical, and ordinal outcome variables.* |
+| Negative Binomial Regression                                                      | *Models to deal with count and rate outcome variables.*                   |
 
-| Method                                      | Description                                                                                     |
-|---------------------------------------------|-------------------------------------------------------------------------------------------------|
-| Linear Regression Model                     | *The classic model, for continuous outcome variables.*                                          |
-| Extensions of the Linear Model              | *Extensions to deal with categorical explanatory variables, interactions, and transformations.* |
-| Binomial Logistic Regression                | *The Model to deal with binary outcome variables.*                                              |
-| Ordinal and Multinomial Logistic Regression | *Models to deal with ordinal and categorical outcome variables.*                                |
-| Poisson and Negative Binomial Regression    | *Models to deal with count and rate outcome variables.*                                         |
+Useful Reference Material: Estimators and Statistical Inference
 
 <br />
 
-## Causal Inference (Econometrics) Toolkit
+## Causal Inference Toolkit
 
-*Introduction: Causal Inference and Potential Outcomes*
+| Method                             | Description                                                                    |
+|-------------------|-----------------------------------------------------|
+| Randomised Controlled Trials       | *The "gold standard" of causal inference and identification.*                  |
+| Selection on Observables Designs   | *Matching, weighting, and regression for observational causal identification.* |
+| Differences-in-Differences Designs | *Causal identification for treatments that occur over time*.                   |
+| Instrumental Variables Designs     | *Causal identification for non-compliance and other observational settings*.   |
+| Regression Discontinuity Designs   | *Causal identification for treatments assigned based on cutoffs.*              |
+| Survey Experimental Design         | *Causal identification in randomised survey experimental designs*.             |
 
-| Method                             | Description                                                                                            |
-|------------------------------------|--------------------------------------------------------------------------------------------------------|
-| Randomised Controlled Trials       | *The "gold standard" of causal inference and identification.*                                          |
-| Selection on Observables Designs   | *Matching, weighting, and regression methods for observational causal identification.*                 |
-| Differences-in-Differences Designs | *Causal identification for treatments that occur over time*.                                           |
-| Instrumental Variables Designs     | *Causal identification for non-compliance in randomised experiments and other observational settings*. |
-| Regression Discontinuity Designs   | *Causal identification for treatments assigned based on some cutoff value of a variable*.              |
-| Survey Experimental Design         | *Causal identification in randomised survey experimental designs*.                                     |
+Useful Reference Material: Causal Inference and Potential Outcomes
 
-: <br />
+<br />
 
 ## Multivariate Statistics Toolkit
-
-*Introduction: Multivariate Statistics*
 
 | Method                        | Description |
 |-------------------------------|-------------|
@@ -82,8 +77,6 @@ Also, if you are interested in political science, I recommend checking out my [Q
 
 ## Time Series Toolkit
 
-*Introduction: Time Series, Autocorrelation, Trends, and Cycles*
-
 | Method                   | Description |
 |--------------------------|-------------|
 | Stationary Processes     |             |
@@ -91,7 +84,9 @@ Also, if you are interested in political science, I recommend checking out my [Q
 | Non-Stationary Processes |             |
 | ARCH and GARCH Models    |             |
 
-: <br />
+Useful Reference Material: Time Series, Autocorrelation, Trends, and Cycles
+
+<br />
 
 ## Spatial Statistics Toolkit
 
