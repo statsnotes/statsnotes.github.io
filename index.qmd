@@ -37,7 +37,7 @@ Also, if you are interested in political science, I recommend checking out my [Q
 ## Regression Toolkit
 
 | Method                                                                            | Description                                                               |
-|-----------------------|-------------------------------------------------|
+|-----------------------------------------------------------------------------------|---------------------------------------------------------------------------|
 | [Multiple Linear Regression](https://statsnotes.github.io/regression/linear.html) | *The classic linear model for continuous outcome variables.*              |
 | Logistic Regression Models                                                        | *Models to deal with binary, categorical, and ordinal outcome variables.* |
 | Negative Binomial Regression                                                      | *Models to deal with count and rate outcome variables.*                   |
@@ -49,7 +49,7 @@ Useful Reference Material: Estimators and Statistical Inference
 ## Causal Inference Toolkit
 
 | Method                             | Description                                                                    |
-|-------------------|-----------------------------------------------------|
+|------------------------------------|--------------------------------------------------------------------------------|
 | Randomised Controlled Trials       | *The "gold standard" of causal inference and identification.*                  |
 | Selection on Observables Designs   | *Matching, weighting, and regression for observational causal identification.* |
 | Differences-in-Differences Designs | *Causal identification for treatments that occur over time*.                   |

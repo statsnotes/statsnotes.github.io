@@ -105,16 +105,12 @@ window.Quarto = {
     <h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-  <li><a href="#basics-of-the-model" id="toc-basics-of-the-model" class="nav-link active" data-scroll-target="#basics-of-the-model"><strong>Basics of the Model</strong></a>
-  <ul class="collapse">
-  <li><a href="#when-to-use-multiple-linear-regression" id="toc-when-to-use-multiple-linear-regression" class="nav-link" data-scroll-target="#when-to-use-multiple-linear-regression">When to Use Multiple Linear Regression</a></li>
+  <li><a href="#when-to-use-multiple-linear-regression" id="toc-when-to-use-multiple-linear-regression" class="nav-link active" data-scroll-target="#when-to-use-multiple-linear-regression">When to Use Multiple Linear Regression</a></li>
   <li><a href="#model-specification" id="toc-model-specification" class="nav-link" data-scroll-target="#model-specification">Model Specification</a></li>
-  </ul></li>
-  <li><a href="#model-estimation" id="toc-model-estimation" class="nav-link" data-scroll-target="#model-estimation"><strong>Model Estimation</strong></a>
+  <li><a href="#model-estimation" id="toc-model-estimation" class="nav-link" data-scroll-target="#model-estimation">Model Estimation</a>
   <ul class="collapse">
   <li><a href="#ordinary-least-squares-estimator" id="toc-ordinary-least-squares-estimator" class="nav-link" data-scroll-target="#ordinary-least-squares-estimator">Ordinary Least Squares Estimator</a></li>
-  <li><a href="#regression-anatomy-theorem" id="toc-regression-anatomy-theorem" class="nav-link" data-scroll-target="#regression-anatomy-theorem">Regression Anatomy Theorem</a></li>
-  <li><a href="#conditional-expectation-function" id="toc-conditional-expectation-function" class="nav-link" data-scroll-target="#conditional-expectation-function">Conditional Expectation Function</a></li>
+  <li><a href="#properties-of-the-ols-estimator" id="toc-properties-of-the-ols-estimator" class="nav-link" data-scroll-target="#properties-of-the-ols-estimator">Properties of the OLS Estimator</a></li>
   </ul></li>
   <li><a href="#interpretation-and-assumptions" id="toc-interpretation-and-assumptions" class="nav-link" data-scroll-target="#interpretation-and-assumptions"><strong>Interpretation and Assumptions</strong></a>
   <ul class="collapse">
@@ -153,111 +149,165 @@ window.Quarto = {
 <p>Use the sidebar to navigate to relevant sections. Additional notes and proofs are provided in the blue collapsible information sections - simply click them to open and close.</p>
 <p><br></p>
 <hr>
-<section id="basics-of-the-model" class="level1">
-<h1><strong>Basics of the Model</strong></h1>
-<section id="when-to-use-multiple-linear-regression" class="level2">
-<h2 class="anchored" data-anchor-id="when-to-use-multiple-linear-regression">When to Use Multiple Linear Regression</h2>
+<section id="when-to-use-multiple-linear-regression" class="level1">
+<h1>When to Use Multiple Linear Regression</h1>
 <p>Regressions are used to model the relationship between explanatory variables and a outcome variable.</p>
-<p>The Multiple Linear Regression Model can be used with any type of explanatory variables. However, the multiple linear regression can only be used when the outcome variable is:</p>
-<ol type="1">
-<li>Our outcome variable <span class="math inline">y</span> is continuous.</li>
-<li>Our outcome variable <span class="math inline">y</span> is binary (although, in this scenario, binomial logistic regression is often the better choice)</li>
-<li>Our outcome variable <span class="math inline">y</span> is ordinal (although, in this scenario, ordinal or multinomial logistic regression is the better choice)</li>
-<li>Our outcome variable <span class="math inline">y</span> is a count/rate variable that cannot be negative (although sometimes in this scenario, negative binomial regression is the better choice).</li>
-</ol>
-<p>See the other respective pages on the other regression models to see when you should use the linear model, and when you should use those.</p>
-<p><br></p>
-<p>The Multiple Linear Regression Model should <strong>not</strong> be used when:</p>
-<ol type="1">
-<li>Our outcome variable <span class="math inline">y</span> is categorical - i.e.&nbsp;distinct categories with no natural order. In this case, we must use multinomial logistic regression.</li>
-</ol>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
+<p>The Multiple Linear Regression Model can be used with any type of explanatory variables. However, it is limited by the possible outcome variables.</p>
+<p>The Multiple Linear Regression Model <strong>can</strong> be used when:</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning Regarding Causal Interpretation
+The Outcome Variable is Continuous
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Regression can be a tool in causal inference, however, we can never claim a causal relationship with a regression alone - we must pair regression with some form of experimental design (see the causal inference toolkit).</p>
-<p>Thus, avoid drawing causal conclusions directly from regression.</p>
+<p>Multiple Linear Regression can always be used when our outcome variable <span class="math inline">y</span> is continuous, i.e., <span class="math inline">y \in (-∞, ∞)</span>.</p>
+<p>There are no other models for such outcome variables.</p>
 </div>
 </div>
-<p><br></p>
-</section>
-<section id="model-specification" class="level2">
-<h2 class="anchored" data-anchor-id="model-specification">Model Specification</h2>
-<p>Take a set of observed data, with <span class="math inline">i=1,\dots,n</span> number of observations, each with values <span class="math inline">(x_{1i}, \dots, x_{ki}, y_i)</span>.</p>
-<p>The multiple linear regression model takes the following form:</p>
-<p><span class="math display">
-E(y_i|\overrightarrow x_i) = \beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki}
-</span></p>
-<div class="callout callout-style-default callout-note callout-titled">
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Notes on the Above Model
+The Outcome Variable is Binary
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p>Multiple Linear Regression can be used when our outcome variable <span class="math inline">y</span> is binary, i.e., <span class="math inline">y \in \{0, 1\}</span>.</p>
+<p>However, Linear Regression can have drawbacks when it is used with binary outcome variables.</p>
+<ul>
+<li>The main drawback is that linear regression can produce fitted values outside of the boundaries of <span class="math inline">[0, 1]</span>, which makes no sense in terms of interpretation.</li>
+<li>Linear regression can also have issues with statistical tests (due to the violation of homoscedasticity).</li>
+</ul>
+<p>An alternative model to use in the (binary) Logistic Regression Model, which solves these weaknesses of linear regression with binary outcome variables.</p>
+<ul>
+<li>However, if your only objective is causal inference, predictions outside of <span class="math inline">[0,1]</span> do not really matter, since you are only concerned with the coefficients, not fitted values. In this case, linear regression is perfectly fine to use for binary outcome variables.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Outcome Variable is Ordinal
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Multiple Linear Regression can be used when our outcome variable <span class="math inline">y</span> is ordinal, i.e., <span class="math inline">y \in \{0, 1, \dots, n \}</span>.</p>
+<p>However, Linear Regression can have drawbacks when it is used with ordinal outcome variables.</p>
+<ul>
+<li>Linear Regression essentially treats ordinal variables as continuous variables. This includes the assumption that the distance between different categories is consistent. This assumption is not always realistic.</li>
+</ul>
+<p>An alternative model to use is the Ordinal Logistic Regression Model, which fixes these weaknesses.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Outcome Variable is a Count/Rate
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Multiple Linear Regression can be used when our outcome variable <span class="math inline">y</span> is a count variable, i.e.&nbsp;<span class="math inline">y \in \{0, 1, 2, \dots, ∞ \}</span>. It can also be used for a rate variable (which is a count divided by a factor).</p>
+<p>However, Linear Regression can have drawbacks when it is used with count/rate variables.</p>
+<ul>
+<li>Linear Regression will not produce probabilities for being at each count value, only the expected count value.</li>
+<li>Linear Regression will also often produce negative outcomes, which make little sense in terms of count/rate outcomes.</li>
+</ul>
+<p>An alternative model to use is the Negative Binomial (or Poisson) Regression.</p>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>The Multiple Linear Regression Model should <strong>not</strong> be used when:</p>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Outcome Variable is Categorical
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Multiple Linear Regression cannot be used when our outcome variable <span class="math inline">y</span> is categorical, i.e.&nbsp;<span class="math inline">y \in \{A, B, \dots \}</span> where <span class="math inline">A, B, \dots</span> have no natural order.</p>
+<p>An alternative model to use is the Multinomial Logistic Regression Model.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Goal is Causal Interpretation
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Regression can be a tool in causal inference, however, we can never claim a causal relationship with a regression alone - we must pair regression with some form of experimental design (see the causal inference toolkit).</p>
+<p>Thus, avoid drawing causal conclusions directly from regression.</p>
+</div>
+</div>
+</div>
+<p><br></p>
+<p><br></p>
+<hr>
+</section>
+<section id="model-specification" class="level1">
+<h1>Model Specification</h1>
+<p>Take a set of observed data, with <span class="math inline">i=1,\dots,n</span> number of observations, each with values <span class="math inline">(x_{1i}, \dots, x_{ki}, y_i)</span>.</p>
+<p>The multiple linear regression model takes the following form:</p>
+<p><span class="math display">
+E(y_i|\overrightarrow x_i) = \beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki}
+</span></p>
 <ul>
 <li><span class="math inline">y</span> is the outcome variable, and <span class="math inline">x_1, \dots, x_k</span> are the explanatory variables.</li>
 <li><span class="math inline">x_{1i}, \dots, x_{ki}</span> are the observed values of the explanatory variables for observation <span class="math inline">i</span>.</li>
 <li><span class="math inline">E(y_i|\overrightarrow x_i)</span> is the expectation of the conditional distribution of <span class="math inline">y</span> given <span class="math inline">\overrightarrow x = (x_1, \dots x_k)</span>. Or in other words, it is the expected value of <span class="math inline">y</span> given some values of <span class="math inline">x_1, \dots, x_k</span>.</li>
 <li><span class="math inline">\beta_0, \dots , \beta_k</span> are coefficients that need to be estimated (based on our observed data) in order to produce the best-fit model.</li>
 </ul>
-</div>
-</div>
-</div>
 <p><br></p>
 <p>The above form specifies the model in relation to <span class="math inline">E(y_i|\overrightarrow x_i)</span>, the conditional expectation. However, we can also specify a model in relation to <span class="math inline">y_i</span>, the actual <span class="math inline">y</span> value for each observation <span class="math inline">i</span> in our observed data:</p>
 <p><span class="math display">
 y_i = \beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki} + u_i
 </span></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Notes on the Above Model
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
 <ul>
 <li><span class="math inline">y_i</span> is the observed value of the outcome variable <span class="math inline">y</span> for observation <span class="math inline">i</span>.</li>
 <li><span class="math inline">x_{1i}, \dots, x_{ki}</span> are the observed values of the explanatory variables for observation <span class="math inline">i</span>.</li>
 <li><span class="math inline">\beta_0, \dots , \beta_k</span> are coefficients that need to be estimated (based on our observed data) in order to produce the best-fit model (same as above).</li>
 <li><span class="math inline">u_i</span> is the <strong>error term</strong>. This represents the idea that not all observed values of <span class="math inline">y_i</span> will be exactly on the expected value of the conditional distribution of <span class="math inline">y|x</span> - the actual value of <span class="math inline">y_i</span> will not always be the expected value of <span class="math inline">E(y_i)</span>. The expected value of the error term <span class="math inline">u</span> should be <span class="math inline">E(u) = 0</span>.</li>
 </ul>
-</div>
-</div>
-</div>
 <p><br></p>
 <p>We can also specify this second model in terms of <strong>linear algebra</strong> as:</p>
 <p><span class="math display">
 y = X \beta + u
 </span></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Notes on the Above Model
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
 <ul>
 <li>where vector <span class="math inline">y</span> is equal to all the values of <span class="math inline">y</span> for each observation <span class="math inline">i = 1, \dots, n</span>: <span class="math inline">y = \begin{pmatrix}y_1 \\ y_2 \\ \vdots \\ y_n\end{pmatrix}</span></li>
 <li>where matrix <span class="math inline">X</span> is equal to all the values of each <span class="math inline">x_1, \dots, x_k</span> for each observation <span class="math inline">i = 1, \dots, n</span> : <span class="math inline">X = \begin{bmatrix}1 &amp; x_{21} &amp; \dots &amp; x_{k1} \\1 &amp; x_{22} &amp; \dots &amp; x_{k2} \\\vdots &amp; \vdots &amp; \vdots &amp; \vdots \\1 &amp; x_{2n} &amp; \dots &amp; x_{kn}\end{bmatrix}</span>
@@ -267,11 +317,8 @@ Notes on the Above Model
 </ul></li>
 <li>Where vector <span class="math inline">\beta</span> is a vector of all coefficients in the model: <span class="math inline">\beta = \begin{pmatrix}\beta_0 \\ \beta_1 \\ \vdots \\ \beta_k\end{pmatrix}</span></li>
 </ul>
-</div>
-</div>
-</div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -280,7 +327,7 @@ Proof of Representation in Linear Algebra
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Start with the linear model written in terms of <span class="math inline">y_i</span>:</p>
 <p><span class="math display">
@@ -324,16 +371,14 @@ y = X \beta + u, \text{ where } X = \begin{bmatrix}1 &amp; x_{21} &amp; \dots &a
 <p><br></p>
 <p><br></p>
 <hr>
-<p><a href="https://statsnotes.github.io">Homepage</a></p>
-</section>
 </section>
 <section id="model-estimation" class="level1">
-<h1><strong>Model Estimation</strong></h1>
+<h1>Model Estimation</h1>
 <section id="ordinary-least-squares-estimator" class="level2">
 <h2 class="anchored" data-anchor-id="ordinary-least-squares-estimator">Ordinary Least Squares Estimator</h2>
-<p>We need to estimate coefficients <span class="math inline">\beta_0, \dots, \beta_k</span> to create a best-fit line (also called <strong>fitted values</strong>) in order to create a model for our observed data. Our estimated coefficients will be labelled <span class="math inline">\widehat{\beta_0}. \dots, \widehat{\beta_k}</span>, thus creating our fitted values model:</p>
+<p>We need to estimate coefficients <span class="math inline">\beta_0, \dots, \beta_k</span> to create a best-fit line (also called <strong>fitted values</strong>) in order to create a model for our observed data:</p>
 <p><span class="math display">
-E(y_i|\overrightarrow x_i) =\widehat{y_i} = \widehat{\beta_0} + \widehat{\beta_1}x_{1i} + \dots + \widehat{\beta_k} x_{ki}
+\widehat{y_i} = \widehat{\beta_0} + \widehat{\beta_1}x_{1i} + \dots + \widehat{\beta_k} x_{ki}
 </span></p>
 <p><br></p>
 <p>The most common estimation is to use the <strong>Ordinary Least Squares Estimator</strong>. This estimator estimates <span class="math inline">\beta_0, \dots, \beta_k</span> by finding the values of <span class="math inline">\widehat{\beta_0}. \dots, \widehat{\beta_k}</span> that minimise the sum of squared residuals (SSR):</p>
@@ -345,7 +390,7 @@ SSR &amp; = \sum\limits_{i=1}^n (y_i - \widehat{y_i})^2 \\
 \end{split}
 </span></p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -354,10 +399,9 @@ Intuitive Visualisation of SSR
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>What is the Sum of Squared Residuals? First, let us find the residuals. The residuals are the difference from our predicted best-fit line result <span class="math inline">\widehat{y_i}</span>, and the actual value of <span class="math inline">y_i</span> in the data.</p>
-<p>Below highlighted in red are the residuals.</p>
+<p>The residuals are the difference from our predicted best-fit line result <span class="math inline">\widehat{y_i}</span>, and the actual value of <span class="math inline">y_i</span> in the data. Below highlighted in red are the residuals.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/clipboard-846785636.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
@@ -368,7 +412,7 @@ Intuitive Visualisation of SSR
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -377,16 +421,15 @@ Why Sum of Squared Residuals
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>A common question is why the residuals are squared. The simple answer is that we care about the magnitude of errors, not the direction of error.</p>
-<p>For example, look at this figure:</p>
+<p>The residuals are squared because we care about the magnitude of errors, not the direction of error. For example, look at this figure:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/clipboard-846785636.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
 </figure>
 </div>
-<p>Here, the residuals d1, d3, and dn are all positive, but the residuals of d2 and d4 are negative. If we just add them together, the negative and positive residuals would cancel out. But by squaring them, we are measuring the magnitude, not the direction of error.</p>
+<p>Here, the residuals d1, d3, and dn are positive, but the residuals of d2 and d4 are negative. If we just add them together, the negative and positive residuals would cancel out. But by squaring them, we are measuring the magnitude, not the direction of error.</p>
 <p>Then you might ask, why not absolute value them all?</p>
 <ul>
 <li>First of all, the absolute value function is not differentiable at its vertex, which makes finding a mathematical closed-form solution difficult.</li>
@@ -396,30 +439,20 @@ Why Sum of Squared Residuals
 </div>
 </div>
 <p><br></p>
-<p>This minimisation problem can be solved mathematically.</p>
-<p>For <strong>Simple Linear Regression</strong> (a linear regression with just one explanatory variable <span class="math inline">x</span>), the estimates of coefficients are given by:</p>
-<p><span class="math display">
-\begin{split}
-&amp; \widehat{\beta_1} = \frac{\sum_{i=1}^n(x_i - \bar x)(y_i - \bar y)}{\sum_{i=1}^n(x_i - \bar x)^2} = \frac{Cov(x,y)}{Var(x)} \\
-&amp; \widehat{\beta_0} = \bar y - \widehat{\beta_1}\bar x
-\end{split}
-</span></p>
+<p>This minimisation problem can be solved mathematically. Derivations are provided below:</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof of OLS Solution for Simple Linear Regression
+Derivation of OLS for Simple Linear Regression
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Let us define the sum of squared residuals as function <span class="math inline">S</span>.</p>
-<p>How do we minimise <span class="math inline">S</span> (the function of the sum of squared residuals)? From calculus, we know that a minimum/maximum of a function is where the derivative of the function is equal to 0.</p>
-<p>Thus, let us find the partial derivative of the function <span class="math inline">S</span> in respect to both <span class="math inline">\hat\beta_0</span> and <span class="math inline">\hat\beta_1</span>, and set them equal to 0. These will be called the <strong>first-order conditions</strong>.</p>
-<p><br></p>
+<p>Let us define the sum of squared residuals as function <span class="math inline">S</span>. We want to minimise <span class="math inline">S</span>, so we have to find the first order conditions and set them equal to 0.</p>
 <section id="first-order-conditions" class="level4">
 <h4 class="anchored" data-anchor-id="first-order-conditions">First Order Conditions</h4>
 <p>First, let us find the partial derivative of <span class="math inline">S</span> in respect to <span class="math inline">\hat\beta_0</span>:</p>
@@ -430,7 +463,7 @@ Proof of OLS Solution for Simple Linear Regression
 <p><span class="math display">
 \frac{\partial}{\partial \hat{\beta}_0} \left[ (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i)^2 \right] = -2(y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i)
 </span></p>
-<p>But how do we deal with the summation? We know that there is the sum rule of derivatives <span class="math inline">[f(x) + g(x)]' = f'(x) + g'(x)</span>. Thus, we know we just sum up the individual derivatives to get the derivative of the sum:</p>
+<p>We know that there is the sum rule of derivatives <span class="math inline">[f(x) + g(x)]' = f'(x) + g'(x)</span>. Thus, we know we just sum up the individual derivatives to get the derivative of the sum:</p>
 <p><span class="math display">
 \begin{split}
 \frac{\partial S(\hat{\beta}_0, \hat{\beta}_1)}{\partial \hat{\beta}_0} &amp; = \sum\limits_{-i=1}^n \left[ -2(y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) \right] \\
@@ -465,11 +498,6 @@ Proof of OLS Solution for Simple Linear Regression
 <section id="solving-the-system-of-equations" class="level4">
 <h4 class="anchored" data-anchor-id="solving-the-system-of-equations">Solving the System of Equations</h4>
 <p>We now have our two first-order conditions. Now, we have a 2-equation system of equations, with 2 variables.</p>
-<ul>
-<li>We can solve this through substitution - in the first equation, solve for <span class="math inline">\hat\beta_0</span> in terms of <span class="math inline">\hat\beta_1</span>.</li>
-<li>Then, plug in <span class="math inline">\hat\beta_0</span> in terms of <span class="math inline">\hat\beta_1</span> into the second equation, thus making that a one-variable equation. We can solve that equation for <span class="math inline">\hat\beta_1</span>, then find <span class="math inline">\hat\beta_0</span>.</li>
-</ul>
-<p><br></p>
 <p>First, let us solve the first equation for <span class="math inline">\hat\beta_0</span> in terms of <span class="math inline">\hat\beta_1</span>:</p>
 <p><span class="math display">
 \begin{split}
@@ -491,8 +519,8 @@ Proof of OLS Solution for Simple Linear Regression
 &amp; = \sum\limits_{i=1}^n x_i (y_i - \bar{y}) - \hat{\beta}_1 \sum\limits_{i=1}^nx_i (x_i - \bar{x})
 \end{split}
 </span></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -501,7 +529,7 @@ Useful Properties of Summation
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Before we finish, here are a few key properties of summation</p>
 <p><strong>Property 1:</strong></p>
@@ -543,27 +571,22 @@ Useful Properties of Summation
 \end{split}
 </span></p>
 <p>Note that the numerator is equivalent to the formula of covariance <span class="math inline">Cov(x,y)</span>, and the denominator is equal to the variance <span class="math inline">Var(x)</span>.</p>
-<p>Of course, we still need to find <span class="math inline">\hat\beta_0</span> (the slope). We found that <span class="math inline">\hat\beta_0 = \bar{y} - \hat{\beta}_1 \bar{x}</span> earlier, so we just plug our solution of <span class="math inline">\hat\beta_1</span> in.</p>
+<p>We found that <span class="math inline">\hat\beta_0 = \bar{y} - \hat{\beta}_1 \bar{x}</span> earlier, so we just plug our solution of <span class="math inline">\hat\beta_1</span> in to get <span class="math inline">\hat\beta_0</span>.</p>
 </section>
 </div>
 </div>
 </div>
-<p><br></p>
-<p>For <strong>Multiple Linear Regression</strong> (a linear regression with just more than one explanatory variable <span class="math inline">x</span>), the estimates of coefficients are given by:</p>
-<p><span class="math display">
-\hat y = X\hat\beta = X(X'X)^{-1}X'y
-</span></p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof of OLS Solution for Multiple Linear Regression
+Derivation of OLS for Multiple Linear Regression
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Similar to our simple linear regression (but with additional variables), our minimisation condition is:</p>
 <p><span class="math display">
@@ -572,8 +595,7 @@ Proof of OLS Solution for Multiple Linear Regression
 &amp; = \min\limits_{(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2, ...)} S(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2, ...)
 \end{split}
 </span></p>
-<p><br></p>
-<p>Taking the partial derivatives of each parameter like in simple linear regression (see <a href="https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator">1.4.4</a>), we get first order conditions:</p>
+<p>Taking the partial derivatives of each parameter like in simple linear regression, we get first order conditions:</p>
 <p><span class="math display">
 \begin{split}&amp; \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\&amp; \sum\limits_{i=1}^n x_{1i}(y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\
 &amp; \sum\limits_{i=1}^n x_{2i} (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0
@@ -606,7 +628,7 @@ S(b) &amp; = y'y - b'X'y - y'Xb + b'X'Xb \\
 <p><span class="math display">
 \frac{\partial S(b)}{\partial b} = -2X'y + 2X'Xb
 </span></p>
-<p>Evaluted at <span class="math inline">\hat{\beta}</span>, the derivatives should equal zero (since first order condition of finding minimums):</p>
+<p>Evaluated at <span class="math inline">\hat{\beta}</span>, the derivatives should equal zero (since first order condition of finding minimums):</p>
 <p><span class="math display">
 \frac{\partial S(b)}{\partial b} \biggr|_{\hat{\beta}} = -2X'y + 2X'X \hat{\beta} = 0
 </span></p>
@@ -623,112 +645,26 @@ S(b) &amp; = y'y - b'X'y - y'Xb + b'X'Xb \\
 </div>
 </div>
 <p><br></p>
-<p>Our OLS estimates have a few algebraic properties.</p>
-<ol type="1">
-<li>The sum of residuals <span class="math inline">\hat u</span> should be equal to 0 (note: residuals <span class="math inline">\hat u</span> and error <span class="math inline">u</span> are different).</li>
-<li>There is no covariance between the error term <span class="math inline">u</span> and any explanatory variable <span class="math inline">x_1, \dots, x_k</span>.</li>
-<li>The best-fit line should pass through the point of means: <span class="math inline">(\bar{x_1}, \dots, \bar{x_k}, \bar{y})</span>.</li>
-</ol>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+</section>
+<section id="properties-of-the-ols-estimator" class="level2">
+<h2 class="anchored" data-anchor-id="properties-of-the-ols-estimator">Properties of the OLS Estimator</h2>
+<p>The OLS Regression has a few useful properties that are outlined below:</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof of OLS Algebraic Properties
+OLS Estimates for Explanatory Variable Partial Out the Effect of Controls (Regression Anatomy)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The residuals of OLS, as defined earlier, are:</p>
-<p><span class="math display">
-\begin{split}\hat u_i &amp; = y_i - \hat y_i \\&amp; = y_i - (\hat \beta_0 + \hat\beta_1x_{1i} + \dots + \hat\beta_k x_{ki}) \\&amp; = y_i - \hat \beta_0 - \hat\beta_1x_{1i} - \dots - \hat\beta_k x_{ki}\end{split}
-</span></p>
-<p>For multiple regression OLS estimates of <span class="math inline">\hat\beta_0 , \dots \hat\beta_k</span> are chosen to satisfy the following first order conditions:</p>
-<p><span class="math display">
-\begin{split}&amp; \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\&amp; \sum\limits_{i=1}^n x_{1i}(y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\
-&amp; \sum\limits_{i=1}^n x_{2i} (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0
-\end{split}
-</span></p>
-<ul>
-<li>and so on for <span class="math inline">x_{3i}, ..., x_{ki}</span>.</li>
-</ul>
-<p>Using these properties, we can plug in <span class="math inline">\hat u_i</span> from above to get the above conditions:</p>
-<p><span class="math display">
-\begin{split}
-&amp; \sum\limits_{i=1}^n \hat u_i = 0 \\
-&amp; \sum\limits_{i=1}^n x_{ji} \hat u_i = 0
-\end{split}
-</span></p>
-<ul>
-<li>Where <span class="math inline">x_j</span> is any <span class="math inline">x_1, \dots, x_k</span> in multiple linear regression</li>
-</ul>
-<p><br></p>
-<section id="property-1-sum-of-residuals-is-0" class="level4">
-<h4 class="anchored" data-anchor-id="property-1-sum-of-residuals-is-0">Property 1: Sum of Residuals is 0</h4>
-<p>OLS residuals always add up to zero (for both simple and multiple regression), since as given above:</p>
-<p><span class="math display">
-\sum\limits_{i=1}^n \hat u_i = 0
-</span></p>
-<p><br></p>
-</section>
-<section id="property-2-no-covariance-between-x-and-residual." class="level4">
-<h4 class="anchored" data-anchor-id="property-2-no-covariance-between-x-and-residual.">Property 2: No Covariance Between <span class="math inline">x</span> and Residual.</h4>
-<p>From above, we know the following to be true:</p>
-<p><span class="math display">
-\sum\limits_{i=1}^n \hat u_i = 0
-</span></p>
-<p>Which also means that <span class="math inline">\bar{\hat u} = 0</span> (since an average is just the sum divided by the number of observations, and the sum is equal to 0).</p>
-<p>We also know that:</p>
-<p><span class="math display">
-\sum\limits_{i=1}^n x_{ji} \hat u_i = 0
-</span></p>
-<ul>
-<li>Where <span class="math inline">x_j = x</span> for simple linear regression, and <span class="math inline">x_j = x_1, \dots, x_k</span> for multiple linear regression.</li>
-</ul>
-<p>Now, recall the formula for covariance discussed in <a href="https://statsnotes.github.io/theory/3.html#quantifying-relationships-with-covariance">1.3.4</a>:</p>
-<p><span class="math display">
-Cov(x,y) = \frac{1}{n}\sum\limits_{i=1}^n [(x_i - \bar x)(y_i - \bar y)] \\
-</span></p>
-<p>Thus, the covariance between <span class="math inline">x_j</span> (for notation simplicity, just <span class="math inline">x</span>) and <span class="math inline">\hat u</span> is:</p>
-<p><span class="math display">
-\begin{split}
-Cov(x, \hat u) &amp; = \frac{1}{n}\sum\limits_{i=1}^n [(x_i - \bar x)(\hat u_i - \bar{\hat u})] \\
-&amp; = \frac{1}{n}\sum\limits_{i=1}^n(x_i \hat u_i - x_i \bar{\hat u} - \bar x \hat u_i + \bar x \bar {\hat u}) \\
-&amp; = \frac{1}{n} \left( \sum\limits_{i=1}^nx_i \hat u_i - \sum\limits_{i=1}^n x_i\bar{\hat u} - \sum\limits_{i=1}^n \bar x \hat u_i + \sum\limits_{i=1}^n\bar x \bar{\hat u} \right) \\
-&amp; = \frac{1}{n} \left( \sum\limits_{i=1}^nx_i \hat u_i - \bar{\hat u}\sum\limits_{i=1}^n x_i - \bar x\sum\limits_{i=1}^n \hat u_i + \bar{\hat u}\sum\limits_{i=1}^n\bar x  \right) \\
-&amp; = \frac{1}{n} \left( \sum\limits_{i=1}^nx_i \hat u_i - 0\sum\limits_{i=1}^n x_i - \bar x\sum\limits_{i=1}^n \hat u_i + 0\sum\limits_{i=1}^n\bar x  \right) \\
-&amp; = \frac{1}{n}(0 -0-\bar x(0) + 0) \\
-&amp; = 0
-\end{split}
-</span></p>
-<p>Thus, the covariance (and thus correlation) between <span class="math inline">x_j</span> and <span class="math inline">\hat u</span> must be zero.</p>
-<p><br></p>
-</section>
-<section id="property-3-regression-line-passes-through-means" class="level4">
-<h4 class="anchored" data-anchor-id="property-3-regression-line-passes-through-means">Property 3: Regression Line Passes Through Means</h4>
-<p>Remember our solution for <span class="math inline">\hat\beta_0</span> in OLS for simple linear regression was <span class="math inline">\hat\beta_0 = \bar{y} - \hat{\beta}_1 \bar{x}</span>. Rearranging this equation, we get:</p>
-<p><span class="math display">
-\begin{split}
-\hat\beta_0  &amp; = \bar{y} - \hat{\beta}_1 \bar{x} \\
-\hat\beta_0 + \hat\beta_1 \bar x &amp; = \bar y \\
-\bar y &amp; = \hat\beta_0 + \hat\beta_1 \bar x
-\end{split}
-</span></p>
-<p>Thus, the OLS estimated best-fit line always passes though point <span class="math inline">(\bar x, \bar y)</span> (the means of our data). The same property applies to multiple linear regression, but for point <span class="math inline">(\bar x_1, \dots, \bar x_k, \bar y)</span>.</p>
-</section>
-</div>
-</div>
-</div>
-<p><br></p>
-</section>
-<section id="regression-anatomy-theorem" class="level2">
-<h2 class="anchored" data-anchor-id="regression-anatomy-theorem">Regression Anatomy Theorem</h2>
 <p>The <strong>Regression Anatomy Theorem</strong>, also called the <strong>Frisch-Waugh-Lovell</strong> theorem, shows how multiple linear regression and OLS can be used to “control” for confounding variables.</p>
-<p>Essentially, the theorem states that given explanatory variables <span class="math inline">x_j= x_1, \dots, x_k</span> and an outcome variable <span class="math inline">y</span>, the coefficient <span class="math inline">\beta_j</span> (of any explanatory variable <span class="math inline">x_j</span>) is the effect of the uncorrelated part of <span class="math inline">x_j</span> with all other explanatory variables, <span class="math inline">\widetilde{r_j}</span>, on <span class="math inline">y</span>.</p>
+<p>Essentially, the theorem states that given explanatory variables <span class="math inline">x_j= x_1, \dots, x_k</span> and an outcome variable <span class="math inline">y</span>, the coefficient <span class="math inline">\beta_j</span> (of any explanatory variable <span class="math inline">x_j</span>) is the effect of the uncorrelated part of <span class="math inline">x_j</span> with all other explanatory variables, <span class="math inline">\widetilde{r_j}</span>, on <span class="math inline">y</span>. This means by including control variables in our regression, our <span class="math inline">\beta_j</span> coefficient will partial out the effect of the controls, and only find the independent effect of <span class="math inline">x_j</span> on <span class="math inline">y</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -737,13 +673,12 @@ Proof of Regression Anatomy Theorem
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Take our standard multiple linear regression:</p>
 <p><span class="math display">
 y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_k x_{ki} + u_i
 </span></p>
-<p><br></p>
 <p>Let us say we are interested in <span class="math inline">x_1</span> (this can be generalised to any explanatory variable <span class="math inline">x_j</span>). Let us make <span class="math inline">x_1</span> the outcome variable of a regression with explanatory variables <span class="math inline">x_2, ..., x_k</span>:</p>
 <p><span class="math display">
 x_{1i} = \gamma_0 + \gamma_1 x_{2i} + ... + \gamma_{k-1}x_{ki} + \widetilde{r_{1i}}
@@ -812,14 +747,13 @@ y_i &amp; = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \dots + \beta_k x_{ki} +
 </div>
 </div>
 </div>
-<p><br></p>
 <p>This theorem allows us to essentially “rewrite” the solution of <span class="math inline">\widehat{\beta_j}</span> in multiple regression as a simple linear regression between <span class="math inline">\widetilde{r_j}</span> and <span class="math inline">y</span>:</p>
 <p><span class="math display">
 \widehat{\beta_j} = \frac{\sum_{i=1}^n \widetilde{r_{ji}} y_i}{\sum_{i=1}^n(\widetilde{r_{ji}})^2}
 </span></p>
 <p>This formula is called the Regression Anatomy Formula.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -828,11 +762,11 @@ Proof of Regression Anatomy Formula
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>We can express the estimation solution of <span class="math inline">\hat\beta_j</span> in relation to the regression anatomy formula.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -841,7 +775,7 @@ Useful Properties of Summation
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Before we start, here are a few key properties of summation</p>
 <p><strong>Property 1:</strong></p>
@@ -873,7 +807,6 @@ Useful Properties of Summation
 </div>
 </div>
 </div>
-<p>Knowing these properties of summation, let us begin.</p>
 <p>Let us start off with the OLS estimator for simple linear regression, which calculates the <span class="math inline">\hat\beta_1</span>, the relationship between <span class="math inline">x</span> and <span class="math inline">y</span> (which we derived previously)</p>
 <p><span class="math display">
 \hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n(x_i - \bar{x})^2}
@@ -922,36 +855,23 @@ Useful Properties of Summation
 </div>
 </div>
 </div>
-<p><br></p>
-</section>
-<section id="conditional-expectation-function" class="level2">
-<h2 class="anchored" data-anchor-id="conditional-expectation-function">Conditional Expectation Function</h2>
-<p>A <strong>conditional expectation function</strong> says that the value of <span class="math inline">E(y)</span> depends on the value of <span class="math inline">x</span>. We notate a conditional expectation function as <span class="math inline">E(y|x)</span>.</p>
-<ul>
-<li>For example, imagine <span class="math inline">y</span> is income and <span class="math inline">x</span> is age.</li>
-<li>A conditional expectation function <span class="math inline">E(y|x)</span> says that as <span class="math inline">x</span> (age) changes, the expected value of <span class="math inline">y</span> (income) also changes.</li>
-<li>For example, you would probably expect the expected value of a 20 year old’s income to be different than a 50 year old’s.</li>
-</ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Notes on Conditional Expectation Functions
+OLS Best Approximates the Conditional Expectation Function
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The conditional expectation function is some function which describes the conditional expectation of <span class="math inline">y</span> given <span class="math inline">x</span>. This function can be linear, or not:</p>
-<p><span class="math display">
-E(y_i|x_i) = m(x_i)
-</span></p>
-<ul>
-<li>Where <span class="math inline">m(x_i)</span> is some function (does not have to be linear).</li>
-</ul>
-<p>A best linear approximation of a conditional expectation function, can take the following form:</p>
+<p>A <strong>conditional expectation function</strong> says that the value of <span class="math inline">E(y)</span> depends on the value of <span class="math inline">x</span>. We notate a conditional expectation function as <span class="math inline">E(y|x)</span>. As we noted earlier, the linear regression model can be a conditional expectation function of <span class="math inline">E(y|x)</span>.</p>
+<p>A <strong>best linear approximation</strong> of a conditional expectation function, can take the following form:</p>
 <p><span class="math display">
 E(y_i|x_i) = b_0 + b_1x_i
 </span></p>
@@ -967,14 +887,11 @@ MSE &amp; = E(y_i - E(y_i|x_i))^2 \\
 &amp; = \frac{1}{n}\sum\limits_{i=1}^n( y_i - E(y_i|x_i))^2
 \end{split}
 </span></p>
-</div>
-</div>
-</div>
 <p><br></p>
 <p>Previously, we expressed the linear regression model in both terms of <span class="math inline">y_i</span>, and the conditional expectation <span class="math inline">E(y_i|x_i)</span>. However, when conducting OLS estimation, we have only looked at the <span class="math inline">y_i</span> form.</p>
-<p>The Ordinary Least Squares Regression line also is the best linear approximation of the conditional expectation function <span class="math inline">E(y|x)</span>. That means, we can view a regression as also a conditional expectation function. The proof is provided below.</p>
+<p>The Ordinary Least Squares Regression line also is the best linear approximation of the conditional expectation function <span class="math inline">E(y|x)</span>. That means, we can view a regression as also a best-estimate of a conditional expectation function.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -983,7 +900,7 @@ Proof that OLS is the Best Approximation of the CEF
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>What we want to prove is that the OLS estimates <span class="math inline">\hat\beta_0</span> and <span class="math inline">\hat\beta_1</span> best estimate the parameters <span class="math inline">b_0</span> and <span class="math inline">b_1</span> of the Conditional Expectation Function, which means that if true, OLS is the best linear approximation of the conditional expectation function.</p>
 <p>Suppose we have the conditional expectation function:</p>
@@ -1058,7 +975,157 @@ MSE &amp; = \min\limits_{b_0, b_1} E(y_i - E(y_i|x_i))^2 \\
 </div>
 </div>
 </div>
-<p>This is an immensely useful property for interpreting the results of regressions, as we will see later.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+OLS is a Special Case of the Method of Moments Estimator
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The Method of Moments Estimator is another estimator of the true value of populations in the parameter. The estimator defines key population <strong>moments</strong> of interest - which are the population parameters written in terms of expected value functions set equal to 0.</p>
+<p>Then, the Method of Moments uses the sample equivalents of the population moments to estimate the population parameter.</p>
+<ul>
+<li>For example, to estimate the population mean, the Method of Moments uses the sample mean.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Details of the Method of Moments Estimator
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In order to define a method of moments for a set of parameters <span class="math inline">\theta_1, \dots, \theta_k</span>, we need to specify at least one population moment per parameter. Or in other words, we must have more than <span class="math inline">k</span> population moments.</p>
+<p>Our population moments can be defined as the expected value of some function <span class="math inline">m(\theta; y)</span> that consists of both the variable <span class="math inline">y</span> and our unknown parameter <span class="math inline">\theta</span>. The expectation of the function <span class="math inline">m(\theta; y)</span> should equal 0.</p>
+<p><span class="math display">
+E(m(\theta; y)) = 0
+</span></p>
+<p>Our sample moments will be the sample analogues of <span class="math inline">\theta</span> and <span class="math inline">y</span>, which are <span class="math inline">\hat\theta</span> and <span class="math inline">y_i</span>:</p>
+<p><span class="math display">
+\frac{1}{n}\sum\limits_{i=1}^n m(\hat\theta; y_i) = 0
+</span></p>
+<ul>
+<li>The <span class="math inline">\frac{1}{n} \sum</span> is there because the definition of expectation/mean is that.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example of a Method of Moments Estimator
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let us say that we have some random variable <span class="math inline">y</span>, with a true population mean <span class="math inline">\mu</span>. We want to estimate <span class="math inline">\mu</span>, but we only have a sample of the population.</p>
+<p>How can we define our true population parameter <span class="math inline">\mu</span> in an expectation equation of the form: <span class="math inline">E(m(\mu, y)) = 0</span>?</p>
+<ul>
+<li>Well, what is <span class="math inline">\mu</span>, the mean, intuitively speaking? It is the expectation of <span class="math inline">y</span>, so <span class="math inline">\mu = E(y)</span>.</li>
+</ul>
+<p>Now that we know that <span class="math inline">\mu = E(y)</span>, since they are equal, <span class="math inline">\mu - E(y) = 0</span>. Thus, we can define the mean as a moment of the following condition:</p>
+<p><span class="math display">
+E(y - \mu) = 0
+</span></p>
+<p>The method of moments says we should use the sample equivalent of the population parameter. The sample equivalent of <span class="math inline">\mu</span> (the true mean of the population), is of course, the sample mean <span class="math inline">\bar y</span>.</p>
+<p>Thus, our sample estimate of the moment would be:</p>
+<p><span class="math display">
+E(y_i - \hat\mu) = \frac{1}{n}\sum\limits_{i=1}^n (y_i - \hat\mu) = 0
+</span></p>
+<p>With this equation, we can then solve for <span class="math inline">\hat\mu</span>:</p>
+<p><span class="math display">
+\begin{split}
+0 &amp; = \frac{1}{n}\sum\limits_{i=1}^n (y_i - \hat\mu) \\
+0 &amp; = \frac{1}{n}\sum\limits_{i=1}^ny_i - \frac{1}{n}\sum\limits_{i=1}^n \hat\mu \\
+0 &amp; = \frac{1}{n}\sum\limits_{i=1}^ny_i - \frac{1}{n} n \hat\mu\\
+0 &amp; = \bar y - \hat \mu \\
+\hat\mu &amp; = \bar y
+\end{split}
+</span></p>
+<p>So, we see the method of moments estimates our true population mean <span class="math inline">\mu</span>, with the sample mean <span class="math inline">\bar y</span>.</p>
+</div>
+</div>
+<p>OLS is a special case of the Method of Moments Estimator. This is a useful property as we move towards causal inference, as it shows why Endogeneity is an important condition of causal inference (and forms the bases of the Instrumental Variables Estimator).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof that OLS is a Method of Moments Estimator
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Consider the bivariate regression model:</p>
+<p><span class="math display">
+y = \beta_0 + \beta_1x + u
+</span></p>
+<p>The OLS estimator can be derived as a method of moments estimator, with 2 moments (expectation functions set equal to 0), one for each parameter (<span class="math inline">\beta_0, \beta_1</span>):</p>
+<p><span class="math display">
+\begin{split}
+&amp; E(y-\beta_0 -\beta_1x) = 0 \\
+&amp; E(x(y - \beta_0 - \beta_1 x)) = 0
+\end{split}
+</span></p>
+<p>Since we know <span class="math inline">u = y - \beta_0 - \beta_1 x</span>, we can rewrite the two moments as:</p>
+<p><span class="math display">
+\begin{split}
+&amp; E(u) = 0 \\
+&amp; E(xu) = 0
+\end{split}
+</span></p>
+<p>The estimates of these moments would use the sample equivalents: <span class="math inline">\hat\beta_0</span> and <span class="math inline">\hat\beta_1</span>.</p>
+<p><span class="math display">
+\begin{split}
+&amp; E(y-\hat\beta_0 -\hat\beta_1x) = 0 \\
+&amp; E(x(y - \hat\beta_0 - \hat\beta_1 x)) = 0
+\end{split}
+</span></p>
+<p><br></p>
+<p>Let us prove that OLS is a special case of the method of moments estimator. Remember our OLS minimisation conditions:</p>
+<p><span class="math display">
+\begin{split}
+&amp; \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0 \\
+&amp; \sum\limits_{i=1}^n x_i (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0
+\end{split}
+</span></p>
+<p>Since by definition, average/expectation is <span class="math inline">E(x) = \frac{1}{n} \sum x_i</span>, we can rewrite the OLS minimisation conditions as:</p>
+<p><span class="math display">
+\begin{split}
+&amp; n \times E(y_i - \hat\beta_0 - \hat\beta_1x_i) = 0 \\
+&amp; n \times E(x_i(y_i - \hat\beta_0 - \hat\beta_1x_i)) = 0
+\end{split}
+</span></p>
+<p>And since anything multiplied to a zero turns into zero, we can ignore the <span class="math inline">n</span> in the first order condition, and only focus on the expected value part. Thus, our conditions are:</p>
+<p><span class="math display">
+\begin{split}
+&amp; E(y_i - \hat\beta_0 - \hat\beta_1x_i) = 0 \\
+&amp; E(x_i(y_i - \hat\beta_0 - \hat\beta_1x_i)) = 0
+\end{split}
+</span></p>
+<p>Which as we can see, are the exact same minimisation conditions as the method of moments estimator. Thus, the OLS estimator is a special case of the Method of Moments estimator, and they produce the same coefficients.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 <p><br></p>
 <p><br></p>
 <hr>

@@ -28,29 +28,76 @@ Use the sidebar to navigate to relevant sections. Additional notes and proofs ar
 
 ------------------------------------------------------------------------
 
-# **Basics of the Model**
-
-## When to Use Multiple Linear Regression
+# When to Use Multiple Linear Regression
 
 Regressions are used to model the relationship between explanatory variables and a outcome variable.
 
-The Multiple Linear Regression Model can be used with any type of explanatory variables. However, the multiple linear regression can only be used when the outcome variable is:
+The Multiple Linear Regression Model can be used with any type of explanatory variables. However, it is limited by the possible outcome variables.
 
-1.  Our outcome variable $y$ is continuous.
-2.  Our outcome variable $y$ is binary (although, in this scenario, binomial logistic regression is often the better choice)
-3.  Our outcome variable $y$ is ordinal (although, in this scenario, ordinal or multinomial logistic regression is the better choice)
-4.  Our outcome variable $y$ is a count/rate variable that cannot be negative (although sometimes in this scenario, negative binomial regression is the better choice).
+The Multiple Linear Regression Model **can** be used when:
 
-See the other respective pages on the other regression models to see when you should use the linear model, and when you should use those.
+::: {.callout-tip collapse="true" icon="false"}
+## The Outcome Variable is Continuous
+
+Multiple Linear Regression can always be used when our outcome variable $y$ is continuous, i.e., $y \in (-∞, ∞)$.
+
+There are no other models for such outcome variables.
+:::
+
+::: {.callout-tip collapse="true" icon="false"}
+## The Outcome Variable is Binary
+
+Multiple Linear Regression can be used when our outcome variable $y$ is binary, i.e., $y \in \{0, 1\}$.
+
+However, Linear Regression can have drawbacks when it is used with binary outcome variables.
+
+-   The main drawback is that linear regression can produce fitted values outside of the boundaries of $[0, 1]$, which makes no sense in terms of interpretation.
+-   Linear regression can also have issues with statistical tests (due to the violation of homoscedasticity).
+
+An alternative model to use in the (binary) Logistic Regression Model, which solves these weaknesses of linear regression with binary outcome variables.
+
+-   However, if your only objective is causal inference, predictions outside of $[0,1]$ do not really matter, since you are only concerned with the coefficients, not fitted values. In this case, linear regression is perfectly fine to use for binary outcome variables.
+:::
+
+::: {.callout-tip collapse="true" icon="false"}
+## The Outcome Variable is Ordinal
+
+Multiple Linear Regression can be used when our outcome variable $y$ is ordinal, i.e., $y \in \{0, 1, \dots, n \}$.
+
+However, Linear Regression can have drawbacks when it is used with ordinal outcome variables.
+
+-   Linear Regression essentially treats ordinal variables as continuous variables. This includes the assumption that the distance between different categories is consistent. This assumption is not always realistic.
+
+An alternative model to use is the Ordinal Logistic Regression Model, which fixes these weaknesses.
+:::
+
+::: {.callout-tip collapse="true" icon="false"}
+## The Outcome Variable is a Count/Rate
+
+Multiple Linear Regression can be used when our outcome variable $y$ is a count variable, i.e. $y \in \{0, 1, 2, \dots, ∞ \}$. It can also be used for a rate variable (which is a count divided by a factor).
+
+However, Linear Regression can have drawbacks when it is used with count/rate variables.
+
+-   Linear Regression will not produce probabilities for being at each count value, only the expected count value.
+-   Linear Regression will also often produce negative outcomes, which make little sense in terms of count/rate outcomes.
+
+An alternative model to use is the Negative Binomial (or Poisson) Regression.
+:::
 
 <br />
 
 The Multiple Linear Regression Model should **not** be used when:
 
-1.  Our outcome variable $y$ is categorical - i.e. distinct categories with no natural order. In this case, we must use multinomial logistic regression.
+::: {.callout-important collapse="true" icon="false"}
+## The Outcome Variable is Categorical
 
-::: callout-important
-## Warning Regarding Causal Interpretation
+Multiple Linear Regression cannot be used when our outcome variable $y$ is categorical, i.e. $y \in \{A, B, \dots \}$ where $A, B, \dots$ have no natural order.
+
+An alternative model to use is the Multinomial Logistic Regression Model.
+:::
+
+::: {.callout-important collapse="true" icon="false"}
+## The Goal is Causal Interpretation
 
 Regression can be a tool in causal inference, however, we can never claim a causal relationship with a regression alone - we must pair regression with some form of experimental design (see the causal inference toolkit).
 
@@ -59,7 +106,11 @@ Thus, avoid drawing causal conclusions directly from regression.
 
 <br />
 
-## Model Specification
+<br />
+
+------------------------------------------------------------------------
+
+# Model Specification
 
 Take a set of observed data, with $i=1,\dots,n$ number of observations, each with values $(x_{1i}, \dots, x_{ki}, y_i)$.
 
@@ -69,14 +120,10 @@ $$
 E(y_i|\overrightarrow x_i) = \beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki}
 $$
 
-::: {.callout-note collapse="true"}
-## Notes on the Above Model
-
 -   $y$ is the outcome variable, and $x_1, \dots, x_k$ are the explanatory variables.
 -   $x_{1i}, \dots, x_{ki}$ are the observed values of the explanatory variables for observation $i$.
 -   $E(y_i|\overrightarrow x_i)$ is the expectation of the conditional distribution of $y$ given $\overrightarrow x = (x_1, \dots x_k)$. Or in other words, it is the expected value of $y$ given some values of $x_1, \dots, x_k$.
 -   $\beta_0, \dots , \beta_k$ are coefficients that need to be estimated (based on our observed data) in order to produce the best-fit model.
-:::
 
 <br />
 
@@ -86,14 +133,10 @@ $$
 y_i = \beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki} + u_i
 $$
 
-::: {.callout-note collapse="true"}
-## Notes on the Above Model
-
 -   $y_i$ is the observed value of the outcome variable $y$ for observation $i$.
 -   $x_{1i}, \dots, x_{ki}$ are the observed values of the explanatory variables for observation $i$.
 -   $\beta_0, \dots , \beta_k$ are coefficients that need to be estimated (based on our observed data) in order to produce the best-fit model (same as above).
 -   $u_i$ is the **error term**. This represents the idea that not all observed values of $y_i$ will be exactly on the expected value of the conditional distribution of $y|x$ - the actual value of $y_i$ will not always be the expected value of $E(y_i)$. The expected value of the error term $u$ should be $E(u) = 0$.
-:::
 
 <br />
 
@@ -103,15 +146,11 @@ $$
 y = X \beta + u
 $$
 
-::: {.callout-note collapse="true"}
-## Notes on the Above Model
-
 -   where vector $y$ is equal to all the values of $y$ for each observation $i = 1, \dots, n$: $y = \begin{pmatrix}y_1 \\ y_2 \\ \vdots \\ y_n\end{pmatrix}$
 -   where matrix $X$ is equal to all the values of each $x_1, \dots, x_k$ for each observation $i = 1, \dots, n$ : $X = \begin{bmatrix}1 & x_{21} & \dots & x_{k1} \\1 & x_{22} & \dots & x_{k2} \\\vdots & \vdots & \vdots & \vdots \\1 & x_{2n} & \dots & x_{kn}\end{bmatrix}$
     -   Where the notation for elements of $X$ is $x_{ki}$, with $i$ being the unit of observation $i = 1, \dots n$, and $k$ being the explanatory variables index.
     -   The first column of $X$ is a vector of 1, which exists because these 1's are multiplied with $\beta_0$ in our model (see below).
 -   Where vector $\beta$ is a vector of all coefficients in the model: $\beta = \begin{pmatrix}\beta_0 \\ \beta_1 \\ \vdots \\ \beta_k\end{pmatrix}$
-:::
 
 ::: {.callout-note collapse="true"}
 ## Proof of Representation in Linear Algebra
@@ -170,16 +209,14 @@ $$
 
 ------------------------------------------------------------------------
 
-[Homepage](https://statsnotes.github.io)
-
-# **Model Estimation**
+# Model Estimation
 
 ## Ordinary Least Squares Estimator
 
-We need to estimate coefficients $\beta_0, \dots, \beta_k$ to create a best-fit line (also called **fitted values**) in order to create a model for our observed data. Our estimated coefficients will be labelled $\widehat{\beta_0}. \dots, \widehat{\beta_k}$, thus creating our fitted values model:
+We need to estimate coefficients $\beta_0, \dots, \beta_k$ to create a best-fit line (also called **fitted values**) in order to create a model for our observed data:
 
 $$
-E(y_i|\overrightarrow x_i) =\widehat{y_i} = \widehat{\beta_0} + \widehat{\beta_1}x_{1i} + \dots + \widehat{\beta_k} x_{ki}
+\widehat{y_i} = \widehat{\beta_0} + \widehat{\beta_1}x_{1i} + \dots + \widehat{\beta_k} x_{ki}
 $$
 
 <br />
@@ -197,9 +234,7 @@ $$
 ::: {.callout-note collapse="true"}
 ## Intuitive Visualisation of SSR
 
-What is the Sum of Squared Residuals? First, let us find the residuals. The residuals are the difference from our predicted best-fit line result $\widehat{y_i}$, and the actual value of $y_i$ in the data.
-
-Below highlighted in red are the residuals.
+The residuals are the difference from our predicted best-fit line result $\widehat{y_i}$, and the actual value of $y_i$ in the data. Below highlighted in red are the residuals.
 
 ![](images/clipboard-846785636.png){fig-align="center" width="70%"}
 
@@ -209,13 +244,11 @@ After we have the residual values, we simply square each of them, then sum all o
 ::: {.callout-note collapse="true"}
 ## Why Sum of Squared Residuals
 
-A common question is why the residuals are squared. The simple answer is that we care about the magnitude of errors, not the direction of error.
-
-For example, look at this figure:
+The residuals are squared because we care about the magnitude of errors, not the direction of error. For example, look at this figure:
 
 ![](images/clipboard-846785636.png){fig-align="center" width="70%"}
 
-Here, the residuals d1, d3, and dn are all positive, but the residuals of d2 and d4 are negative. If we just add them together, the negative and positive residuals would cancel out. But by squaring them, we are measuring the magnitude, not the direction of error.
+Here, the residuals d1, d3, and dn are positive, but the residuals of d2 and d4 are negative. If we just add them together, the negative and positive residuals would cancel out. But by squaring them, we are measuring the magnitude, not the direction of error.
 
 Then you might ask, why not absolute value them all?
 
@@ -225,27 +258,12 @@ Then you might ask, why not absolute value them all?
 
 <br />
 
-This minimisation problem can be solved mathematically.
-
-For **Simple Linear Regression** (a linear regression with just one explanatory variable $x$), the estimates of coefficients are given by:
-
-$$
-\begin{split}
-& \widehat{\beta_1} = \frac{\sum_{i=1}^n(x_i - \bar x)(y_i - \bar y)}{\sum_{i=1}^n(x_i - \bar x)^2} = \frac{Cov(x,y)}{Var(x)} \\
-& \widehat{\beta_0} = \bar y - \widehat{\beta_1}\bar x
-\end{split}
-$$
+This minimisation problem can be solved mathematically. Derivations are provided below:
 
 ::: {.callout-note collapse="true"}
-## Proof of OLS Solution for Simple Linear Regression
+## Derivation of OLS for Simple Linear Regression
 
-Let us define the sum of squared residuals as function $S$.
-
-How do we minimise $S$ (the function of the sum of squared residuals)? From calculus, we know that a minimum/maximum of a function is where the derivative of the function is equal to 0.
-
-Thus, let us find the partial derivative of the function $S$ in respect to both $\hat\beta_0$ and $\hat\beta_1$, and set them equal to 0. These will be called the **first-order conditions**.
-
-<br />
+Let us define the sum of squared residuals as function $S$. We want to minimise $S$, so we have to find the first order conditions and set them equal to 0.
 
 #### First Order Conditions
 
@@ -261,7 +279,7 @@ $$
 \frac{\partial}{\partial \hat{\beta}_0} \left[ (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i)^2 \right] = -2(y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i)
 $$
 
-But how do we deal with the summation? We know that there is the sum rule of derivatives $[f(x) + g(x)]' = f'(x) + g'(x)$. Thus, we know we just sum up the individual derivatives to get the derivative of the sum:
+We know that there is the sum rule of derivatives $[f(x) + g(x)]' = f'(x) + g'(x)$. Thus, we know we just sum up the individual derivatives to get the derivative of the sum:
 
 $$
 \begin{split}
@@ -308,11 +326,6 @@ $$
 
 We now have our two first-order conditions. Now, we have a 2-equation system of equations, with 2 variables.
 
--   We can solve this through substitution - in the first equation, solve for $\hat\beta_0$ in terms of $\hat\beta_1$.
--   Then, plug in $\hat\beta_0$ in terms of $\hat\beta_1$ into the second equation, thus making that a one-variable equation. We can solve that equation for $\hat\beta_1$, then find $\hat\beta_0$.
-
-<br />
-
 First, let us solve the first equation for $\hat\beta_0$ in terms of $\hat\beta_1$:
 
 $$
@@ -338,7 +351,7 @@ $$
 \end{split}
 $$
 
-::: {.callout-note collapse="true"}
+::: {.callout-warning collapse="true"}
 ## Useful Properties of Summation
 
 Before we finish, here are a few key properties of summation
@@ -386,19 +399,11 @@ $$
 
 Note that the numerator is equivalent to the formula of covariance $Cov(x,y)$, and the denominator is equal to the variance $Var(x)$.
 
-Of course, we still need to find $\hat\beta_0$ (the slope). We found that $\hat\beta_0 = \bar{y} - \hat{\beta}_1 \bar{x}$ earlier, so we just plug our solution of $\hat\beta_1$ in.
+We found that $\hat\beta_0 = \bar{y} - \hat{\beta}_1 \bar{x}$ earlier, so we just plug our solution of $\hat\beta_1$ in to get $\hat\beta_0$.
 :::
 
-<br />
-
-For **Multiple Linear Regression** (a linear regression with just more than one explanatory variable $x$), the estimates of coefficients are given by:
-
-$$
-\hat y = X\hat\beta = X(X'X)^{-1}X'y
-$$
-
 ::: {.callout-note collapse="true"}
-## Proof of OLS Solution for Multiple Linear Regression
+## Derivation of OLS for Multiple Linear Regression
 
 Similar to our simple linear regression (but with additional variables), our minimisation condition is:
 
@@ -409,9 +414,7 @@ $$
 \end{split}
 $$
 
-<br />
-
-Taking the partial derivatives of each parameter like in simple linear regression (see [1.4.4](https://statsnotes.github.io/theory/4.html#mathematics-of-the-ordinary-least-squares-estimator)), we get first order conditions:
+Taking the partial derivatives of each parameter like in simple linear regression, we get first order conditions:
 
 $$
 \begin{split}& \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\& \sum\limits_{i=1}^n x_{1i}(y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\
@@ -454,7 +457,7 @@ $$
 \frac{\partial S(b)}{\partial b} = -2X'y + 2X'Xb
 $$
 
-Evaluted at $\hat{\beta}$, the derivatives should equal zero (since first order condition of finding minimums):
+Evaluated at $\hat{\beta}$, the derivatives should equal zero (since first order condition of finding minimums):
 
 $$
 \frac{\partial S(b)}{\partial b} \biggr|_{\hat{\beta}} = -2X'y + 2X'X \hat{\beta} = 0
@@ -474,118 +477,16 @@ $$
 
 <br />
 
-Our OLS estimates have a few algebraic properties.
+## Properties of the OLS Estimator
 
-1.  The sum of residuals $\hat u$ should be equal to 0 (note: residuals $\hat u$ and error $u$ are different).
-2.  There is no covariance between the error term $u$ and any explanatory variable $x_1, \dots, x_k$.
-3.  The best-fit line should pass through the point of means: $(\bar{x_1}, \dots, \bar{x_k}, \bar{y})$.
+The OLS Regression has a few useful properties that are outlined below:
 
-::: {.callout-note collapse="true"}
-## Proof of OLS Algebraic Properties
-
-The residuals of OLS, as defined earlier, are:
-
-$$
-\begin{split}\hat u_i & = y_i - \hat y_i \\& = y_i - (\hat \beta_0 + \hat\beta_1x_{1i} + \dots + \hat\beta_k x_{ki}) \\& = y_i - \hat \beta_0 - \hat\beta_1x_{1i} - \dots - \hat\beta_k x_{ki}\end{split}
-$$
-
-For multiple regression OLS estimates of $\hat\beta_0 , \dots \hat\beta_k$ are chosen to satisfy the following first order conditions:
-
-$$
-\begin{split}& \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\& \sum\limits_{i=1}^n x_{1i}(y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\
-& \sum\limits_{i=1}^n x_{2i} (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0
-\end{split}
-$$
-
--   and so on for $x_{3i}, ..., x_{ki}$.
-
-Using these properties, we can plug in $\hat u_i$ from above to get the above conditions:
-
-$$
-\begin{split}
-& \sum\limits_{i=1}^n \hat u_i = 0 \\
-& \sum\limits_{i=1}^n x_{ji} \hat u_i = 0
-\end{split}
-$$
-
--   Where $x_j$ is any $x_1, \dots, x_k$ in multiple linear regression
-
-<br />
-
-#### Property 1: Sum of Residuals is 0
-
-OLS residuals always add up to zero (for both simple and multiple regression), since as given above:
-
-$$
-\sum\limits_{i=1}^n \hat u_i = 0
-$$
-
-<br />
-
-#### Property 2: No Covariance Between $x$ and Residual.
-
-From above, we know the following to be true:
-
-$$
-\sum\limits_{i=1}^n \hat u_i = 0
-$$
-
-Which also means that $\bar{\hat u} = 0$ (since an average is just the sum divided by the number of observations, and the sum is equal to 0).
-
-We also know that:
-
-$$
-\sum\limits_{i=1}^n x_{ji} \hat u_i = 0
-$$
-
--   Where $x_j = x$ for simple linear regression, and $x_j = x_1, \dots, x_k$ for multiple linear regression.
-
-Now, recall the formula for covariance discussed in [1.3.4](https://statsnotes.github.io/theory/3.html#quantifying-relationships-with-covariance):
-
-$$
-Cov(x,y) = \frac{1}{n}\sum\limits_{i=1}^n [(x_i - \bar x)(y_i - \bar y)] \\
-$$
-
-Thus, the covariance between $x_j$ (for notation simplicity, just $x$) and $\hat u$ is:
-
-$$
-\begin{split}
-Cov(x, \hat u) & = \frac{1}{n}\sum\limits_{i=1}^n [(x_i - \bar x)(\hat u_i - \bar{\hat u})] \\
-& = \frac{1}{n}\sum\limits_{i=1}^n(x_i \hat u_i - x_i \bar{\hat u} - \bar x \hat u_i + \bar x \bar {\hat u}) \\
-& = \frac{1}{n} \left( \sum\limits_{i=1}^nx_i \hat u_i - \sum\limits_{i=1}^n x_i\bar{\hat u} - \sum\limits_{i=1}^n \bar x \hat u_i + \sum\limits_{i=1}^n\bar x \bar{\hat u} \right) \\
-& = \frac{1}{n} \left( \sum\limits_{i=1}^nx_i \hat u_i - \bar{\hat u}\sum\limits_{i=1}^n x_i - \bar x\sum\limits_{i=1}^n \hat u_i + \bar{\hat u}\sum\limits_{i=1}^n\bar x  \right) \\
-& = \frac{1}{n} \left( \sum\limits_{i=1}^nx_i \hat u_i - 0\sum\limits_{i=1}^n x_i - \bar x\sum\limits_{i=1}^n \hat u_i + 0\sum\limits_{i=1}^n\bar x  \right) \\
-& = \frac{1}{n}(0 -0-\bar x(0) + 0) \\
-& = 0
-\end{split}
-$$
-
-Thus, the covariance (and thus correlation) between $x_j$ and $\hat u$ must be zero.
-
-<br />
-
-#### Property 3: Regression Line Passes Through Means
-
-Remember our solution for $\hat\beta_0$ in OLS for simple linear regression was $\hat\beta_0 = \bar{y} - \hat{\beta}_1 \bar{x}$. Rearranging this equation, we get:
-
-$$
-\begin{split}
-\hat\beta_0  & = \bar{y} - \hat{\beta}_1 \bar{x} \\
-\hat\beta_0 + \hat\beta_1 \bar x & = \bar y \\
-\bar y & = \hat\beta_0 + \hat\beta_1 \bar x
-\end{split}
-$$
-
-Thus, the OLS estimated best-fit line always passes though point $(\bar x, \bar y)$ (the means of our data). The same property applies to multiple linear regression, but for point $(\bar x_1, \dots, \bar x_k, \bar y)$.
-:::
-
-<br />
-
-## Regression Anatomy Theorem
+::: {.callout-tip collapse="true" icon="false"}
+## OLS Estimates for Explanatory Variable Partial Out the Effect of Controls (Regression Anatomy)
 
 The **Regression Anatomy Theorem**, also called the **Frisch-Waugh-Lovell** theorem, shows how multiple linear regression and OLS can be used to "control" for confounding variables.
 
-Essentially, the theorem states that given explanatory variables $x_j= x_1, \dots, x_k$ and an outcome variable $y$, the coefficient $\beta_j$ (of any explanatory variable $x_j$) is the effect of the uncorrelated part of $x_j$ with all other explanatory variables, $\widetilde{r_j}$, on $y$.
+Essentially, the theorem states that given explanatory variables $x_j= x_1, \dots, x_k$ and an outcome variable $y$, the coefficient $\beta_j$ (of any explanatory variable $x_j$) is the effect of the uncorrelated part of $x_j$ with all other explanatory variables, $\widetilde{r_j}$, on $y$. This means by including control variables in our regression, our $\beta_j$ coefficient will partial out the effect of the controls, and only find the independent effect of $x_j$ on $y$.
 
 ::: {.callout-note collapse="true"}
 ## Proof of Regression Anatomy Theorem
@@ -595,8 +496,6 @@ Take our standard multiple linear regression:
 $$
 y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_k x_{ki} + u_i
 $$
-
-<br />
 
 Let us say we are interested in $x_1$ (this can be generalised to any explanatory variable $x_j$). Let us make $x_1$ the outcome variable of a regression with explanatory variables $x_2, ..., x_k$:
 
@@ -677,8 +576,6 @@ Or in other words, OLS in multiple linear regression estimates the effect of $\w
 -   We can apply this to any explanatory variable $x_1, \dots, x_k$. The uncorrelated parts of any explanatory variable $x_j$ are labelled $\widetilde{r_{ji}}$.
 :::
 
-<br />
-
 This theorem allows us to essentially "rewrite" the solution of $\widehat{\beta_j}$ in multiple regression as a simple linear regression between $\widetilde{r_j}$ and $y$:
 
 $$
@@ -692,7 +589,7 @@ This formula is called the Regression Anatomy Formula.
 
 We can express the estimation solution of $\hat\beta_j$ in relation to the regression anatomy formula.
 
-::: {.callout-note collapse="true"}
+::: {.callout-warning collapse="true"}
 ## Useful Properties of Summation
 
 Before we start, here are a few key properties of summation
@@ -726,8 +623,6 @@ $$
 -   Which splits into $\sum x_i (x_i - \bar x) - \bar x \sum (x_i - \bar x)$
 -   By the first property, we know $\sum x_i - \bar x = 0$, so we are only left with $\sum x_i (x_i - \bar x)$
 :::
-
-Knowing these properties of summation, let us begin.
 
 Let us start off with the OLS estimator for simple linear regression, which calculates the $\hat\beta_1$, the relationship between $x$ and $y$ (which we derived previously)
 
@@ -788,29 +683,14 @@ $$
 \end{split}
 $$
 :::
+:::
 
-<br />
+::: {.callout-tip collapse="true" icon="false"}
+## OLS Best Approximates the Conditional Expectation Function
 
-## Conditional Expectation Function
+A **conditional expectation function** says that the value of $E(y)$ depends on the value of $x$. We notate a conditional expectation function as $E(y|x)$. As we noted earlier, the linear regression model can be a conditional expectation function of $E(y|x)$.
 
-A **conditional expectation function** says that the value of $E(y)$ depends on the value of $x$. We notate a conditional expectation function as $E(y|x)$.
-
--   For example, imagine $y$ is income and $x$ is age.
--   A conditional expectation function $E(y|x)$ says that as $x$ (age) changes, the expected value of $y$ (income) also changes.
--   For example, you would probably expect the expected value of a 20 year old's income to be different than a 50 year old's.
-
-::: {.callout-note collapse="true"}
-## Notes on Conditional Expectation Functions
-
-The conditional expectation function is some function which describes the conditional expectation of $y$ given $x$. This function can be linear, or not:
-
-$$
-E(y_i|x_i) = m(x_i)
-$$
-
--   Where $m(x_i)$ is some function (does not have to be linear).
-
-A best linear approximation of a conditional expectation function, can take the following form:
+A **best linear approximation** of a conditional expectation function, can take the following form:
 
 $$
 E(y_i|x_i) = b_0 + b_1x_i
@@ -828,13 +708,12 @@ MSE & = E(y_i - E(y_i|x_i))^2 \\
 & = \frac{1}{n}\sum\limits_{i=1}^n( y_i - E(y_i|x_i))^2
 \end{split}
 $$
-:::
 
 <br />
 
 Previously, we expressed the linear regression model in both terms of $y_i$, and the conditional expectation $E(y_i|x_i)$. However, when conducting OLS estimation, we have only looked at the $y_i$ form.
 
-The Ordinary Least Squares Regression line also is the best linear approximation of the conditional expectation function $E(y|x)$. That means, we can view a regression as also a conditional expectation function. The proof is provided below.
+The Ordinary Least Squares Regression line also is the best linear approximation of the conditional expectation function $E(y|x)$. That means, we can view a regression as also a best-estimate of a conditional expectation function.
 
 ::: {.callout-note collapse="true"}
 ## Proof that OLS is the Best Approximation of the CEF
@@ -934,8 +813,145 @@ $$
 
 Which as we can see, are the exact same minimisation conditions as the conditional expectation function. Thus, OLS is the best approximation of the conditional expectation function.
 :::
+:::
 
-This is an immensely useful property for interpreting the results of regressions, as we will see later.
+::: {.callout-tip collapse="true"}
+## OLS is a Special Case of the Method of Moments Estimator
+
+The Method of Moments Estimator is another estimator of the true value of populations in the parameter. The estimator defines key population **moments** of interest - which are the population parameters written in terms of expected value functions set equal to 0.
+
+Then, the Method of Moments uses the sample equivalents of the population moments to estimate the population parameter.
+
+-   For example, to estimate the population mean, the Method of Moments uses the sample mean.
+
+::: {.callout-note collapse="true"}
+## Details of the Method of Moments Estimator
+
+In order to define a method of moments for a set of parameters $\theta_1, \dots, \theta_k$, we need to specify at least one population moment per parameter. Or in other words, we must have more than $k$ population moments.
+
+Our population moments can be defined as the expected value of some function $m(\theta; y)$ that consists of both the variable $y$ and our unknown parameter $\theta$. The expectation of the function $m(\theta; y)$ should equal 0.
+
+$$
+E(m(\theta; y)) = 0
+$$
+
+Our sample moments will be the sample analogues of $\theta$ and $y$, which are $\hat\theta$ and $y_i$:
+
+$$
+\frac{1}{n}\sum\limits_{i=1}^n m(\hat\theta; y_i) = 0
+$$
+
+-   The $\frac{1}{n} \sum$ is there because the definition of expectation/mean is that.
+:::
+
+::: callout-note
+## Example of a Method of Moments Estimator
+
+Let us say that we have some random variable $y$, with a true population mean $\mu$. We want to estimate $\mu$, but we only have a sample of the population.
+
+How can we define our true population parameter $\mu$ in an expectation equation of the form: $E(m(\mu, y)) = 0$?
+
+-   Well, what is $\mu$, the mean, intuitively speaking? It is the expectation of $y$, so $\mu = E(y)$.
+
+Now that we know that $\mu = E(y)$, since they are equal, $\mu - E(y) = 0$. Thus, we can define the mean as a moment of the following condition:
+
+$$
+E(y - \mu) = 0
+$$
+
+The method of moments says we should use the sample equivalent of the population parameter. The sample equivalent of $\mu$ (the true mean of the population), is of course, the sample mean $\bar y$.
+
+Thus, our sample estimate of the moment would be:
+
+$$
+E(y_i - \hat\mu) = \frac{1}{n}\sum\limits_{i=1}^n (y_i - \hat\mu) = 0
+$$
+
+With this equation, we can then solve for $\hat\mu$:
+
+$$
+\begin{split}
+0 & = \frac{1}{n}\sum\limits_{i=1}^n (y_i - \hat\mu) \\
+0 & = \frac{1}{n}\sum\limits_{i=1}^ny_i - \frac{1}{n}\sum\limits_{i=1}^n \hat\mu \\
+0 & = \frac{1}{n}\sum\limits_{i=1}^ny_i - \frac{1}{n} n \hat\mu\\
+0 & = \bar y - \hat \mu \\
+\hat\mu & = \bar y
+\end{split}
+$$
+
+So, we see the method of moments estimates our true population mean $\mu$, with the sample mean $\bar y$.
+:::
+
+OLS is a special case of the Method of Moments Estimator. This is a useful property as we move towards causal inference, as it shows why Endogeneity is an important condition of causal inference (and forms the bases of the Instrumental Variables Estimator).
+
+::: {.callout-note collapse="true" icon="false"}
+## Proof that OLS is a Method of Moments Estimator
+
+Consider the bivariate regression model:
+
+$$
+y = \beta_0 + \beta_1x + u
+$$
+
+The OLS estimator can be derived as a method of moments estimator, with 2 moments (expectation functions set equal to 0), one for each parameter ($\beta_0, \beta_1$):
+
+$$
+\begin{split}
+& E(y-\beta_0 -\beta_1x) = 0 \\
+& E(x(y - \beta_0 - \beta_1 x)) = 0
+\end{split}
+$$
+
+Since we know $u = y - \beta_0 - \beta_1 x$, we can rewrite the two moments as:
+
+$$
+\begin{split}
+& E(u) = 0 \\
+& E(xu) = 0
+\end{split}
+$$
+
+The estimates of these moments would use the sample equivalents: $\hat\beta_0$ and $\hat\beta_1$.
+
+$$
+\begin{split}
+& E(y-\hat\beta_0 -\hat\beta_1x) = 0 \\
+& E(x(y - \hat\beta_0 - \hat\beta_1 x)) = 0
+\end{split}
+$$
+
+<br />
+
+Let us prove that OLS is a special case of the method of moments estimator. Remember our OLS minimisation conditions:
+
+$$
+\begin{split}
+& \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0 \\
+& \sum\limits_{i=1}^n x_i (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0
+\end{split}
+$$
+
+Since by definition, average/expectation is $E(x) = \frac{1}{n} \sum x_i$, we can rewrite the OLS minimisation conditions as:
+
+$$
+\begin{split}
+& n \times E(y_i - \hat\beta_0 - \hat\beta_1x_i) = 0 \\
+& n \times E(x_i(y_i - \hat\beta_0 - \hat\beta_1x_i)) = 0
+\end{split}
+$$
+
+And since anything multiplied to a zero turns into zero, we can ignore the $n$ in the first order condition, and only focus on the expected value part. Thus, our conditions are:
+
+$$
+\begin{split}
+& E(y_i - \hat\beta_0 - \hat\beta_1x_i) = 0 \\
+& E(x_i(y_i - \hat\beta_0 - \hat\beta_1x_i)) = 0
+\end{split}
+$$
+
+Which as we can see, are the exact same minimisation conditions as the method of moments estimator. Thus, the OLS estimator is a special case of the Method of Moments estimator, and they produce the same coefficients.
+:::
+:::
 
 <br />
 
