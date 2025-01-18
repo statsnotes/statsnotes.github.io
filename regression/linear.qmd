@@ -815,7 +815,7 @@ Which as we can see, are the exact same minimisation conditions as the condition
 :::
 :::
 
-::: {.callout-tip collapse="true"}
+::: {.callout-tip collapse="true" icon="false"}
 ## OLS is a Special Case of the Method of Moments Estimator
 
 The Method of Moments Estimator is another estimator of the true value of populations in the parameter. The estimator defines key population **moments** of interest - which are the population parameters written in terms of expected value functions set equal to 0.
@@ -1268,27 +1268,677 @@ $$
 This is the [key assumption]{.underline} of OLS that is most frequently violated.
 :::
 
+<br />
+
 If all 4 conditions are met, The OLS estimate of $\widehat{\beta_j}$ (the relationship between $x_j$ and $y$) is unbiased.
 
 ::: {.callout-note collapse="true"}
 ## Proof of Unbiasedness for Simple Linear Regression
+
+We want to show $E(\hat\beta_1) = \beta_1$. Let us start off with the OLS estimator:
+
+$$
+\hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n(x_i - \bar{x})^2}
+$$
+
+::: callout-tip
+## SLR.3 Variance in $x$
+
+The existence of $\hat{\beta}_1$ is guaranteed by SLR.3 $Var(x) ≠ 0$, since we cannot divide by 0.
+:::
+
+<br />
+
+::: {.callout-warning collapse="true"}
+## Useful Properties of Summation
+
+Before we start, here are a few key properties of summation
+
+**Property 1:**
+
+$$
+\sum\limits_{i=1}^n (x_i - \bar{x}) = 0
+$$
+
+-   This is because we can expand the left to $\sum x_i - \sum \bar x$.
+-   Then, we know $\sum x_i = \sum \bar x$ (by the formula for mean), so $\sum x_i - \sum \bar x = 0$.
+
+**Property 2:**
+
+$$
+\sum\limits_{i=1}^n x_i(y_i - \bar{y}) = \sum\limits_{i=1}^n(x_i - \bar{x}) (y_i - \bar{y}) 
+$$
+
+-   This is because on the right side can expand to $\sum [x_i(y_i - \bar y) - \bar x (y_i - \bar y)]$.
+-   Then, split into $\sum x_i (y_i - \bar y) - \bar x \sum (y_i - \bar y)$.
+-   We know that by property 1 (which applies to any variable), $\sum (y_i - \bar y) = 0$. Thus, the right side disappears, and we are left with $\sum x_i (y_i - \bar y)$.
+
+**Property 3:**
+
+$$
+\sum\limits_{i=1}^n x_i(x_i - \bar{x}) = \sum\limits_{i=1}^n(x_i - \bar{x})^2
+$$
+
+-   Start by expanding right side to $\sum [ x_i ( x_i - \bar x) - \bar x (x_i - \bar x)]$
+-   Which splits into $\sum x_i (x_i - \bar x) - \bar x \sum (x_i - \bar x)$
+-   By the first property, we know $\sum x_i - \bar x = 0$, so we are only left with $\sum x_i (x_i - \bar x)$
+:::
+
+Let us look at the numerator. Let us expand the numerator:
+
+$$
+\begin{split}
+& \sum\limits_{i=1}^n (x_i - \bar{x})(y_i - \bar{y}) \\
+= & \sum\limits_{i=1}^n [(x_i - \bar x)y_i - (x_i - \bar x) \bar y] \\
+= & \sum\limits_{i=1}^n(x_i - \bar x)y_i - \sum\limits_{i=1}^n (x_i - \bar x) \bar y \\
+= & \sum\limits_{i=1}^n(x_i - \bar x)y_i - \bar y\sum\limits_{i=1}^n (x_i - \bar x) \\
+\end{split}
+$$
+
+We know that $\sum (x_i - \bar x) = 0$ (from the properties above). Thus, we can further simplify to:
+
+$$
+\begin{split}
+= & \sum\limits_{i=1}^n(x_i - \bar x)y_i - \bar y\sum\limits_{i=1}^n (x_i - \bar x) \\
+= & \sum\limits_{i=1}^n(x_i - \bar x)y_i - \bar y(0) \\
+= & \sum\limits_{i=1}^n(x_i - \bar x)y_i
+\end{split}
+$$
+
+Now, let us play with the numerator more (note the properties of summation introduced earlier):
+
+$$
+\begin{split}
+& = \sum\limits_{i=1}^n (x_i - \bar{x})y_i \\
+& = \sum\limits_{i=1}^n(x_i - \bar{x})(\beta_0 + \beta_1 x_i + u_i) \\
+& = \sum\limits_{i=1}^n(x_i - \bar{x}) \beta_0 + \sum\limits_{i=1}^n(x_i - \bar{x}) \beta_1  x_i + \sum\limits_{i=1}^n (x_i - \bar{x}) u_i \\
+& = \beta_0 \sum\limits_{i=1}^n(x_i - \bar{x}) + \beta_1 \sum\limits_{i=1}^n(x_i - \bar{x}) x_i + \sum\limits_{i=1}^n (x_i - \bar{x}) u_i \\
+& = 0 + \beta_1 \sum\limits_{i=1}^n(x_i - \bar{x})^2 + \sum\limits_{i=1}^n(x_i - \bar{x})u_i\end{split}
+$$
+
+Now, putting the numerator back into the equation, we simplify:
+
+$$
+\begin{split}
+\hat{\beta}_1 & = \frac{\beta_1 \sum_{i=1}^n(x_i - \bar{x})^2 + \sum_{i=1}^n(x_i - \bar{x})u_i}{\sum_{i=1}^n(x_i - \bar{x})^2} \\
+&  =  \beta_1 + \frac{\sum_{i=1}^n(x_i - \bar{x}) u_i}{\sum_{i=1}^n (x_i - \bar{x})^2} \\
+&  = \beta_1 + \sum\limits_{i=1}^n w_i u_i
+\end{split}
+$$
+
+-   Where $w_i = \frac{x_i - \bar{x}}{\sum (x_i - \bar{x})^2}$, which is a function of random variable $x$. We could also write $w_i$ as $\frac{x_i - \bar{x}}{SST_x}$ (where $SST_x$ is total sum of squares for $x$).
+
+Since $w_i$ is a function of $x$, that means $\hat\beta_1$ is also a function of $x$ (depends on the value of $x$).
+
+<br />
+
+Now we need to find the expectation $E(\hat\beta_1)$. Thus, we have this equation:
+
+$$
+\begin{split}
+E(\hat\beta_1|x) & = E \left( \beta_1 + \sum\limits_{i=1}^n w_i u_i \bigg| x \right) \\
+& = \beta_1 + \sum\limits_{i=1}^nE(w_iu_i|x)
+\end{split}
+$$
+
+But what does $\sum E(w_iu_i |x)$ equal? This is where our other two Gauss-Markov Conditions come into play.
+
+::: callout-tip
+## SLR.4 Zero Conditional Mean
+
+The Zero-Conditional Mean assumption says $E(u|x) = 0$.
+:::
+
+::: callout-tip
+## SLR.2 Random Sampling
+
+Random sampling, combined with zero-conditional mean, allows us to say:
+
+$$
+E(u|x) = E(u_i | x_i) = E(u_i|x) = 0
+$$
+:::
+
+This means that:
+
+$$
+E(w_i u_i|x) = w_i E(u_i|x) = 0
+$$
+
+<br />
+
+Now knowing what $E(w_iu_i|x)$ is, let us plug it back into our equation:
+
+$$
+\begin{split}
+E(\hat\beta_1|x) & = \beta_1 + \sum\limits_{i=1}^nE(w_iu_i|x) \\
+& = \beta_1 + \sum\limits_{i=1}^n0 \\
+& = \beta_1
+\end{split}
+$$
+
+However, we have solved for $E(\hat\beta_1 |x)$, and not $E (\hat\beta_1)$. This is where the **Law of Iterated Expectation**. The law says the following:
+
+$$
+E(x) = E[E(x|y)]
+$$
+
+Thus, we can use this to conclude the proof:
+
+$$
+\begin{split}
+E(\hat\beta_1) & = E[E(\hat\beta_1|x)] \\
+& = E(\beta_1) \\
+& = \beta_1
+\end{split}
+$$
+
+-   Since $\beta_1$ is the true value (a constant), its expectation is itself
+
+Thus, $E(\hat\beta_1) = \beta_1$, proving the unbiasedness of OLS under the 4 conditions.
 :::
 
 ::: {.callout-note collapse="true"}
 ## Proof of Unbiasedness for Multiple Linear Regression
+
+For simplicity, let us focus on $\hat\beta_1$. However, this can be generalised to any $\hat\beta_2, \dots, \hat\beta_k$.
+
+Recall the regression anatomy solution of OLS for $\hat\beta_1$:
+
+$$
+\hat\beta_1 = \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ y_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+$$
+
+-   Where $\widetilde{r_{1i}}$ is the part of $x_1$ uncorrelated with $x_2, \dots, x_k$.
+
+::: callout-tip
+## MLR.3 No Perfect Multicollinearity
+
+The existence of $\hat\beta_1$ is guaranteed by MLR.3 $\sum\widetilde{r_{1i}}^2 ≠ 0$, since we cannot divide by 0.
+:::
+
+Now, let us plug in $y_i = \beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki} + u_i$ into our regression anatomy formula:
+
+$$
+\begin{split}
+\hat\beta_1 & = \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ y_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
+& = \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ (\beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki} + u_i)}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
+\end{split}
+$$
+
+::: {.callout-warning collapse="true"}
+## Useful Properties of Summations
+
+Before we start, here are a few key properties of summation
+
+**Property 1:**
+
+$$
+\sum\limits_{i=1}^n \widetilde{r_{1i}} = 0
+$$
+
+-   This is because $\widetilde{r_{1i}}$ is a residual term of a OLS regression of outcome $x_1$ and explanatory variables $x_2, \dots, x_k$, and we know OLS residuals sum to 0.
+
+**Property 2:**
+
+$$
+\sum\limits_{i=1}^n \widetilde{r_{1i}} x_{ji} = 0, \text{ given } j=2, \dots, k 
+$$
+
+-   Because for OLS, $\sum x_i \hat u_i = 0$, and we know $\widetilde{r_{1i}}$ is the residual $\hat u_i$ in a regression with explanatory variables $x_2, \dots, x_k$ and outcome variable $x_1$.
+
+**Property 3:**
+
+$$
+\sum\limits_{i=1}^n \widetilde{r_{1i}} x_{1i} = \sum\limits_{i=1}^n \widetilde{r_{1i}}(\hat x_{1i} + \sum\limits_{i=1}^n \widetilde{r_{1i}}) = \sum\limits_{i=1}^n \widetilde{r_{1i}}^2
+$$
+
+-   Because we have the regression fitted values $\hat x_{1i} = \hat \gamma_0 + \hat\gamma_1 x_2 + \dots + \hat\gamma_{k-1} x_{k} + \widetilde{r_{1i}}$ from regression anatomy.
+-   And we know with regression, actual values are the predicted plus residual: $y_i = \hat y_i + \hat u_i$. Thus, $x_i = \hat x_i + \widetilde{r_{1i}}$.
+:::
+
+Now, focusing on the numerator, and using the summation properties above, let us simplify:
+
+$$
+\begin{split}
+& \sum\limits_{i=1}^n \widetilde{r_{1i}} \ (\beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki} + u_i) \\
+& = \sum\limits_{i=1}^n (\widetilde{r_{1i}}\beta_0 + \widetilde{r_{1i}}\beta_1x_{1i} + \dots + \widetilde{r_{1i}}\beta_k x_{ki} + \widetilde{r_{1i}} u_i) \\
+& = \sum\limits_{i=1}^n \widetilde{r_{1i}}\beta_0 + \sum\limits_{i=1}^n \widetilde{r_{1i}}\beta_1 x_{1i} + \dots + \sum\limits_{i=1}^n \widetilde{r_{1i}}\beta_k x_{ki} + \sum\limits_{i=1}^n \widetilde{r_{1i}} u_i \\
+& = \beta_0 \sum\limits_{i=1}^n \widetilde{r_{1i}} + \beta_1 \sum\limits_{i=1}^n \widetilde{r_{1i}} x_{1i} + \dots + \beta_k \sum\limits_{i=1}^n \widetilde{r_{1i}} x_{ki} + \sum\limits_{i=1}^n \widetilde{r_{1i}} u_i \\
+& = \beta_0 (0) + \beta_1 \sum\limits_{i=1}^n \widetilde{r_{1i}}^2 + \beta_2 (0) + \dots + \beta_k (0) + \sum\limits_{i=1}^n \widetilde{r_{1i}} u_i \\
+& = \beta_1 \sum\limits_{i=1}^n \widetilde{r_{1i}}^2 + \sum\limits_{i=1}^n \widetilde{r_{1i}} u_i
+\end{split}
+$$
+
+Now, putting the numerator back in, we can simplify:
+
+$$
+\begin{split}
+\hat\beta_1 & = \frac{\beta_1 \sum_{i=1}^n \widetilde{r_{1i}}^2 + \sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
+& \\
+& = \frac{\beta_1 \sum_{i=1}^n \widetilde{r_{1i}}^2}{\sum_{i=1}^n \widetilde{r_{1i}}^2} + \frac{\sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
+& \\
+& = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+\end{split}
+$$
+
+<br />
+
+Now, we want to find $E(\hat\beta_1)$. Note that the second part of the equation is a function of $u_i$, of which itself is a function of all explanatory variables $x_{1i}, \dots, x_{ki}$. Thus, we know:
+
+$$
+\begin{split}
+E(\hat\beta_1 | x_{1i}, \dots x_{ki}) & = \beta_1 + E\left( \frac{\sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \biggr|x_{1i},\dots, x_{ki} \right) \\
+& = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ E(u_i|x_{1i}, \dots,x_{ki})}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+\end{split}
+$$
+
+But what is $E(u_i|x_{1i}, \dots , x_{ki})$? We can use two Gauss-Markov conditions to evaluate this.
+
+::: callout-tip
+## MLR.4 Zero Conditional Mean
+
+The Zero-Conditional Mean assumption says $E(u|x_1, \dots, x_k) = 0$.
+:::
+
+::: callout-tip
+## MLR.2 Random Sampling
+
+Random sampling, combined with Zero-Conditional Mean, allows us to say:
+
+$$
+E(u|x_1, \dots, x_k)=E(u_1|x_{1i}, \dots, x_{ki}) = 0
+$$
+:::
+
+Thus, plugging that in to our formula, we get:
+
+$$
+\begin{split}
+E(\hat\beta_1 | x_{1i}, \dots x_{ki}) 
+& = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ E(u_i|x_{1i}, \dots,x_{ki})}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
+& = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ (0)}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
+& = \beta_1 + 0 \\
+& = \beta_1
+\end{split}
+$$
+
+Now, just like in simple linear regression, we use the **law of iterated expectations** to conclude this proof:
+
+$$
+\begin{split}
+E(\hat\beta_1) & = E[E(\hat\beta_1|x_{1i}, \dots, x_{ki})] \\
+& = E(\beta_1) \\
+& = \beta_1
+\end{split}
+$$
+
+Thus, OLS is unbiased under these 4 conditions
 :::
 
 <br />
 
 ## Assumptions for Consistency
 
+Asymptotic consistency of an estimator is when we increase sample size $n \rightarrow ∞$, the estimator should converge around the true population value.
+
+::: {.callout-note collapse="true"}
+## Notes on Asymptotic Consistency
+
+An estimator is consistent, if as we increase sample size towards infinity, the estimate will become more and more concentrated around the true population value $\theta$.
+
+Or in other words, as sample size increases indefinitely, we will get closer and closer to the true population value $\theta$, until at infinite sample size, all our estimates will be exactly $\theta$.
+
+Mathematically:
+
+$$
+Pr(|\hat\theta_n - \theta|> \epsilon) \rightarrow 0, \text { as } n \rightarrow ∞
+$$
+
+-   Or in other words, the proabability that the distance between an estimate $\hat\theta_n$ and the true population value $\theta$ will be higher than a small close-to-zero value $\epsilon$ will be 0, since our estimates $\hat\theta_n$ will converge at the $\theta$.
+
 <br />
+
+An estimator can be both biased, but consistent.
+
+-   i.e. in smaller sample sizes, the estimator might not be on average correct, but over a large enough sample size, it will become "unbiased".
+:::
+
+The assumptions for the asymptotic consistency of the OLS estimate of $\widehat{\beta_1}$ are very similar to the assumptions for unbiasedness, but with assumption MLR.4 weakened to MLR.4':
+
+::: {.callout-tip collapse="true" icon="false"}
+## MLR.1 Linearity in Parameters
+
+A model must be linear in parameters for unbiasedness. This means that the parameters of the model $\beta_0, \dots, \beta_k$ must not be multiplied/divided together.
+
+Note: this does not mean the actual regression line must be linear - only the parameters/coefficients must not be multiplied.
+
+For example, the following model is still linear in parameters:
+
+$$
+y = \beta_0 + \beta_1x^2
+$$
+:::
+
+::: {.callout-tip collapse="true" icon="false"}
+## MLR.2 Random Sampling
+
+This assumption says that all observations in our sample are randomly sampled from the same population.
+
+The error term $u$ in our regression model is some random variable (with its own probability distribution), that can be defined by its expectation $E(u)$.
+
+-   If we randomly select one observation $i$ from the data, each observation $i$ has an equal chance of being selected.
+-   The error term for that observation, $u_i$, should also have the same expectation as the random variable $u$, since each observation $i$ within $u$ has the same chance of being selected.
+
+Thus, random sampling allows us to say $E(u) = E(u_i)$.
+:::
+
+::: {.callout-tip collapse="true" icon="false"}
+## MLR.3 No Perfect Multicollinearity/Variance in $x$
+
+No perfect multicollinearity (MLR.3) means that no two explanatory variables are perfectly correlated together. This also means that in the regression anatomy formula, $\sum \widetilde{r_{ji}}^2 ≠ 0$.
+
+If we have a simple linear regression, we instead must make sure that there is indeed variance in the explanatory variable $x$ (SLR.3). Or in other words: $Var(x) ≠ 0$.
+
+**These two assumptions are necessary to even calculate** $\widehat{\beta_0}$, since the formulas require dividing by these values, so if they equal 0, we cannot calculate OLS.
+:::
+
+::: {.callout-tip collapse="true" icon="false"}
+## MLR.4' Zero-Mean and Exogeneity
+
+We can weaken *MLR.4 Zero-Conditional Mean* to the *Zero-Mean and Exogeneity assumption*:
+
+$$
+\begin{split}
+& E(u) = 0 \\
+& Cov(x_j, u) = 0, \quad \text{for } j = 1,\dots k
+\end{split}
+$$
+
+The second assumption can also be rewritten as:
+
+$$
+E(x_j u) = 0
+$$
+
+-   The proof of this is almost identical to the proof of $\sum x \hat u = 0$ implying $Cov(x, \hat u) = 0$ we did in section 2.3.1.
+
+Note: if we meet the full MLR.4 Zero-Conditional Mean assumption, we will automatically meet this weakened assumption. However, the reverse is not true.
+
+[Under this new assumption (and the other 3 Gauss-Markov assumptions), OLS is biased in small sample sizes, but asymptotically consistent.]{.underline}
+:::
+
+<br />
+
+If these 4 conditions are met, OLS is Asymptotically consistent.
+
+::: {.callout-note collapse="true"}
+## Proof of OLS Asymptotic Consistency
+
+::: {.callout-warning collapse="true"}
+## Useful Properties of Summation
+
+Before we start, here are a few key properties of summation
+
+**Property 1:**
+
+$$
+\sum\limits_{i=1}^n (x_i - \bar{x}) = 0
+$$
+
+-   This is because we can expand the left to $\sum x_i - \sum \bar x$.
+-   Then, we know $\sum x_i = \sum \bar x$ (by the formula for mean), so $\sum x_i - \sum \bar x = 0$.
+
+**Property 2:**
+
+$$
+\sum\limits_{i=1}^n x_i(y_i - \bar{y}) = \sum\limits_{i=1}^n(x_i - \bar{x}) (y_i - \bar{y}) 
+$$
+
+-   This is because on the right side can expand to $\sum [x_i(y_i - \bar y) - \bar x (y_i - \bar y)]$.
+-   Then, split into $\sum x_i (y_i - \bar y) - \bar x \sum (y_i - \bar y)$.
+-   We know that by property 1 (which applies to any variable), $\sum (y_i - \bar y) = 0$. Thus, the right side disappears, and we are left with $\sum x_i (y_i - \bar y)$.
+
+**Property 3:**
+
+$$
+\sum\limits_{i=1}^n x_i(x_i - \bar{x}) = \sum\limits_{i=1}^n(x_i - \bar{x})^2
+$$
+
+-   Start by expanding right side to $\sum [ x_i ( x_i - \bar x) - \bar x (x_i - \bar x)]$
+-   Which splits into $\sum x_i (x_i - \bar x) - \bar x \sum (x_i - \bar x)$
+-   By the first property, we know $\sum x_i - \bar x = 0$, so we are only left with $\sum x_i (x_i - \bar x)$
+:::
+
+Let us look at the numerator. Let us expand the numerator:
+
+$$
+\begin{split}
+& \sum\limits_{i=1}^n (x_i - \bar{x})(y_i - \bar{y}) \\
+= & \sum\limits_{i=1}^n [(x_i - \bar x)y_i - (x_i - \bar x) \bar y] \\
+= & \sum\limits_{i=1}^n(x_i - \bar x)y_i - \sum\limits_{i=1}^n (x_i - \bar x) \bar y \\
+= & \sum\limits_{i=1}^n(x_i - \bar x)y_i - \bar y\sum\limits_{i=1}^n (x_i - \bar x) \\
+\end{split}
+$$
+
+We know that $\sum (x_i - \bar x) = 0$ (from the properties above). Thus, we can further simplify to:
+
+$$
+\begin{split}
+= & \sum\limits_{i=1}^n(x_i - \bar x)y_i - \bar y\sum\limits_{i=1}^n (x_i - \bar x) \\
+= & \sum\limits_{i=1}^n(x_i - \bar x)y_i - \bar y(0) \\
+= & \sum\limits_{i=1}^n(x_i - \bar x)y_i
+\end{split}
+$$
+
+Now, let us play with the numerator more (note the properties of summation introduced earlier):
+
+$$
+\begin{split}
+& = \sum\limits_{i=1}^n (x_i - \bar{x})y_i \\
+& = \sum\limits_{i=1}^n(x_i - \bar{x})(\beta_0 + \beta_1 x_i + u_i) \\
+& = \sum\limits_{i=1}^n(x_i - \bar{x}) \beta_0 + \sum\limits_{i=1}^n(x_i - \bar{x}) \beta_1  x_i + \sum\limits_{i=1}^n (x_i - \bar{x}) u_i \\
+& = \beta_0 \sum\limits_{i=1}^n(x_i - \bar{x}) + \beta_1 \sum\limits_{i=1}^n(x_i - \bar{x}) x_i + \sum\limits_{i=1}^n (x_i - \bar{x}) u_i \\
+& = 0 + \beta_1 \sum\limits_{i=1}^n(x_i - \bar{x})^2 + \sum\limits_{i=1}^n(x_i - \bar{x})u_i\end{split}
+$$
+
+Now, putting the numerator back into the equation, we simplify:
+
+$$
+\begin{split}
+\hat{\beta}_1 & = \frac{\beta_1 \sum_{i=1}^n(x_i - \bar{x})^2 + \sum_{i=1}^n(x_i - \bar{x})u_i}{\sum_{i=1}^n(x_i - \bar{x})^2} \\
+&  =  \beta_1 + \frac{\sum_{i=1}^n(x_i - \bar{x}) u_i}{\sum_{i=1}^n (x_i - \bar{x})^2}
+\end{split}
+$$
+
+We can add $\frac{1}{n}$ (or $n^{-1}$) to the top and bottom of the fraction (which cancel each other out, keeping the equation equivalent):
+
+$$
+\hat\beta_1=  \beta_1 + \frac{n^{-1} \sum_{i=1}^n(x_i - \bar{x}) u_i}{n^{-1} \sum_{i=1}^n (x_i - \bar{x})^2}
+$$
+
+Now, let us expand the numerator, and simplify, and we get:
+
+$$
+\begin{split}
+\hat\beta_1 & =  \beta_1 + \frac{n^{-1} \sum_{i=1}^n x_i u_i - n^{-1} \sum_{i=1}^n \bar x u_i}{n^{-1} \sum_{i=1}^n (x_i - \bar{x})^2} \\
+& =  \beta_1 + \frac{n^{-1} \sum_{i=1}^n x_i u_i - \bar x \ n^{-1} \sum_{i=1}^n u_i}{n^{-1} \sum_{i=1}^n (x_i - \bar{x})^2} \\
+& =  \beta_1 + \frac{ \overline{xu} - \bar x \bar u}{S.Var(x)}
+\end{split}
+$$
+
+-   Where $S.Var(x)$ is the sample variance of $x$.
+
+We want to find $\text{plim}(\hat\beta_1)$. We will need a few properties for this:
+
+::: {.callout-warning collapse="true"}
+## Properties of Probability Limits
+
+We know these general rules about probability limits:
+
+$$
+\begin{split}
+& \text{plim}(\bar x_n) = \mu _x \\
+& \text{plim}(S.Var(x_i)) = Var(x_i) \\
+& \text{plim}(S.Cov(x_i, y_i)) = Cov (x_i, y_i)
+\end{split}
+$$
+
+The other properties are about algebra with probability limits. Assume $\text{plim} (u_n) = a$, and $\text{plim}(v_n) = b$. Then, the following are true:
+
+$$
+\begin{split}
+& \text{plim} (u_n + v_n) = a + b \\
+& \text{plim} (u_n v_n) = ab \\
+& \text{plim} (u_n v_n) = a/b
+\end{split}
+$$
+:::
+
+Knowing this, we then know that:
+
+$$
+\begin{split}
+\text{plim}(\hat\beta_1) & = \beta_1 + \frac{ \text{plim}(\overline{xu}) - \text{plim}( \bar x \bar u) }{ \text{plim}(S.Var(x))} \\
+& = \beta_1 + \frac{ \text{plim}(\overline{xu}) - \text{plim}(\bar x) \text{plim}(\bar u) }{ \text{plim}(S.Var(x))} \\
+&  = \beta_1 + \frac{ E(xu) - E(x) E(u) }{Var(x)} \\
+\end{split}
+$$
+
+::: callout-tip
+## MLR.4' Zero-Mean and Exogeneity Assumption
+
+The weakened Zero-Mean and Exogeneity assumption states:
+
+$$
+\begin{split}
+& E(u) = 0 \\
+& E(xu) = 0
+\end{split}
+$$
+:::
+
+Using this assumption, we can conclude the proof:
+
+$$
+\begin{split}
+\text{plim}(\hat\beta_1) & = \beta_1 + \frac{ E(xu) - E(x) E(u) }{Var(x)} \\
+& = \beta_1 + \frac{ 0 - E(x)0}{Var(x)} \\
+& = \beta_1 + \frac{ 0 }{Var(x)} \\
+& = \beta_1+0 \\
+\text{plim}(\hat\beta_1) & = \beta_1
+\end{split}
+$$
+
+Thus, OLS is asymptotically consistent under a weakened version of MLR.4 Zero-Conditional Mean - called the Zero-Mean and Exogeneity Assumption.
+
+-   Under this weakened assumption (without meeting the full MLR.4 assumption), OLS is [biased but consistent]{.underline}.
+:::
+
+The key assumption is **Exogeneity** - that no explanatory variable is correlated with the error term. If exogeneity is violated, this is often caused by omitted variable bias.
+
+::: {.callout-note collapse="true"}
+## Omitted Variable Bias
+
+Consider two regressions. The first regression, the "short" regression, is a simple linear regression with only explanatory variable $x$. The second regression, the "long" regression, contains an extra variable $z$ that is omitted from the first regression:
+
+$$
+\begin{split}y_i & = \beta_0^S + \beta_1^Sx_i + u_i^S \quad \text{short} \\y_i & = \beta_0 + \beta_1x_i + \beta_2z_i + u_i \quad \text{long}\end{split}
+$$
+
+-   Note: the $S$ in $\beta_0^S$ is a subscript representing short. It is not an exponent.
+
+Now consider an auxiliary regression, where the omitted variable $z$ is the outcome variable, and $x$ is the explanatory variable:
+
+$$
+z_i = \delta_0 + \delta_1 x_i + v_i
+$$
+
+-   where $\delta_0, \delta_1$ are coefficients and $v_i$ is the error term
+
+<br />
+
+Now we have $z$ in terms of $x$, let us plug $z$ into our long regression to "recreate" the short regression:
+
+$$
+\begin{split}y_i & = \beta_0 + \beta_1x_i + \beta_2z_i + u_i \\y_i & = \beta_0 + \beta_1 x_i + \beta_2(\delta_0 + \delta_1x_i + v_i) + u_i \\y_i & = \beta_0 + \beta_1 x_i + \beta_2 \delta_0 + \beta_2 \delta_1 x_i + \beta_2v_i + u_i \\y_i & = \beta_0 + \beta_2 \delta_0 + (\beta_1 + \beta_2 \delta_1)x_i + \beta_2v_i + u_i\end{split}
+$$
+
+We have "recreated" the short regression with one variable $x$. Let us see our recreation next to the original short regression:
+
+$$
+\begin{split}
+y_i & = \beta_0^S + \beta_1^Sx_i + u_i^S \\
+y_i & = \beta_0 + \beta_2 \delta_0 + (\beta_1 + \beta_2 \delta_1)x_i + \beta_2v_i + u_i
+\end{split}
+$$
+
+-   The short regression coefficient $\beta_0^S$ is analogous to the $\beta_0 + \beta_2 \delta_0$ in the recreation (both are the intercepts)
+-   The short regression coefficient $\beta_1^S x_i$ is analogous to the $(\beta_1 + \beta_2 \delta_1)x_i$ in the recreation (both are the slope and variable of interest)
+-   The short regression $u_i^S$ is analogous to the $\beta_2 v_i + u_i$ in the recreation (both are the error terms).
+
+Since the short regression $\beta_1^S x_i$ is analogous to the $(\beta_1 + \beta_2 \delta_1)x_i$ in the recreation, that means coefficient $\beta_1^S = \beta_1 + \beta_2 \delta_1$.
+
+Thus, the difference between the short regression (simple linear regression) coefficient $\beta_1^S$, and the original long regression coefficient $\beta_1$, is $\beta_2 \delta_1$.
+
+-   If $\beta_2 = 0$ (meaning no relationship between omitted $x$ and $y$), or $\delta_1 = 0$ (meaning no relationship between omitted $x$ and $x$), then difference $\beta_2 \delta_1 = 0$, thus there is no difference.
+-   But if either of those facts are not true, then $\beta_2 \delta_1 ≠ 0$, and there is a difference between $\beta_1^S$ and $\beta_1$.
+
+<br />
+
+More intuitively, if the omitted variable $z$ is both correlated with $x$ and $y$, then the two coefficients are different by $\beta_2 \delta_1$.
+
+-   Any variable $z$ correlated both with $x$ and $y$ is called a **confounding variable**.
+-   This $\beta_2 \delta_1$ amount is called the **omitted variable bias**.
+:::
 
 <br />
 
 ------------------------------------------------------------------------
 
 # Statistical Inference
+
+The standard errors of OLS estimates quantify how precise our estimates are:
+
+::: callout-tip
+## Intuition of Standard Errors and Uncertainty
+:::
+
+::: callout-tip
+## Homoscedasticity vs. Heteroscedasticity and Standard Errors
+:::
+
+<br />
+
+We can mathematically derive standard errors as shown below:
+
+::: callout-note
+## Deriving OLS Standard Errors
+:::
+
+::: callout-note
+## Deriving Robust Standard Errors
+:::
+
+<br />
+
+Using standard errors, we can conduct hypothesis testing:
+
+::: callout-tip
+## T-Tests for Coefficients
+:::
+
+::: callout-tip
+## Confidence Intervals for Coefficients
+:::
+
+::: callout-tip
+## F-Tests for Multiple Coefficients
+:::
+
+::: callout-tip
+## Confidence Intervals for Prediction
+:::
 
 <br />
 

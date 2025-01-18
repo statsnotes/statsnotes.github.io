@@ -975,10 +975,10 @@ MSE &amp; = \min\limits_{b_0, b_1} E(y_i - E(y_i|x_i))^2 \\
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 OLS is a Special Case of the Method of Moments Estimator
@@ -1537,9 +1537,10 @@ E(u|x_1, \dots, x_k) = E(u_i|x_{1i}, \dots, x_{ki}) = 0
 </div>
 </div>
 </div>
+<p><br></p>
 <p>If all 4 conditions are met, The OLS estimate of <span class="math inline">\widehat{\beta_j}</span> (the relationship between <span class="math inline">x_j</span> and <span class="math inline">y</span>) is unbiased.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-37-contents" aria-controls="callout-37" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-41-contents" aria-controls="callout-41" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1548,14 +1549,178 @@ Proof of Unbiasedness for Simple Linear Regression
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-37" class="callout-37-contents callout-collapse collapse">
+<div id="callout-41" class="callout-41-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-
+<p>We want to show <span class="math inline">E(\hat\beta_1) = \beta_1</span>. Let us start off with the OLS estimator:</p>
+<p><span class="math display">
+\hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n(x_i - \bar{x})^2}
+</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+SLR.3 Variance in <span class="math inline">x</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The existence of <span class="math inline">\hat{\beta}_1</span> is guaranteed by SLR.3 <span class="math inline">Var(x) ≠ 0</span>, since we cannot divide by 0.</p>
+</div>
+</div>
+<p><br></p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-38-contents" aria-controls="callout-38" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Useful Properties of Summation
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-38" class="callout-38-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Before we start, here are a few key properties of summation</p>
+<p><strong>Property 1:</strong></p>
+<p><span class="math display">
+\sum\limits_{i=1}^n (x_i - \bar{x}) = 0
+</span></p>
+<ul>
+<li>This is because we can expand the left to <span class="math inline">\sum x_i - \sum \bar x</span>.</li>
+<li>Then, we know <span class="math inline">\sum x_i = \sum \bar x</span> (by the formula for mean), so <span class="math inline">\sum x_i - \sum \bar x = 0</span>.</li>
+</ul>
+<p><strong>Property 2:</strong></p>
+<p><span class="math display">
+\sum\limits_{i=1}^n x_i(y_i - \bar{y}) = \sum\limits_{i=1}^n(x_i - \bar{x}) (y_i - \bar{y})
+</span></p>
+<ul>
+<li>This is because on the right side can expand to <span class="math inline">\sum [x_i(y_i - \bar y) - \bar x (y_i - \bar y)]</span>.</li>
+<li>Then, split into <span class="math inline">\sum x_i (y_i - \bar y) - \bar x \sum (y_i - \bar y)</span>.</li>
+<li>We know that by property 1 (which applies to any variable), <span class="math inline">\sum (y_i - \bar y) = 0</span>. Thus, the right side disappears, and we are left with <span class="math inline">\sum x_i (y_i - \bar y)</span>.</li>
+</ul>
+<p><strong>Property 3:</strong></p>
+<p><span class="math display">
+\sum\limits_{i=1}^n x_i(x_i - \bar{x}) = \sum\limits_{i=1}^n(x_i - \bar{x})^2
+</span></p>
+<ul>
+<li>Start by expanding right side to <span class="math inline">\sum [ x_i ( x_i - \bar x) - \bar x (x_i - \bar x)]</span></li>
+<li>Which splits into <span class="math inline">\sum x_i (x_i - \bar x) - \bar x \sum (x_i - \bar x)</span></li>
+<li>By the first property, we know <span class="math inline">\sum x_i - \bar x = 0</span>, so we are only left with <span class="math inline">\sum x_i (x_i - \bar x)</span></li>
+</ul>
+</div>
+</div>
+</div>
+<p>Let us look at the numerator. Let us expand the numerator:</p>
+<p><span class="math display">
+\begin{split}
+&amp; \sum\limits_{i=1}^n (x_i - \bar{x})(y_i - \bar{y}) \\
+= &amp; \sum\limits_{i=1}^n [(x_i - \bar x)y_i - (x_i - \bar x) \bar y] \\
+= &amp; \sum\limits_{i=1}^n(x_i - \bar x)y_i - \sum\limits_{i=1}^n (x_i - \bar x) \bar y \\
+= &amp; \sum\limits_{i=1}^n(x_i - \bar x)y_i - \bar y\sum\limits_{i=1}^n (x_i - \bar x) \\
+\end{split}
+</span></p>
+<p>We know that <span class="math inline">\sum (x_i - \bar x) = 0</span> (from the properties above). Thus, we can further simplify to:</p>
+<p><span class="math display">
+\begin{split}
+= &amp; \sum\limits_{i=1}^n(x_i - \bar x)y_i - \bar y\sum\limits_{i=1}^n (x_i - \bar x) \\
+= &amp; \sum\limits_{i=1}^n(x_i - \bar x)y_i - \bar y(0) \\
+= &amp; \sum\limits_{i=1}^n(x_i - \bar x)y_i
+\end{split}
+</span></p>
+<p>Now, let us play with the numerator more (note the properties of summation introduced earlier):</p>
+<p><span class="math display">
+\begin{split}
+&amp; = \sum\limits_{i=1}^n (x_i - \bar{x})y_i \\
+&amp; = \sum\limits_{i=1}^n(x_i - \bar{x})(\beta_0 + \beta_1 x_i + u_i) \\
+&amp; = \sum\limits_{i=1}^n(x_i - \bar{x}) \beta_0 + \sum\limits_{i=1}^n(x_i - \bar{x}) \beta_1  x_i + \sum\limits_{i=1}^n (x_i - \bar{x}) u_i \\
+&amp; = \beta_0 \sum\limits_{i=1}^n(x_i - \bar{x}) + \beta_1 \sum\limits_{i=1}^n(x_i - \bar{x}) x_i + \sum\limits_{i=1}^n (x_i - \bar{x}) u_i \\
+&amp; = 0 + \beta_1 \sum\limits_{i=1}^n(x_i - \bar{x})^2 + \sum\limits_{i=1}^n(x_i - \bar{x})u_i\end{split}
+</span></p>
+<p>Now, putting the numerator back into the equation, we simplify:</p>
+<p><span class="math display">
+\begin{split}
+\hat{\beta}_1 &amp; = \frac{\beta_1 \sum_{i=1}^n(x_i - \bar{x})^2 + \sum_{i=1}^n(x_i - \bar{x})u_i}{\sum_{i=1}^n(x_i - \bar{x})^2} \\
+&amp;  =  \beta_1 + \frac{\sum_{i=1}^n(x_i - \bar{x}) u_i}{\sum_{i=1}^n (x_i - \bar{x})^2} \\
+&amp;  = \beta_1 + \sum\limits_{i=1}^n w_i u_i
+\end{split}
+</span></p>
+<ul>
+<li>Where <span class="math inline">w_i = \frac{x_i - \bar{x}}{\sum (x_i - \bar{x})^2}</span>, which is a function of random variable <span class="math inline">x</span>. We could also write <span class="math inline">w_i</span> as <span class="math inline">\frac{x_i - \bar{x}}{SST_x}</span> (where <span class="math inline">SST_x</span> is total sum of squares for <span class="math inline">x</span>).</li>
+</ul>
+<p>Since <span class="math inline">w_i</span> is a function of <span class="math inline">x</span>, that means <span class="math inline">\hat\beta_1</span> is also a function of <span class="math inline">x</span> (depends on the value of <span class="math inline">x</span>).</p>
+<p><br></p>
+<p>Now we need to find the expectation <span class="math inline">E(\hat\beta_1)</span>. Thus, we have this equation:</p>
+<p><span class="math display">
+\begin{split}
+E(\hat\beta_1|x) &amp; = E \left( \beta_1 + \sum\limits_{i=1}^n w_i u_i \bigg| x \right) \\
+&amp; = \beta_1 + \sum\limits_{i=1}^nE(w_iu_i|x)
+\end{split}
+</span></p>
+<p>But what does <span class="math inline">\sum E(w_iu_i |x)</span> equal? This is where our other two Gauss-Markov Conditions come into play.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+SLR.4 Zero Conditional Mean
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The Zero-Conditional Mean assumption says <span class="math inline">E(u|x) = 0</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+SLR.2 Random Sampling
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Random sampling, combined with zero-conditional mean, allows us to say:</p>
+<p><span class="math display">
+E(u|x) = E(u_i | x_i) = E(u_i|x) = 0
+</span></p>
+</div>
+</div>
+<p>This means that:</p>
+<p><span class="math display">
+E(w_i u_i|x) = w_i E(u_i|x) = 0
+</span></p>
+<p><br></p>
+<p>Now knowing what <span class="math inline">E(w_iu_i|x)</span> is, let us plug it back into our equation:</p>
+<p><span class="math display">
+\begin{split}
+E(\hat\beta_1|x) &amp; = \beta_1 + \sum\limits_{i=1}^nE(w_iu_i|x) \\
+&amp; = \beta_1 + \sum\limits_{i=1}^n0 \\
+&amp; = \beta_1
+\end{split}
+</span></p>
+<p>However, we have solved for <span class="math inline">E(\hat\beta_1 |x)</span>, and not <span class="math inline">E (\hat\beta_1)</span>. This is where the <strong>Law of Iterated Expectation</strong>. The law says the following:</p>
+<p><span class="math display">
+E(x) = E[E(x|y)]
+</span></p>
+<p>Thus, we can use this to conclude the proof:</p>
+<p><span class="math display">
+\begin{split}
+E(\hat\beta_1) &amp; = E[E(\hat\beta_1|x)] \\
+&amp; = E(\beta_1) \\
+&amp; = \beta_1
+\end{split}
+</span></p>
+<ul>
+<li>Since <span class="math inline">\beta_1</span> is the true value (a constant), its expectation is itself</li>
+</ul>
+<p>Thus, <span class="math inline">E(\hat\beta_1) = \beta_1</span>, proving the unbiasedness of OLS under the 4 conditions.</p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-38-contents" aria-controls="callout-38" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-46-contents" aria-controls="callout-46" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1564,9 +1729,152 @@ Proof of Unbiasedness for Multiple Linear Regression
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-38" class="callout-38-contents callout-collapse collapse">
+<div id="callout-46" class="callout-46-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-
+<p>For simplicity, let us focus on <span class="math inline">\hat\beta_1</span>. However, this can be generalised to any <span class="math inline">\hat\beta_2, \dots, \hat\beta_k</span>.</p>
+<p>Recall the regression anatomy solution of OLS for <span class="math inline">\hat\beta_1</span>:</p>
+<p><span class="math display">
+\hat\beta_1 = \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ y_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+</span></p>
+<ul>
+<li>Where <span class="math inline">\widetilde{r_{1i}}</span> is the part of <span class="math inline">x_1</span> uncorrelated with <span class="math inline">x_2, \dots, x_k</span>.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MLR.3 No Perfect Multicollinearity
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The existence of <span class="math inline">\hat\beta_1</span> is guaranteed by MLR.3 <span class="math inline">\sum\widetilde{r_{1i}}^2 ≠ 0</span>, since we cannot divide by 0.</p>
+</div>
+</div>
+<p>Now, let us plug in <span class="math inline">y_i = \beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki} + u_i</span> into our regression anatomy formula:</p>
+<p><span class="math display">
+\begin{split}
+\hat\beta_1 &amp; = \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ y_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
+&amp; = \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ (\beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki} + u_i)}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
+\end{split}
+</span></p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-43-contents" aria-controls="callout-43" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Useful Properties of Summations
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-43" class="callout-43-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Before we start, here are a few key properties of summation</p>
+<p><strong>Property 1:</strong></p>
+<p><span class="math display">
+\sum\limits_{i=1}^n \widetilde{r_{1i}} = 0
+</span></p>
+<ul>
+<li>This is because <span class="math inline">\widetilde{r_{1i}}</span> is a residual term of a OLS regression of outcome <span class="math inline">x_1</span> and explanatory variables <span class="math inline">x_2, \dots, x_k</span>, and we know OLS residuals sum to 0.</li>
+</ul>
+<p><strong>Property 2:</strong></p>
+<p><span class="math display">
+\sum\limits_{i=1}^n \widetilde{r_{1i}} x_{ji} = 0, \text{ given } j=2, \dots, k
+</span></p>
+<ul>
+<li>Because for OLS, <span class="math inline">\sum x_i \hat u_i = 0</span>, and we know <span class="math inline">\widetilde{r_{1i}}</span> is the residual <span class="math inline">\hat u_i</span> in a regression with explanatory variables <span class="math inline">x_2, \dots, x_k</span> and outcome variable <span class="math inline">x_1</span>.</li>
+</ul>
+<p><strong>Property 3:</strong></p>
+<p><span class="math display">
+\sum\limits_{i=1}^n \widetilde{r_{1i}} x_{1i} = \sum\limits_{i=1}^n \widetilde{r_{1i}}(\hat x_{1i} + \sum\limits_{i=1}^n \widetilde{r_{1i}}) = \sum\limits_{i=1}^n \widetilde{r_{1i}}^2
+</span></p>
+<ul>
+<li>Because we have the regression fitted values <span class="math inline">\hat x_{1i} = \hat \gamma_0 + \hat\gamma_1 x_2 + \dots + \hat\gamma_{k-1} x_{k} + \widetilde{r_{1i}}</span> from regression anatomy.</li>
+<li>And we know with regression, actual values are the predicted plus residual: <span class="math inline">y_i = \hat y_i + \hat u_i</span>. Thus, <span class="math inline">x_i = \hat x_i + \widetilde{r_{1i}}</span>.</li>
+</ul>
+</div>
+</div>
+</div>
+<p>Now, focusing on the numerator, and using the summation properties above, let us simplify:</p>
+<p><span class="math display">
+\begin{split}
+&amp; \sum\limits_{i=1}^n \widetilde{r_{1i}} \ (\beta_0 + \beta_1 x_{1i} + \dots + \beta_k x_{ki} + u_i) \\
+&amp; = \sum\limits_{i=1}^n (\widetilde{r_{1i}}\beta_0 + \widetilde{r_{1i}}\beta_1x_{1i} + \dots + \widetilde{r_{1i}}\beta_k x_{ki} + \widetilde{r_{1i}} u_i) \\
+&amp; = \sum\limits_{i=1}^n \widetilde{r_{1i}}\beta_0 + \sum\limits_{i=1}^n \widetilde{r_{1i}}\beta_1 x_{1i} + \dots + \sum\limits_{i=1}^n \widetilde{r_{1i}}\beta_k x_{ki} + \sum\limits_{i=1}^n \widetilde{r_{1i}} u_i \\
+&amp; = \beta_0 \sum\limits_{i=1}^n \widetilde{r_{1i}} + \beta_1 \sum\limits_{i=1}^n \widetilde{r_{1i}} x_{1i} + \dots + \beta_k \sum\limits_{i=1}^n \widetilde{r_{1i}} x_{ki} + \sum\limits_{i=1}^n \widetilde{r_{1i}} u_i \\
+&amp; = \beta_0 (0) + \beta_1 \sum\limits_{i=1}^n \widetilde{r_{1i}}^2 + \beta_2 (0) + \dots + \beta_k (0) + \sum\limits_{i=1}^n \widetilde{r_{1i}} u_i \\
+&amp; = \beta_1 \sum\limits_{i=1}^n \widetilde{r_{1i}}^2 + \sum\limits_{i=1}^n \widetilde{r_{1i}} u_i
+\end{split}
+</span></p>
+<p>Now, putting the numerator back in, we can simplify:</p>
+<p><span class="math display">
+\begin{split}
+\hat\beta_1 &amp; = \frac{\beta_1 \sum_{i=1}^n \widetilde{r_{1i}}^2 + \sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
+&amp; \\
+&amp; = \frac{\beta_1 \sum_{i=1}^n \widetilde{r_{1i}}^2}{\sum_{i=1}^n \widetilde{r_{1i}}^2} + \frac{\sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
+&amp; \\
+&amp; = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+\end{split}
+</span></p>
+<p><br></p>
+<p>Now, we want to find <span class="math inline">E(\hat\beta_1)</span>. Note that the second part of the equation is a function of <span class="math inline">u_i</span>, of which itself is a function of all explanatory variables <span class="math inline">x_{1i}, \dots, x_{ki}</span>. Thus, we know:</p>
+<p><span class="math display">
+\begin{split}
+E(\hat\beta_1 | x_{1i}, \dots x_{ki}) &amp; = \beta_1 + E\left( \frac{\sum_{i=1}^n \widetilde{r_{1i}} u_i}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \biggr|x_{1i},\dots, x_{ki} \right) \\
+&amp; = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ E(u_i|x_{1i}, \dots,x_{ki})}{\sum_{i=1}^n \widetilde{r_{1i}}^2}
+\end{split}
+</span></p>
+<p>But what is <span class="math inline">E(u_i|x_{1i}, \dots , x_{ki})</span>? We can use two Gauss-Markov conditions to evaluate this.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MLR.4 Zero Conditional Mean
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The Zero-Conditional Mean assumption says <span class="math inline">E(u|x_1, \dots, x_k) = 0</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MLR.2 Random Sampling
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Random sampling, combined with Zero-Conditional Mean, allows us to say:</p>
+<p><span class="math display">
+E(u|x_1, \dots, x_k)=E(u_1|x_{1i}, \dots, x_{ki}) = 0
+</span></p>
+</div>
+</div>
+<p>Thus, plugging that in to our formula, we get:</p>
+<p><span class="math display">
+\begin{split}
+E(\hat\beta_1 | x_{1i}, \dots x_{ki})
+&amp; = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ E(u_i|x_{1i}, \dots,x_{ki})}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
+&amp; = \beta_1 + \frac{\sum_{i=1}^n \widetilde{r_{1i}} \ (0)}{\sum_{i=1}^n \widetilde{r_{1i}}^2} \\
+&amp; = \beta_1 + 0 \\
+&amp; = \beta_1
+\end{split}
+</span></p>
+<p>Now, just like in simple linear regression, we use the <strong>law of iterated expectations</strong> to conclude this proof:</p>
+<p><span class="math display">
+\begin{split}
+E(\hat\beta_1) &amp; = E[E(\hat\beta_1|x_{1i}, \dots, x_{ki})] \\
+&amp; = E(\beta_1) \\
+&amp; = \beta_1
+\end{split}
+</span></p>
+<p>Thus, OLS is unbiased under these 4 conditions</p>
 </div>
 </div>
 </div>
@@ -1574,13 +1882,483 @@ Proof of Unbiasedness for Multiple Linear Regression
 </section>
 <section id="assumptions-for-consistency" class="level2">
 <h2 class="anchored" data-anchor-id="assumptions-for-consistency">Assumptions for Consistency</h2>
+<p>Asymptotic consistency of an estimator is when we increase sample size <span class="math inline">n \rightarrow ∞</span>, the estimator should converge around the true population value.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-47-contents" aria-controls="callout-47" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Notes on Asymptotic Consistency
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-47" class="callout-47-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>An estimator is consistent, if as we increase sample size towards infinity, the estimate will become more and more concentrated around the true population value <span class="math inline">\theta</span>.</p>
+<p>Or in other words, as sample size increases indefinitely, we will get closer and closer to the true population value <span class="math inline">\theta</span>, until at infinite sample size, all our estimates will be exactly <span class="math inline">\theta</span>.</p>
+<p>Mathematically:</p>
+<p><span class="math display">
+Pr(|\hat\theta_n - \theta|&gt; \epsilon) \rightarrow 0, \text { as } n \rightarrow ∞
+</span></p>
+<ul>
+<li>Or in other words, the proabability that the distance between an estimate <span class="math inline">\hat\theta_n</span> and the true population value <span class="math inline">\theta</span> will be higher than a small close-to-zero value <span class="math inline">\epsilon</span> will be 0, since our estimates <span class="math inline">\hat\theta_n</span> will converge at the <span class="math inline">\theta</span>.</li>
+</ul>
 <p><br></p>
+<p>An estimator can be both biased, but consistent.</p>
+<ul>
+<li>i.e.&nbsp;in smaller sample sizes, the estimator might not be on average correct, but over a large enough sample size, it will become “unbiased”.</li>
+</ul>
+</div>
+</div>
+</div>
+<p>The assumptions for the asymptotic consistency of the OLS estimate of <span class="math inline">\widehat{\beta_1}</span> are very similar to the assumptions for unbiasedness, but with assumption MLR.4 weakened to MLR.4’:</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-48-contents" aria-controls="callout-48" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MLR.1 Linearity in Parameters
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-48" class="callout-48-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A model must be linear in parameters for unbiasedness. This means that the parameters of the model <span class="math inline">\beta_0, \dots, \beta_k</span> must not be multiplied/divided together.</p>
+<p>Note: this does not mean the actual regression line must be linear - only the parameters/coefficients must not be multiplied.</p>
+<p>For example, the following model is still linear in parameters:</p>
+<p><span class="math display">
+y = \beta_0 + \beta_1x^2
+</span></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-49-contents" aria-controls="callout-49" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MLR.2 Random Sampling
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-49" class="callout-49-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This assumption says that all observations in our sample are randomly sampled from the same population.</p>
+<p>The error term <span class="math inline">u</span> in our regression model is some random variable (with its own probability distribution), that can be defined by its expectation <span class="math inline">E(u)</span>.</p>
+<ul>
+<li>If we randomly select one observation <span class="math inline">i</span> from the data, each observation <span class="math inline">i</span> has an equal chance of being selected.</li>
+<li>The error term for that observation, <span class="math inline">u_i</span>, should also have the same expectation as the random variable <span class="math inline">u</span>, since each observation <span class="math inline">i</span> within <span class="math inline">u</span> has the same chance of being selected.</li>
+</ul>
+<p>Thus, random sampling allows us to say <span class="math inline">E(u) = E(u_i)</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-50-contents" aria-controls="callout-50" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MLR.3 No Perfect Multicollinearity/Variance in <span class="math inline">x</span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-50" class="callout-50-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>No perfect multicollinearity (MLR.3) means that no two explanatory variables are perfectly correlated together. This also means that in the regression anatomy formula, <span class="math inline">\sum \widetilde{r_{ji}}^2 ≠ 0</span>.</p>
+<p>If we have a simple linear regression, we instead must make sure that there is indeed variance in the explanatory variable <span class="math inline">x</span> (SLR.3). Or in other words: <span class="math inline">Var(x) ≠ 0</span>.</p>
+<p><strong>These two assumptions are necessary to even calculate</strong> <span class="math inline">\widehat{\beta_0}</span>, since the formulas require dividing by these values, so if they equal 0, we cannot calculate OLS.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-51-contents" aria-controls="callout-51" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MLR.4’ Zero-Mean and Exogeneity
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-51" class="callout-51-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>We can weaken <em>MLR.4 Zero-Conditional Mean</em> to the <em>Zero-Mean and Exogeneity assumption</em>:</p>
+<p><span class="math display">
+\begin{split}
+&amp; E(u) = 0 \\
+&amp; Cov(x_j, u) = 0, \quad \text{for } j = 1,\dots k
+\end{split}
+</span></p>
+<p>The second assumption can also be rewritten as:</p>
+<p><span class="math display">
+E(x_j u) = 0
+</span></p>
+<ul>
+<li>The proof of this is almost identical to the proof of <span class="math inline">\sum x \hat u = 0</span> implying <span class="math inline">Cov(x, \hat u) = 0</span> we did in section 2.3.1.</li>
+</ul>
+<p>Note: if we meet the full MLR.4 Zero-Conditional Mean assumption, we will automatically meet this weakened assumption. However, the reverse is not true.</p>
+<p><u>Under this new assumption (and the other 3 Gauss-Markov assumptions), OLS is biased in small sample sizes, but asymptotically consistent.</u></p>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>If these 4 conditions are met, OLS is Asymptotically consistent.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-55-contents" aria-controls="callout-55" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof of OLS Asymptotic Consistency
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-55" class="callout-55-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-52-contents" aria-controls="callout-52" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Useful Properties of Summation
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-52" class="callout-52-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Before we start, here are a few key properties of summation</p>
+<p><strong>Property 1:</strong></p>
+<p><span class="math display">
+\sum\limits_{i=1}^n (x_i - \bar{x}) = 0
+</span></p>
+<ul>
+<li>This is because we can expand the left to <span class="math inline">\sum x_i - \sum \bar x</span>.</li>
+<li>Then, we know <span class="math inline">\sum x_i = \sum \bar x</span> (by the formula for mean), so <span class="math inline">\sum x_i - \sum \bar x = 0</span>.</li>
+</ul>
+<p><strong>Property 2:</strong></p>
+<p><span class="math display">
+\sum\limits_{i=1}^n x_i(y_i - \bar{y}) = \sum\limits_{i=1}^n(x_i - \bar{x}) (y_i - \bar{y})
+</span></p>
+<ul>
+<li>This is because on the right side can expand to <span class="math inline">\sum [x_i(y_i - \bar y) - \bar x (y_i - \bar y)]</span>.</li>
+<li>Then, split into <span class="math inline">\sum x_i (y_i - \bar y) - \bar x \sum (y_i - \bar y)</span>.</li>
+<li>We know that by property 1 (which applies to any variable), <span class="math inline">\sum (y_i - \bar y) = 0</span>. Thus, the right side disappears, and we are left with <span class="math inline">\sum x_i (y_i - \bar y)</span>.</li>
+</ul>
+<p><strong>Property 3:</strong></p>
+<p><span class="math display">
+\sum\limits_{i=1}^n x_i(x_i - \bar{x}) = \sum\limits_{i=1}^n(x_i - \bar{x})^2
+</span></p>
+<ul>
+<li>Start by expanding right side to <span class="math inline">\sum [ x_i ( x_i - \bar x) - \bar x (x_i - \bar x)]</span></li>
+<li>Which splits into <span class="math inline">\sum x_i (x_i - \bar x) - \bar x \sum (x_i - \bar x)</span></li>
+<li>By the first property, we know <span class="math inline">\sum x_i - \bar x = 0</span>, so we are only left with <span class="math inline">\sum x_i (x_i - \bar x)</span></li>
+</ul>
+</div>
+</div>
+</div>
+<p>Let us look at the numerator. Let us expand the numerator:</p>
+<p><span class="math display">
+\begin{split}
+&amp; \sum\limits_{i=1}^n (x_i - \bar{x})(y_i - \bar{y}) \\
+= &amp; \sum\limits_{i=1}^n [(x_i - \bar x)y_i - (x_i - \bar x) \bar y] \\
+= &amp; \sum\limits_{i=1}^n(x_i - \bar x)y_i - \sum\limits_{i=1}^n (x_i - \bar x) \bar y \\
+= &amp; \sum\limits_{i=1}^n(x_i - \bar x)y_i - \bar y\sum\limits_{i=1}^n (x_i - \bar x) \\
+\end{split}
+</span></p>
+<p>We know that <span class="math inline">\sum (x_i - \bar x) = 0</span> (from the properties above). Thus, we can further simplify to:</p>
+<p><span class="math display">
+\begin{split}
+= &amp; \sum\limits_{i=1}^n(x_i - \bar x)y_i - \bar y\sum\limits_{i=1}^n (x_i - \bar x) \\
+= &amp; \sum\limits_{i=1}^n(x_i - \bar x)y_i - \bar y(0) \\
+= &amp; \sum\limits_{i=1}^n(x_i - \bar x)y_i
+\end{split}
+</span></p>
+<p>Now, let us play with the numerator more (note the properties of summation introduced earlier):</p>
+<p><span class="math display">
+\begin{split}
+&amp; = \sum\limits_{i=1}^n (x_i - \bar{x})y_i \\
+&amp; = \sum\limits_{i=1}^n(x_i - \bar{x})(\beta_0 + \beta_1 x_i + u_i) \\
+&amp; = \sum\limits_{i=1}^n(x_i - \bar{x}) \beta_0 + \sum\limits_{i=1}^n(x_i - \bar{x}) \beta_1  x_i + \sum\limits_{i=1}^n (x_i - \bar{x}) u_i \\
+&amp; = \beta_0 \sum\limits_{i=1}^n(x_i - \bar{x}) + \beta_1 \sum\limits_{i=1}^n(x_i - \bar{x}) x_i + \sum\limits_{i=1}^n (x_i - \bar{x}) u_i \\
+&amp; = 0 + \beta_1 \sum\limits_{i=1}^n(x_i - \bar{x})^2 + \sum\limits_{i=1}^n(x_i - \bar{x})u_i\end{split}
+</span></p>
+<p>Now, putting the numerator back into the equation, we simplify:</p>
+<p><span class="math display">
+\begin{split}
+\hat{\beta}_1 &amp; = \frac{\beta_1 \sum_{i=1}^n(x_i - \bar{x})^2 + \sum_{i=1}^n(x_i - \bar{x})u_i}{\sum_{i=1}^n(x_i - \bar{x})^2} \\
+&amp;  =  \beta_1 + \frac{\sum_{i=1}^n(x_i - \bar{x}) u_i}{\sum_{i=1}^n (x_i - \bar{x})^2}
+\end{split}
+</span></p>
+<p>We can add <span class="math inline">\frac{1}{n}</span> (or <span class="math inline">n^{-1}</span>) to the top and bottom of the fraction (which cancel each other out, keeping the equation equivalent):</p>
+<p><span class="math display">
+\hat\beta_1=  \beta_1 + \frac{n^{-1} \sum_{i=1}^n(x_i - \bar{x}) u_i}{n^{-1} \sum_{i=1}^n (x_i - \bar{x})^2}
+</span></p>
+<p>Now, let us expand the numerator, and simplify, and we get:</p>
+<p><span class="math display">
+\begin{split}
+\hat\beta_1 &amp; =  \beta_1 + \frac{n^{-1} \sum_{i=1}^n x_i u_i - n^{-1} \sum_{i=1}^n \bar x u_i}{n^{-1} \sum_{i=1}^n (x_i - \bar{x})^2} \\
+&amp; =  \beta_1 + \frac{n^{-1} \sum_{i=1}^n x_i u_i - \bar x \ n^{-1} \sum_{i=1}^n u_i}{n^{-1} \sum_{i=1}^n (x_i - \bar{x})^2} \\
+&amp; =  \beta_1 + \frac{ \overline{xu} - \bar x \bar u}{S.Var(x)}
+\end{split}
+</span></p>
+<ul>
+<li>Where <span class="math inline">S.Var(x)</span> is the sample variance of <span class="math inline">x</span>.</li>
+</ul>
+<p>We want to find <span class="math inline">\text{plim}(\hat\beta_1)</span>. We will need a few properties for this:</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-53-contents" aria-controls="callout-53" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Properties of Probability Limits
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-53" class="callout-53-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>We know these general rules about probability limits:</p>
+<p><span class="math display">
+\begin{split}
+&amp; \text{plim}(\bar x_n) = \mu _x \\
+&amp; \text{plim}(S.Var(x_i)) = Var(x_i) \\
+&amp; \text{plim}(S.Cov(x_i, y_i)) = Cov (x_i, y_i)
+\end{split}
+</span></p>
+<p>The other properties are about algebra with probability limits. Assume <span class="math inline">\text{plim} (u_n) = a</span>, and <span class="math inline">\text{plim}(v_n) = b</span>. Then, the following are true:</p>
+<p><span class="math display">
+\begin{split}
+&amp; \text{plim} (u_n + v_n) = a + b \\
+&amp; \text{plim} (u_n v_n) = ab \\
+&amp; \text{plim} (u_n v_n) = a/b
+\end{split}
+</span></p>
+</div>
+</div>
+</div>
+<p>Knowing this, we then know that:</p>
+<p><span class="math display">
+\begin{split}
+\text{plim}(\hat\beta_1) &amp; = \beta_1 + \frac{ \text{plim}(\overline{xu}) - \text{plim}( \bar x \bar u) }{ \text{plim}(S.Var(x))} \\
+&amp; = \beta_1 + \frac{ \text{plim}(\overline{xu}) - \text{plim}(\bar x) \text{plim}(\bar u) }{ \text{plim}(S.Var(x))} \\
+&amp;  = \beta_1 + \frac{ E(xu) - E(x) E(u) }{Var(x)} \\
+\end{split}
+</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MLR.4’ Zero-Mean and Exogeneity Assumption
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The weakened Zero-Mean and Exogeneity assumption states:</p>
+<p><span class="math display">
+\begin{split}
+&amp; E(u) = 0 \\
+&amp; E(xu) = 0
+\end{split}
+</span></p>
+</div>
+</div>
+<p>Using this assumption, we can conclude the proof:</p>
+<p><span class="math display">
+\begin{split}
+\text{plim}(\hat\beta_1) &amp; = \beta_1 + \frac{ E(xu) - E(x) E(u) }{Var(x)} \\
+&amp; = \beta_1 + \frac{ 0 - E(x)0}{Var(x)} \\
+&amp; = \beta_1 + \frac{ 0 }{Var(x)} \\
+&amp; = \beta_1+0 \\
+\text{plim}(\hat\beta_1) &amp; = \beta_1
+\end{split}
+</span></p>
+<p>Thus, OLS is asymptotically consistent under a weakened version of MLR.4 Zero-Conditional Mean - called the Zero-Mean and Exogeneity Assumption.</p>
+<ul>
+<li>Under this weakened assumption (without meeting the full MLR.4 assumption), OLS is <u>biased but consistent</u>.</li>
+</ul>
+</div>
+</div>
+</div>
+<p>The key assumption is <strong>Exogeneity</strong> - that no explanatory variable is correlated with the error term. If exogeneity is violated, this is often caused by omitted variable bias.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-56-contents" aria-controls="callout-56" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Omitted Variable Bias
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-56" class="callout-56-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Consider two regressions. The first regression, the “short” regression, is a simple linear regression with only explanatory variable <span class="math inline">x</span>. The second regression, the “long” regression, contains an extra variable <span class="math inline">z</span> that is omitted from the first regression:</p>
+<p><span class="math display">
+\begin{split}y_i &amp; = \beta_0^S + \beta_1^Sx_i + u_i^S \quad \text{short} \\y_i &amp; = \beta_0 + \beta_1x_i + \beta_2z_i + u_i \quad \text{long}\end{split}
+</span></p>
+<ul>
+<li>Note: the <span class="math inline">S</span> in <span class="math inline">\beta_0^S</span> is a subscript representing short. It is not an exponent.</li>
+</ul>
+<p>Now consider an auxiliary regression, where the omitted variable <span class="math inline">z</span> is the outcome variable, and <span class="math inline">x</span> is the explanatory variable:</p>
+<p><span class="math display">
+z_i = \delta_0 + \delta_1 x_i + v_i
+</span></p>
+<ul>
+<li>where <span class="math inline">\delta_0, \delta_1</span> are coefficients and <span class="math inline">v_i</span> is the error term</li>
+</ul>
+<p><br></p>
+<p>Now we have <span class="math inline">z</span> in terms of <span class="math inline">x</span>, let us plug <span class="math inline">z</span> into our long regression to “recreate” the short regression:</p>
+<p><span class="math display">
+\begin{split}y_i &amp; = \beta_0 + \beta_1x_i + \beta_2z_i + u_i \\y_i &amp; = \beta_0 + \beta_1 x_i + \beta_2(\delta_0 + \delta_1x_i + v_i) + u_i \\y_i &amp; = \beta_0 + \beta_1 x_i + \beta_2 \delta_0 + \beta_2 \delta_1 x_i + \beta_2v_i + u_i \\y_i &amp; = \beta_0 + \beta_2 \delta_0 + (\beta_1 + \beta_2 \delta_1)x_i + \beta_2v_i + u_i\end{split}
+</span></p>
+<p>We have “recreated” the short regression with one variable <span class="math inline">x</span>. Let us see our recreation next to the original short regression:</p>
+<p><span class="math display">
+\begin{split}
+y_i &amp; = \beta_0^S + \beta_1^Sx_i + u_i^S \\
+y_i &amp; = \beta_0 + \beta_2 \delta_0 + (\beta_1 + \beta_2 \delta_1)x_i + \beta_2v_i + u_i
+\end{split}
+</span></p>
+<ul>
+<li>The short regression coefficient <span class="math inline">\beta_0^S</span> is analogous to the <span class="math inline">\beta_0 + \beta_2 \delta_0</span> in the recreation (both are the intercepts)</li>
+<li>The short regression coefficient <span class="math inline">\beta_1^S x_i</span> is analogous to the <span class="math inline">(\beta_1 + \beta_2 \delta_1)x_i</span> in the recreation (both are the slope and variable of interest)</li>
+<li>The short regression <span class="math inline">u_i^S</span> is analogous to the <span class="math inline">\beta_2 v_i + u_i</span> in the recreation (both are the error terms).</li>
+</ul>
+<p>Since the short regression <span class="math inline">\beta_1^S x_i</span> is analogous to the <span class="math inline">(\beta_1 + \beta_2 \delta_1)x_i</span> in the recreation, that means coefficient <span class="math inline">\beta_1^S = \beta_1 + \beta_2 \delta_1</span>.</p>
+<p>Thus, the difference between the short regression (simple linear regression) coefficient <span class="math inline">\beta_1^S</span>, and the original long regression coefficient <span class="math inline">\beta_1</span>, is <span class="math inline">\beta_2 \delta_1</span>.</p>
+<ul>
+<li>If <span class="math inline">\beta_2 = 0</span> (meaning no relationship between omitted <span class="math inline">x</span> and <span class="math inline">y</span>), or <span class="math inline">\delta_1 = 0</span> (meaning no relationship between omitted <span class="math inline">x</span> and <span class="math inline">x</span>), then difference <span class="math inline">\beta_2 \delta_1 = 0</span>, thus there is no difference.</li>
+<li>But if either of those facts are not true, then <span class="math inline">\beta_2 \delta_1 ≠ 0</span>, and there is a difference between <span class="math inline">\beta_1^S</span> and <span class="math inline">\beta_1</span>.</li>
+</ul>
+<p><br></p>
+<p>More intuitively, if the omitted variable <span class="math inline">z</span> is both correlated with <span class="math inline">x</span> and <span class="math inline">y</span>, then the two coefficients are different by <span class="math inline">\beta_2 \delta_1</span>.</p>
+<ul>
+<li>Any variable <span class="math inline">z</span> correlated both with <span class="math inline">x</span> and <span class="math inline">y</span> is called a <strong>confounding variable</strong>.</li>
+<li>This <span class="math inline">\beta_2 \delta_1</span> amount is called the <strong>omitted variable bias</strong>.</li>
+</ul>
+</div>
+</div>
+</div>
 <p><br></p>
 <hr>
 </section>
 </section>
 <section id="statistical-inference" class="level1">
 <h1>Statistical Inference</h1>
+<p>The standard errors of OLS estimates quantify how precise our estimates are:</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Intuition of Standard Errors and Uncertainty
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Homoscedasticity vs.&nbsp;Heteroscedasticity and Standard Errors
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<p><br></p>
+<p>We can mathematically derive standard errors as shown below:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Deriving OLS Standard Errors
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Deriving Robust Standard Errors
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<p><br></p>
+<p>Using standard errors, we can conduct hypothesis testing:</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+T-Tests for Coefficients
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Confidence Intervals for Coefficients
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+F-Tests for Multiple Coefficients
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Confidence Intervals for Prediction
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
 <p><br></p>
 <p><br></p>
 <hr>
