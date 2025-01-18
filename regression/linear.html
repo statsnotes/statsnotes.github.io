@@ -112,21 +112,18 @@ window.Quarto = {
   <li><a href="#ordinary-least-squares-estimator" id="toc-ordinary-least-squares-estimator" class="nav-link" data-scroll-target="#ordinary-least-squares-estimator">Ordinary Least Squares Estimator</a></li>
   <li><a href="#properties-of-the-ols-estimator" id="toc-properties-of-the-ols-estimator" class="nav-link" data-scroll-target="#properties-of-the-ols-estimator">Properties of the OLS Estimator</a></li>
   </ul></li>
-  <li><a href="#interpretation-and-assumptions" id="toc-interpretation-and-assumptions" class="nav-link" data-scroll-target="#interpretation-and-assumptions"><strong>Interpretation and Assumptions</strong></a>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a>
   <ul class="collapse">
   <li><a href="#interpretation-of-coefficients" id="toc-interpretation-of-coefficients" class="nav-link" data-scroll-target="#interpretation-of-coefficients">Interpretation of Coefficients</a></li>
-  <li><a href="#assumptions-for-unbiasedness" id="toc-assumptions-for-unbiasedness" class="nav-link" data-scroll-target="#assumptions-for-unbiasedness">Assumptions for Unbiasedness</a></li>
-  <li><a href="#assumptions-for-consistency" id="toc-assumptions-for-consistency" class="nav-link" data-scroll-target="#assumptions-for-consistency">Assumptions for Consistency</a></li>
   <li><a href="#model-summary-statistics" id="toc-model-summary-statistics" class="nav-link" data-scroll-target="#model-summary-statistics">Model Summary Statistics</a></li>
   </ul></li>
-  <li><a href="#statistical-inference" id="toc-statistical-inference" class="nav-link" data-scroll-target="#statistical-inference"><strong>Statistical Inference</strong></a>
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a>
   <ul class="collapse">
-  <li><a href="#standard-errors-of-coefficients" id="toc-standard-errors-of-coefficients" class="nav-link" data-scroll-target="#standard-errors-of-coefficients">Standard Errors of Coefficients</a></li>
-  <li><a href="#t-tests-and-confidence-intervals" id="toc-t-tests-and-confidence-intervals" class="nav-link" data-scroll-target="#t-tests-and-confidence-intervals">T-Tests and Confidence Intervals</a></li>
-  <li><a href="#f-tests-for-multiple-coefficients" id="toc-f-tests-for-multiple-coefficients" class="nav-link" data-scroll-target="#f-tests-for-multiple-coefficients">F-Tests for Multiple Coefficients</a></li>
-  <li><a href="#predictive-inference" id="toc-predictive-inference" class="nav-link" data-scroll-target="#predictive-inference">Predictive Inference</a></li>
+  <li><a href="#assumptions-for-unbiasedness" id="toc-assumptions-for-unbiasedness" class="nav-link" data-scroll-target="#assumptions-for-unbiasedness">Assumptions for Unbiasedness</a></li>
+  <li><a href="#assumptions-for-consistency" id="toc-assumptions-for-consistency" class="nav-link" data-scroll-target="#assumptions-for-consistency">Assumptions for Consistency</a></li>
   </ul></li>
-  <li><a href="#extension-explanatory-variables" id="toc-extension-explanatory-variables" class="nav-link" data-scroll-target="#extension-explanatory-variables"><strong>Extension: Explanatory Variables</strong></a>
+  <li><a href="#statistical-inference" id="toc-statistical-inference" class="nav-link" data-scroll-target="#statistical-inference">Statistical Inference</a></li>
+  <li><a href="#extension-explanatory-variables" id="toc-extension-explanatory-variables" class="nav-link" data-scroll-target="#extension-explanatory-variables">Extension: Explanatory Variables</a>
   <ul class="collapse">
   <li><a href="#categorical-explanatory-variables" id="toc-categorical-explanatory-variables" class="nav-link" data-scroll-target="#categorical-explanatory-variables">Categorical Explanatory Variables</a></li>
   <li><a href="#fixed-effects" id="toc-fixed-effects" class="nav-link" data-scroll-target="#fixed-effects">Fixed Effects</a></li>
@@ -1022,15 +1019,17 @@ E(m(\theta; y)) = 0
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 Example of a Method of Moments Estimator
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Let us say that we have some random variable <span class="math inline">y</span>, with a true population mean <span class="math inline">\mu</span>. We want to estimate <span class="math inline">\mu</span>, but we only have a sample of the population.</p>
 <p>How can we define our true population parameter <span class="math inline">\mu</span> in an expectation equation of the form: <span class="math inline">E(m(\mu, y)) = 0</span>?</p>
@@ -1059,11 +1058,12 @@ E(y_i - \hat\mu) = \frac{1}{n}\sum\limits_{i=1}^n (y_i - \hat\mu) = 0
 <p>So, we see the method of moments estimates our true population mean <span class="math inline">\mu</span>, with the sample mean <span class="math inline">\bar y</span>.</p>
 </div>
 </div>
+</div>
 <p>OLS is a special case of the Method of Moments Estimator. This is a useful property as we move towards causal inference, as it shows why Endogeneity is an important condition of causal inference (and forms the bases of the Instrumental Variables Estimator).</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 Proof that OLS is a Method of Moments Estimator
@@ -1126,55 +1126,467 @@ y = \beta_0 + \beta_1x + u
 </div>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+OLS Residuals Sum to 0
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The residuals of OLS are the errors (but this time, not squared):</p>
+<p><span class="math display">
+\begin{split}\hat u_i &amp; = y_i - \hat y_i \\&amp; = y_i - (\hat \beta_0 + \hat\beta_1x_{1i} + \dots + \hat\beta_k x_{ki}) \\&amp; = y_i - \hat \beta_0 - \hat\beta_1x_{1i} - \dots - \hat\beta_k x_{ki}\end{split}
+</span></p>
+<p>OLS Residuals sum to 0 - i.e.&nbsp;the average true value of <span class="math inline">y</span> and the average predicted value of <span class="math inline">\hat y</span> are equal.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof OLS Residuals Sum to 0
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Recall our OLS first order conditions:</p>
+<p><span class="math display">
+\begin{split}&amp; \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\&amp; \sum\limits_{i=1}^n x_{1i}(y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\
+&amp; \sum\limits_{i=1}^n x_{2i} (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0
+\end{split}
+</span></p>
+<ul>
+<li>and so on for <span class="math inline">x_{3i}, ..., x_{ki}</span>.</li>
+</ul>
+<p>We know residuals <span class="math inline">\hat u_i = y_i - \hat \beta_0 - \hat\beta_1x_{1i} - \dots - \hat\beta_k x_{ki}</span>.</p>
+<p>If we plug that definition of <span class="math inline">\hat u_i</span> into the first minimisation condition, we get:</p>
+<p><span class="math display">
+\sum\limits_{i=1}^n \hat u_i = 0
+</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+No Covariance Between Any Explanatory Variable and OLS Residuals
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-26" class="callout-26-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In OLS estimation, any explanatory variable <span class="math inline">x_1, \dots, x_k</span> is uncorrelated with the OLS residuals <span class="math inline">\hat u_i = y_i - \hat \beta_0 - \hat\beta_1x_{1i} - \dots - \hat\beta_k x_{ki}</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof of No Covariance
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Recall our OLS first order conditions:</p>
+<p><span class="math display">
+\begin{split}&amp; \sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\&amp; \sum\limits_{i=1}^n x_{1i}(y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0 \\
+&amp; \sum\limits_{i=1}^n x_{2i} (y_i - \hat{\beta}_0 - \hat{\beta}_1x_{1i} -  \hat{\beta}_2x_{2i}...) = 0
+\end{split}
+</span></p>
+<ul>
+<li>and so on for <span class="math inline">x_{3i}, ..., x_{ki}</span>.</li>
+</ul>
+<p>We know residuals <span class="math inline">\hat u_i = y_i - \hat \beta_0 - \hat\beta_1x_{1i} - \dots - \hat\beta_k x_{ki}</span>.</p>
+<ul>
+<li>Thus, plugging into the first condition, <span class="math inline">\sum\limits_{i=1}^n \hat u_i = 0</span>.</li>
+<li>Thus, plugging into the other conditions, <span class="math inline">\sum\limits_{i=1}^n x_j \hat u_i = 0</span>.</li>
+</ul>
+<p>For simplicity, we will use simple linear regression, but the same applies to multiple linear regression.</p>
+<p>Now, recall the formula for covariance discussed in <a href="https://statsnotes.github.io/theory/3.html#quantifying-relationships-with-covariance">1.3.4</a>:</p>
+<p><span class="math display">
+Cov(x,y) = \frac{1}{n}\sum\limits_{i=1}^n [(x_i - \bar x)(y_i - \bar y)] \\
+</span></p>
+<p>Thus, the covariance between <span class="math inline">x_j</span> (for notation simplicity, just <span class="math inline">x</span>) and <span class="math inline">\hat u</span> is:</p>
+<p><span class="math display">
+\begin{split}
+Cov(x, \hat u) &amp; = \frac{1}{n}\sum\limits_{i=1}^n [(x_i - \bar x)(\hat u_i - \bar{\hat u})] \\
+&amp; = \frac{1}{n}\sum\limits_{i=1}^n(x_i \hat u_i - x_i \bar{\hat u} - \bar x \hat u_i + \bar x \bar {\hat u}) \\
+&amp; = \frac{1}{n} \left( \sum\limits_{i=1}^nx_i \hat u_i - \sum\limits_{i=1}^n x_i\bar{\hat u} - \sum\limits_{i=1}^n \bar x \hat u_i + \sum\limits_{i=1}^n\bar x \bar{\hat u} \right) \\
+&amp; = \frac{1}{n} \left( \sum\limits_{i=1}^nx_i \hat u_i - \bar{\hat u}\sum\limits_{i=1}^n x_i - \bar x\sum\limits_{i=1}^n \hat u_i + \bar{\hat u}\sum\limits_{i=1}^n\bar x  \right) \\
+&amp; = \frac{1}{n} \left( \sum\limits_{i=1}^nx_i \hat u_i - 0\sum\limits_{i=1}^n x_i - \bar x\sum\limits_{i=1}^n \hat u_i + 0\sum\limits_{i=1}^n\bar x  \right) \\
+&amp; = \frac{1}{n}(0 -0-\bar x(0) + 0) \\
+&amp; = 0
+\end{split}
+</span></p>
+<p>Thus, the covariance (and thus correlation) between <span class="math inline">x_j</span> and <span class="math inline">\hat u</span> must be zero.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+OLS Best-Fit Line Passes Through Means
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-27" class="callout-27-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The OLS estimated coefficients produces a best-fit line, that always passes through the point <span class="math inline">(\bar x_1, \dots, \bar x_k, \bar y)</span>, which is the point of the means of all the variables.</p>
+<p>For simplicity, take simple linear regression. Remember our solution for <span class="math inline">\hat\beta_0</span> in OLS for simple linear regression was <span class="math inline">\hat\beta_0 = \bar{y} - \hat{\beta}_1 \bar{x}</span>. Rearranging this equation, we get:</p>
+<p><span class="math display">
+\begin{split}
+\hat\beta_0  &amp; = \bar{y} - \hat{\beta}_1 \bar{x} \\
+\hat\beta_0 + \hat\beta_1 \bar x &amp; = \bar y \\
+\bar y &amp; = \hat\beta_0 + \hat\beta_1 \bar x
+\end{split}
+</span></p>
+<p>Thus, the OLS estimated best-fit line always passes though point <span class="math inline">(\bar x, \bar y)</span> (the means of our data). The same property applies to multiple linear regression, but for point <span class="math inline">(\bar x_1, \dots, \bar x_k, \bar y)</span>.</p>
+</div>
+</div>
+</div>
 <p><br></p>
 <p><br></p>
 <hr>
 </section>
 </section>
-<section id="interpretation-and-assumptions" class="level1">
-<h1><strong>Interpretation and Assumptions</strong></h1>
+<section id="interpretation" class="level1">
+<h1>Interpretation</h1>
 <section id="interpretation-of-coefficients" class="level2">
 <h2 class="anchored" data-anchor-id="interpretation-of-coefficients">Interpretation of Coefficients</h2>
+<p>Once we have estimated our coefficients model, we will have the following fitted-values model.</p>
+<p><span class="math display">
+\widehat{y_i} = E(y_i|x_i)= \widehat{\beta_0} + \widehat{\beta_1}x_{1i} + \dots + \widehat{\beta_k} x_{ki}
+</span></p>
+<p>The coefficient <span class="math inline">\widehat{\beta_0}</span>, also called the intercept, is the expected value of <span class="math inline">y</span> given all explanatory variables <span class="math inline">x_1, \dots, x_k = 0</span>.</p>
 <p><br></p>
-</section>
-<section id="assumptions-for-unbiasedness" class="level2">
-<h2 class="anchored" data-anchor-id="assumptions-for-unbiasedness">Assumptions for Unbiasedness</h2>
-<p><br></p>
-</section>
-<section id="assumptions-for-consistency" class="level2">
-<h2 class="anchored" data-anchor-id="assumptions-for-consistency">Assumptions for Consistency</h2>
+<p>The coefficient <span class="math inline">\widehat{\beta_j} = \widehat{\beta_1}, \dots, \widehat{\beta_k}</span> has an interpretation that depends on the type of variables <span class="math inline">y</span> and <span class="math inline">x_j. =x_1, \dots, x_k</span> are:</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="math inline">\widehat{\beta_j}</span> for Continuous <span class="math inline">y</span>, Continuous <span class="math inline">x_j</span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-28" class="callout-28-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For every one unit increase in <span class="math inline">x_j</span>, there is an expected <span class="math inline">\widehat{\beta_j}</span> unit change in <span class="math inline">y</span>.</p>
+<p>We can also standardise our interpretations in respect to standard deviations: For a one standard deviation increase in <span class="math inline">x_j</span>, there is an expected <span class="math inline">\widehat{\beta_1}\sigma_x/\sigma_y</span> standard deviation change in <span class="math inline">y</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="math inline">\widehat{\beta_j}</span> for Continuous <span class="math inline">y</span>, Binary <span class="math inline">x_j</span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-29" class="callout-29-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>There is an expected <span class="math inline">\widehat{\beta_j}</span> unit differnce in <span class="math inline">y</span> between categories <span class="math inline">x_j = 1</span> and <span class="math inline">x_j = 0</span>.</p>
+<p>We can also calculate the expected <span class="math inline">y</span> for each category of <span class="math inline">x_j</span>:</p>
+<ul>
+<li>The expected <span class="math inline">y</span> of category <span class="math inline">x_j = 0</span> is <span class="math inline">\widehat{\beta_0}</span>.</li>
+<li>The expected <span class="math inline">y</span> of category <span class="math inline">x_j = 1</span> is <span class="math inline">\widehat{\beta_0} + \widehat{\beta_1}</span>.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="math inline">\widehat{\beta_j}</span> for Continuous <span class="math inline">y</span>, Continuous <span class="math inline">x_j</span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-30" class="callout-30-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For every one unit increase in <span class="math inline">x_j</span>, there is an expected <span class="math inline">\widehat{\beta_j} \times 100</span> percentage point change in the chance of a unit being in category <span class="math inline">y=1</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="math inline">\widehat{\beta_j}</span> for Continuous <span class="math inline">y</span>, Continuous <span class="math inline">x_j</span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-31" class="callout-31-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>There is an expected <span class="math inline">\widehat{\beta_j}</span> percentage point difference in the chance of being in category <span class="math inline">y=1</span> between category <span class="math inline">x_j = 1</span> and category <span class="math inline">x_j = 0</span>.</p>
+<p>We can also calculate the expected percentage of units in category <span class="math inline">y=1</span> for each category of <span class="math inline">x_j</span>:</p>
+<ul>
+<li>The percentage of units in category <span class="math inline">y=1</span> for category <span class="math inline">x_j = 0</span> is <span class="math inline">\widehat{\beta_0}</span>.</li>
+<li>The percentage of units in category <span class="math inline">y=1</span> for category <span class="math inline">x_j = 1</span> is <span class="math inline">\widehat{\beta_0} + \widehat{\beta_1}</span>.</li>
+</ul>
+</div>
+</div>
+</div>
 <p><br></p>
 </section>
 <section id="model-summary-statistics" class="level2">
 <h2 class="anchored" data-anchor-id="model-summary-statistics">Model Summary Statistics</h2>
+<p>The <strong>Residual Standard Deviation</strong> <span class="math inline">\hat\sigma</span> is the standard deviation of the residuals (also, the standard deviation of the conditional expectation distribution).</p>
+<p>The formula for Residual Variance is given below (square root for standard deviation):</p>
+<p><span class="math display">
+\hat\sigma^2 = \frac{\sum_{i=1}^n (y_i -\hat y_i)^2}{n-k-1}
+</span></p>
+<ul>
+<li>Larger values mean the observed values of <span class="math inline">y</span> are more widely scattered around <span class="math inline">E(y|x)</span>.</li>
+<li>Smaller values mean the observed values of <span class="math inline">y</span> are more tightly concentrated around <span class="math inline">E(y|x)</span>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-2778593669.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
+</figure>
+</div>
+<p><br></p>
+<p>The <strong>R-squared</strong> Statistic, <span class="math inline">R^2</span>, is a measure of the fit of our best-fit line.</p>
+<ul>
+<li>Interpreted as: The proportion of the total variance in <span class="math inline">y_i</span> that is accounted for (or explained) by the explanatory variables in the model.</li>
+<li><span class="math inline">R^2</span> is always between 0 and 1 (or 0% and 100%).</li>
+</ul>
+<p>The formula for <span class="math inline">R^2</span> is:</p>
+<p><span class="math display">
+R^2 = \frac{\sum_{i=1}^n(\widehat{y_i} - \bar y)^2}{\sum_{i=1}^n (y_i - \bar y)^2}
+</span></p>
+<ul>
+<li>The numerator is also called the explained sum of squares (SSE), the variation in <span class="math inline">y</span> that is explained by our model.</li>
+<li>The denominator is called the total sum of squares (SST), the total variation in <span class="math inline">y</span>.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Derivation of R-Squared
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-32" class="callout-32-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For each observation, we know that the actual <span class="math inline">y_i</span> value is the predicted <span class="math inline">\hat y_i</span> plus the residual term <span class="math inline">\hat u_i</span>. Thus:</p>
+<p><span class="math display">
+y_i = \hat y_i + \hat u_i
+</span></p>
+<p>Now, let us define these three concepts: the total sum of squares (SST), explained sum of squares (SSE), and residual sum of squares (SSR):</p>
+<p><span class="math display">
+\begin{split}
+&amp; SST = \sum\limits_{i=1}^n (y_i - \bar y)^2 \\
+&amp; SSE = \sum\limits_{i=1}^n (\hat y_i - \bar y)^2 \\
+&amp; SSR = \sum\limits_{i=1}^n (\hat u_i)^2
+\end{split}
+</span></p>
+<ul>
+<li>The SST explains the total amount of variation in <span class="math inline">y</span></li>
+<li>The SSE is the amount of variation in <span class="math inline">y</span> explained by our model</li>
+<li>The SSR is the amount of variation in <span class="math inline">y</span> not explained by our model</li>
+</ul>
+<p>Let us look at the total sum of squares (SST). We can manipulate it as follows:</p>
+<p><span class="math display">
+\begin{split}
+SST &amp; = \sum\limits_{i=1}^n (y_i - \bar y)^2 \\
+&amp; = \sum\limits_{i=1}^n(y_i - \hat y_i+ \hat y_i - \bar y)^2 \\
+&amp; = \sum\limits_{i=1}^n((y_i - \hat y_i)+ \hat y_i - \bar y)^2 \\
+&amp; = \sum\limits_{i=1}^n[\hat u_i + \hat y_i - \bar y]^2 \\
+&amp; = \sum\limits_{i=1}^n[\hat u_i^2 + \hat u_i \hat y_i - \hat u_i \bar y + \hat y_i \hat u_i + \hat y_i^2 - \hat y_i \bar y-\bar y \hat u_i -\bar y \hat  y_i+\hat y^2_i] \\
+&amp; = \sum\limits_{i=1}^n[ \hat u_i^2 + 2 \hat u_i \hat y_i+ \hat y_i^2 - 2 \hat u_i \bar y - 2 \hat y_i \bar y + \bar y ^2]
+\end{split}
+</span></p>
+<p>By a property of linear regression, <span class="math inline">\sum \hat y_i \hat u_i = 0</span>. Knowing this, we can further simplify to:</p>
+<p><span class="math display">
+\begin{split}
+SST &amp; = \sum\limits_{i=1}^n[ \hat u_i^2 + \hat y_i^2 - 2 \hat u_i \bar y - 2 \hat y_i \bar y + \bar y ^2] \\
+&amp; = \sum\limits_{i=1}^n[\hat u_i^2 + (\hat y_i - \bar y)^2]\\
+&amp; = \sum\limits_{i=1}^n \hat u_i^2 + \sum\limits_{i=1}^n(\hat y_i - \bar y)^2 \\
+&amp; = SSE + SSR
+\end{split}
+</span></p>
+<p>This makes sense: After all, SSE is the squared errors explained by the model, and SSR is the residual (non-explained) parts of the model, so together, they should be equal to the total sum of squares.</p>
+<p>Thus, SSE/SST should be a percentage between 0 and 100, and 1 - SSR/SST should also be equivalent to that.</p>
+</div>
+</div>
+</div>
+<p><br></p>
+<p><br></p>
+<hr>
+</section>
+</section>
+<section id="assumptions" class="level1">
+<h1>Assumptions</h1>
+<section id="assumptions-for-unbiasedness" class="level2">
+<h2 class="anchored" data-anchor-id="assumptions-for-unbiasedness">Assumptions for Unbiasedness</h2>
+<p>Unbiasedness means the expected value of our estimate from our population is equal to the true population value. In other words, <span class="math inline">E(\hat\theta) = \theta</span>.</p>
+<p>The OLS estimate of <span class="math inline">\widehat{\beta_j}</span> (the relationship between <span class="math inline">x_j</span> and <span class="math inline">y</span>) is only unbiased if these 4 conditions are met:</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MLR.1 Linearity in Parameters
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-33" class="callout-33-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A model must be linear in parameters for unbiasedness. This means that the parameters of the model <span class="math inline">\beta_0, \dots, \beta_k</span> must not be multiplied/divided together.</p>
+<p>Note: this does not mean the actual regression line must be linear - only the parameters/coefficients must not be multiplied.</p>
+<p>For example, the following model is still linear in parameters:</p>
+<p><span class="math display">
+y = \beta_0 + \beta_1x^2
+</span></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-34-contents" aria-controls="callout-34" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MLR.2 Random Sampling
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-34" class="callout-34-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This assumption says that all observations in our sample are randomly sampled from the same population.</p>
+<p>The error term <span class="math inline">u</span> in our regression model is some random variable (with its own probability distribution), that can be defined by its expectation <span class="math inline">E(u)</span>.</p>
+<ul>
+<li>If we randomly select one observation <span class="math inline">i</span> from the data, each observation <span class="math inline">i</span> has an equal chance of being selected.</li>
+<li>The error term for that observation, <span class="math inline">u_i</span>, should also have the same expectation as the random variable <span class="math inline">u</span>, since each observation <span class="math inline">i</span> within <span class="math inline">u</span> has the same chance of being selected.</li>
+</ul>
+<p>Thus, random sampling allows us to say <span class="math inline">E(u) = E(u_i)</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-35-contents" aria-controls="callout-35" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MLR.3 No Perfect Multicollinearity/Variance in <span class="math inline">x</span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-35" class="callout-35-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>No perfect multicollinearity (MLR.3) means that no two explanatory variables are perfectly correlated together. This also means that in the regression anatomy formula, <span class="math inline">\sum \widetilde{r_{ji}}^2 ≠ 0</span>.</p>
+<p>If we have a simple linear regression, we instead must make sure that there is indeed variance in the explanatory variable <span class="math inline">x</span> (SLR.3). Or in other words: <span class="math inline">Var(x) ≠ 0</span>.</p>
+<p><strong>These two assumptions are necessary to even calculate</strong> <span class="math inline">\widehat{\beta_0}</span>, since the formulas require dividing by these values, so if they equal 0, we cannot calculate OLS.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-36-contents" aria-controls="callout-36" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MLR.4 Zero-Conditional Mean
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-36" class="callout-36-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In the population, the error term <span class="math inline">u</span> must have an expectation of 0, given all values of <span class="math inline">\overrightarrow x</span>.</p>
+<p>Mathematically:</p>
+<p><span class="math display">
+E(u|x_1, \dots, x_k) = 0, \ \forall (x_1, \dots, x_k)
+</span></p>
+<p>When combined with MLR.2 Random Sampling from above, we can say that:</p>
+<p><span class="math display">
+E(u|x_1, \dots, x_k) = E(u_i|x_{1i}, \dots, x_{ki}) = 0
+</span></p>
+<p>This is the <u>key assumption</u> of OLS that is most frequently violated.</p>
+</div>
+</div>
+</div>
+<p>If all 4 conditions are met, The OLS estimate of <span class="math inline">\widehat{\beta_j}</span> (the relationship between <span class="math inline">x_j</span> and <span class="math inline">y</span>) is unbiased.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-37-contents" aria-controls="callout-37" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof of Unbiasedness for Simple Linear Regression
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-37" class="callout-37-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-38-contents" aria-controls="callout-38" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof of Unbiasedness for Multiple Linear Regression
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-38" class="callout-38-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="assumptions-for-consistency" class="level2">
+<h2 class="anchored" data-anchor-id="assumptions-for-consistency">Assumptions for Consistency</h2>
 <p><br></p>
 <p><br></p>
 <hr>
 </section>
 </section>
 <section id="statistical-inference" class="level1">
-<h1><strong>Statistical Inference</strong></h1>
-<section id="standard-errors-of-coefficients" class="level2">
-<h2 class="anchored" data-anchor-id="standard-errors-of-coefficients">Standard Errors of Coefficients</h2>
-<p><br></p>
-</section>
-<section id="t-tests-and-confidence-intervals" class="level2">
-<h2 class="anchored" data-anchor-id="t-tests-and-confidence-intervals">T-Tests and Confidence Intervals</h2>
-<p><br></p>
-</section>
-<section id="f-tests-for-multiple-coefficients" class="level2">
-<h2 class="anchored" data-anchor-id="f-tests-for-multiple-coefficients">F-Tests for Multiple Coefficients</h2>
-<p><br></p>
-</section>
-<section id="predictive-inference" class="level2">
-<h2 class="anchored" data-anchor-id="predictive-inference">Predictive Inference</h2>
+<h1>Statistical Inference</h1>
 <p><br></p>
 <p><br></p>
 <hr>
 </section>
-</section>
 <section id="extension-explanatory-variables" class="level1">
-<h1><strong>Extension: Explanatory Variables</strong></h1>
+<h1>Extension: Explanatory Variables</h1>
 <section id="categorical-explanatory-variables" class="level2">
 <h2 class="anchored" data-anchor-id="categorical-explanatory-variables">Categorical Explanatory Variables</h2>
 <p><br></p>
