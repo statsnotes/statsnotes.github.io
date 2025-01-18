@@ -1900,23 +1900,19 @@ More intuitively, if the omitted variable $z$ is both correlated with $x$ and $y
 
 The standard errors of OLS estimates quantify how precise our estimates are:
 
-::: callout-tip
-## Intuition of Standard Errors and Uncertainty
+::: {.callout-note collapse="true"}
+## Sampling Distributions and Sampling Error
 :::
 
-::: callout-tip
+::: {.callout-note collapse="true"}
 ## Homoscedasticity vs. Heteroscedasticity and Standard Errors
 :::
 
-<br />
-
-We can mathematically derive standard errors as shown below:
-
-::: callout-note
+::: {.callout-note collapse="true"}
 ## Deriving OLS Standard Errors
 :::
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## Deriving Robust Standard Errors
 :::
 
@@ -1924,19 +1920,19 @@ We can mathematically derive standard errors as shown below:
 
 Using standard errors, we can conduct hypothesis testing:
 
-::: callout-tip
+::: {.callout-tip collapse="true"}
 ## T-Tests for Coefficients
 :::
 
-::: callout-tip
+::: {.callout-tip collapse="true"}
 ## Confidence Intervals for Coefficients
 :::
 
-::: callout-tip
+::: {.callout-tip collapse="true"}
 ## F-Tests for Multiple Coefficients
 :::
 
-::: callout-tip
+::: {.callout-tip collapse="true"}
 ## Confidence Intervals for Prediction
 :::
 
